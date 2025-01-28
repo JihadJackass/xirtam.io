@@ -2521,3 +2521,148 @@ input, select, textarea {
 				}
 
 	}
+
+/* Achievements Section Styling */
+#achievements {
+    padding: 30px;
+    background-color: #222629; /* Match your site’s dark theme */
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.achievement-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #333; /* Darker background for contrast */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Soft shadow */
+}
+
+.achievement-icon {
+    width: 64px;
+    height: 64px;
+    margin-right: 15px;
+    border-radius: 5px;
+    background-color: #444; /* Placeholder background if no icon */
+    object-fit: cover; /* Ensure the image scales nicely */
+}
+
+.achievement-details {
+    flex-grow: 1;
+    font-family: "Source Sans Pro", Arial, sans-serif; /* Match your typography */
+}
+
+.achievement-details h4 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #e27689; /* Highlighted color from your CSS */
+    font-weight: 600;
+}
+
+.achievement-details p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.75); /* Subtle contrast for text */
+}
+
+.mark-complete {
+    padding: 8px 12px;
+    background-color: #8ebebc; /* Button color from your CSS */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+}
+
+.mark-complete:hover {
+    background-color: #9ececc; /* Lighter hover effect */
+}
+
+.mark-complete.completed {
+    background-color: #6c757d; /* Gray for completed achievements */
+    cursor: default;
+}
+
+	/* Custom Achievement Form */
+	#add-achievement {
+		margin-top: 40px;
+	}
+
+	#add-achievement h3 {
+		color: #e27689;
+		font-size: 1.5em;
+		margin-bottom: 20px;
+	}
+
+	#add-achievement form {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+	}
+
+	#achievement-title,
+	#achievement-description {
+		padding: 10px;
+		background: #444;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 5px;
+		color: #fff;
+		font-size: 1em;
+		font-family: "Source Sans Pro", Arial, sans-serif;
+	}
+
+	#achievement-title:focus,
+	#achievement-description:focus {
+		outline: none;
+		border-color: #e27689; /* Focus effect */
+	}
+
+	#achievement-icon {
+		padding: 10px;
+		background: #444;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 5px;
+		color: #fff;
+		font-size: 1em;
+		font-family: "Source Sans Pro", Arial, sans-serif;
+	}
+
+	#achievement-form button {
+		padding: 10px;
+		background-color: #e27689; /* Button matches the highlight color */
+		color: #fff;
+		border: none;
+		border-radius: 5px;
+		font-size: 1em;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+	}
+
+	#achievement-form button:hover {
+		background-color: #f49797; /* Subtle hover effect */
+	}
+
+		/* Remove Button */
+	.remove-achievement {
+		padding: 8px 12px;
+		background-color: #e27689; /* Matches your site's theme */
+		color: #fff;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		font-size: 0.9em;
+		margin-left: 10px;
+		transition: background-color 0.3s ease;
+	}
+
+	.remove-achievement:hover {
+		background-color: #f49797; /* Hover effect */
+	}
+
+		

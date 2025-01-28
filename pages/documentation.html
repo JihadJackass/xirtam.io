@@ -65,20 +65,165 @@
                         <h3>Europa Universalis IV Achievment Tracker</h3><hr>
                     </header><br>
 
-                    <header>
-                        <h3>Custom Achievments</h3><hr>
-                        Europa Universalis IV<br>
-                        Hearts of Iron IV<br>
-                        Victoria 2<br>
-                        Victoria 3<br>
-                        Fallout 3<br>
-                    </header><br>
+                    <section id="achievements">
+                        <div class="container">
+                            <header>
+                                <h2>Achievements</h2>
+                            </header>
+                    
+                            <!-- Game-Specific Achievements -->
+                            <div id="achievement-list">
+                                <!-- Example Game -->
+                                <div class="game-section">
+                                    <h3>Europa Universalis IV</h3>
+                                    <ul class="achievement-items">
+                                        <!-- Example Achievement -->
+                                        <li class="achievement-item">
+                                            <img src="../assets/images/achievements/eu4_icon.png" alt="Achievement Icon" class="achievement-icon">
+                                            <div class="achievement-details">
+                                                <h4>Conquer the World</h4>
+                                                <p>Form a one-tag world conquest.</p>
+                                                <button class="mark-complete">Mark Complete</button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                    
+                            <!-- Add Custom Achievement -->
+                            <div id="add-achievement">
+                                <h3>Create Custom Achievement</h3>
+                                <form id="achievement-form">
+                                    <input type="text" id="achievement-title" placeholder="Achievement Title" required>
+                                    <textarea id="achievement-description" placeholder="Description" required></textarea>
+                                    <input type="file" id="achievement-icon" accept="image/*">
+                                    <button type="submit">Add Achievement</button>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                    
 
                 </div>
             </section>
         </div>
 
 		<!-- Scripts -->
+
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const achievementList = document.getElementById("achievement-list");
+            const form = document.getElementById("achievement-form");
+
+            // Load achievements from localStorage
+            const loadAchievements = () => {
+                const savedAchievements = JSON.parse(localStorage.getItem("achievements")) || [];
+                achievementList.innerHTML = ""; // Clear existing list
+                savedAchievements.forEach((achievement) => {
+                    addAchievementToDOM(achievement);
+                });
+            };
+
+            // Save achievements to localStorage
+            const saveAchievements = () => {
+                const achievements = [];
+                document.querySelectorAll(".achievement-item").forEach((item) => {
+                    const title = item.querySelector("h4").textContent;
+                    const description = item.querySelector("p").textContent;
+                    const icon = item.querySelector("img").src;
+                    const completed = item.querySelector(".mark-complete").classList.contains("completed");
+                    achievements.push({ title, description, icon, completed });
+                });
+                localStorage.setItem("achievements", JSON.stringify(achievements));
+            };
+
+            // Add achievement to the DOM
+            const addAchievementToDOM = ({ title, description, icon, completed }) => {
+                const listItem = document.createElement("li");
+                listItem.className = "achievement-item";
+
+                // Icon
+                const iconImg = document.createElement("img");
+                iconImg.className = "achievement-icon";
+                iconImg.src = icon || "../assets/images/default_icon.png";
+                listItem.appendChild(iconImg);
+
+                // Details
+                const details = document.createElement("div");
+                details.className = "achievement-details";
+                const titleElem = document.createElement("h4");
+                titleElem.textContent = title;
+                const descElem = document.createElement("p");
+                descElem.textContent = description;
+                details.appendChild(titleElem);
+                details.appendChild(descElem);
+
+                // Mark Complete Button
+                const completeButton = document.createElement("button");
+                completeButton.className = "mark-complete";
+                completeButton.textContent = completed ? "Completed" : "Mark Complete";
+                if (completed) completeButton.classList.add("completed");
+                details.appendChild(completeButton);
+
+                // Remove Button
+                const removeButton = document.createElement("button");
+                removeButton.className = "remove-achievement";
+                removeButton.textContent = "Remove";
+                details.appendChild(removeButton);
+
+                listItem.appendChild(details);
+
+                // Append to list
+                achievementList.appendChild(listItem);
+            };
+
+            // Handle marking achievements as complete or removing them
+            achievementList.addEventListener("click", (e) => {
+                // Mark Complete Button Logic
+                if (e.target.classList.contains("mark-complete")) {
+                    e.target.classList.toggle("completed");
+                    e.target.textContent = e.target.classList.contains("completed") ? "Completed" : "Mark Complete";
+                    saveAchievements(); // Save the updated state
+                }
+
+                // Remove Achievement Logic
+                if (e.target.classList.contains("remove-achievement")) {
+                    const listItem = e.target.closest(".achievement-item");
+                    console.log("Removing achievement:", listItem.querySelector("h4").textContent); // Debugging log
+                    listItem.remove(); // Remove from DOM
+                    saveAchievements(); // Update localStorage
+                }
+            });
+
+            // Handle adding custom achievements
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const title = document.getElementById("achievement-title").value;
+                const description = document.getElementById("achievement-description").value;
+                const fileInput = document.getElementById("achievement-icon");
+                const file = fileInput.files[0];
+
+                // Create new achievement object
+                const newAchievement = {
+                    title,
+                    description,
+                    icon: file ? URL.createObjectURL(file) : "../assets/images/default_icon.png",
+                    completed: false,
+                };
+
+                // Add to DOM and save
+                addAchievementToDOM(newAchievement);
+                saveAchievements();
+
+                // Reset the form
+                form.reset();
+            });
+
+            // Initial load
+            loadAchievements();
+        });
+        </script>
+
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/jquery.scrolly.min.js"></script>
         <script src="assets/js/jquery.scrollex.min.js"></script>

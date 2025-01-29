@@ -1,9 +1,5 @@
-/* General Styles */
-body {
-    background: rgb(53, 51, 51);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
-    color: #ddd;
+#achievements-manager {
+    font-size: 16px !important;
 }
 
 /* Achievements Manager Container */
@@ -27,7 +23,6 @@ h2, h3, h4 {
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 15px;
-    text-align: center; /* Center align buttons */
 }
 
 #admin-settings label {
@@ -238,12 +233,9 @@ h2, h3, h4 {
     background: #8ebebc;
 }
 
-/* Fix button width issue */
-#toggle-custom-achievements,
-#admin-login {
-    display: inline-block;
-    width: auto; /* Prevent full-width stretching */
-    padding: 10px 20px; /* Ensure proper button proportions */
+#toggle-custom-achievements {
+    width: 100%;
+    padding: 10px;
     background: #e27689;
     border: none;
     border-radius: 5px;
@@ -251,16 +243,12 @@ h2, h3, h4 {
     font-size: 1em;
     cursor: pointer;
     transition: background 0.3s ease;
-    text-align: center;
-    margin: 5px; /* Spacing between buttons */
 }
 
-#toggle-custom-achievements:hover,
-#admin-login:hover {
+#toggle-custom-achievements:hover {
     background: #f49797;
 }
 
-/* Active state for the enable/disable toggle */
 #toggle-custom-achievements.active {
     background: #8ebebc;
 }

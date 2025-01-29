@@ -5,6 +5,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="../assets/css/reptiles.css" />
 	</head>
 	<body class="is-preload">
 
@@ -45,65 +46,72 @@
         <!-- Main -->
 
         <div id="main">
-
-            <!-- Reptiles Page -->
-
-            <!-- TODO: Add links and navigation bar buttons for links for reptiles (current, previous, etc) -->
-
-            <section id="Documentation">
-                <div class="container">
-                    <header>
-                        <h2>Reptiles</h2>
-                        <br>I am very fond of reptiles and this is my archive of any reptiles I have or do currently own.
-                    </header>
-
-                    <br><h3>Currently Owned Reptiles</h3><br>
-
-                        <br><h1>Leopard Gecko</h1><br>
-
-                            <i>Leo</i><br><br>
-
-                                <i>Age</i>: Unkown<br>
-                                <i>Morph</i>: Unknown<br>
-
-                            <br><i>Lily</i><br><br>
-
-                                <i>Age</i>: Unkown<br>
-                                <i>Morph</i>: Unknown<br>
-
-                        <br><h1>Tokay Gecko</h1><br>
-
-                            <i>Athena</i>
-
-                                <i>Age</i>: Unkown<br>
-                                <i>Morph</i>: Unknown<br>
-
-                        <br><h1>Bearded Dragon</h1><br>
-
-                            <i>Mushu</i><br><br>
-
-                                <i>Age</i>: Unkown<br>
-                                <i>Morph</i>: Unknown<br>
-
-                    <br><br><h3>Previously Owned Reptiles</h3><br>
-
-                        <br><h1>Crested Gecko</h1><br>
-
-                            <i>Zeus</i><br>
-
-                        <br><h1>Skink</h1><br>
-
-                            <i>Peter's Banded Skink</i><br>
-
-                        <br><h1>Monitor</h1><br>
-
-                            <i>Savannah Monitor Lizard</i><br><br>
-
-                </div>
-            </section>
+            <body class="reptile-theme">
+                <div id="background"></div>
+                <div id="fog-layer"></div>
+                <nav class="reptile-theme">
+                    <ul>
+                        <li><a href="#current">Currently Owned</a></li>
+                        <li><a href="#previous">Previously Owned</a></li>
+                        <li><a href="#wishlist">Wishlist</a></li>
+                        <li><a href="#care">Care Tips</a></li>
+                        <li><a href="#breeding">Breeding Projects</a></li>
+                        <li><a href="#obituaries" id="toggle-obituaries">Obituaries ▼</a></li>
+                    </ul>
+                </nav>
+                <section id="current">
+                    <h2>Currently Owned Reptiles</h2>
+                    <div class="reptile-container">
+                        <h3>Leopard Gecko - Leo</h3>
+                        <p><strong>Age:</strong> Unknown</p>
+                        <p><strong>Morph:</strong> Unknown</p>
+                    </div>
+                </section>
+                <section id="previous">
+                    <h2>Previously Owned Reptiles</h2>
+                    <div class="reptile-container">
+                        <h3>Crested Gecko - Zeus</h3>
+                    </div>
+                </section>
+                <section id="wishlist">
+                    <h2>Wishlist Reptiles</h2>
+                    <p>Dream reptiles I'd love to own in the future.</p>
+                </section>
+                <section id="care">
+                    <h2>Reptile Care Tips</h2>
+                    <p>Advice on feeding, handling, and setting up enclosures.</p>
+                </section>
+                <section id="breeding">
+                    <h2>Breeding Projects</h2>
+                    <p>Details on reptile breeding experiments.</p>
+                </section>
+                <section id="obituaries" class="hidden">
+                    <h2>Obituaries</h2>
+                    Bearded Dragon - Mushu - 13 Years - My first reptile - Struggled with MBD but lived a decent life; 
+                        If I could have done things differently I absolutely would.
+                </section>
+            </body>
         </div>
 
 		<!-- Scripts -->
+        <script>
+            // REPTILE SCRIPTS
+            document.addEventListener("DOMContentLoaded", function() {
+                const toggleObituaries = document.getElementById("toggle-obituaries");
+                const obituariesSection = document.getElementById("obituaries");
+                
+                toggleObituaries.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    obituariesSection.classList.toggle("hidden");
+                    
+                    if (obituariesSection.classList.contains("hidden")) {
+                        toggleObituaries.textContent = "Obituaries ▼";
+                    } else {
+                        toggleObituaries.textContent = "Obituaries ▲";
+                    }
+                });
+            });
+        </script>
         <script src="../assets/js/jquery.min.js"></script>
         <script src="../assets/js/jquery.scrolly.min.js"></script>
         <script src="../assets/js/jquery.scrollex.min.js"></script>

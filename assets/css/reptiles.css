@@ -1,0 +1,70 @@
+body.reptile-theme {
+    font-family: Arial, sans-serif;
+    color: #fff;
+    background-color: #222 !important;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+}
+
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/life/reptiles/rainforest.jpg') no-repeat center center/cover,
+                url('../images/life/reptiles/Mushu-1.jpg') no-repeat center center/cover;
+    z-index: -2;
+    opacity: 0.8;
+}
+
+#fog-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/effects/mist.png') repeat;
+    z-index: -1;
+    opacity: 0.4;
+    animation: mistMove 15s infinite linear;
+}
+
+@keyframes mistMove {
+    0% { transform: translateX(-50px); opacity: 0.3; }
+    50% { transform: translateX(50px); opacity: 0.5; }
+    100% { transform: translateX(-50px); opacity: 0.3; }
+}
+
+nav.reptile-theme ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 0;
+}
+
+nav.reptile-theme ul li {
+    margin: 0 15px;
+}
+
+nav.reptile-theme ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.reptile-container {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    margin: 10px auto;
+    max-width: 600px;
+    border-radius: 8px;
+}
+
+.hidden {
+    display: none;
+}

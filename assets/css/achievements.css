@@ -1,0 +1,267 @@
+/* General Styles */
+body {
+    background: rgb(53, 51, 51);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    color: #ddd;
+}
+
+/* Achievements Manager Container */
+#achievements-manager {
+    max-width: 900px;
+    margin: 20px auto;
+    background: #222629;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Section Headers */
+h2, h3, h4 {
+    color: #e27689;
+}
+
+/* Administration Settings */
+#admin-settings {
+    background: #333;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center; /* Center align buttons */
+}
+
+#admin-settings label {
+    display: block;
+    color: #ddd;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* Profile Management */
+#profile-management {
+    background: #333;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+#profile-management button {
+    width: 100%;
+    padding: 10px;
+    background: #8ebebc;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+#profile-management button:hover {
+    background: #9ececc;
+}
+
+/* Scrollable Games List */
+#game-container {
+    max-height: 400px;
+    overflow-y: auto;
+    background: #222629;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* Game Categories */
+.game-category {
+    margin-bottom: 10px;
+}
+
+.game-category h4 {
+    cursor: pointer;
+    padding: 10px;
+    background: #333;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Games inside Categories */
+.game-list {
+    display: none;
+    padding-left: 20px;
+}
+
+.game h5 {
+    cursor: pointer;
+    color: #e27689;
+    padding: 8px;
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+/* Achievements List */
+.achievement-list {
+    display: none;
+    padding-left: 20px;
+}
+
+/* Individual Achievement */
+.achievement-item {
+    background: #444;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Achievement Icon */
+.achievement-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* Achievement Details */
+.achievement-details {
+    flex-grow: 1;
+}
+
+.achievement-details h4 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #e27689;
+}
+
+.achievement-details p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Buttons */
+.mark-complete, .remove-achievement, .profile-btn, .game-btn {
+    padding: 8px 12px;
+    background: #8ebebc;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.mark-complete:hover, .remove-achievement:hover, .profile-btn:hover, .game-btn:hover {
+    background: #9ececc;
+}
+
+.mark-complete.completed {
+    background: #6c757d;
+    cursor: default;
+}
+
+.remove-achievement {
+    background: #e27689;
+    margin-left: 10px;
+}
+
+.remove-achievement:hover {
+    background: #f49797;
+}
+
+/* Custom Achievements Form */
+#custom-achievements {
+    background: #333;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+#custom-achievements input, #custom-achievements textarea {
+    width: 100%;
+    padding: 10px;
+    background: #444;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+#custom-achievements input:focus, #custom-achievements textarea:focus {
+    outline: none;
+    border-color: #e27689;
+}
+
+/* Import/Export Buttons */
+#achievement-actions {
+    margin-top: 20px;
+}
+
+#export-profile, #import-profile {
+    width: 100%;
+    padding: 10px;
+    background: #e27689;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#export-profile:hover, #import-profile:hover {
+    background: #f49797;
+}
+
+/* Hide Import Input */
+#import-file {
+    display: none;
+}
+
+#import-label {
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    padding: 10px;
+    background: #9ececc;
+    border-radius: 5px;
+    color: white;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+#import-label:hover {
+    background: #8ebebc;
+}
+
+/* Fix button width issue */
+#toggle-custom-achievements,
+#admin-login {
+    display: inline-block;
+    width: auto; /* Prevent full-width stretching */
+    padding: 10px 20px; /* Ensure proper button proportions */
+    background: #e27689;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-align: center;
+    margin: 5px; /* Spacing between buttons */
+}
+
+#toggle-custom-achievements:hover,
+#admin-login:hover {
+    background: #f49797;
+}
+
+/* Active state for the enable/disable toggle */
+#toggle-custom-achievements.active {
+    background: #8ebebc;
+}
+

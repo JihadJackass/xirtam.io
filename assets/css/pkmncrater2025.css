@@ -1,0 +1,110 @@
+/* Reset & Global Styles */
+body {
+    background-color: #C0C0C0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    width: 900px;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+    border: 2px solid #000;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Header */
+.header {
+    background-color: #660000;
+    color: #FFF;
+    padding: 10px;
+    text-align: left;
+    font-size: 22px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+.header img {
+    width: auto;
+    height: 50px;
+}
+
+/* Navigation */
+.navbar {
+    background-color: #660000;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 3px solid #FFF;
+}
+.navbar a {
+    color: #FFF;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #990000;
+    padding: 10px 20px;
+    margin: 5px;
+    border: 2px solid #FFF;
+    display: inline-block;
+    font-size: 16px;
+}
+.navbar a:hover {
+    background-color: #AA0000;
+}
+
+/* Main Layout */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+.left-content {
+    width: 65%;
+    padding: 10px;
+}
+.right-sidebar {
+    width: 30%;
+    background-color: #DDDDDD;
+    padding: 10px;
+    border-left: 2px solid #000;
+    text-align: left;
+}
+.right-sidebar h2 {
+    color: #660000;
+    font-size: 18px;
+    font-weight: bold;
+}
+.right-sidebar a {
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    padding: 5px 0;
+}
+.right-sidebar a:hover {
+    color: #660000;
+}
+
+/* Section Titles */
+h1, h2 {
+    font-size: 24px;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Footer */
+.footer {
+    background-color: #CCCCCC;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 12px;
+    border-top: 2px solid #000;
+}
+

@@ -1,100 +1,56 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Xirtam 3</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../assets/css/main.css" />
-	</head>
-	<body class="is-preload">
+<head>
+    <title>Pokémon Crater Classic</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../assets/css/pkmncrater2025.css" />
+    <link rel="icon" href="https://pokemon-crater.com/assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <img src="../assets/images/pkmncrater2025/small_title.png" alt="Pokémon Crater Logo" class="logo" />
+    </div>
 
-		<!-- Header -->
-        <div id="header">
-            <div class="top">
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="#">Log In</a>
+        <a href="#">Sign Up</a>
+        <a href="#">About Us / FAQ</a>
+    </div>
 
-                <!-- Side Panel -->
-                <div id="logo">
-                    <span class="image avatar48"><img src="../assets/images/avatars/avatar.jpg" alt="" /></span>
-                    <h1 id="title">Noah Gamble JihadiJackass</h1>
-                    <p>Computer Programmer</p>
-                    <p>Mod Developer</p>
-                    </div>
-
-				<!-- Navigation Menu -->
-                <nav id="nav">
-                    <ul>
-                        <li><a href="../index.html" id="top-link"><span class="icon solid fa-home">Home</span></a></li>
-                        <li><a href="../pages/projects.html" id="projects-link"><span class="icon solid fa-user">Projects</span></a></li>
-                        <li><a href="../pages/documentation.html" id="documentation-link"><span class="icon solid fa-user">Documentation</span></a></li>
-                        <li><a href="../pages/airsoft.html" id="airsoft-link"><span class="icon solid fa-user">Airsoft</span></a></li>
-                        <li><a href="../pages/reptiles.html" id="reptiles-link"><span class="icon solid fa-user">Reptiles</span></a></li>
-                        <li><a href="../pages/images.html" id="images-link"><span class="icon solid fa-user">Images</span></a></li>
-                        <li><a href="../pages/about.html" id="about-link"><span class="icon solid fa-user">About</span></a></li>
-                    </ul>
-                </nav>
-            </div>
-        <div class="bottom">
-
-        <!-- Social Icons -->
-        <ul class="icons">
-                <li><a href="https://github.com/JihadJackass" class="icon brands fa-github"><span class="label">Github</span></a></li>
-                <li><a href="mailto:noahrg2@hotmail.com?Subject=Xirtam3" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-            </div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="left-content">
+            <img src="../assets/images/pkmncrater2025/front_v7.gif" alt="Battle Arena v7" class="banner">
+            <p>Sign up for <strong>Version 7</strong> of the famous Pokémon Crater Battle Arena! You can own and battle Pokémon online, and the best part is that it's completely FREE! This version brings a whole new look for the site and features a new user interface that speeds up battles and moving on the maps! </p>
+            <img src="../assets/images/pkmncrater2025/signup_login_v7.gif" alt="Sign Up / Log In">
         </div>
-
-        <!-- Main -->
-
-        <div id="main">
-            
+        <div class="right-sidebar">
+            <h2>Battle Arena:</h2>
+            <a href="#">Log In</a>
+            <a href="#">Sign Up</a>
+            <a href="#">About</a>
+            <a href="#">Credits</a>
+            <h2>Other Features:</h2>
+            <a href="#">Home/News</a>
+            <a href="#">News Archive</a>
+            <a href="#">Forums</a>
+            <a href="#">Chat Room</a>
         </div>
+    </div>
 
-		<!-- Scripts -->
-        <script>
-            import React from "react";
-            import Link from "next/link";
-            import "@/styles/pokemonCrater.css";
+    <!-- News Section -->
+    <div class="news-section">
+        <h2>News & Updates</h2>
+        <p><strong>Version 7 has arrived!</strong> This version improves battles, map movement, and introduces new features.</p>
+        <p>New maps and a sixth special Pokémon type are coming soon!</p>
+    </div>
 
-            const HomePage = () => {
-            return (
-                <div className="container">
-                <header className="header">
-                    <img src="/images/crater_logo.png" alt="Pokémon Crater Logo" className="logo" />
-                </header>
-                <div className="content">
-                    <nav className="sidebar">
-                    <ul>
-                        <li><Link href="/login">Login</Link></li>
-                        <li><Link href="/register">Register</Link></li>
-                        <li><Link href="/game">Start Game</Link></li>
-                        <li><Link href="/pokedex">Pokédex</Link></li>
-                        <li><Link href="/battles">Battle</Link></li>
-                    </ul>
-                    </nav>
-                    <main className="main-content">
-                    <h1>Welcome to Pokémon Crater Classic</h1>
-                    <p>Experience the nostalgia of the original Pokémon Crater. Battle, explore, and catch Pokémon just like before!</p>
-                    <img src="/images/classic_bg.png" alt="Classic Pokémon Crater Background" className="background-image" />
-                    </main>
-                    <aside className="sidebar-right">
-                    <h2>News & Updates</h2>
-                    <p>Stay updated with the latest game news and events.</p>
-                    </aside>
-                </div>
-                <footer className="footer">
-                    <p>&copy; 2025 Pokémon Crater Classic. Not affiliated with Nintendo or Game Freak.</p>
-                </footer>
-                </div>
-            );
-            };
-
-            export default HomePage;
-        </script>
-        <script src="../assets/js/jquery.min.js"></script>
-        <script src="../assets/js/jquery.scrolly.min.js"></script>
-        <script src="../assets/js/jquery.scrollex.min.js"></script>
-        <script src="../assets/js/browser.min.js"></script>
-        <script src="../assets/js/breakpoints.min.js"></script>
-        <script src="../assets/js/util.js"></script>
-        <script src="../assets/js/main.js"></script>
-	</body>
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Pokémon Crater Classic. Not affiliated with Nintendo or Game Freak.</p>
+    </div>
+</body>
 </html>

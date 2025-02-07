@@ -65,10 +65,12 @@
                             Version 4.3.1<br><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1810341847"><img src="../../assets/images/social_media/steam.png"> Steam Workshop</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/JihadJackass/Formable-Nations-Reworked"><img src="../../assets/images/social_media/github.png"> Github</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.patreon.com/JihadiJackass/membership"><img src="../../assets/images/social_media/patreon.png"> Patreon</a>
                             <p>Formable Nations: Reworked is a complete rework and overhaul of the highly popular mod <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=523302365">Basic Mods: Formable Nations</a>. With a team of dedicated developers and absolutely no lives we've recreated the mod into a functional, error-free, bug-squashed experience for all to play</p><br><p>Here you can find a list of nations that are available to you as a player, and the AI as well. They all have unique flags created by various talented artists online. By clicking a nation on this page you will be taken to a unique page for that nation which will contain information about the nation such as history, and how to form the nation similar to the eu4wiki if you were to google a nation when trying to form it allowing for all-in-one convenience of what you may be after!</p>
                         </header>
-
-                        <h1>Featured Country:</h1><br>
-                        <a href="../fnr_eu4_guide/tonga_empire.html"><img src="../../assets/images/projects/europa_universalis_4/100x150_flags/Tonga Empire.png">
-                        <br>Tuʻi Tonga Empire</a>
+                    </div>
+                    <h2>Featured Countries:</h2><br>
+                    <div class="slideshow-content" align="center">
+                        <img class="image-slide" href="/pages/fnr_eu4_guide/ukraine.html" img src="../../assets/images/projects/europa_universalis_4/100x150_flags/Ukraine.png" a>
+                        <img class="image-slide" href="/pages/fnr_eu4_guide/donetsk_people_republic.html" img src="../../assets/images/projects/europa_universalis_4/100x150_flags/DPR.png">
+                        <img class="image-slide" href="/pages/fnr_eu4_guide/luhansk_people_republic.html" img src="../../assets/images/projects/europa_universalis_4/100x150_flags/LUH.png">
                     </div>
                 </section>
 
@@ -693,5 +695,22 @@
         <script src="/assets/js/breakpoints.min.js"></script>
         <script src="/assets/js/util.js"></script>
         <script src="/assets/js/main.js"></script>
+        <!-- Carousel script -->
+        <script>
+            var slideIndex = 0;
+            carousel();
+
+            function carousel() {
+              var i;
+              var x = document.getElementsByClassName("image-slide");
+              for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+              }
+              slideIndex++;
+              if (slideIndex > x.length) {slideIndex = 1}
+              x[slideIndex-1].style.display = "block";
+              setTimeout(carousel, 3000);
+            }
+        </script>
 	</body>
 </html>

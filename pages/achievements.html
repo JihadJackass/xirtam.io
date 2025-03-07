@@ -46,7 +46,7 @@
             <!-- Main -->
 
             <div id="main">
-                <!-- Documentation Listing Page -->
+                <!-- Achievement Manager Page -->
                 <section id="Documentation">
                     <div class="container">
 
@@ -56,126 +56,25 @@
                                     <h2>Achievements Manager</h2>
                                 </header>
                         
-                                <!-- 🔧 Administration Settings -->
-                                <div id="admin-settings">
-                                    <h3>Administration Settings</h3>
-                                    <button id="toggle-custom-achievements">Enable Custom Achievements</button>
-                                    <button id="admin-login">Login (Placeholder)</button>
-                                    <!-- Steam Profile Section -->
+                                <!-- 👤 Profile Management -->
+                                <div id="profile-management">
+                                    <h3>Profile Management</h3>
                                     <div id="steam-profile">
                                         <h3>Steam Profile</h3>
                                         <input type="text" id="steam-id-input" placeholder="Enter Steam ID" />
-                                        <button onclick="loadSteamProfile(document.getElementById('steam-id-input').value, 'YOUR_STEAM_API_KEY')">Load Profile</button>
+                                        <button id="search-steam-profile">Search Steam ID</button>
                                         <div id="profile-info">
                                             <img id="steam-avatar" src="" alt="Steam Avatar" width="100">
                                             <p id="steam-name"></p>
                                         </div>
-                                    </div>
-                                    <!-- Load Steam Achievements -->
-                                    <div id="steam-achievements-section">
-                                        <h3>Steam Achievements</h3>
-                                        <input type="text" id="steam-game-id" placeholder="Enter Steam App ID (Game)" />
-                                        <button onclick="loadSteamAchievements(localStorage.getItem('steamID'), document.getElementById('steam-game-id').value, 'YOUR_STEAM_API_KEY')">Load Achievements</button>
-                                        <ul id="steam-achievements"></ul>
-                                    </div>
-                                    <!-- Load Steam + Custom Achievements -->
-                                    <div id="all-achievements-section">
-                                        <h3>All Achievements</h3>
-                                        <input type="text" id="game-name" placeholder="Enter Game Name" />
-                                        <input type="text" id="steam-game-id-merge" placeholder="Enter Steam App ID" />
-                                        <button onclick="loadAllAchievements(localStorage.getItem('steamID'), document.getElementById('steam-game-id-merge').value, 'YOUR_STEAM_API_KEY', document.getElementById('game-name').value)">Load All Achievements</button>
-                                        <ul id="steam-achievements"></ul>
-                                    </div>
-                                </div>
-                        
-                                <!-- 👤 Profile Management -->
-                                <div id="profile-management">
-                                    <h3>Profile Management</h3>
-                                    <button id="load-steam-profile">Load Profile (Steam)</button>
-                                    <button id="import-profile">Load Profile (JSON)</button>
-                                    <button id="export-profile">Save Profile (JSON)</button>
+                                    </div>  <!-- Brings up a box to enter ID which will search for Steam ID and then load profile, name, and avatar-->
+                                    <button id="load-profile-steam">Load Profile (Steam)</button>  <!-- Used to handle loading saved profile with achievement data-->
+                                    <button id="save-profile-steam">Save Profile (Steam)</button>  <!-- Used to handle saving profile to local which handles and tracks the linked steam account as well as owned games, achievements, custom achievements, progress, and anything relevant. -->
+                                    <button id="import-profile">Load Profile (JSON)</button> <!-- Used for JSON profile loading which is just JSON version of load profile steam -->
+                                    <button id="export-profile">Save Profile (JSON)</button> <!-- Used for JSON profile saving -->
                                     <input type="file" id="import-file" accept=".json" style="display: none;">
                                 </div>
                         
-                                <!-- 🎮 Games List (Scrollable Container) -->
-                                <div id="game-container">
-                                    <h3>Tracked Games</h3>
-                        
-                                    <div class="game-category">
-                                        <h4 class="toggle-category">[+] Games with Full Steam Support</h4>
-                                        <div class="game-list">
-                                            <div class="game">
-                                                <h5 class="toggle-game">[+] Europa Universalis IV</h5>
-                                                <ul class="achievement-list" id="eu4-achievements"></ul>
-                                            </div>
-                                            <div class="game">
-                                                <h5 class="toggle-game">[+] Hearts of Iron IV</h5>
-                                                <ul class="achievement-list" id="hoi4-achievements"></ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                        
-                                    <div class="game-category">
-                                        <h4 class="toggle-category">[+] Games with No Steam Achievement Support</h4>
-                                        <div class="game-list">
-                                            <div class="game">
-                                                <h5 class="toggle-game">[+] Fallout 3</h5>
-                                                <ul class="achievement-list" id="fallout3-achievements"></ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                        
-                                    <div class="game-category">
-                                        <h4 class="toggle-category">[+] Non-Steam Games</h4>
-                                        <div class="game-list">
-                                            <div class="game">
-                                                <h5 class="toggle-game">[+] Placeholder Game</h5>
-                                                <ul class="achievement-list" id="placeholder-achievements"></ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                        
-                                <!-- 📌 Add Custom Achievements -->
-                                <div id="custom-achievements" style="display: none;">
-                                    <h3>Add Custom Achievement</h3>
-                                    <form id="achievement-form">
-                                        <!-- Category Selection -->
-                                        <label for="achievement-category">Select Category:</label>
-                                        <select id="achievement-category" required>
-                                            <option value="">-- Select Category --</option>
-                                            <option value="steam-supported">Steam Games (Full Support)</option>
-                                            <option value="no-steam-achievements">Steam Games (No Achievements)</option>
-                                            <option value="non-steam">Non-Steam Games</option>
-                                        </select>
-
-                                        <!-- Game Selection -->
-                                        <br><label for="achievement-game">Select Game:</label>
-                                        <select id="achievement-game" required>
-                                            <option value="">-- Select Game --</option>
-                                            <!-- Games will be populated dynamically based on category -->
-                                        </select>
-
-                                        <!-- Achievement Type Selection -->
-                                        <br><label for="achievement-type">Achievement Type:</label>
-                                        <select id="achievement-type" required>
-                                            <option value="">-- Select Achievement Type --</option>
-                                            <option value="custom">Custom Achievement</option>
-                                            <option value="mp">Multiplayer Achievement</option>
-                                        </select>
-
-                                        <!-- Achievement Title -->
-                                        <input type="text" id="achievement-title" placeholder="Achievement Title" required>
-
-                                        <!-- Achievement Description -->
-                                        <textarea id="achievement-description" placeholder="Description" required></textarea>
-
-                                        <!-- Achievement Icon -->
-                                        <input type="file" id="achievement-icon" accept="image/*">
-
-                                        <button type="submit">Add Achievement</button>
-                                    </form>
-                                </div>
                             </div>
                         </section>                 
 
@@ -183,219 +82,13 @@
                 </section>
             </div>
 
-            <!-- Scripts -->
-
-            <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const toggleButton = document.getElementById("toggle-custom-achievements");
-                const customAchievementsSection = document.getElementById("custom-achievements");
-                const categories = document.querySelectorAll(".toggle-category");
-                const games = document.querySelectorAll(".toggle-game");
-                const importFile = document.getElementById("import-file");
-                const exportButton = document.getElementById("export-profile");
-                const importButton = document.getElementById("import-profile");
-
-                function openAARModal(title, imageUrl, description) {
-                    var modal = document.getElementById("aar-modal");
-                    document.getElementById("aar-title").innerText = title;
-                    document.getElementById("aar-image").src = imageUrl;
-                    document.getElementById("aar-description").innerText = description;
-                    modal.style.display = "flex"; // Ensure visibility
-                }
-
-                function closeAARModal() {
-                    document.getElementById("aar-modal").style.display = "none";
-                }
-
-                // Attach event listeners to AAR items dynamically
-                document.querySelectorAll(".aar-item").forEach(item => {
-                    item.addEventListener("click", function () {
-                        const title = this.querySelector("figcaption").innerText;
-                        const imageUrl = this.querySelector("img").src;
-                        const description = "Detailed description of the campaign events."; // Placeholder
-
-                        openAARModal(title, imageUrl, description);
-                    });
-                });
-
-                // Close button functionality
-                document.getElementById("close-modal-btn").addEventListener("click", closeAARModal);
-
-                // Background click to close modal
-                document.getElementById("aar-modal").addEventListener("click", function (event) {
-                    if (event.target === this) {
-                        closeAARModal();
-                    }
-                });
-
-                // Toggle AAR Section Visibility
-                document.getElementById("toggle-aar-section").addEventListener("click", function () {
-                    var aarContent = document.getElementById("aar-content");
-                    aarContent.style.display = (aarContent.style.display === "none" || aarContent.style.display === "") ? "grid" : "none";
-                });
-
-                // 🔧 Check and Set Initial State from LocalStorage
-                const customAchievementsEnabled = localStorage.getItem("customAchievementsEnabled") === "true";
-                if (customAchievementsEnabled) {
-                    toggleButton.classList.add("active");
-                    toggleButton.textContent = "Disable Custom Achievements";
-                    customAchievementsSection.style.display = "block";
-                } else {
-                    customAchievementsSection.style.display = "none";
-                }
-
-                // 🔧 Toggle Custom Achievements Section
-                toggleButton.addEventListener("click", () => {
-                    const isActive = toggleButton.classList.toggle("active");
-
-                    if (isActive) {
-                        toggleButton.textContent = "Disable Custom Achievements";
-                        customAchievementsSection.style.display = "block";
-                        localStorage.setItem("customAchievementsEnabled", "true");
-                    } else {
-                        toggleButton.textContent = "Enable Custom Achievements";
-                        customAchievementsSection.style.display = "none";
-                        localStorage.setItem("customAchievementsEnabled", "false");
-                    }
-                });
-
-                // 🎮 Expand/Collapse Game Categories
-                categories.forEach(category => {
-                    category.addEventListener("click", () => {
-                        let gameList = category.nextElementSibling;
-                        gameList.style.display = gameList.style.display === "none" ? "block" : "none";
-                        category.textContent = gameList.style.display === "none" ? `[+] ${category.textContent.substring(3)}` : `[-] ${category.textContent.substring(3)}`;
-                    });
-                });
-
-                // 🎮 Expand/Collapse Games
-                games.forEach(game => {
-                    game.addEventListener("click", () => {
-                        let achievementList = game.nextElementSibling;
-                        achievementList.style.display = achievementList.style.display === "none" ? "block" : "none";
-                        game.textContent = achievementList.style.display === "none" ? `[+] ${game.textContent.substring(3)}` : `[-] ${game.textContent.substring(3)}`;
-                    });
-                });
-
-                // Load Steam Profile
-
-                async function loadSteamProfile(steamID, apiKey) {
-                    const url = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${apiKey}&steamids=${steamID}`;
-
-                    try {
-                        const response = await fetch(url);
-                        const data = await response.json();
-
-                        if (data.response.players.length > 0) {
-                            const player = data.response.players[0];
-                            document.getElementById("steam-avatar").src = player.avatarfull;
-                            document.getElementById("steam-name").textContent = player.personaname;
-                            localStorage.setItem("steamID", steamID); // Store for later
-                        } else {
-                            alert("Steam profile not found!");
-                        }
-                    } catch (error) {
-                        console.error("Error loading Steam profile:", error);
-                    }
-                }
-
-                async function loadSteamAchievements(steamID, appID, apiKey) {
-                    const url = `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?key=${apiKey}&steamid=${steamID}&appid=${appID}`;
-                    try {
-                        const response = await fetch(url);
-                        const data = await response.json();
-
-                        if (data.playerstats && data.playerstats.achievements) {
-                            const achievementsList = document.getElementById("steam-achievements");
-                            achievementsList.innerHTML = ""; // Clear previous achievements
-
-                            data.playerstats.achievements.forEach(ach => {
-                                const achievementItem = document.createElement("li");
-                                achievementItem.className = ach.achieved ? "completed" : "incomplete";
-                                achievementItem.innerHTML = `<strong>${ach.apiname}</strong>: ${ach.achieved ? "✔ Completed" : "❌ Not Completed"}`;
-                                achievementsList.appendChild(achievementItem);
-                            });
-                        } else {
-                            alert("No achievements found for this game.");
-                        }
-                    } catch (error) {
-                        console.error("Error fetching achievements:", error);
-                    }
-                }
-
-                async function loadAllAchievements(steamID, appID, apiKey, gameName) {
-                    const achievementsList = document.getElementById("steam-achievements");
-                    achievementsList.innerHTML = ""; // Clear previous achievements
-
-                    // Load Steam Achievements
-                    const url = `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?key=${apiKey}&steamid=${steamID}&appid=${appID}`;
-                    try {
-                        const response = await fetch(url);
-                        const data = await response.json();
-
-                        if (data.playerstats && data.playerstats.achievements) {
-                            data.playerstats.achievements.forEach(ach => {
-                                const achievementItem = document.createElement("li");
-                                achievementItem.className = ach.achieved ? "completed" : "incomplete";
-                                achievementItem.innerHTML = `<strong>${ach.apiname}</strong>: ${ach.achieved ? "✔ Completed" : "❌ Not Completed"}`;
-                                achievementsList.appendChild(achievementItem);
-                            });
-                        }
-                    } catch (error) {
-                        console.error("Error fetching Steam achievements:", error);
-                    }
-
-                    // Load Custom Achievements
-                    let customAchievements = JSON.parse(localStorage.getItem("achievements")) || {};
-                    if (customAchievements[gameName]) {
-                        customAchievements[gameName].forEach(ach => {
-                            const achievementItem = document.createElement("li");
-                            achievementItem.className = ach.completed ? "completed" : "incomplete";
-                            achievementItem.innerHTML = `<strong>${ach.title}</strong>: ${ach.completed ? "✔ Completed" : "❌ Not Completed"}`;
-                            achievementsList.appendChild(achievementItem);
-                        });
-                    }
-                }
-
-                // 📥 Import JSON Profile
-                importButton.addEventListener("click", () => importFile.click());
-                importFile.addEventListener("change", (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (event) => {
-                            try {
-                                const importedData = JSON.parse(event.target.result);
-                                localStorage.setItem("achievements", JSON.stringify(importedData));
-                                alert("Profile Imported Successfully!");
-                            } catch (error) {
-                                alert("Invalid JSON file.");
-                            }
-                        };
-                        reader.readAsText(file);
-                    }
-                });
-
-                // 📤 Export JSON Profile
-                exportButton.addEventListener("click", () => {
-                    const achievements = localStorage.getItem("achievements") || "{}";
-                    const blob = new Blob([achievements], { type: "application/json" });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    a.href = url;
-                    a.download = "achievements.json";
-                    a.click();
-                    URL.revokeObjectURL(url);
-                });
-            });
-            </script>
-
-            <script src="assets/js/jquery.min.js"></script>
-            <script src="assets/js/jquery.scrolly.min.js"></script>
-            <script src="assets/js/jquery.scrollex.min.js"></script>
-            <script src="assets/js/browser.min.js"></script>
-            <script src="assets/js/breakpoints.min.js"></script>
-            <script src="assets/js/util.js"></script>
-            <script src="assets/js/main.js"></script>
+            <script src="/assets/js/jquery.min.js"></script>
+            <script src="/assets/js/jquery.scrolly.min.js"></script>
+            <script src="/assets/js/jquery.scrollex.min.js"></script>
+            <script src="/assets/js/browser.min.js"></script>
+            <script src="/assets/js/breakpoints.min.js"></script>
+            <script src="/assets/js/util.js"></script>
+            <script src="/assets/js/main.js"></script>
+            <script src="/assets/js/achievements.js"></script>
         </body>
     </html>

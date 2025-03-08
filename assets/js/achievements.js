@@ -217,23 +217,31 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 	
 	function showGameSelectionMenu() {
-		leftPanel.innerHTML = "<h3>Game Selection</h3>";
+		leftPanel.innerHTML = `
+			<h3>Select Game Type</h3>
+			<button id="load-steam-games">🎮 Load Steam Games</button>
+			<button id="load-non-steam-games">📂 Load Non-Steam Games</button>
+			<button id="back-to-options">⬅ Back</button>
+		`;
 	
-		// ✅ Add Back Button (Goes to Options Page)
-		const backButton = showBackButton(showOptionsPage);
-		leftPanel.appendChild(backButton);
+		// ✅ Ensure the right panel (achievements list) is cleared when switching between games
+		const achievementsList = document.getElementById("steam-achievements");
+		const customAchievementsList = document.getElementById("custom-achievements-list");
+		if (achievementsList) achievementsList.innerHTML = "";
+		if (customAchievementsList) customAchievementsList.innerHTML = "";
 	
-		// ✅ Load Steam & Non-Steam Buttons
-		const steamGamesBtn = document.createElement("button");
-		steamGamesBtn.textContent = "Load Steam Games";
-		steamGamesBtn.addEventListener("click", displaySteamGames);
+		// ✅ Event listeners for loading games
+		document.getElementById("load-steam-games").addEventListener("click", function () {
+			displaySteamGames();
+		});
 	
-		const nonSteamGamesBtn = document.createElement("button");
-		nonSteamGamesBtn.textContent = "Load Non-Steam Games";
-		nonSteamGamesBtn.addEventListener("click", displayNonSteamGames);
+		document.getElementById("load-non-steam-games").addEventListener("click", function () {
+			displayNonSteamGames();
+		});
 	
-		leftPanel.appendChild(steamGamesBtn);
-		leftPanel.appendChild(nonSteamGamesBtn);
+		document.getElementById("back-to-options").addEventListener("click", function () {
+			showOptionsPage();
+		});
 	}
 	
 
@@ -335,54 +343,37 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	}
 
+		// Show the custom achievement form with image upload support
 	function showCustomAchievementsMenu(gameName) {
-		leftPanel.innerHTML = `<h3>Custom Achievements for ${gameName}</h3>`;
-	
-		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
-	
-		// ✅ If no custom achievements exist, show the creation option
-		if (!customAchievements[gameName]) {
-			leftPanel.innerHTML += `
-				<p>No custom achievements found for this game.</p>
-				<button id="create-custom-achievements">Create Custom Achievements</button>
-				<button id="back-to-games">⬅ Back</button>
-			`;
-	
-			document.getElementById("create-custom-achievements").addEventListener("click", function () {
-				setupCustomAchievements(gameName);
-			});
-	
-			document.getElementById("back-to-games").addEventListener("click", function () {
-				displayNonSteamGames();
-			});
-	
-			return;
-		}
-	
-		// ✅ Once created, show options to manage achievements
-		leftPanel.innerHTML += `
-			<button id="add-custom-achievement">➕ Add Custom Achievement</button>
+		leftPanel.innerHTML = `
+			<h3 class="custom-achievements-title">Custom Achievements for ${gameName}</h3>
+			<h4>Add a Custom Achievement</h4>
+			<input type="text" id="custom-achievement-name" placeholder="Achievement Name">
+			<textarea id="custom-achievement-description" placeholder="Description"></textarea>
+			<input type="text" id="custom-achievement-image" placeholder="Image URL (optional)">
+			<br>
+			<label for="custom-achievement-image-upload">Or upload an image:</label>
+			<input type="file" id="custom-achievement-image-upload" accept="image/*">
+			<button id="save-custom-achievement">💾 Save Achievement</button>
 			<button id="import-achievements">📂 Import from JSON</button>
-		`;
+			`;
+		
+		document.getElementById("save-custom-achievement").addEventListener("click", function () {
+			console.log("Save achievement button clicked.");
+			saveCustomAchievement(gameName);
+		});
 	
-		// ✅ Ensure the JSON import button works
 		document.getElementById("import-achievements").addEventListener("click", function () {
 			importCustomAchievements(gameName);
 		});
 	
-		// ✅ Ensure the add custom achievement button works
-		document.getElementById("add-custom-achievement").addEventListener("click", function () {
-			showCustomAchievementForm(gameName);
-		});
-	
-		// ✅ Load and display existing achievements
 		loadCustomAchievements(gameName);
 	}
 
 	function setupCustomAchievements(gameName) {
 		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
 	
-		// ✅ If game doesn't have custom achievements, create storage for it
+		// ✅ If the game does not already have custom achievements, initialize it
 		if (!customAchievements[gameName]) {
 			customAchievements[gameName] = [];
 			localStorage.setItem("customAchievements", JSON.stringify(customAchievements));
@@ -390,43 +381,147 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 		console.log(`✅ Custom Achievements Initialized for: ${gameName}`);
 	
-		// ✅ Immediately update UI
+		// ✅ Update UI immediately to show the achievement options
 		showCustomAchievementsMenu(gameName);
+	}
+
+	function saveCustomAchievement(gameName) {
+		const name = document.getElementById("custom-achievement-name").value.trim();
+		const description = document.getElementById("custom-achievement-description").value.trim();
+		const imageURL = document.getElementById("custom-achievement-image").value.trim();
+		const fileInput = document.getElementById("custom-achievement-image-upload");
+		
+		if (!name || !description) {
+			alert("Achievement name and description are required.");
+			return;
+		}
+		
+		// Debug: Log file input details.
+		console.log("File input element:", fileInput);
+		console.log("File input files:", fileInput.files);
+		
+		function saveAchievementWithImage(imageSrc) {
+			let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+			if (Array.isArray(customAchievements)) { // Convert if outdated structure exists.
+				customAchievements = {};
+			}
+			if (!customAchievements[gameName]) {
+				customAchievements[gameName] = [];
+			}
+			customAchievements[gameName].push({
+				name: name,
+				description: description,
+				image: imageSrc,
+				completed: false
+			});
+			localStorage.setItem("customAchievements", JSON.stringify(customAchievements));
+			console.log("Custom achievements after saving:", JSON.parse(localStorage.getItem("customAchievements")));
+			
+			// Clear input fields.
+			document.getElementById("custom-achievement-name").value = "";
+			document.getElementById("custom-achievement-description").value = "";
+			document.getElementById("custom-achievement-image").value = "";
+			fileInput.value = "";
+			
+			loadCustomAchievements(gameName);
+		}
+		
+		// Check if a file was selected.
+		if (fileInput.files && fileInput.files[0]) {
+			console.log("File selected:", fileInput.files[0]);
+			const file = fileInput.files[0];
+			const reader = new FileReader();
+			reader.onload = function(e) {
+				const imageData = e.target.result;
+				saveAchievementWithImage(imageData);
+			};
+			reader.readAsDataURL(file);
+		} else if (imageURL) {
+			console.log("No file selected; using image URL:", imageURL);
+			saveAchievementWithImage(imageURL);
+		} else {
+			console.log("No file or URL provided; using default image.");
+			saveAchievementWithImage("default-achievement.png");
+		}
 	}
 	
 	function loadCustomAchievements(gameName) {
-		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
 		const achievementsList = document.getElementById("custom-achievements-list");
-	
 		if (!achievementsList) {
-			console.error("❌ 'custom-achievements-list' not found in the DOM.");
+			console.error("Custom achievements list element not found.");
 			return;
 		}
-	
-		achievementsList.innerHTML = ""; // Clear previous list
-	
-		if (customAchievements[gameName]) {
+		achievementsList.innerHTML = "";
+		
+		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+		console.log("Loading custom achievements for game:", gameName, customAchievements[gameName]);
+		
+		if (customAchievements[gameName] && customAchievements[gameName].length > 0) {
 			customAchievements[gameName].forEach((ach, index) => {
-				const achievementItem = document.createElement("li");
-				achievementItem.className = ach.completed ? "completed" : "incomplete";
-				achievementItem.innerHTML = `
+				const li = document.createElement("li");
+				li.className = "achievement-item"; // Apply same styling as Steam achievements.
+				li.innerHTML = `
 					<img src="${ach.image}" class="achievement-icon">
 					<div class="achievement-details">
 						<h4>${ach.name}</h4>
 						<p>${ach.description}</p>
-						<button onclick="markCustomAchievementComplete('${gameName}', ${index})">
-							${ach.completed ? "✔ Completed" : "Mark as Complete"}
-						</button>
+						<span>${ach.completed ? "✔ Completed" : "❌ Not Completed"}</span>
+					</div>
+					<div class="achievement-actions">
+						<button class="edit-achievement">Edit</button>
+						<button class="remove-achievement">Remove</button>
+						<button class="toggle-completion-achievement">${ach.completed ? "Mark Incomplete" : "Mark Completed"}</button>
 					</div>
 				`;
-				achievementsList.appendChild(achievementItem);
+				achievementsList.appendChild(li);
+				
+				// Edit: populate form with current data and remove the achievement for re‑saving.
+				li.querySelector(".edit-achievement").addEventListener("click", function() {
+					document.getElementById("custom-achievement-name").value = ach.name;
+					document.getElementById("custom-achievement-description").value = ach.description;
+					document.getElementById("custom-achievement-image").value = "";
+					// For simplicity, image upload is not preloaded.
+					removeAchievement(gameName, index);
+				});
+				
+				// Remove the achievement.
+				li.querySelector(".remove-achievement").addEventListener("click", function() {
+					removeAchievement(gameName, index);
+				});
+				
+				// Toggle completion status.
+				li.querySelector(".toggle-completion-achievement").addEventListener("click", function() {
+					toggleAchievementCompletion(gameName, index);
+				});
 			});
+		} else {
+			achievementsList.innerHTML = "<li>No custom achievements added yet.</li>";
+		}
+	}
+	
+		// Helper function to remove an achievement.
+	function removeAchievement(gameName, achievementIndex) {
+		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+		if (customAchievements[gameName]) {
+			customAchievements[gameName].splice(achievementIndex, 1);
+			localStorage.setItem("customAchievements", JSON.stringify(customAchievements));
+			loadCustomAchievements(gameName);
+		}
+	}
+
+		// Helper function to toggle an achievement's completion status.
+	function toggleAchievementCompletion(gameName, achievementIndex) {
+		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+		if (customAchievements[gameName] && customAchievements[gameName][achievementIndex]) {
+			customAchievements[gameName][achievementIndex].completed = !customAchievements[gameName][achievementIndex].completed;
+			localStorage.setItem("customAchievements", JSON.stringify(customAchievements));
+			loadCustomAchievements(gameName);
 		}
 	}
 
 	function importCustomAchievements(gameName) {
 		const jsonInput = prompt("Paste JSON Achievements Here:");
-		
+	
 		if (!jsonInput) {
 			alert("⚠ No JSON provided.");
 			return;
@@ -449,12 +544,13 @@ document.addEventListener("DOMContentLoaded", function () {
 			localStorage.setItem("customAchievements", JSON.stringify(customAchievements));
 	
 			alert(`✅ Successfully imported ${importedAchievements.length} achievements.`);
-			showCustomAchievementsMenu(gameName);
+			loadCustomAchievements(gameName);
 		} catch (error) {
 			alert("⚠ Error parsing JSON. Please check the format.");
 			console.error("❌ JSON Import Error:", error);
 		}
 	}
+	
 
 	function showBackButton(callback) {
 		if (!leftPanel) {

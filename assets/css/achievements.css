@@ -32,6 +32,31 @@ h2, h3, h4 {
     margin-top: 10px;
 }
 
+/* Steam Game Selection Management */
+#steam-game-selection-management {
+    background: #333;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* Non-Steam Game Selection Management */
+#non-steam-game-selection-management {
+    background: #333;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* Custom Achievement Management */
+#custom_achievement-management {
+    background: #333;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+
 /* Profile Management */
 #profile-management {
     background: #333;
@@ -95,10 +120,49 @@ h2, h3, h4 {
     font-size: 15px;
 }
 
-/* Achievements List */
-.achievement-list {
-    display: none;
-    padding-left: 20px;
+/* 🔹 Flex container for Achievements Manager and List */
+.achievements-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px; /* Increased spacing for better layout */
+    width: 90%;
+    max-width: 1400px;
+    margin: auto;
+}
+
+/* 🔹 Adjust Achievements Manager Section */
+#achievements-manager {
+    flex: 1;
+    max-width: 50%;
+    background: #222629;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* 🔹 Adjust Achievements List Section */
+#achievements-list {
+    flex: 1;
+    max-width: 50%;
+    background: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    overflow-y: auto;
+    max-height: 600px;
+}
+
+/* 🔹 Make it responsive */
+@media (max-width: 1024px) {
+    .achievements-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    #achievements-manager,
+    #achievements-list {
+        max-width: 90%;
+    }
 }
 
 /* Individual Achievement */

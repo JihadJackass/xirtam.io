@@ -208,7 +208,16 @@ document.addEventListener("DOMContentLoaded", function () {
 			const gameItem = document.createElement("li");
 			gameItem.classList.add("non-steam-game-item");
 	
-			// ✅ Game Button
+			// ✅ Simple Clickable `❌` (No Button)
+			const removeButton = document.createElement("span");
+			removeButton.innerHTML = "❌";
+			removeButton.classList.add("remove-game-icon");
+			removeButton.addEventListener("click", function (event) {
+				event.stopPropagation(); // Prevent accidental game selection
+				removeNonSteamGame(index);
+			});
+	
+			// ✅ Game Button (Expands fully)
 			const gameButton = document.createElement("button");
 			gameButton.textContent = game;
 			gameButton.classList.add("game-btn");
@@ -218,23 +227,17 @@ document.addEventListener("DOMContentLoaded", function () {
 				leftPanel.innerHTML = `<h3>Custom Achievements for ${game}</h3>`;
 			});
 	
-			// ✅ Remove Button (❌)
-			const removeButton = document.createElement("button");
-			removeButton.innerHTML = "❌";
-			removeButton.classList.add("remove-game-btn");
-			removeButton.addEventListener("click", function (event) {
-				event.stopPropagation(); // Prevent clicking the game itself
-				removeNonSteamGame(index);
-			});
-	
-			// ✅ Game and Remove Button are properly formatted inside a div
+			// ✅ Ensure game and remove button stay in one row
 			const gameContainer = document.createElement("div");
 			gameContainer.classList.add("game-container");
+
+			// ✅ Move `gameButton` first, then `❌` button
 			gameContainer.appendChild(gameButton);
 			gameContainer.appendChild(removeButton);
-	
+
 			gameItem.appendChild(gameContainer);
 			gameList.appendChild(gameItem);
+
 		});
 	
 		leftPanel.appendChild(gameList);
@@ -243,8 +246,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		document.getElementById("back-to-selection").addEventListener("click", function () {
 			showGameSelectionMenu();
 		});
-	}
-
+	}	
+	
 	function removeNonSteamGame(index) {
 		let nonSteamGames = JSON.parse(localStorage.getItem("nonSteamGames")) || [];
 		if (index >= 0 && index < nonSteamGames.length) {

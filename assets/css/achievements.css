@@ -138,42 +138,47 @@
     border-radius: 5px;
 }
 
-/* 🔹 Game Button */
+/* 🔹 Game Container - Aligns Buttons in One Row */
+.game-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;  /* ✅ Ensures full width */
+    gap: 10px;  /* ✅ Adds spacing */
+}
+
+/* 🔹 Game Button - Bigger Text & Centered */
 .game-btn {
-    flex-grow: 1;
+    flex-grow: 1;  /* ✅ Ensures button takes full available space */
     background: #4caf50;
     color: white;
     border: none;
-    padding: 15px;  /* 🔹 Increased size */
-    font-size: 16px; /* 🔹 Bigger font */
-    text-align: left;
+    padding: 15px 20px;  /* ✅ Slightly increased padding for better spacing */
+    font-size: 20px;  /* ✅ Bigger text */
+    text-align: center; /* ✅ Centers text */
     border-radius: 5px;
     cursor: pointer;
-    min-width: 200px; /* 🔹 Ensures button is larger */
+    width: auto;
+    min-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .game-btn:hover {
     background: #45a049;
 }
 
-/* 🔹 Remove Game Button (❌) */
-.remove-game-btn {
-    background: transparent !important;  /* ✅ No background */
-    color: #e74c3c;
-    border: 2px solid transparent;
-    padding: 5px;
-    font-size: 20px;
-    border-radius: 50%;
+/* 🔹 Simple Clickable `❌` */
+.remove-game-icon {
+    color: red;
+    font-size: 18px;
     cursor: pointer;
-    width: 36px;  /* 🔹 Small button */
-    height: 36px; /* 🔹 Circular */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    margin-right: 10px; /* ✅ Spacing between `❌` and game name */
 }
 
-.remove-game-btn:hover {
-    background: rgba(231, 76, 60, 0.2); /* ✅ Light red background on hover */
-    border: 2px solid #e74c3c;
+.remove-game-icon:hover {
+    color: darkred;
 }
+
+

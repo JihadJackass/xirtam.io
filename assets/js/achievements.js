@@ -134,74 +134,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	async function loadSteamAchievements(steamID, appID, previousPage) {
 		const achievementsList = document.getElementById("steam-achievements");
+	
 		if (!achievementsList) {
 			console.error("❌ 'steam-achievements' element not found!");
 			return;
 		}
+	
 		achievementsList.innerHTML = ""; // Clear previous achievements
 	
-		// ✅ Ensure API key is correctly set
-		const apiKey = "B221B9B37FB61109794F719AEBA0268F";  // Your Steam API Key
-		if (!apiKey || apiKey === "undefined") {
-			alert("❌ Steam API key is missing! Please provide a valid key.");
+		const apiKey = "B221B9B37FB61109794F719AEBA0268F"; // Your Steam API Key
+		const proxyUrl = "https://corsproxy.io/?";
+	
+		if (!steamID || !appID || !apiKey) {
+			console.error("❌ Missing required Steam API parameters!");
 			return;
 		}
 	
-		// ✅ Ensure steamID and appID are valid
-		if (!steamID || !appID) {
-			alert("❌ Missing Steam ID or App ID!");
-			return;
-		}
-	
-		// ✅ Use proxy to bypass CORS
-		const proxyUrl = `https://corsproxy.io/?`;
-		const playerAchievementsUrl = proxyUrl + encodeURIComponent(
-			`https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?key=${apiKey}&steamid=${steamID}&appid=${appID}`
-		);
+		// Fetch game achievement schema
 		const schemaUrl = proxyUrl + encodeURIComponent(
 			`https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=${apiKey}&appid=${appID}`
 		);
 	
 		try {
-			const [playerResponse, schemaResponse] = await Promise.all([
-				fetch(playerAchievementsUrl),
-				fetch(schemaUrl)
-			]);
+			console.log(`🔹 Checking if game supports achievements: ${schemaUrl}`);
+			const schemaResponse = await fetch(schemaUrl);
+			if (!schemaResponse.ok) {
+				throw new Error(`Steam API Schema Request Failed: ${schemaResponse.status}`);
+			}
 	
-			// ✅ Handle API response errors
-			if (!playerResponse.ok) {
-				console.error(`❌ Steam API Error: ${playerResponse.status} - ${playerResponse.statusText}`);
-				alert(`❌ Failed to fetch achievements (Error ${playerResponse.status})`);
-				if (previousPage) previousPage();
+			const schemaData = await schemaResponse.json();
+			if (!schemaData.game || !schemaData.game.availableGameStats || !schemaData.game.availableGameStats.achievements) {
+				console.warn("⚠ This game does not have achievements.");
+				alert("⚠ This game does not have achievements. Would you like to add custom achievements instead?");
+				showCustomAchievementsMenu(appID);
 				return;
 			}
 	
-			if (!schemaResponse.ok) {
-				console.error(`❌ Steam API Schema Error: ${schemaResponse.status} - ${schemaResponse.statusText}`);
-				alert(`❌ Failed to fetch game achievement schema.`);
-				if (previousPage) previousPage();
-				return;
+			// Fetch player's achievements
+			const playerAchievementsUrl = proxyUrl + encodeURIComponent(
+				`https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?key=${apiKey}&steamid=${steamID}&appid=${appID}`
+			);
+	
+			console.log(`🔹 Fetching player achievements: ${playerAchievementsUrl}`);
+			const playerResponse = await fetch(playerAchievementsUrl);
+			if (!playerResponse.ok) {
+				throw new Error(`Steam API Request Failed: ${playerResponse.status}`);
 			}
 	
 			const playerData = await playerResponse.json();
-			const schemaData = await schemaResponse.json();
-	
 			if (!playerData.playerstats || !playerData.playerstats.achievements) {
-				leftPanel.innerHTML = `
-					<h3>No Achievements Found</h3>
-					<p>This game does not have achievements. Would you like to create custom achievements?</p>
-					<button id="create-custom-achievements">Yes, Create Custom Achievements</button>
-					<button id="back-to-games">⬅ Back</button>
-				`;
-	
-				document.getElementById("create-custom-achievements").addEventListener("click", function () {
-					setupCustomAchievements(appID, playerData.playerstats.gameName);
-				});
-	
-				document.getElementById("back-to-games").addEventListener("click", function () {
-					if (previousPage) previousPage();
-				});
-	
+				alert("⚠ No achievements found for this game.");
 				return;
 			}
 	
@@ -210,10 +192,9 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 			playerAchievements.forEach(playerAch => {
 				const schemaAch = schemaAchievements.find(ach => ach.name === playerAch.apiname);
-	
 				if (schemaAch) {
 					const achievementItem = document.createElement("li");
-					achievementItem.className = playerAch.achieved ? "completed" : "incomplete";
+					achievementItem.className = "achievement-item"; // ✅ Apply box styling
 					achievementItem.innerHTML = `
 						<img src="${schemaAch.icon}" class="achievement-icon">
 						<div class="achievement-details">
@@ -226,13 +207,14 @@ document.addEventListener("DOMContentLoaded", function () {
 				}
 			});
 	
-			console.log("✅ Achievements with localized names & icons loaded!");
+			console.log("✅ Steam achievements loaded successfully!");
 		} catch (error) {
 			console.error("❌ Error fetching achievements:", error);
 			alert("⚠ Error fetching achievements. Please try again later.");
 			if (previousPage) previousPage();
 		}
 	}
+	
 	
 	function showGameSelectionMenu() {
 		leftPanel.innerHTML = "<h3>Game Selection</h3>";

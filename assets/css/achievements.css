@@ -98,28 +98,66 @@
     border-radius: 10px;
 }
 
-/* 🔹 Improve Achievement Layout */
+/* 🔹 Text alignment inside each achievement box */
 .achievement-details {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    margin-left: 10px;
 }
 
+/* 🔹 Style for achievement title */
 .achievement-details h4 {
     font-size: 18px;
-    margin: 5px 0;
+    margin-bottom: 4px;
+    color: #fff;
 }
 
+/* 🔹 Style for achievement description */
 .achievement-details p {
     font-size: 14px;
-    text-align: left;
+    color: #bbb;
 }
 
 /* 🔹 Achievements List */
 #steam-achievements, #custom-achievements-list {
     list-style: none;
     padding: 0;
+}
+
+/* 🔹 Style for ALL achievements (Steam & Non-Steam) */
+.achievement-item {
+    display: flex;
+    align-items: center;
+    background: #2c2f33;  /* Darker background for contrast */
+    padding: 12px;
+    border-radius: 8px; /* Rounded edges for a smooth design */
+    margin-bottom: 10px; /* Space between achievements */
+    border: 1px solid #444; /* Subtle border to define each achievement */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+}
+
+/* 🔹 Icon size & positioning */
+.achievement-item img.achievement-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+
+/* 🔹 Style for the "Mark as Complete" button */
+.achievement-details button {
+    margin-top: 5px;
+    padding: 6px 10px;
+    background: #218838;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.achievement-details button:hover {
+    background: #28a745;
 }
 
 #custom-achievements-list li {

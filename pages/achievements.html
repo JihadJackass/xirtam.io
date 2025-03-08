@@ -77,48 +77,54 @@
                         
                                 <!-- 🔹 Steam Games Section -->
                                 <div id="steam-games-section">
-                                    <h3>Steam Game Selection Menu<br><br></h3>
+                                    <br><br><h3>Steam Game Selection Menu<br><br></h3>
                                     <button id="load-steam-games">Load Steam Games from Steam Profile</button>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="steam-game-select">
                                         <option value="">&nbsp;&nbsp;Steam Game Selection&nbsp;&nbsp;</option>
                                     </select>
                                     <br><br><button id="load-steam-achievements">Load Achievements from Selected Game</button>
                                 </div>
-                                
-                            </div>
-                        </section>   
                         
-                        <section id="achievements-manager">
-                        <div class="container">
+                        <section id="non-steam-achievements-manager">
+                            <div class="container">
 
-                        <!-- 🔹 Non-Steam Games Section -->
-                        <div id="non-steam-games-section">
-                            <h3>Non-Steam Game Selection Menu</h3><br>
-                            <h3>Select a non-steam Game</h3>
-                            <select id="non-steam-game-select">
-                                <option value="">Select a Non-Steam Game</option>
-                                <option value="Tale of Two Wastelands">Tale of Two Wastelands</option>
-                                <option value="Codename Isotope">Codename Isotope (RSPS)</option>
-                            </select>
-                            <br><br><h3>Add a Non-Steam Game</h3><input type="text" id="new-non-steam-game" placeholder="Enter new game name">
-                            <button id="add-non-steam-game">Add Game</button>
-                        </div>
+                            <!-- 🔹 Non-Steam Games Section -->
+                            <div id="non-steam-games-section">
+                                <h3>Non-Steam Game Selection Menu</h3><br>
+                                <h3>Select a non-steam Game</h3>
+                                <select id="non-steam-game-select">
+                                    <option value="">Select a Non-Steam Game</option>
+                                    <!--<option value="Tale of Two Wastelands">Tale of Two Wastelands</option>-->
+                                    <!--<option value="Codename Isotope">Codename Isotope (RSPS)</option>-->
+                                </select>
+                                <button id="select-non-steam-game">Select Game and Load Achievements</button>
+                                <br><br><h3>Add a Non-Steam Game</h3><input type="text" id="new-non-steam-game" placeholder="Enter new game name">
+                                <button id="add-non-steam-game">Add Game</button>
+                            </div>
 
-                        <!-- 🔹 Custom Achievements Section -->
-                        <div id="custom-achievements-section">
+                            <!-- 🔹 Custom Achievements Section -->
+                            <div id="custom-achievements-section">
                             <br><h3>Add Custom Achievements</h3>
                             <form id="add-custom-achievement-form">
-                                <input type="text" id="custom-achievement-name" placeholder="Achievement Name" required>
+                                <h3>Select Game for Custom Achievement</h3>
+                                <select id="custom-achievement-game">
+                                    <option value="">Select a Game</option>
+                                    <optgroup label="Steam Games" id="steam-games-list"></optgroup>
+                                    <optgroup label="Non-Steam Games" id="non-steam-games-list"></optgroup>
+                                </select>
+                            
+                                <br><input type="text" id="custom-achievement-name" placeholder="Achievement Name" required>
                                 <br><input type="text" id="custom-achievement-image" placeholder="Image URL (optional)">
                                 <br><textarea id="custom-achievement-description" placeholder="Description" required></textarea>
-                                <br>todo: SELECTION MENU ALLOW YOU TO SELECT GAME TO APPLY CUSTOM ACHIEVEMENT TO (Steam or Non-Steam)
                                 <br><button type="submit">Add Custom Achievement</button>
                             </form>
                             <ul id="custom-achievements-list"></ul>
                         </div>
 
-                        </section id="achievements-manager">
-                    </div class="container">
+                    </div>
+                </section>   
+                    </section>
+                </div>
 
 
                     </div>

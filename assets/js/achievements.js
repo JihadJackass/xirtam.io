@@ -197,6 +197,64 @@ async function loadSteamAchievements(steamID, appID, apiKey) {
 document.addEventListener("DOMContentLoaded", function () {
     const apiKey = "B221B9B37FB61109794F719AEBA0268F"; // Replace with your actual API Key
 
+	console.log("Steam Games:", JSON.parse(localStorage.getItem("steamGames")));
+	console.log("Non-Steam Games:", JSON.parse(localStorage.getItem("nonSteamGames")));
+	// Load games into dropdown when page loads
+	loadGamesIntoDropdown();
+
+	function loadGamesIntoDropdown() {
+		const steamGamesList = document.getElementById("steam-games-list");
+		const nonSteamGamesList = document.getElementById("non-steam-games-list");
+	
+		if (!steamGamesList || !nonSteamGamesList) {
+			console.error("Dropdown elements not found!");
+			return;
+		}
+	
+		steamGamesList.innerHTML = ""; // Clear existing options
+		nonSteamGamesList.innerHTML = "";
+	
+		// Load Steam Games from localStorage
+		let steamGames = JSON.parse(localStorage.getItem("steamGames")) || [];
+		steamGames.forEach(game => {
+			const option = document.createElement("option");
+			option.value = game.appid;
+			option.textContent = game.name;
+			steamGamesList.appendChild(option);
+		});
+	
+		// Load Non-Steam Games from localStorage
+		let nonSteamGames = JSON.parse(localStorage.getItem("nonSteamGames")) || [];
+		nonSteamGames.forEach(game => {
+			const option = document.createElement("option");
+			option.value = game;
+			option.textContent = game;
+			nonSteamGamesList.appendChild(option);
+		});
+
+		document.getElementById("add-non-steam-game").addEventListener("click", function () {
+			const gameInput = document.getElementById("new-non-steam-game").value.trim();
+			if (gameInput) {
+				const gameSelect = document.getElementById("non-steam-game-select");
+				const option = document.createElement("option");
+				option.value = gameInput;
+				option.textContent = gameInput;
+				gameSelect.appendChild(option);
+		
+				// Save to localStorage
+				let nonSteamGames = JSON.parse(localStorage.getItem("nonSteamGames")) || [];
+				nonSteamGames.push(gameInput);
+				localStorage.setItem("nonSteamGames", JSON.stringify(nonSteamGames));
+		
+				// Update dropdown
+				// loadGamesIntoDropdown();
+		
+				document.getElementById("new-non-steam-game").value = ""; // Clear input
+				alert("Game added successfully!");
+			}
+		});
+	}
+
     // Search Steam Profile (Enter Steam ID)
     document.getElementById("search-steam-profile").addEventListener("click", function () {
         const steamID = document.getElementById("steam-id-input").value;
@@ -227,6 +285,71 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	});
 
+	document.getElementById("add-custom-achievement-form").addEventListener("submit", function (event) {
+		event.preventDefault();
+	
+		const gameName = document.getElementById("custom-achievement-game").value;
+		if (!gameName) {
+			alert("Please select a game first.");
+			return;
+		}
+	
+		const name = document.getElementById("custom-achievement-name").value.trim();
+		const image = document.getElementById("custom-achievement-image").value.trim() || "default-achievement.png";
+		const description = document.getElementById("custom-achievement-description").value.trim();
+	
+		if (!name || !description) {
+			alert("Achievement name and description are required.");
+			return;
+		}
+	
+		// Create achievement object
+		let achievement = {
+			name,
+			image,
+			description,
+			completed: false
+		};
+	
+		// Save to localStorage
+		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+		if (!customAchievements[gameName]) {
+			customAchievements[gameName] = [];
+		}
+		customAchievements[gameName].push(achievement);
+		localStorage.setItem("customAchievements", JSON.stringify(customAchievements));
+	
+		document.getElementById("custom-achievement-name").value = "";
+		document.getElementById("custom-achievement-image").value = "";
+		document.getElementById("custom-achievement-description").value = "";
+	
+		loadCustomAchievements(gameName);
+
+		function loadCustomAchievements(gameName) {
+			const achievementsList = document.getElementById("custom-achievements-list");
+			achievementsList.innerHTML = ""; // Clear previous list
+		
+			let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+			if (customAchievements[gameName]) {
+				customAchievements[gameName].forEach((ach, index) => {
+					const achievementItem = document.createElement("li");
+					achievementItem.className = ach.completed ? "completed" : "incomplete";
+					achievementItem.innerHTML = `
+						<img src="${ach.image}" class="achievement-icon">
+						<div class="achievement-details">
+							<h4>${ach.name}</h4>
+							<p>${ach.description}</p>
+							<button onclick="markCustomAchievementComplete('${gameName}', ${index})">
+								${ach.completed ? "✔ Completed" : "Mark as Complete"}
+							</button>
+						</div>
+					`;
+					achievementsList.appendChild(achievementItem);
+				});
+			}
+		}
+	});
+
 	// Load Achievements when a game is selected
 	document.getElementById("load-steam-achievements").addEventListener("click", function () {
 		const steamID = localStorage.getItem("steamID");
@@ -237,4 +360,13 @@ document.addEventListener("DOMContentLoaded", function () {
 			alert("Please select a game first!");
 		}
 	});	
+
+	function markCustomAchievementComplete(gameName, index) {
+		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+		if (customAchievements[gameName]) {
+			customAchievements[gameName][index].completed = true;
+			localStorage.setItem("customAchievements", JSON.stringify(customAchievements));
+			loadCustomAchievements(gameName);
+		}
+	}
 });

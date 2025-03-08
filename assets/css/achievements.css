@@ -1,319 +1,179 @@
-#achievements-manager {
-    font-size: 16px !important;
-}
+/* 🔹 Achievements Page Styling (Works with `main.css`) */
 
-/* Achievements Manager Container */
-#achievements-manager {
-    max-width: 900px;
-    margin: 20px auto;
-    background: #222629;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-
-/* Section Headers */
-h2, h3, h4 {
-    color: #e27689;
-}
-
-/* Administration Settings */
-#admin-settings {
-    background: #333;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-#admin-settings label {
-    display: block;
-    color: #ddd;
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-/* Steam Game Selection Management */
-#steam-game-selection-management {
-    background: #333;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-/* Non-Steam Game Selection Management */
-#non-steam-game-selection-management {
-    background: #333;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-/* Custom Achievement Management */
-#custom_achievement-management {
-    background: #333;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-
-/* Profile Management */
-#profile-management {
-    background: #333;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-#profile-management button {
-    width: 100%;
+/* 🔹 Context Menu */
+.top-menu {
+    display: flex;
+    justify-content: center;
+    background: #1a1a1a;
     padding: 10px;
-    background: #8ebebc;
+    border-bottom: 2px solid #444;
+}
+
+.top-menu button {
+    background: #4caf50;
     border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 16px;
+    padding: 10px 15px;
     cursor: pointer;
-    margin-top: 5px;
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+    margin: 0 5px; /* ✅ Reduces spacing */
 }
 
-#profile-management button:hover {
-    background: #9ececc;
+.top-menu button:hover {
+    background: #45a049;
 }
 
-/* Scrollable Games List */
-#game-container {
-    max-height: 400px;
+/* 🔹 Achievements Container Layout */
+.achievements-container {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 60px);
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#left-panel {
+    width: 25%;
+    background: #333;
+    padding: 20px;
+    border-right: 2px solid #444;
     overflow-y: auto;
-    background: #222629;
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    min-height: 600px;
 }
 
-/* Game Categories */
-.game-category {
+#left-panel button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    background: #4caf50;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+
+#left-panel button:hover {
+    background: #45a049;
+}
+
+/* 🔹 Left Sidebar: Game Selection */
+.game-list {
+    width: 25%;
+    background: #333;
+    padding: 20px;
+    border-right: 2px solid #444;
+    overflow-y: auto;
+}
+
+.game-list h3 {
+    color: #f05a5a;
+}
+
+.game-list select, .game-list button {
+    width: 100%;
+    padding: 8px;
     margin-bottom: 10px;
 }
 
-.game-category h4 {
-    cursor: pointer;
-    padding: 10px;
-    background: #333;
-    color: white;
-    border-radius: 5px;
-    font-size: 16px;
-    margin: 0;
-}
-
-/* Games inside Categories */
-.game-list {
-    display: none;
-    padding-left: 20px;
-}
-
-.game h5 {
-    cursor: pointer;
-    color: #e27689;
-    padding: 8px;
-    margin: 5px 0;
-    font-size: 15px;
-}
-
-/* 🔹 Flex container for Achievements Manager and List */
-.achievements-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 30px; /* Increased spacing for better layout */
-    width: 90%;
-    max-width: 1400px;
-    margin: auto;
-}
-
-/* 🔹 Adjust Achievements Manager Section */
-#achievements-manager {
+/* 🔹 Main Achievements Section */
+.achievement-container {
     flex: 1;
-    max-width: 50%;
-    background: #222629;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-
-/* 🔹 Adjust Achievements List Section */
-#achievements-list {
-    flex: 1;
-    max-width: 50%;
-    background: #333;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     overflow-y: auto;
-    max-height: 600px;
+    background: #2a2a2a;
 }
 
-/* 🔹 Make it responsive */
+.achievement-container h2 {
+    text-align: center;
+}
+
+/* 🔹 Achievements List */
+#steam-achievements, #custom-achievements-list {
+    list-style: none;
+    padding: 0;
+}
+
+#custom-achievements-list li {
+    background: #444;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+#steam-achievements li img, #custom-achievements-list li img {
+    width: 40px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/* 🔹 Responsive Fix */
 @media (max-width: 1024px) {
     .achievements-container {
         flex-direction: column;
-        align-items: center;
     }
-    #achievements-manager,
-    #achievements-list {
-        max-width: 90%;
+    #left-panel {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #444;
     }
 }
 
-/* Individual Achievement */
-.achievement-item {
-    background: #444;
-    padding: 8px;
-    margin: 5px 0;
-    border-radius: 5px;
+/* 🔹 Non-Steam Game List */
+.non-steam-game-list {
+    list-style: none;
+    padding: 0;
+}
+
+.non-steam-game-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-}
-
-/* Achievement Icon */
-.achievement-icon {
-    width: 50px;
-    height: 50px;
+    justify-content: space-between;
+    background: none;
+    padding: 5px;
+    margin: 5px 0;
     border-radius: 5px;
-    object-fit: cover;
 }
 
-/* Achievement Details */
-.achievement-details {
+/* 🔹 Game Button */
+.game-btn {
     flex-grow: 1;
-}
-
-.achievement-details h4 {
-    margin: 0;
-    font-size: 1.2em;
-    color: #e27689;
-}
-
-.achievement-details p {
-    margin: 5px 0 0;
-    font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.75);
-}
-
-/* Buttons */
-.mark-complete, .remove-achievement, .profile-btn, .game-btn {
-    padding: 8px 12px;
-    background: #8ebebc;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.mark-complete:hover, .remove-achievement:hover, .profile-btn:hover, .game-btn:hover {
-    background: #9ececc;
-}
-
-.mark-complete.completed {
-    background: #6c757d;
-    cursor: default;
-}
-
-.remove-achievement {
-    background: #e27689;
-    margin-left: 10px;
-}
-
-.remove-achievement:hover {
-    background: #f49797;
-}
-
-/* Custom Achievements Form */
-#custom-achievements {
-    background: #333;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 15px;
-}
-
-#custom-achievements input, #custom-achievements textarea {
-    width: 100%;
-    padding: 10px;
-    background: #444;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    color: #fff;
-    font-size: 1em;
-    margin-top: 10px;
-}
-
-#custom-achievements input:focus, #custom-achievements textarea:focus {
-    outline: none;
-    border-color: #e27689;
-}
-
-/* Import/Export Buttons */
-#achievement-actions {
-    margin-top: 20px;
-}
-
-#export-profile, #import-profile {
-    width: 100%;
-    padding: 10px;
-    background: #e27689;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-#export-profile:hover, #import-profile:hover {
-    background: #f49797;
-}
-
-/* Hide Import Input */
-#import-file {
-    display: none;
-}
-
-#import-label {
-    cursor: pointer;
-    text-align: center;
-    display: block;
-    padding: 10px;
-    background: #9ececc;
-    border-radius: 5px;
+    background: #4caf50;
     color: white;
-    font-size: 1em;
-    margin-top: 10px;
-}
-
-#import-label:hover {
-    background: #8ebebc;
-}
-
-#toggle-custom-achievements {
-    width: 100%;
-    padding: 10px;
-    background: #e27689;
     border: none;
+    padding: 15px;  /* 🔹 Increased size */
+    font-size: 16px; /* 🔹 Bigger font */
+    text-align: left;
     border-radius: 5px;
-    color: #fff;
-    font-size: 1em;
     cursor: pointer;
-    transition: background 0.3s ease;
+    min-width: 200px; /* 🔹 Ensures button is larger */
 }
 
-#toggle-custom-achievements:hover {
-    background: #f49797;
+.game-btn:hover {
+    background: #45a049;
 }
 
-#toggle-custom-achievements.active {
-    background: #8ebebc;
+/* 🔹 Remove Game Button (❌) */
+.remove-game-btn {
+    background: transparent !important;  /* ✅ No background */
+    color: #e74c3c;
+    border: 2px solid transparent;
+    padding: 5px;
+    font-size: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 36px;  /* 🔹 Small button */
+    height: 36px; /* 🔹 Circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
+.remove-game-btn:hover {
+    background: rgba(231, 76, 60, 0.2); /* ✅ Light red background on hover */
+    border: 2px solid #e74c3c;
+}

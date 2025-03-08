@@ -43,92 +43,37 @@
                 </div>
             </div>
 
-            <!-- Main -->
-
+            <!-- Main Content -->
             <div id="main">
-                <section id="AchievementManager">
-                    <!-- 🔹 Achievements Container (Flexbox for Achievements Manager + Achievements List) -->
-                    <div class="achievements-container">
-                        
-                        <!-- 🔹 Achievements Manager Section -->
-                        <section id="achievements-manager">
-                            <div class="container">
-                                <header>
-                                    <h2>Achievements Manager</h2>
-                                </header>
+                <!-- 🔹 Context Menu / Navigation -->
+                <nav class="top-menu">
+                    <button id="open-steam-settings">Search Steam ID</button>
+                    <button id="open-json-settings">JSON Management</button>
+                    <button id="open-game-selection">Game Selection</button>
+                </nav>
 
-                                <!-- Steam Profile Management -->
-                                <div id="profile-management">
-                                    <h3>Profile Management</h3>
-                                    <div id="steam-profile">
-                                        <h3>Steam Profile</h3>
-                                        <input type="text" id="steam-id-input" placeholder="Enter Steam ID" />
-                                        <button id="search-steam-profile">Search Steam ID</button>
-                                        <div id="profile-info">
-                                            <img id="steam-avatar" src="" alt="Steam Avatar" width="100">
-                                            <p id="steam-name"></p>
-                                        </div>
-                                    </div>
-                                    <button id="load-profile-steam">Load Profile (Steam)</button>
-                                    <button id="save-profile-steam">Save Profile (Steam)</button>
-                                    <button id="import-profile">Load Profile (JSON)</button>
-                                    <button id="export-profile">Save Profile (JSON)</button>
-                                    <input type="file" id="import-file" accept=".json" style="display: none;">
-                                </div>
+                <!-- 🔹 Main Layout -->
+                <div class="achievements-container">
+                    
+                    <!-- Left Sidebar (Blank by Default) -->
+                    <aside class="game-list" id="left-panel">
+                        <div id="profile-info">
+                            <img id="steam-avatar" src="" alt="Steam Avatar" width="100">
+                            <p id="steam-name"></p>
+                        </div>
 
-                                <!-- Steam Games Selection -->
-                                <div id="steam-game-selection-management">
-                                    <h3>Steam Game Selection Menu</h3>
-                                    <button id="load-steam-games">Load Steam Games</button>
-                                    <select id="steam-game-select">
-                                        <option value="">Steam Game Selection</option>
-                                    </select>
-                                    <button id="load-steam-achievements">Load Achievements</button>
-                                </div>
+                        <h3>Options</h3>
+                        <p>Select a menu option to load content.</p>
+                    </aside>
 
-                                <!-- Non-Steam Games -->
-                                <div id="non-steam-game-selection-management">
-                                    <h3>Non-Steam Game Selection Menu</h3>
-                                    <select id="non-steam-game-select">
-                                        <option value="">Select a Non-Steam Game</option>
-                                    </select>
-                                    <button id="select-non-steam-game">Select & Load Achievements</button>
-                                    <h3>Add a Non-Steam Game</h3>
-                                    <input type="text" id="new-non-steam-game" placeholder="Enter new game name">
-                                    <button id="add-non-steam-game">Add Game</button>
-                                </div>
+                    <!-- Right: Achievements List -->
+                    <main class="achievement-container">
+                        <h2>Achievement List</h2>
+                        <ul id="steam-achievements"></ul>
+                        <ul id="custom-achievements-list"></ul>
+                    </main>
 
-                                <!-- Custom Achievements -->
-                                <div id="custom_achievement-management">
-                                    <h3>Add Custom Achievements</h3>
-                                    <form id="add-custom-achievement-form">
-                                        <h3>Select Game</h3>
-                                        <select id="custom-achievement-game">
-                                            <option value="">Select a Game</option>
-                                            <optgroup label="Steam Games" id="steam-games-list"></optgroup>
-                                            <optgroup label="Non-Steam Games" id="non-steam-games-list"></optgroup>
-                                        </select>
-                                        <input type="text" id="custom-achievement-name" placeholder="Achievement Name" required>
-                                        <input type="text" id="custom-achievement-image" placeholder="Image URL (optional)">
-                                        <textarea id="custom-achievement-description" placeholder="Description" required></textarea>
-                                        <button type="submit">Add Custom Achievement</button>
-                                    </form>
-                                    <ul id="custom-achievements-list"></ul>
-                                </div>
-                            </div>
-                        </section>
-
-                        <!-- 🔹 Achievements List Section -->
-                        <section id="achievements-list">
-                            <div class="container">
-                                <h3>Achievements List</h3>
-                                <ul id="steam-achievements"></ul>  
-                                <ul id="custom-achievements-list"></ul>
-                            </div>
-                        </section>
-
-                    </div> <!-- Closes .achievements-container --> 
-                </section>
+                </div>
             </div>
 
             <script src="/assets/js/jquery.min.js"></script>

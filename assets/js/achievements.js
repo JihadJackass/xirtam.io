@@ -33,6 +33,39 @@ async function loadSteamProfile(steamID, apiKey) {
     }
 }
 
+const leftPanel = document.getElementById("left-panel"); // ✅ Ensure this matches your HTML ID
+
+function showOptionsPage() {
+    if (!leftPanel) {
+        console.error("❌ 'leftPanel' is not found in the DOM.");
+        return;
+    }
+
+    leftPanel.innerHTML = `
+        <div id="profile-info">
+            <img id="steam-avatar" src="" alt="Steam Avatar" width="100">
+            <p id="steam-name"></p>
+        </div>
+
+        <h3>Options</h3>
+        <button id="open-steam-settings">Search Steam ID</button>
+        <button id="open-json-settings">JSON Management</button>
+        <button id="open-game-selection">Game Selection</button>
+    `;
+
+    // ✅ Restore profile info if already loaded
+    const savedProfile = JSON.parse(localStorage.getItem("steamProfile"));
+    if (savedProfile) {
+        document.getElementById("steam-avatar").src = savedProfile.avatar;
+        document.getElementById("steam-name").textContent = savedProfile.name;
+    }
+
+    // ✅ Attach event listeners to buttons
+    document.getElementById("open-steam-settings").addEventListener("click", showSteamSettings);
+    document.getElementById("open-game-selection").addEventListener("click", showGameSelectionMenu);
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const apiKey = "B221B9B37FB61109794F719AEBA0268F"; // Replace with your actual API Key
     const leftPanel = document.getElementById("left-panel");
@@ -99,13 +132,26 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	});
 
-	async function loadSteamAchievements(steamID, appID, apiKey) {
+	async function loadSteamAchievements(steamID, appID, previousPage) {
 		const achievementsList = document.getElementById("steam-achievements");
 		if (!achievementsList) {
 			console.error("❌ 'steam-achievements' element not found!");
 			return;
 		}
 		achievementsList.innerHTML = ""; // Clear previous achievements
+	
+		// ✅ Ensure API key is correctly set
+		const apiKey = "B221B9B37FB61109794F719AEBA0268F";  // Your Steam API Key
+		if (!apiKey || apiKey === "undefined") {
+			alert("❌ Steam API key is missing! Please provide a valid key.");
+			return;
+		}
+	
+		// ✅ Ensure steamID and appID are valid
+		if (!steamID || !appID) {
+			alert("❌ Missing Steam ID or App ID!");
+			return;
+		}
 	
 		// ✅ Use proxy to bypass CORS
 		const proxyUrl = `https://corsproxy.io/?`;
@@ -122,79 +168,139 @@ document.addEventListener("DOMContentLoaded", function () {
 				fetch(schemaUrl)
 			]);
 	
+			// ✅ Handle API response errors
+			if (!playerResponse.ok) {
+				console.error(`❌ Steam API Error: ${playerResponse.status} - ${playerResponse.statusText}`);
+				alert(`❌ Failed to fetch achievements (Error ${playerResponse.status})`);
+				if (previousPage) previousPage();
+				return;
+			}
+	
+			if (!schemaResponse.ok) {
+				console.error(`❌ Steam API Schema Error: ${schemaResponse.status} - ${schemaResponse.statusText}`);
+				alert(`❌ Failed to fetch game achievement schema.`);
+				if (previousPage) previousPage();
+				return;
+			}
+	
 			const playerData = await playerResponse.json();
 			const schemaData = await schemaResponse.json();
 	
-			// ✅ Fix JSON parsing to handle different response structures
-			const parsedPlayerData = playerData.playerstats ? playerData : JSON.parse(playerData.contents);
-			const parsedSchemaData = schemaData.game ? schemaData : JSON.parse(schemaData.contents);
+			if (!playerData.playerstats || !playerData.playerstats.achievements) {
+				leftPanel.innerHTML = `
+					<h3>No Achievements Found</h3>
+					<p>This game does not have achievements. Would you like to create custom achievements?</p>
+					<button id="create-custom-achievements">Yes, Create Custom Achievements</button>
+					<button id="back-to-games">⬅ Back</button>
+				`;
 	
-			if (parsedPlayerData.playerstats && parsedPlayerData.playerstats.achievements) {
-				const playerAchievements = parsedPlayerData.playerstats.achievements;
-				const schemaAchievements = parsedSchemaData.game.availableGameStats.achievements;
-	
-				playerAchievements.forEach(playerAch => {
-					const schemaAch = schemaAchievements.find(ach => ach.name === playerAch.apiname);
-	
-					if (schemaAch) {
-						const achievementItem = document.createElement("li");
-						achievementItem.className = playerAch.achieved ? "completed" : "incomplete";
-						achievementItem.innerHTML = `
-							<img src="${schemaAch.icon}" class="achievement-icon">
-							<div class="achievement-details">
-								<h4>${schemaAch.displayName}</h4>
-								<p>${schemaAch.description || "No description available"}</p>
-								<span>${playerAch.achieved ? "✔ Completed" : "❌ Not Completed"}</span>
-							</div>
-						`;
-						achievementsList.appendChild(achievementItem);
-					}
+				document.getElementById("create-custom-achievements").addEventListener("click", function () {
+					setupCustomAchievements(appID, playerData.playerstats.gameName);
 				});
 	
-				console.log("✅ Achievements with localized names & icons loaded!");
-			} else {
-				alert("⚠ No achievements found for this game.");
+				document.getElementById("back-to-games").addEventListener("click", function () {
+					if (previousPage) previousPage();
+				});
+	
+				return;
 			}
+	
+			const playerAchievements = playerData.playerstats.achievements;
+			const schemaAchievements = schemaData.game.availableGameStats.achievements;
+	
+			playerAchievements.forEach(playerAch => {
+				const schemaAch = schemaAchievements.find(ach => ach.name === playerAch.apiname);
+	
+				if (schemaAch) {
+					const achievementItem = document.createElement("li");
+					achievementItem.className = playerAch.achieved ? "completed" : "incomplete";
+					achievementItem.innerHTML = `
+						<img src="${schemaAch.icon}" class="achievement-icon">
+						<div class="achievement-details">
+							<h4>${schemaAch.displayName}</h4>
+							<p>${schemaAch.description || "No description available"}</p>
+							<span>${playerAch.achieved ? "✔ Completed" : "❌ Not Completed"}</span>
+						</div>
+					`;
+					achievementsList.appendChild(achievementItem);
+				}
+			});
+	
+			console.log("✅ Achievements with localized names & icons loaded!");
 		} catch (error) {
 			console.error("❌ Error fetching achievements:", error);
+			alert("⚠ Error fetching achievements. Please try again later.");
+			if (previousPage) previousPage();
 		}
+	}
+	
+	function showGameSelectionMenu() {
+		leftPanel.innerHTML = "<h3>Game Selection</h3>";
+	
+		// ✅ Add Back Button (Goes to Options Page)
+		const backButton = showBackButton(showOptionsPage);
+		leftPanel.appendChild(backButton);
+	
+		// ✅ Load Steam & Non-Steam Buttons
+		const steamGamesBtn = document.createElement("button");
+		steamGamesBtn.textContent = "Load Steam Games";
+		steamGamesBtn.addEventListener("click", displaySteamGames);
+	
+		const nonSteamGamesBtn = document.createElement("button");
+		nonSteamGamesBtn.textContent = "Load Non-Steam Games";
+		nonSteamGamesBtn.addEventListener("click", displayNonSteamGames);
+	
+		leftPanel.appendChild(steamGamesBtn);
+		leftPanel.appendChild(nonSteamGamesBtn);
 	}
 	
 
 	function displaySteamGames() {
-		const steamGames = JSON.parse(localStorage.getItem("steamGames")) || [];
 		leftPanel.innerHTML = "<h3>Select a Steam Game</h3>";
 	
+		// ✅ Add Back Button (Goes to Game Selection)
+		const backButton = showBackButton(showGameSelectionMenu);
+		leftPanel.appendChild(backButton);
+	
+		let steamGames = JSON.parse(localStorage.getItem("steamGames")) || [];
+	
 		if (steamGames.length === 0) {
-			leftPanel.innerHTML += "<p>No Steam games found. Load Steam Profile first.</p>";
+			leftPanel.innerHTML += "<p>No Steam games found. Load your Steam profile first.</p>";
 			return;
 		}
 	
-		steamGames.forEach(game => {
-			const button = document.createElement("button");
-			button.textContent = game.name;
-			button.dataset.appid = game.appid;
-			button.classList.add("steam-game-button"); // Mark as Steam Game
-			button.addEventListener("click", function () {
+		steamGames.forEach((game) => {
+			const gameItem = document.createElement("li");
+			gameItem.classList.add("steam-game-item");
+	
+			// ✅ Game Button
+			const gameButton = document.createElement("button");
+			gameButton.textContent = game.name;
+			gameButton.classList.add("game-btn");
+			gameButton.addEventListener("click", function () {
 				const steamID = localStorage.getItem("steamID");
 				if (steamID && game.appid) {
-					loadSteamAchievements(steamID, game.appid, apiKey);
-					// 🚀 DO NOT call loadCustomAchievements() for Steam games
+					loadSteamAchievements(steamID, game.appid, displaySteamGames);
 					leftPanel.innerHTML = `<h3>Achievements for ${game.name}</h3>`;
 				} else {
 					console.error("❌ Error: Steam ID or AppID missing");
 				}
 			});
-			leftPanel.appendChild(button);
+	
+			gameItem.appendChild(gameButton);
+			leftPanel.appendChild(gameItem);
 		});
 	}
+	
 
 	function displayNonSteamGames() {
+		leftPanel.innerHTML = "<h3>Select a Non-Steam Game</h3>";
+	
+		// ✅ Add Back Button (Goes to Game Selection)
+		const backButton = showBackButton(showGameSelectionMenu);
+		leftPanel.appendChild(backButton);
+	
 		let nonSteamGames = JSON.parse(localStorage.getItem("nonSteamGames")) || [];
-		leftPanel.innerHTML = `
-			<h3>Select a Non-Steam Game</h3>
-			<button id="back-to-selection">⬅ Back</button>
-		`;
 	
 		if (nonSteamGames.length === 0) {
 			leftPanel.innerHTML += "<p>No non-Steam games found. Add one first.</p>";
@@ -208,45 +314,35 @@ document.addEventListener("DOMContentLoaded", function () {
 			const gameItem = document.createElement("li");
 			gameItem.classList.add("non-steam-game-item");
 	
-			// ✅ Simple Clickable `❌` (No Button)
+			// ✅ Simple Clickable `❌`
 			const removeButton = document.createElement("span");
 			removeButton.innerHTML = "❌";
 			removeButton.classList.add("remove-game-icon");
 			removeButton.addEventListener("click", function (event) {
-				event.stopPropagation(); // Prevent accidental game selection
+				event.stopPropagation();
 				removeNonSteamGame(index);
 			});
 	
-			// ✅ Game Button (Expands fully)
+			// ✅ Game Button
 			const gameButton = document.createElement("button");
 			gameButton.textContent = game;
 			gameButton.classList.add("game-btn");
 			gameButton.addEventListener("click", function () {
-				loadCustomAchievements(game);
-				showCustomAchievementsMenu(game);
-				leftPanel.innerHTML = `<h3>Custom Achievements for ${game}</h3>`;
+				setupCustomAchievements(game);
 			});
 	
-			// ✅ Ensure game and remove button stay in one row
+			// ✅ Append in correct order
 			const gameContainer = document.createElement("div");
 			gameContainer.classList.add("game-container");
-
-			// ✅ Move `gameButton` first, then `❌` button
 			gameContainer.appendChild(gameButton);
 			gameContainer.appendChild(removeButton);
-
+	
 			gameItem.appendChild(gameContainer);
 			gameList.appendChild(gameItem);
-
 		});
 	
 		leftPanel.appendChild(gameList);
-	
-		// ✅ Add "Back" button functionality
-		document.getElementById("back-to-selection").addEventListener("click", function () {
-			showGameSelectionMenu();
-		});
-	}	
+	}
 	
 	function removeNonSteamGame(index) {
 		let nonSteamGames = JSON.parse(localStorage.getItem("nonSteamGames")) || [];
@@ -258,36 +354,138 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	function showCustomAchievementsMenu(gameName) {
+		leftPanel.innerHTML = `<h3>Custom Achievements for ${gameName}</h3>`;
+	
+		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+	
+		// ✅ If no custom achievements exist, show the creation option
+		if (!customAchievements[gameName]) {
+			leftPanel.innerHTML += `
+				<p>No custom achievements found for this game.</p>
+				<button id="create-custom-achievements">Create Custom Achievements</button>
+				<button id="back-to-games">⬅ Back</button>
+			`;
+	
+			document.getElementById("create-custom-achievements").addEventListener("click", function () {
+				setupCustomAchievements(gameName);
+			});
+	
+			document.getElementById("back-to-games").addEventListener("click", function () {
+				displayNonSteamGames();
+			});
+	
+			return;
+		}
+	
+		// ✅ Once created, show options to manage achievements
 		leftPanel.innerHTML += `
-			<h3>Manage Custom Achievements for ${gameName}</h3>
-			<button id="add-custom-achievement">Add Achievement</button>
-			<button id="remove-custom-achievement">Remove Achievement</button>
-			<ul id="custom-achievements-list"></ul>
+			<button id="add-custom-achievement">➕ Add Custom Achievement</button>
+			<button id="import-achievements">📂 Import from JSON</button>
 		`;
 	
+		// ✅ Ensure the JSON import button works
+		document.getElementById("import-achievements").addEventListener("click", function () {
+			importCustomAchievements(gameName);
+		});
+	
+		// ✅ Ensure the add custom achievement button works
 		document.getElementById("add-custom-achievement").addEventListener("click", function () {
-			const achievementName = prompt("Enter achievement name:");
-			if (achievementName) {
-				let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
-				if (!customAchievements[gameName]) {
-					customAchievements[gameName] = [];
-				}
-				customAchievements[gameName].push({ name: achievementName, completed: false });
-				localStorage.setItem("customAchievements", JSON.stringify(customAchievements));
-				loadCustomAchievements(gameName);
-			}
+			showCustomAchievementForm(gameName);
 		});
 	
-		document.getElementById("remove-custom-achievement").addEventListener("click", function () {
-			const achievementName = prompt("Enter achievement name to remove:");
-			let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
-			if (customAchievements[gameName]) {
-				customAchievements[gameName] = customAchievements[gameName].filter(ach => ach.name !== achievementName);
-				localStorage.setItem("customAchievements", JSON.stringify(customAchievements));
-				loadCustomAchievements(gameName);
-			}
-		});
-	
+		// ✅ Load and display existing achievements
 		loadCustomAchievements(gameName);
 	}
+
+	function setupCustomAchievements(gameName) {
+		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+	
+		// ✅ If game doesn't have custom achievements, create storage for it
+		if (!customAchievements[gameName]) {
+			customAchievements[gameName] = [];
+			localStorage.setItem("customAchievements", JSON.stringify(customAchievements));
+		}
+	
+		console.log(`✅ Custom Achievements Initialized for: ${gameName}`);
+	
+		// ✅ Immediately update UI
+		showCustomAchievementsMenu(gameName);
+	}
+	
+	function loadCustomAchievements(gameName) {
+		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+		const achievementsList = document.getElementById("custom-achievements-list");
+	
+		if (!achievementsList) {
+			console.error("❌ 'custom-achievements-list' not found in the DOM.");
+			return;
+		}
+	
+		achievementsList.innerHTML = ""; // Clear previous list
+	
+		if (customAchievements[gameName]) {
+			customAchievements[gameName].forEach((ach, index) => {
+				const achievementItem = document.createElement("li");
+				achievementItem.className = ach.completed ? "completed" : "incomplete";
+				achievementItem.innerHTML = `
+					<img src="${ach.image}" class="achievement-icon">
+					<div class="achievement-details">
+						<h4>${ach.name}</h4>
+						<p>${ach.description}</p>
+						<button onclick="markCustomAchievementComplete('${gameName}', ${index})">
+							${ach.completed ? "✔ Completed" : "Mark as Complete"}
+						</button>
+					</div>
+				`;
+				achievementsList.appendChild(achievementItem);
+			});
+		}
+	}
+
+	function importCustomAchievements(gameName) {
+		const jsonInput = prompt("Paste JSON Achievements Here:");
+		
+		if (!jsonInput) {
+			alert("⚠ No JSON provided.");
+			return;
+		}
+	
+		try {
+			const importedAchievements = JSON.parse(jsonInput);
+	
+			if (!Array.isArray(importedAchievements)) {
+				alert("⚠ Invalid JSON format. Expected an array.");
+				return;
+			}
+	
+			let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+			if (!customAchievements[gameName]) {
+				customAchievements[gameName] = [];
+			}
+	
+			customAchievements[gameName] = customAchievements[gameName].concat(importedAchievements);
+			localStorage.setItem("customAchievements", JSON.stringify(customAchievements));
+	
+			alert(`✅ Successfully imported ${importedAchievements.length} achievements.`);
+			showCustomAchievementsMenu(gameName);
+		} catch (error) {
+			alert("⚠ Error parsing JSON. Please check the format.");
+			console.error("❌ JSON Import Error:", error);
+		}
+	}
+
+	function showBackButton(callback) {
+		if (!leftPanel) {
+			console.error("❌ 'leftPanel' is not found in the DOM.");
+			return;
+		}
+	
+		const backButton = document.createElement("button");
+		backButton.textContent = "⬅ Back";
+		backButton.classList.add("back-btn");
+		backButton.addEventListener("click", callback);
+	
+		return backButton;
+	}
+	
 });

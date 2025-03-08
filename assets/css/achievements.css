@@ -91,6 +91,31 @@
     text-align: center;
 }
 
+/* 🔹 Increase Icon Size */
+.achievement-icon {
+    width: 80px;  /* ⬆ Increased from 40px */
+    height: 80px;
+    border-radius: 10px;
+}
+
+/* 🔹 Improve Achievement Layout */
+.achievement-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 10px;
+}
+
+.achievement-details h4 {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.achievement-details p {
+    font-size: 14px;
+    text-align: left;
+}
+
 /* 🔹 Achievements List */
 #steam-achievements, #custom-achievements-list {
     list-style: none;
@@ -181,4 +206,53 @@
     color: darkred;
 }
 
+/* 🔹 Back Button */
+.back-btn {
+    background: #5a5a5a;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
+}
+
+.back-btn:hover {
+    background: #444;
+}
+
+
+/* 🔹 Warning Message */
+.no-achievements {
+    background: #ffcc00;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* 🔹 Custom Achievements Buttons */
+.create-custom-btn, .back-btn {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.create-custom-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+}
+
+.create-custom-btn:hover {
+    background: #0056b3;
+}
 

@@ -1,3 +1,11 @@
+// Achievement Manager Scripts
+// - I suck at scripting
+// - I love fallout
+
+// PRE-LOAD SPECIFIC SCRIPTS BEFORE DOMContent
+
+// TODO: Documentation
+
 async function loadSteamProfile(steamID, apiKey) {
     const url = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${apiKey}&steamids=${steamID}`;
 
@@ -32,6 +40,8 @@ async function loadSteamProfile(steamID, apiKey) {
         alert("Failed to load Steam profile.");
     }
 }
+
+// TODO: Documentation
 
 const leftPanel = document.getElementById("left-panel"); // ✅ Ensure this matches your HTML ID
 
@@ -74,6 +84,8 @@ function insertFilterUI(gameName) {
 	});
 }
 
+// TODO: Documentation
+
 function showOptionsPage() {
     if (!leftPanel) {
         console.error("❌ 'leftPanel' is not found in the DOM.");
@@ -85,11 +97,6 @@ function showOptionsPage() {
             <img id="steam-avatar" src="" alt="Steam Avatar" width="100">
             <p id="steam-name"></p>
         </div>
-
-        <h3>Options</h3>
-        <button id="open-steam-settings">Search Steam ID</button>
-        <button id="open-json-settings">JSON Management</button>
-        <button id="open-game-selection">Game Selection</button>
     `;
 
     // ✅ Restore profile info if already loaded
@@ -104,11 +111,14 @@ function showOptionsPage() {
     document.getElementById("open-game-selection").addEventListener("click", showGameSelectionMenu);
 }
 
+// TODO: Documentation
 
 document.addEventListener("DOMContentLoaded", function () {
     const apiKey = "B221B9B37FB61109794F719AEBA0268F"; // Replace with your actual API Key
     const leftPanel = document.getElementById("left-panel");
     const savedProfile = JSON.parse(localStorage.getItem("steamProfile"));
+
+	// TODO: Documentation
 
 	if (savedProfile) {
         console.log("✅ Loading saved Steam profile...");
@@ -170,6 +180,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		});
 	});
+
+	// TODO: Documentation
 
 	async function loadSteamAchievements(steamID, appID, previousPage) {
 		const achievementsList = document.getElementById("steam-achievements");
@@ -351,13 +363,13 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	}
 	
+	// TODO: Documentation
 	
 	function showGameSelectionMenu() {
 		leftPanel.innerHTML = `
 			<h3>Select Game Type</h3>
 			<button id="load-steam-games">🎮 Load Steam Games</button>
 			<button id="load-non-steam-games">📂 Load Non-Steam Games</button>
-			<button id="back-to-options">⬅ Back</button>
 		`;
 	
 		// ✅ Ensure the right panel (achievements list) is cleared when switching between games
@@ -374,19 +386,12 @@ document.addEventListener("DOMContentLoaded", function () {
 		document.getElementById("load-non-steam-games").addEventListener("click", function () {
 			displayNonSteamGames();
 		});
-	
-		document.getElementById("back-to-options").addEventListener("click", function () {
-			showOptionsPage();
-		});
 	}
 	
+	// TODO: Documentation
 
 	function displaySteamGames() {
 		leftPanel.innerHTML = "<h3>Select a Steam Game</h3>";
-	
-		// ✅ Add Back Button (Goes to Game Selection)
-		const backButton = showBackButton(showGameSelectionMenu);
-		leftPanel.appendChild(backButton);
 	
 		let steamGames = JSON.parse(localStorage.getItem("steamGames")) || [];
 	
@@ -418,13 +423,10 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 	
+	// TODO: Documentation
 
 	function displayNonSteamGames() {
 		leftPanel.innerHTML = "<h3>Select a Non-Steam Game</h3>";
-	
-		// ✅ Add Back Button (Goes to Game Selection)
-		const backButton = showBackButton(showGameSelectionMenu);
-		leftPanel.appendChild(backButton);
 	
 		let nonSteamGames = JSON.parse(localStorage.getItem("nonSteamGames")) || [];
 	
@@ -469,6 +471,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 		leftPanel.appendChild(gameList);
 	}
+
+	// TODO: Documentation
 	
 	function removeNonSteamGame(index) {
 		let nonSteamGames = JSON.parse(localStorage.getItem("nonSteamGames")) || [];
@@ -479,7 +483,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	}
 
-		// Show the custom achievement form with image upload support
+	// Show the custom achievement form with image upload support
+
 	function showCustomAchievementsMenu(gameName) {
 		leftPanel.innerHTML = `
 			<h3 class="custom-achievements-title">Custom Achievements for ${gameName}</h3>
@@ -507,6 +512,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		insertFilterUI(gameName);
 	}
 
+	// TODO: Documentation
+
 	function setupCustomAchievements(gameName) {
 		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
 	
@@ -521,6 +528,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		// ✅ Update UI immediately to show the achievement options
 		showCustomAchievementsMenu(gameName);
 	}
+
+	// TODO: Documentation
 
 	function saveCustomAchievement(gameName) {
 		const name = document.getElementById("custom-achievement-name").value.trim();
@@ -581,6 +590,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			saveAchievementWithImage("default-achievement.png");
 		}
 	}
+
+	// TODO: Documentation
 	
 	function loadCustomAchievements(gameName) {
 		const achievementsList = document.getElementById("custom-achievements-list");
@@ -636,7 +647,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	}
 	
-		// Helper function to remove an achievement.
+	// Helper function to remove an achievement.
+
 	function removeAchievement(gameName, achievementIndex) {
 		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
 		if (customAchievements[gameName]) {
@@ -646,7 +658,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	}
 
-		// Helper function to toggle an achievement's completion status.
+	// Helper function to toggle an achievement's completion status.
+
 	function toggleAchievementCompletion(gameName, achievementIndex) {
 		let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
 		if (customAchievements[gameName] && customAchievements[gameName][achievementIndex]) {
@@ -655,6 +668,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			loadCustomAchievements(gameName);
 		}
 	}
+
+	// TODO: Documentation
 
 	function importCustomAchievements(gameName) {
 		const jsonInput = prompt("Paste JSON Achievements Here:");
@@ -688,6 +703,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	}
 	
+	// TODO: Documentation
 
 	function showBackButton(callback) {
 		if (!leftPanel) {

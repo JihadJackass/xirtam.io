@@ -27,29 +27,80 @@
     margin-top: 15px; /* Adds spacing between title and filter */
 }
 
-/* 🔹 Context Menu */
-.top-menu {
-    display: flex;
-    justify-content: center;
-    background: #1a1a1a;
-    padding: 10px;
-    border-bottom: 2px solid #444;
-}
+    /* 🔹 TOP MENU - MANAGEMENT MENU */
+        .top-menu {
+            display: flex;
+            justify-content: center;
+            background: #1a1a1a;
+            padding: 10px;
+            border-bottom: 2px solid #444;
+        }
 
-.top-menu button {
-    background: #4caf50;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    color: white;
-    font-size: 14px;
-    border-radius: 5px;
-    margin: 0 5px; /* ✅ Reduces spacing */
-}
+        .top-menu button {
+            background: #4caf50;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            color: white;
+            font-size: 14px;
+            border-radius: 5px;
+            margin: 0 5px; /* ✅ Reduces spacing */
+        }
 
-.top-menu button:hover {
-    background: #45a049;
-}
+        .top-menu button:hover {
+            background: #45a049;
+        }
+    /* */
+
+    /* 🔹 LEFT PANEL MENU  */
+
+        #left-panel {
+            width: 25%;
+            background: #333;
+            padding: 20px;
+            border-right: 2px solid #444;
+            overflow-y: auto;
+            min-height: 600px;
+        }
+
+        #left-panel button {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            background: #4caf50;
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+
+        #left-panel button:hover {
+            background: #45a049;
+        }
+
+        /* 🔹 Left Sidebar: Game Selection */
+        .game-list {
+            width: 25%;
+            background: #333;
+            padding: 20px;
+            border-right: 2px solid #444;
+            overflow-y: auto;
+        }
+
+        .game-list h3 {
+            color: #f05a5a;
+        }
+
+        .game-list select, .game-list button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+    /* */
 
 /* 🔹 Achievements Container Layout */
 .achievements-container {
@@ -58,52 +109,6 @@
     height: calc(100vh - 60px);
     margin: 0 auto;
     padding: 20px;
-}
-
-#left-panel {
-    width: 25%;
-    background: #333;
-    padding: 20px;
-    border-right: 2px solid #444;
-    overflow-y: auto;
-    min-height: 600px;
-}
-
-#left-panel button {
-    display: block;
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    background: #4caf50;
-    border: none;
-    cursor: pointer;
-    color: white;
-    font-size: 14px;
-    border-radius: 5px;
-}
-
-
-#left-panel button:hover {
-    background: #45a049;
-}
-
-/* 🔹 Left Sidebar: Game Selection */
-.game-list {
-    width: 25%;
-    background: #333;
-    padding: 20px;
-    border-right: 2px solid #444;
-    overflow-y: auto;
-}
-
-.game-list h3 {
-    color: #f05a5a;
-}
-
-.game-list select, .game-list button {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
 }
 
 /* 🔹 Main Achievements Section */

@@ -1,5 +1,32 @@
 /* 🔹 Achievements Page Styling (Works with `main.css`) */
 
+.import-export-buttons {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    margin-bottom: 15px; /* Extra spacing below */
+}
+
+.import-export-buttons button {
+    flex: 1;
+    background: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.import-export-buttons button:hover {
+    background: #45a049;
+}
+
+#achievement-filter {
+    width: 100%;
+    padding: 50px;
+    margin-top: 15px; /* Adds spacing between title and filter */
+}
+
 /* 🔹 Context Menu */
 .top-menu {
     display: flex;
@@ -93,7 +120,7 @@
 
 /* 🔹 Increase Icon Size */
 .achievement-icon {
-    width: 80px;  /* ⬆ Increased from 40px */
+    width: 80px;  /* Increased size */
     height: 80px;
     border-radius: 10px;
 }
@@ -128,12 +155,13 @@
 .achievement-item {
     display: flex;
     align-items: center;
-    background: #2c2f33;  /* Darker background for contrast */
+    justify-content: space-between;
     padding: 12px;
-    border-radius: 8px; /* Rounded edges for a smooth design */
-    margin-bottom: 10px; /* Space between achievements */
-    border: 1px solid #444; /* Subtle border to define each achievement */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #2c2f33;
+    border: 1px solid #444;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* 🔹 Icon size & positioning */

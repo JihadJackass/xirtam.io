@@ -35,6 +35,45 @@ async function loadSteamProfile(steamID, apiKey) {
 
 const leftPanel = document.getElementById("left-panel"); // ✅ Ensure this matches your HTML ID
 
+// Inserts the filter/export UI right below the Achievement List title.
+function insertFilterUI(gameName) {
+	// Find the Achievement List title in the main achievement container.
+	const achievementContainer = document.querySelector('.achievement-container');
+	const titleElement = achievementContainer.querySelector('h2');
+	if (!titleElement) {
+		console.error("Achievement List title element not found.");
+		return;
+	}
+	
+	// Create the filter container element.
+	let filterContainer = document.createElement("div");
+	filterContainer.id = "filter-container";
+	filterContainer.innerHTML = `
+		<center>		
+			<input type="text" id="achievement-filter-input" placeholder="Filter achievements...">
+			<button id="apply-achievement-filter">Filter</button>
+			<div class="import-export-buttons">
+				<button id="import-json">Import JSON</button>
+				<button id="export-json">Export JSON</button>
+			</div>
+		</center>
+	`;
+	
+	// Insert the filter container right after the title element.
+	titleElement.insertAdjacentElement('afterend', filterContainer);
+	
+	// Attach event listener for filtering.
+	document.getElementById("apply-achievement-filter").addEventListener("click", function(){
+		const filterText = document.getElementById("achievement-filter-input").value.trim().toLowerCase();
+		filterAchievements(gameName, filterText);
+	});
+	
+	// Attach event listener for exporting achievements.
+	document.getElementById("export-achievements-json").addEventListener("click", function(){
+		exportAchievements();
+	});
+}
+
 function showOptionsPage() {
     if (!leftPanel) {
         console.error("❌ 'leftPanel' is not found in the DOM.");
@@ -169,6 +208,103 @@ document.addEventListener("DOMContentLoaded", function () {
 				showCustomAchievementsMenu(appID);
 				return;
 			}
+
+			// Call this function when initializing your custom achievements menu,
+			// after showing the form for adding/editing achievements.
+			function showAchievementFilters(gameName) {
+				// Create a container for filter input and export button.
+				const filterContainer = document.createElement("div");
+				filterContainer.id = "filter-container";
+				filterContainer.innerHTML = `
+					<input type="text" id="achievement-filter-input" placeholder="Filter achievements...">
+					<button id="apply-achievement-filter">Filter</button>
+					<button id="export-achievements-json">Export JSON</button>
+					<button id="import-achievements-json">Import JSON</button>
+				`;
+				// Append the filter UI to the left panel (or another suitable container).
+				leftPanel.appendChild(filterContainer);
+
+				// Event listener for filtering.
+				document.getElementById("apply-achievement-filter").addEventListener("click", function(){
+					const filterText = document.getElementById("achievement-filter-input").value.trim().toLowerCase();
+					filterAchievements(gameName, filterText);
+				});
+
+				// Event listener for exporting achievements.
+				document.getElementById("export-achievements-json").addEventListener("click", function(){
+					exportAchievements();
+				});
+			}
+
+			// This function filters the custom achievements based on the filter text.
+			function filterAchievements(gameName, filterText) {
+				const achievementsList = document.getElementById("custom-achievements-list");
+				if (!achievementsList) {
+					console.error("Custom achievements list element not found.");
+					return;
+				}
+				achievementsList.innerHTML = ""; // Clear the list.
+
+				let customAchievements = JSON.parse(localStorage.getItem("customAchievements")) || {};
+				const gameAchievements = customAchievements[gameName] || [];
+
+				// Filter achievements by checking if the name or description includes the filter text.
+				const filtered = gameAchievements.filter(ach => {
+					return ach.name.toLowerCase().includes(filterText) || ach.description.toLowerCase().includes(filterText);
+				});
+
+				if (filtered.length > 0) {
+					filtered.forEach((ach, index) => {
+						const li = document.createElement("li");
+						li.className = "achievement-item"; // Use your CSS styling.
+						li.innerHTML = `
+							<img src="${ach.image}" class="achievement-icon">
+							<div class="achievement-details">
+								<h4>${ach.name}</h4>
+								<p>${ach.description}</p>
+								<span>${ach.completed ? "✔ Completed" : "❌ Not Completed"}</span>
+							</div>
+							<div class="achievement-actions">
+								<button class="edit-achievement">Edit</button>
+								<button class="remove-achievement">Remove</button>
+								<button class="toggle-completion-achievement">${ach.completed ? "Mark Incomplete" : "Mark Completed"}</button>
+							</div>
+						`;
+						achievementsList.appendChild(li);
+
+						// Attach action listeners (these helper functions should already be defined).
+						li.querySelector(".edit-achievement").addEventListener("click", function() {
+							// Populate the form with the achievement data for editing.
+							document.getElementById("custom-achievement-name").value = ach.name;
+							document.getElementById("custom-achievement-description").value = ach.description;
+							document.getElementById("custom-achievement-image").value = "";
+							// Optionally, clear file input here.
+							removeAchievement(gameName, index);
+						});
+						li.querySelector(".remove-achievement").addEventListener("click", function() {
+							removeAchievement(gameName, index);
+						});
+						li.querySelector(".toggle-completion-achievement").addEventListener("click", function() {
+							toggleAchievementCompletion(gameName, index);
+						});
+					});
+				} else {
+					achievementsList.innerHTML = "<li>No achievements match your filter.</li>";
+				}
+			}
+
+			// Export the custom achievements JSON to a downloadable file.
+			function exportAchievements() {
+				const customAchievements = localStorage.getItem("customAchievements") || "{}";
+				const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(customAchievements);
+				const downloadAnchorNode = document.createElement("a");
+				downloadAnchorNode.setAttribute("href", dataStr);
+				downloadAnchorNode.setAttribute("download", "achievements_export_" + Date.now() + ".json");
+				document.body.appendChild(downloadAnchorNode);
+				downloadAnchorNode.click();
+				downloadAnchorNode.remove();
+			}
+
 	
 			// Fetch player's achievements
 			const playerAchievementsUrl = proxyUrl + encodeURIComponent(
@@ -368,6 +504,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	
 		loadCustomAchievements(gameName);
+		insertFilterUI(gameName);
 	}
 
 	function setupCustomAchievements(gameName) {

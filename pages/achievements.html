@@ -47,27 +47,29 @@
             <div id="main">
                 <!-- 🔹 Context Menu / Navigation -->
                 <nav class="top-menu">
+                    <button id="home-button">Home</button>
                     <button id="open-steam-settings">Search Steam ID</button>
                     <button id="open-game-selection">Game Selection</button>
+                    <button id="sign-out">Sign Out</button> <!-- New Sign Out Button -->
                 </nav>
 
                 <!-- 🔹 Main Layout -->
                 <div class="achievements-container">
                     
-                    <!-- Left Sidebar (Blank by Default) -->
+                    <!-- LeftPanel (Blank by Default) -->
                     <aside class="game-list" id="left-panel">
                         <div id="profile-info">
-                            <img id="steam-avatar" src="" alt="Steam Avatar" width="100">
+                            <img id="steam-avatar" src="" width="100">
                             <p id="steam-name"></p>
                         </div>
 
-                        <h3>Options</h3>
-                        <p>Select a menu option to load content.</p>
+                        <h3>Instructions</h3>
+                        <p>- First, you must either load your Steam Profile or Create an Account which can store your data respectively.<br>- You can then choose either Steam Games or Non-Steam Games<br>- Depending on your choice, you can track and mark achievements as complete as well as adding custom achievements.</p>
                     </aside>
 
-                    <!-- Right: Achievements List -->
+                    <!-- RightPanel: Achievements List -->
                     <main class="achievement-container">
-                        <h2>Achievement List</h2>
+                        <h2>Achievement List</h2><br>
                         <ul id="steam-achievements"></ul>
                         <ul id="custom-achievements-list"></ul>
                     </main>

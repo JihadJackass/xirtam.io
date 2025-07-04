@@ -117,6 +117,32 @@ document.addEventListener("DOMContentLoaded", function () {
     const apiKey = "B221B9B37FB61109794F719AEBA0268F"; // Replace with your actual API Key
     const leftPanel = document.getElementById("left-panel");
     const savedProfile = JSON.parse(localStorage.getItem("steamProfile"));
+	const signOutButton = document.getElementById("sign-out"); // Handle signing out of steam profile
+	loadUserAchievements();
+    loadServerAchievements();
+
+	// Sign Out button to handle Steam Profile
+
+    if (signOutButton) {
+        signOutButton.addEventListener("click", function () {
+            // Remove only the logged-in user session (not custom achievements)
+            localStorage.removeItem("steamProfile"); 
+
+            // Log sign-out in user.txt for reference
+            fetch("../assets/achievements/userdata/user.txt", {
+                method: "POST",
+                body: "User signed out",
+                headers: { "Content-Type": "text/plain" }
+            }).then(response => {
+                if (response.ok) {
+                    console.log("User sign-out logged.");
+                }
+            }).catch(error => console.error("Error logging sign-out:", error));
+
+            // Redirect to the home page (achievements.html index)
+            window.location.href = "../pages/achievements.html"; 
+        });
+    }
 
 	// TODO: Documentation
 
@@ -180,6 +206,24 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		});
 	});
+
+	function loadUserAchievements() {
+		fetch("../assets/achievements/userdata/user.txt")
+			.then(response => response.text())
+			.then(data => {
+				console.log("User Achievements Loaded:", data);
+			})
+			.catch(error => console.error("Error loading user achievements:", error));
+	}
+	
+	function loadServerAchievements() {
+		fetch("../assets/achievements/serverdata/serverdata.txt")
+			.then(response => response.text())
+			.then(data => {
+				console.log("Server Achievements Loaded:", data);
+			})
+			.catch(error => console.error("Error loading server achievements:", error));
+	}
 
 	// TODO: Documentation
 

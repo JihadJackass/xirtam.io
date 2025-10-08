@@ -1,0 +1,81 @@
+.projects-section {
+  padding: 30px;
+  background-color: #2e2e2e;
+  color: #ddd;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.projects-title {
+  font-size: 28px;
+  color: #b0c4de;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.project-card {
+  display: flex;
+  align-items: flex-start;
+  background-color: #3a3a3a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.project-image {
+  width: 175px;
+  height: 175px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+
+.project-content {
+  flex: 1;
+}
+
+.project-link {
+  color: #87ceeb;
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.project-link:hover {
+  text-decoration: underline;
+}
+
+.project-description {
+  margin-top: 8px;
+  color: #ccc;
+  line-height: 1.5;
+  word-wrap: break-word;       /* ensures long words wrap */
+  overflow-wrap: break-word;   /* modern equivalent */
+  white-space: normal;         /* allows text wrapping */
+  max-width: 100%;             /* prevent overflow beyond container */
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.image-row {
+  display: flex;
+  justify-content: center; /* centers the pair as a group */
+  gap: 20px; /* space between images */
+  flex-wrap: wrap; /* allows wrapping on smaller screens */
+}
+
+.image-row img {
+  width: 45%; /* adjust as needed */
+  border-radius: 8px;
+}

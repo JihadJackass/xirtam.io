@@ -18,9 +18,10 @@
   background-color: #3a3a3a;
   border: 1px solid #444;
   border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
+  padding: 10px 12px;         /* reduced from 15px */
+  margin-bottom: 25px;        /* slightly smaller gap between cards */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  gap: 12px;                  /* replaces margin-right on image */
 }
 
 .project-card:hover {
@@ -29,15 +30,17 @@
 }
 
 .project-image {
-  width: 175px;
-  height: 175px;
+  width: 160px;
+  height: 160px;
   object-fit: cover;
   border-radius: 5px;
-  margin-right: 20px;
+  margin: 0;                  /* removes extra bottom/side space */
 }
 
 .project-content {
   flex: 1;
+  min-width: 0;
+  margin-top: -2px;           /* slight nudge to reduce vertical gap */
 }
 
 .project-link {
@@ -52,13 +55,10 @@
 }
 
 .project-description {
-  margin-top: 8px;
+  margin-top: 0;
+  line-height: 1.35;          /* tighter line spacing */
   color: #ccc;
-  line-height: 1.5;
-  word-wrap: break-word;       /* ensures long words wrap */
-  overflow-wrap: break-word;   /* modern equivalent */
-  white-space: normal;         /* allows text wrapping */
-  max-width: 100%;             /* prevent overflow beyond container */
+  overflow-wrap: anywhere;
 }
 
 .center {
@@ -77,5 +77,5 @@
 
 .image-row img {
   width: 45%; /* adjust as needed */
-  border-radius: 8px;
+  border-radius: 4px;
 }

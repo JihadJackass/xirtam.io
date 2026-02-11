@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combat Training Calculator - 2009scape</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #1a0a0a;
+            --bg-medium: #2d1010;
+            --bg-light: #3d1818;
+            --primary: #DC143C;
+            --primary-dark: #a30f2d;
+            --primary-light: #ff4d6a;
+            --text-light: #e8dcc8;
+            --text-dim: #a89878;
+            --accent: #8B0000;
+            --shadow: rgba(0, 0, 0, 0.6);
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #0a0303 0%, var(--bg-dark) 50%, #0f0505 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(220, 20, 60, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 0, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3em;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 
+                2px 2px 4px var(--shadow),
+                0 0 20px rgba(220, 20, 60, 0.4);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: var(--text-dim);
+            font-style: italic;
+        }
+
+        .main-panel {
+            background: linear-gradient(145deg, var(--bg-medium) 0%, var(--bg-dark) 100%);
+            border: 3px solid var(--primary-dark);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 
+                0 10px 40px var(--shadow),
+                inset 0 1px 0 rgba(220, 20, 60, 0.2);
+            position: relative;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .skills-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: var(--primary-light);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .skill-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .skill-group {
+            background: var(--bg-dark);
+            border: 2px solid var(--primary-dark);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .skill-icon {
+            font-size: 1.5em;
+        }
+
+        .skill-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1em;
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .level-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label {
+            font-size: 0.85em;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select {
+            background: var(--bg-light);
+            border: 2px solid var(--primary-dark);
+            color: var(--text-light);
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Crimson Text', serif;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.3);
+        }
+
+        .multiplier-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .multiplier-info {
+            background: linear-gradient(90deg, transparent, rgba(139, 0, 0, 0.15), transparent);
+            padding: 15px;
+            border-left: 3px solid var(--accent);
+            margin: 20px 0;
+            border-radius: 5px;
+            font-style: italic;
+            color: var(--text-dim);
+        }
+
+        .monster-selector {
+            margin-bottom: 30px;
+        }
+
+        .monster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .monster-card {
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-medium) 100%);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .monster-card:hover {
+            border-color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        .monster-card.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--accent) 100%);
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.4);
+        }
+
+        .monster-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1em;
+            color: var(--primary-light);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .monster-stats {
+            color: var(--text-dim);
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .results {
+            background: var(--bg-dark);
+            border: 2px solid var(--primary-dark);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-medium) 100%);
+            border: 2px solid var(--primary-dark);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .result-label {
+            font-family: 'Cinzel', serif;
+            color: var(--text-dim);
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(220, 20, 60, 0.3);
+        }
+
+        .result-value.large {
+            font-size: 2em;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .main-panel {
+                padding: 20px;
+            }
+            
+            .skill-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .monster-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to All Skills</a>
+        
+        <header>
+            <h1>⚔️ Combat Training Calculator ⚔️</h1>
+            <div class="subtitle">2009scape Edition with Custom Multiplier</div>
+        </header>
+
+        <div class="main-panel">
+            <div class="skills-section">
+                <div class="section-title">Combat Skills</div>
+                <div class="skill-inputs">
+                    <div class="skill-group">
+                        <div class="skill-header">
+                            <span class="skill-icon">⚔️</span>
+                            <span class="skill-name">Attack</span>
+                        </div>
+                        <div class="level-inputs">
+                            <div class="input-group">
+                                <label>Current</label>
+                                <input type="number" id="attackCurrent" value="1" min="1" max="99">
+                            </div>
+                            <div class="input-group">
+                                <label>Target</label>
+                                <input type="number" id="attackTarget" value="99" min="1" max="99">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <div class="skill-header">
+                            <span class="skill-icon">💪</span>
+                            <span class="skill-name">Strength</span>
+                        </div>
+                        <div class="level-inputs">
+                            <div class="input-group">
+                                <label>Current</label>
+                                <input type="number" id="strengthCurrent" value="1" min="1" max="99">
+                            </div>
+                            <div class="input-group">
+                                <label>Target</label>
+                                <input type="number" id="strengthTarget" value="99" min="1" max="99">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <div class="skill-header">
+                            <span class="skill-icon">🛡️</span>
+                            <span class="skill-name">Defence</span>
+                        </div>
+                        <div class="level-inputs">
+                            <div class="input-group">
+                                <label>Current</label>
+                                <input type="number" id="defenceCurrent" value="1" min="1" max="99">
+                            </div>
+                            <div class="input-group">
+                                <label>Target</label>
+                                <input type="number" id="defenceTarget" value="99" min="1" max="99">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <div class="skill-header">
+                            <span class="skill-icon">❤️</span>
+                            <span class="skill-name">Hitpoints</span>
+                        </div>
+                        <div class="level-inputs">
+                            <div class="input-group">
+                                <label>Current</label>
+                                <input type="number" id="hitpointsCurrent" value="10" min="10" max="99">
+                            </div>
+                            <div class="input-group">
+                                <label>Target</label>
+                                <input type="number" id="hitpointsTarget" value="99" min="10" max="99">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <div class="skill-header">
+                            <span class="skill-icon">🏹</span>
+                            <span class="skill-name">Ranged</span>
+                        </div>
+                        <div class="level-inputs">
+                            <div class="input-group">
+                                <label>Current</label>
+                                <input type="number" id="rangedCurrent" value="1" min="1" max="99">
+                            </div>
+                            <div class="input-group">
+                                <label>Target</label>
+                                <input type="number" id="rangedTarget" value="99" min="1" max="99">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <div class="skill-header">
+                            <span class="skill-icon">✨</span>
+                            <span class="skill-name">Magic</span>
+                        </div>
+                        <div class="level-inputs">
+                            <div class="input-group">
+                                <label>Current</label>
+                                <input type="number" id="magicCurrent" value="1" min="1" max="99">
+                            </div>
+                            <div class="input-group">
+                                <label>Target</label>
+                                <input type="number" id="magicTarget" value="99" min="1" max="99">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="multiplier-section">
+                <div class="input-group">
+                    <label for="multiplier">XP Multiplier</label>
+                    <input type="number" id="multiplier" value="1" min="0.1" max="100" step="0.1">
+                </div>
+            </div>
+
+            <div class="multiplier-info">
+                ⚔️ Multiplier affects all combat XP gained. Set this to match your 2009scape server's combat rates.
+            </div>
+
+            <div class="monster-selector">
+                <div class="section-title">Select Monster to Train On</div>
+                <div class="monster-grid" id="monsterGrid"></div>
+            </div>
+
+            <div class="results" id="results" style="display: none;">
+                <div class="section-title" style="margin-bottom: 20px;">Training Results</div>
+                <div class="result-grid" id="resultGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const monsters = [
+            { name: "Chicken", hp: 3, attack: 3, strength: 3, defence: 3, hitpoints: 1.33 },
+            { name: "Cow", hp: 8, attack: 5.5, strength: 5.5, defence: 5.5, hitpoints: 2.66 },
+            { name: "Goblin", hp: 5, attack: 8, strength: 8, defence: 8, hitpoints: 2.66 },
+            { name: "Giant Rat", hp: 6, attack: 11, strength: 11, defence: 11, hitpoints: 4 },
+            { name: "Al-Kharid Warrior", hp: 9, attack: 18, strength: 18, defence: 18, hitpoints: 6 },
+            { name: "Guard", hp: 22, attack: 32.5, strength: 32.5, defence: 32.5, hitpoints: 10.66 },
+            { name: "Hill Giant", hp: 35, attack: 52, strength: 52, defence: 52, hitpoints: 17.33 },
+            { name: "Moss Giant", hp: 60, attack: 78, strength: 78, defence: 78, hitpoints: 26 },
+            { name: "Fire Giant", hp: 111, attack: 167, strength: 167, defence: 167, hitpoints: 44.4 },
+            { name: "Lesser Demon", hp: 79, attack: 132, strength: 132, defence: 132, hitpoints: 52.66 },
+            { name: "Greater Demon", hp: 87, attack: 166, strength: 166, defence: 166, hitpoints: 66.33 },
+            { name: "Black Demon", hp: 157, attack: 237, strength: 237, defence: 237, hitpoints: 94.66 },
+            { name: "Dagannoth", hp: 85, attack: 198, strength: 198, defence: 198, hitpoints: 79.33 },
+            { name: "Hellhound", hp: 116, attack: 212, strength: 212, defence: 212, hitpoints: 84.66 },
+            { name: "Abyssal Demon", hp: 150, attack: 253, strength: 253, defence: 253, hitpoints: 101.33 },
+            { name: "Rock Crab", hp: 50, attack: 70, strength: 70, defence: 70, hitpoints: 28 },
+            { name: "Experiment", hp: 100, attack: 194, strength: 194, defence: 194, hitpoints: 77.66 },
+            { name: "Giant Spider", hp: 50, attack: 88, strength: 88, defence: 88, hitpoints: 35.33 },
+            { name: "Zombie", hp: 25, attack: 39, strength: 39, defence: 39, hitpoints: 15.66 },
+            { name: "Ice Warrior", hp: 57, attack: 103, strength: 103, defence: 103, hitpoints: 41.33 }
+        ];
+
+        let selectedMonster = monsters[0];
+
+        function getXPForLevel(level) {
+            let xp = 0;
+            for (let i = 1; i < level; i++) {
+                xp += Math.floor(i + 300 * Math.pow(2, i / 7));
+            }
+            return Math.floor(xp / 4);
+        }
+
+        function renderMonsters() {
+            const grid = document.getElementById('monsterGrid');
+            grid.innerHTML = '';
+            
+            monsters.forEach((monster, index) => {
+                const card = document.createElement('div');
+                card.className = 'monster-card';
+                if (index === 0) card.classList.add('selected');
+                
+                card.innerHTML = `
+                    <div class="monster-name">${monster.name}</div>
+                    <div class="monster-stats">
+                        HP: ${monster.hp} | ATK XP: ${monster.attack}<br>
+                        STR XP: ${monster.strength} | DEF XP: ${monster.defence}
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.monster-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    selectedMonster = monster;
+                    calculate();
+                });
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function calculate() {
+            const multiplier = parseFloat(document.getElementById('multiplier').value);
+            
+            const skills = [
+                { 
+                    name: 'Attack', 
+                    icon: '⚔️',
+                    current: parseInt(document.getElementById('attackCurrent').value),
+                    target: parseInt(document.getElementById('attackTarget').value),
+                    xpPerKill: selectedMonster.attack * multiplier
+                },
+                { 
+                    name: 'Strength', 
+                    icon: '💪',
+                    current: parseInt(document.getElementById('strengthCurrent').value),
+                    target: parseInt(document.getElementById('strengthTarget').value),
+                    xpPerKill: selectedMonster.strength * multiplier
+                },
+                { 
+                    name: 'Defence', 
+                    icon: '🛡️',
+                    current: parseInt(document.getElementById('defenceCurrent').value),
+                    target: parseInt(document.getElementById('defenceTarget').value),
+                    xpPerKill: selectedMonster.defence * multiplier
+                },
+                { 
+                    name: 'Hitpoints', 
+                    icon: '❤️',
+                    current: parseInt(document.getElementById('hitpointsCurrent').value),
+                    target: parseInt(document.getElementById('hitpointsTarget').value),
+                    xpPerKill: selectedMonster.hitpoints * multiplier
+                },
+                { 
+                    name: 'Ranged', 
+                    icon: '🏹',
+                    current: parseInt(document.getElementById('rangedCurrent').value),
+                    target: parseInt(document.getElementById('rangedTarget').value),
+                    xpPerKill: selectedMonster.attack * multiplier  // Ranged uses same as attack
+                },
+                { 
+                    name: 'Magic', 
+                    icon: '✨',
+                    current: parseInt(document.getElementById('magicCurrent').value),
+                    target: parseInt(document.getElementById('magicTarget').value),
+                    xpPerKill: selectedMonster.attack * multiplier  // Magic uses same as attack
+                }
+            ];
+
+            const resultGrid = document.getElementById('resultGrid');
+            resultGrid.innerHTML = '';
+            
+            let hasValidSkill = false;
+            let maxKills = 0;
+
+            skills.forEach(skill => {
+                if (skill.current < skill.target && skill.current >= 1 && skill.target <= 99) {
+                    hasValidSkill = true;
+                    const currentXP = getXPForLevel(skill.current);
+                    const targetXP = getXPForLevel(skill.target);
+                    const xpNeeded = targetXP - currentXP;
+                    const killsNeeded = Math.ceil(xpNeeded / skill.xpPerKill);
+                    
+                    if (killsNeeded > maxKills) maxKills = killsNeeded;
+
+                    const card = document.createElement('div');
+                    card.className = 'result-card';
+                    card.innerHTML = `
+                        <div class="result-label">${skill.icon} ${skill.name}</div>
+                        <div class="result-value">${killsNeeded.toLocaleString()}</div>
+                        <div class="monster-stats" style="margin-top: 8px;">
+                            ${xpNeeded.toLocaleString()} XP needed<br>
+                            ${skill.xpPerKill.toFixed(1)} XP per kill
+                        </div>
+                    `;
+                    resultGrid.appendChild(card);
+                }
+            });
+
+            if (hasValidSkill) {
+                // Add total kills card
+                const totalCard = document.createElement('div');
+                totalCard.className = 'result-card';
+                totalCard.style.gridColumn = 'span 2';
+                totalCard.innerHTML = `
+                    <div class="result-label">Maximum Kills Needed</div>
+                    <div class="result-value large">${maxKills.toLocaleString()}</div>
+                    <div class="monster-stats" style="margin-top: 8px;">
+                        Kill ${maxKills.toLocaleString()} ${selectedMonster.name}${maxKills > 1 ? 's' : ''} to reach all goals
+                    </div>
+                `;
+                resultGrid.appendChild(totalCard);
+                
+                document.getElementById('results').style.display = 'block';
+            } else {
+                document.getElementById('results').style.display = 'none';
+            }
+        }
+
+        // Add event listeners to all inputs
+        ['attackCurrent', 'attackTarget', 'strengthCurrent', 'strengthTarget', 
+         'defenceCurrent', 'defenceTarget', 'hitpointsCurrent', 'hitpointsTarget',
+         'rangedCurrent', 'rangedTarget', 'magicCurrent', 'magicTarget', 'multiplier'].forEach(id => {
+            document.getElementById(id).addEventListener('input', calculate);
+        });
+
+        renderMonsters();
+        calculate();
+    </script>
+</body>
+</html>

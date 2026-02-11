@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2009scape Skill Calculators</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #0a0806 0%, #1a1410 50%, #0f0c08 100%);
+            color: #e8dcc8;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5em;
+            font-weight: 700;
+            color: #d4af37;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6), 0 0 20px rgba(212, 175, 55, 0.3);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #a89878;
+            font-style: italic;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .skill-card {
+            background: linear-gradient(145deg, #2d2419 0%, #1a1410 100%);
+            border: 3px solid;
+            border-radius: 15px;
+            padding: 25px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .skill-card:hover::before {
+            left: 100%;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .skill-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .skill-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .skill-desc {
+            text-align: center;
+            font-size: 0.95em;
+            color: #a89878;
+        }
+
+        /* Skill-specific colors */
+        .combat { border-color: #DC143C; }
+        .combat .skill-name { color: #DC143C; }
+        
+        .agility { border-color: #90EE90; }
+        .agility .skill-name { color: #90EE90; }
+        
+        .construction { border-color: #CD853F; }
+        .construction .skill-name { color: #CD853F; }
+        
+        .cooking { border-color: #FF6347; }
+        .cooking .skill-name { color: #FF6347; }
+        
+        .crafting { border-color: #9370DB; }
+        .crafting .skill-name { color: #9370DB; }
+        
+        .farming { border-color: #3CB371; }
+        .farming .skill-name { color: #3CB371; }
+        
+        .firemaking { border-color: #FF4500; }
+        .firemaking .skill-name { color: #FF4500; }
+        
+        .fishing { border-color: #4682B4; }
+        .fishing .skill-name { color: #4682B4; }
+        
+        .fletching { border-color: #8B4513; }
+        .fletching .skill-name { color: #8B4513; }
+        
+        .herblore { border-color: #32CD32; }
+        .herblore .skill-name { color: #32CD32; }
+        
+        .hunter { border-color: #D2691E; }
+        .hunter .skill-name { color: #D2691E; }
+        
+        .magic { border-color: #4169E1; }
+        .magic .skill-name { color: #4169E1; }
+        
+        .mining { border-color: #708090; }
+        .mining .skill-name { color: #708090; }
+        
+        .prayer { border-color: #d4af37; }
+        .prayer .skill-name { color: #d4af37; }
+        
+        .runecrafting { border-color: #9370DB; }
+        .runecrafting .skill-name { color: #9370DB; }
+        
+        .smithing { border-color: #DC143C; }
+        .smithing .skill-name { color: #DC143C; }
+        
+        .thieving { border-color: #6A5ACD; }
+        .thieving .skill-name { color: #6A5ACD; }
+        
+        .woodcutting { border-color: #228B22; }
+        .woodcutting .skill-name { color: #228B22; }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: #d4af37;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .skill-card:nth-child(1) { animation-delay: 0.05s; }
+        .skill-card:nth-child(2) { animation-delay: 0.1s; }
+        .skill-card:nth-child(3) { animation-delay: 0.15s; }
+        .skill-card:nth-child(4) { animation-delay: 0.2s; }
+        .skill-card:nth-child(5) { animation-delay: 0.25s; }
+        .skill-card:nth-child(6) { animation-delay: 0.3s; }
+        .skill-card:nth-child(7) { animation-delay: 0.35s; }
+        .skill-card:nth-child(8) { animation-delay: 0.4s; }
+        .skill-card:nth-child(9) { animation-delay: 0.45s; }
+        .skill-card:nth-child(10) { animation-delay: 0.5s; }
+        .skill-card:nth-child(11) { animation-delay: 0.55s; }
+        .skill-card:nth-child(12) { animation-delay: 0.6s; }
+        .skill-card:nth-child(13) { animation-delay: 0.65s; }
+        .skill-card:nth-child(14) { animation-delay: 0.7s; }
+        .skill-card:nth-child(15) { animation-delay: 0.75s; }
+        .skill-card:nth-child(16) { animation-delay: 0.8s; }
+        .skill-card:nth-child(17) { animation-delay: 0.85s; }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚔ 2009scape Skill Calculators ⚔</h1>
+            <div class="subtitle">Custom XP Multiplier for Every Skill</div>
+        </header>
+
+        <div class="skills-grid">
+            <a href="combat.html" class="skill-card combat">
+                <div class="skill-icon"><img src="combat.png" width="50" height="50"></div>
+                <div class="skill-name">Combat Training</div>
+                <div class="skill-desc">All combat skills</div>
+            </a>
+
+            <a href="agility.html" class="skill-card agility">
+                <div class="skill-icon"><img src="Agility.png" width="50" height="50"></div>
+                <div class="skill-name">Agility</div>
+                <div class="skill-desc">Obstacle courses & laps</div>
+            </a>
+
+            <a href="construction.html" class="skill-card construction">
+                <div class="skill-icon"><img src="Construction.png" width="50" height="50"></div>
+                <div class="skill-name">Construction</div>
+                <div class="skill-desc">Furniture & planks</div>
+            </a>
+
+            <a href="cooking.html" class="skill-card cooking">
+                <div class="skill-icon"><img src="Cooking.png" width="50" height="50"></div>
+                <div class="skill-name">Cooking</div>
+                <div class="skill-desc">Food preparation</div>
+            </a>
+
+            <a href="crafting.html" class="skill-card crafting">
+                <div class="skill-icon"><img src="Crafting.png" width="50" height="50"></div>
+                <div class="skill-name">Crafting</div>
+                <div class="skill-desc">Jewelry, armor & more</div>
+            </a>
+
+            <a href="farming.html" class="skill-card farming">
+                <div class="skill-icon"><img src="Farming.png" width="50" height="50"></div>
+                <div class="skill-name">Farming</div>
+                <div class="skill-desc">Herbs, trees & allotments</div>
+            </a>
+
+            <a href="firemaking.html" class="skill-card firemaking">
+                <div class="skill-icon"><img src="Firemaking.png" width="50" height="50"></div>
+                <div class="skill-name">Firemaking</div>
+                <div class="skill-desc">Burning logs</div>
+            </a>
+
+            <a href="fishing.html" class="skill-card fishing">
+                <div class="skill-icon"><img src="Fishing.png" width="50" height="50"></div>
+                <div class="skill-name">Fishing</div>
+                <div class="skill-desc">Catch various fish</div>
+            </a>
+
+            <a href="fletching.html" class="skill-card fletching">
+                <div class="skill-icon"><img src="Fletching.png" width="50" height="50"></div>
+                <div class="skill-name">Fletching</div>
+                <div class="skill-desc">Bows, arrows & darts</div>
+            </a>
+
+            <a href="herblore.html" class="skill-card herblore">
+                <div class="skill-icon"><img src="Herblore.png" width="50" height="50"></div>
+                <div class="skill-name">Herblore</div>
+                <div class="skill-desc">Potions & herbs</div>
+            </a>
+
+            <a href="hunter.html" class="skill-card hunter">
+                <div class="skill-icon"><img src="Hunter.png" width="50" height="50"></div>
+                <div class="skill-name">Hunter</div>
+                <div class="skill-desc">Trap creatures</div>
+            </a>
+
+            <a href="magic.html" class="skill-card magic">
+                <div class="skill-icon"><img src="magic.png" width="50" height="50"></div>
+                <div class="skill-name">Magic</div>
+                <div class="skill-desc">Spellcasting & enchanting</div>
+            </a>
+
+            <a href="mining.html" class="skill-card mining">
+                <div class="skill-icon"><img src="Mining.png" width="50" height="50"></div>
+                <div class="skill-name">Mining</div>
+                <div class="skill-desc">Mine ores & gems</div>
+            </a>
+
+            <a href="prayer.html" class="skill-card prayer">
+                <div class="skill-icon"><img src="Prayer.png" width="50" height="50"></div>
+                <div class="skill-name">Prayer</div>
+                <div class="skill-desc">Bones & ashes</div>
+            </a>
+
+            <a href="runecrafting.html" class="skill-card runecrafting">
+                <div class="skill-icon"><img src="Runecraft.png" width="50" height="50"></div>
+                <div class="skill-name">Runecrafting</div>
+                <div class="skill-desc">Craft runes</div>
+            </a>
+
+            <a href="smithing.html" class="skill-card smithing">
+                <div class="skill-icon"><img src="Smithing.png" width="50" height="50"></div>
+                <div class="skill-name">Smithing</div>
+                <div class="skill-desc">Forge bars & items</div>
+            </a>
+
+            <a href="thieving.html" class="skill-card thieving">
+                <div class="skill-icon"><img src="Thieving.png" width="50" height="50"></div>
+                <div class="skill-name">Thieving</div>
+                <div class="skill-desc">Pickpocket & steal</div>
+            </a>
+
+            <a href="woodcutting.html" class="skill-card woodcutting">
+                <div class="skill-icon"><img src="Woodcutting.png" width="50" height="50"></div>
+                <div class="skill-name">Woodcutting</div>
+                <div class="skill-desc">Chop trees for logs</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

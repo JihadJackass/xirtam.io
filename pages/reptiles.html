@@ -9,11 +9,11 @@
     </head>
     <body class="is-preload">
 
-        <!-- Header (unchanged — your existing site sidebar) -->
+        <!-- Sidebar — untouched -->
         <div id="header">
             <div class="top">
                 <div id="logo">
-                    <span class="image avatar48"><img src="../assets/images/avatars/avatar.jpg" alt="" /></span>
+                    <span class="image avatar48"><img src="../assets/images/avatars/avatar.jpg"/></span>
                     <h1 id="title">Noah Gamble JihadiJackass</h1>
                     <p>Computer Programmer</p>
                     <p>Mod Developer</p>
@@ -33,24 +33,22 @@
             <div class="bottom">
                 <ul class="icons">
                     <li><a href="https://github.com/JihadJackass" class="icon brands fa-github"><span class="label">Github</span></a></li>
-                    <li><a href="mailto:todosupportemail?Subject=Xirtam3" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+                    <li><a href="/cdn-cgi/l/email-protection#7f0b101b100c0a0f0f100d0b1a121e1613402c0a1d151a1c0b4227160d0b1e124c" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
                 </ul>
             </div>
         </div>
 
-        <!-- =====================================================
-             MAIN CONTENT
-             ===================================================== -->
+        <!-- MAIN -->
         <div id="main">
             <div class="reptile-page">
 
-                <!-- Layered jungle background -->
+                <!-- Jungle background layers -->
                 <div class="rp-background">
                     <div class="rp-bg-base"></div>
                     <div class="rp-trees-far"></div>
+                    <div class="rp-trees-mid"></div>
                     <div class="rp-trees-left"></div>
                     <div class="rp-trees-right"></div>
-                    <div class="rp-trees-mid"></div>
                     <div class="rp-canopy-top"></div>
                     <div class="rp-mist-1"></div>
                     <div class="rp-mist-2"></div>
@@ -58,22 +56,21 @@
                     <div class="rp-light-rays"></div>
                 </div>
 
-                <!-- Sub-navigation -->
+                <!-- Sub-navigation — order matches section order below -->
                 <nav class="rp-subnav" id="rp-subnav">
                     <ul>
-                        <li><a href="#rp-current"   class="rp-nav-link">Currently Owned</a></li>
-                        <li><a href="#rp-previous"  class="rp-nav-link">Previously Owned</a></li>
-                        <li><a href="#rp-wishlist"  class="rp-nav-link">Wishlist</a></li>
-                        <li><a href="#rp-care"      class="rp-nav-link">Care Tips</a></li>
-                        <li><a href="#rp-breeding"  class="rp-nav-link">Breeding</a></li>
-                        <li><a href="#rp-obituaries" class="rp-nav-link obituaries-toggle" id="toggle-obituaries">Obituaries</a></li>
+                        <li><a href="#rp-current"    class="rp-nav-link">Currently Owned</a></li>
+                        <li><a href="#rp-previous"   class="rp-nav-link">Previously Owned</a></li>
+                        <li><a href="#rp-wishlist"   class="rp-nav-link">Wishlist</a></li>
+                        <li><a href="#rp-obituaries" class="rp-nav-link obituaries-toggle">Obituaries</a></li>
+                        <li><a href="#rp-care"       class="rp-nav-link">Care Tips</a></li>
+                        <li><a href="#rp-breeding"   class="rp-nav-link">Breeding</a></li>
                     </ul>
                 </nav>
 
-                <!-- Content wrapper -->
+                <!-- Content -->
                 <div class="rp-content">
 
-                    <!-- CURRENTLY OWNED -->
                     <section id="rp-current" class="rp-section">
                         <div class="rp-section-header">
                             <span class="rp-section-label">In My Care</span>
@@ -84,7 +81,6 @@
                     </section>
                     <div class="rp-section-sep"></div>
 
-                    <!-- PREVIOUSLY OWNED -->
                     <section id="rp-previous" class="rp-section">
                         <div class="rp-section-header">
                             <span class="rp-section-label">Past Companions</span>
@@ -95,7 +91,6 @@
                     </section>
                     <div class="rp-section-sep"></div>
 
-                    <!-- WISHLIST -->
                     <section id="rp-wishlist" class="rp-section">
                         <div class="rp-section-header">
                             <span class="rp-section-label">Dream Roster</span>
@@ -106,7 +101,17 @@
                     </section>
                     <div class="rp-section-sep"></div>
 
-                    <!-- CARE TIPS -->
+                    <!-- OBITUARIES — now above Care Tips -->
+                    <section id="rp-obituaries" class="rp-section">
+                        <div class="rp-section-header">
+                            <span class="rp-section-label">In Memoriam</span>
+                            <h2>Obituaries</h2>
+                            <div class="rp-section-divider"></div>
+                        </div>
+                        <div class="rp-card-grid" id="grid-obituaries"></div>
+                    </section>
+                    <div class="rp-section-sep"></div>
+
                     <section id="rp-care" class="rp-section">
                         <div class="rp-section-header">
                             <span class="rp-section-label">Husbandry Notes</span>
@@ -117,7 +122,6 @@
                     </section>
                     <div class="rp-section-sep"></div>
 
-                    <!-- BREEDING PROJECTS -->
                     <section id="rp-breeding" class="rp-section">
                         <div class="rp-section-header">
                             <span class="rp-section-label">Projects</span>
@@ -127,95 +131,135 @@
                         <div id="grid-breeding"></div>
                     </section>
 
-                    <!-- OBITUARIES (always visible) -->
-                    <section id="rp-obituaries" class="rp-content open">
-                        <div class="rp-section-header">
-                            <span class="rp-section-label">In Memoriam</span>
-                            <h2>Obituaries</h2>
-                            <div class="rp-section-divider"></div>
-                        </div>
-                        <div class="rp-card-grid" id="grid-obituaries"></div>
-                    </section>
-
                 </div><!-- /rp-content -->
             </div><!-- /reptile-page -->
         </div><!-- /main -->
 
         <!-- =====================================================
-             REPTILE DATA
-             To add a reptile: copy one object, paste it into the
-             correct array, and fill in the fields.
-             Use null for unknown values.
+             IMAGE LIGHTBOX (shared modal)
              ===================================================== -->
-        <script>
+        <div class="rp-lightbox" id="rp-lightbox">
+            <button class="rp-lightbox-close" id="lb-close" aria-label="Close">&#x2715;</button>
+            <div class="rp-lightbox-inner">
+                <img class="rp-lightbox-img" id="lb-img" src="" alt="" />
+                <div class="rp-lightbox-caption" id="lb-caption"></div>
+                <div class="rp-lightbox-counter" id="lb-counter"></div>
+            </div>
+            <button class="rp-lightbox-prev" id="lb-prev" aria-label="Previous">&#8592;</button>
+            <button class="rp-lightbox-next" id="lb-next" aria-label="Next">&#8594;</button>
+        </div>
+
+        <!-- =====================================================
+             REPTILE DATA
+             ─────────────────────────────────────────────────────
+             IMAGE FIELD GUIDE:
+             Each reptile can have:
+               image:  "../assets/images/reptiles/leo-1.jpg"   ← single primary image shown on card
+               images: [                                        ← full gallery opened on click
+                   { src: "../assets/images/reptiles/leo-1.jpg", caption: "Leo in his basking spot" },
+                   { src: "../assets/images/reptiles/leo-2.jpg", caption: "Leo after a shed" },
+               ]
+             Set image: null and images: [] if you have no photos yet.
+             ===================================================== -->
+        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // ── CURRENTLY OWNED ──────────────────────────────────────
         const CURRENT_REPTILES = [
             {
                 name:       "Leo",
                 species:    "Leopard Gecko",
                 latin:      "Eublepharis macularius",
-                morph:      "Male",           // null = displays as "Unknown"
-                sex:        null,
-                age:        null,
-                acquired:   null,
+                morph:      null,
+                sex:        "Male",
+                age:        "5 Years",
+                acquired:   "2018–2019",
                 enclosure:  "40gal long",
-                notes:      "My current gecko. Still learning more about him — morph and age TBD as I get to know him better."
+                notes:      "Leo is my more skittish Leopard Gecko which prefers to keep to himself and does not come out much aside from food night crawling, and absolutely despises Lily everytime he sees her in her own cage.",
+                image:      null,   // e.g. "../assets/images/reptiles/leo.jpg"
+                images:     [],     // gallery — add objects: { src: "...", caption: "..." }
             },
             {
                 name:       "Lily",
                 species:    "Leopard Gecko",
                 latin:      "Eublepharis macularius",
-                morph:      "Male",           // null = displays as "Unknown"
-                sex:        null,
-                age:        null,
-                acquired:   null,
+                morph:      null,
+                sex:        "Male",
+                age:        "5 Years",
+                acquired:   "2018–2019",
                 enclosure:  "40gal long",
-                notes:      "My current gecko. Still learning more about him — morph and age TBD as I get to know him better."
+                notes:      "Lily, despite being a male is much more interactive and friendly and constantly comes out seeking food and attention. Does not care about Leo one way or another and keeps to himself.",
+                image:      null,
+                images:     [],
             },
             {
-                name:       "TODO",
+                name:       "Pengu",
                 species:    "Tokay Gecko",
                 latin:      "Gekko Gekko",
-                morph:      null,           // null = displays as "Unknown"
+                morph:      null,
                 sex:        null,
-                age:        null,
-                acquired:   null,
-                enclosure:  "20gal long",
-                notes:      "My current gecko. Still learning more about him — morph and age TBD as I get to know him better."
+                age:        "1 Year",
+                acquired:   "2025",
+                enclosure:  "30gal tall",
+                notes:      "Pengu is apart of my plan to own a horde of Tokay Geckos, as they are my favorite species of Gecko with how they can be both friendly and evil — moreso as an adult considering they hold more fear as a youngling.<br><br>Pengu and Pebbles names are based on the fact that they are siblings of which tokay geckos are known to be more communal in the sense that they will protect their young, so the name derives from how penguins will provide their partner with their favorite pebble.<br>(Pengu = Penguin | Pebbles = The Pebble )",
+                image:      null,
+                images:     [],
             },
             {
-                name:       "TODO",
+                name:       "Pebbles",
                 species:    "Tokay Gecko",
                 latin:      "Gekko Gekko",
-                morph:      null,           // null = displays as "Unknown"
+                morph:      null,
                 sex:        null,
-                age:        null,
-                acquired:   null,
-                enclosure:  "20gal long",
-                notes:      "My current gecko. Still learning more about him — morph and age TBD as I get to know him better."
+                age:        "1 Year",
+                acquired:   "2025",
+                enclosure:  "30gal tall",
+                notes:      "Pebbles is also apart of my plan to own a horde of Tokay Geckos, as they are my favorite species of Gecko with how they can be both friendly and evil — moreso as an adult considering they hold more fear as a youngling.<br><br>Pengu and Pebbles names are based on the fact that they are siblings of which tokay geckos are known to be more communal in the sense that they will protect their young, so the name derives from how penguins will provide their partner with their favorite pebble.<br>(Pengu = Penguin | Pebbles = The Pebble )",
+                image:      null,
+                images:     [],
             },
             {
-                name:       "TODO",
+                name:       "Khan / Caesar / Alexander",
                 species:    "Tokay Gecko",
                 latin:      "Gekko Gekko",
-                morph:      null,           // null = displays as "Unknown"
-                sex:        null,
-                age:        null,
-                acquired:   null,
-                enclosure:  "20gal long",
-                notes:      "My current gecko. Still learning more about him — morph and age TBD as I get to know him better."
+                morph:      null,
+                sex:        "Male",
+                age:        "3 Years",
+                acquired:   "2021",
+                enclosure:  "60gal tall",
+                notes:      "Khan is my most beloved Tokay Gecko and is my Adult Male that I am hoping either Pebbles or Pengu will be able to breed with eventually should one be a girl, otherwise I will have 3 Male masters of war.",
+                image:      "../assets/images/reptiles/khan_1.jpg",
+                images:     [],
+            },
+            {
+                name:       "Izzie",
+                species:    "Uromastyx",
+                latin:      "Uromastyx acanthinura (to be confirmed)",
+                morph:      null,
+                sex:        "Female",
+                age:        "8 Years",
+                acquired:   "2024",
+                enclosure:  "45gal long",
+                notes:      "Izzie is a blind North African spiny-tailed lizard which I rescued from my volunteer work at a reptile store and sadly has a rather frustrating eye condition that seems to cause near or total blindness — ironically, I can relate as I am half blind myself. I give her a specialized cage which allows her not to hurt herself while still being reasonably enriched. She is a passionate eater and loves treats now and then such as raspberries and various fruits that aren't apart of her normal diet.",
+                image:      "../assets/images/reptiles/izzie_1.jpg",
+                images:     [
+                    { src: "../assets/images/reptiles/izzie_2.jpg", caption: "Description" },
+                    { src: "../assets/images/reptiles/izzie_2.jpg", caption: "Description" },
+                ],
             },
             // ── ADD NEW CURRENT REPTILE HERE ──
             // {
             //     name:      "Name",
             //     species:   "Common Name",
             //     latin:     "Genus species",
-            //     morph:     "Morph name",
+            //     morph:     null,
             //     sex:       "Male / Female / Unknown",
             //     age:       "2 years",
             //     acquired:  "Jan 2024",
             //     enclosure: "40gal breeder",
-            //     notes:     "Notes about this animal."
+            //     notes:     "Notes about this animal.",
+            //     image:     "../assets/images/reptiles/name.jpg",
+            //     images:    [
+            //         { src: "../assets/images/reptiles/name-1.jpg", caption: "Description" },
+            //     ],
             // },
         ];
 
@@ -230,102 +274,81 @@
                 age:        "1",
                 acquired:   "2019",
                 enclosure:  null,
-                notes:      null
+                notes:      "I had decided to get a Savannah Monitor Lizard at one point believing I'd be able to build an appropriate large cage within enough time, but then had my living situation entirely shift which prevented me from being able to home such a demanding space consuming reptile - One day I will get another one of these beautiful lizards.",
+                image:      "../assets/images/reptiles/savannah_1.jpg",
+                images:     [],
             },
             // ── ADD NEW PREVIOUS REPTILE HERE ──
         ];
 
         // ── WISHLIST ─────────────────────────────────────────────
         const WISHLIST_REPTILES = [
-            // ── ADD WISHLIST ENTRIES HERE ──
             {
-                name:    null,          // null = species only, no personal name yet
+                name:    null,
                 species: "Blue Tree Monitor",
                 latin:   "Varanus macraei",
-                notes:   "Dream animal. Would need a serious custom build."
+                notes:   "Dream animal. Would need a serious custom build.",
+                image:   null,
+                images:  [],
             },
+            // ── ADD WISHLIST ENTRIES HERE ──
         ];
 
         // ── CARE TIPS ─────────────────────────────────────────────
         const CARE_TIPS = [
-            {
-                icon:  "🌡️",
-                title: "Temperature Gradients",
-                body:  "Always provide a thermal gradient — hot side, cool side, and a hiding spot at each. Reptiles regulate body temperature behaviourally and need the choice."
-            },
-            {
-                icon:  "💧",
-                title: "Humidity & Hydration",
-                body:  "Species requirements vary wildly. Leopard geckos prefer 30–40%, while crested geckos need 60–80%. A digital hygrometer is non-negotiable."
-            },
-            {
-                icon:  "🍖",
-                title: "Feeding & Gut-Loading",
-                body:  "Live feeders should be gut-loaded 24h before feeding. Dust with calcium (D3 twice monthly). Variety prevents nutritional deficiencies over time."
-            },
-            {
-                icon:  "🏠",
-                title: "Enrichment & Hides",
-                body:  "Reptiles need at least two hides — one warm, one cool. More is better. Enrichment like branches, cork bark, and leaf litter reduces stress significantly."
-            },
-            {
-                icon:  "🩺",
-                title: "Vet & Health Checks",
-                body:  "Find a reptile-specialist vet before you need one. Annual fecal exams catch parasites early. Know your animal\'s baseline weight — weigh monthly."
-            },
-            {
-                icon:  "🪨",
-                title: "Substrate Choices",
-                body:  "Loose substrate is fine for many species when humidity is controlled. Bioactive setups with microfauna are excellent long-term. Avoid cedar or pine."
-            },
+            { icon: "🌡️", title: "Temperature Gradients",  body: "Always provide a thermal gradient — hot side, cool side, and a hiding spot at each. Reptiles regulate body temperature behaviourally and need the choice." },
+            { icon: "💧", title: "Humidity & Hydration",    body: "Species requirements vary wildly. Leopard geckos prefer 30–40%, while crested geckos need 60–80%. A digital hygrometer is non-negotiable." },
+            { icon: "🍖", title: "Feeding & Gut-Loading",   body: "Live feeders should be gut-loaded 24h before feeding. Dust with calcium (D3 twice monthly). Variety prevents nutritional deficiencies over time." },
+            { icon: "🏠", title: "Enrichment & Hides",      body: "Reptiles need at least two hides — one warm, one cool. More is better. Enrichment like branches, cork bark, and leaf litter reduces stress significantly." },
+            { icon: "🩺", title: "Vet & Health Checks",     body: "Find a reptile-specialist vet before you need one. Annual fecal exams catch parasites early. Know your animal\'s baseline weight — weigh monthly." },
+            { icon: "🪨", title: "Substrate Choices",       body: "Loose substrate is fine for many species when humidity is controlled. Bioactive setups with microfauna are excellent long-term. Avoid cedar or pine." },
         ];
 
         // ── BREEDING PROJECTS ────────────────────────────────────
         const BREEDING_PROJECTS = [
-            // ── ADD BREEDING PROJECTS HERE ──
-            // {
-            //     title:    "Leo × ???",
-            //     species:  "Leopard Gecko",
-            //     status:   "Planning",
-            //     notes:    "Need to determine Leo's morph first before planning any pairing."
-            // },
+            // { title: "Khan × Pengu/Pebbles", species: "Tokay Gecko", status: "Planning", notes: "Pending sex confirmation of Pengu and Pebbles." },
         ];
 
         // ── OBITUARIES ───────────────────────────────────────────
         const OBITUARIES = [
             {
-                name:        "Mushu",
-                species:     "Bearded Dragon",
-                latin:       "Pogona vitticeps",
-                morph:       null,
-                sex:         null,
-                age:         "13 years",
-                acquired:    "2014",
-                enclosure:   null,
-                cause:       "Heat Stroke due to complications with Metabolic Bone Disease (MBD).",
-                notes:       "My first reptile, and the one who started all of this. I purchased him from Pet Smart at the age of roughly 16 and unfortunately had MBD from the start and so he struggled with MBD but lived a long, decent life. If I could go back and do things differently, I absolutely would — but I gave him everything I knew how to give at the time. Rest easy, buddy."
+                name:     "Mushu",
+                species:  "Bearded Dragon",
+                latin:    "Pogona vitticeps",
+                morph:    null,
+                sex:      null,
+                age:      "13 years",
+                acquired: "2014",
+                cause:    "Heat Stroke due to complications with Metabolic Bone Disease (MBD).",
+                notes:    "My first reptile, and the one who started all of this. I purchased him from Pet Smart at the age of roughly 16 and unfortunately had MBD from the start and so he struggled with MBD but lived a long, decent life. I had much to learn then, and MBD was not something I realized could be overcome until later in life but by that point he had developed further issues as a result of MBD. He was always a friendly lizard and really enjoyed shitting on my comfortable blankets, which I suppose I understand to a degree.",
+                image:    null,
+                images:   [],
             },
             {
-                name:        "Zeus",
-                species:     "Crested Gecko",
-                latin:       "Correlophus ciliatus",
-                morph:       null,
-                sex:         "Male",
-                age:         "5",
-                acquired:    null,
-                enclosure:   null,
-                cause:       "Power Failiure",
-                notes:       "My second reptile - TODO."
+                name:     "Zeus",
+                species:  "Crested Gecko",
+                latin:    "Correlophus ciliatus",
+                morph:    null,
+                sex:      "Male",
+                age:      "5",
+                acquired: null,
+                cause:    "Power Failure",
+                notes:    "My second reptile who sadly passed away due to unforseen circumstances with a previous living situation in which he was exposed to intense heat for far too long. I interacted with Zeus on a semi-regular basis as I preferred to keep him in a more 'natural' state of behavour for observational purposes. He was a gorgeous boy who deserved a much longer life.",
+                image:    null,
+                images:   [],
             },
+            // ── ADD OBITUARY HERE ──
         ];
 
         // =====================================================
-        //  CARD RENDERING — no need to edit below this line
+        //  RENDERING ENGINE — edit below only if you know what you're doing
         // =====================================================
 
-        function val(v) {
-            return (v !== null && v !== undefined && v !== '') ? v : null;
-        }
+        // Lightbox state
+        let lbImages = [];
+        let lbIndex  = 0;
+
+        function val(v) { return (v !== null && v !== undefined && v !== '') ? v : null; }
 
         function statHtml(label, value) {
             const display = val(value)
@@ -334,20 +357,59 @@
             return `<div class="rp-stat"><span class="rp-stat-label">${label}</span>${display}</div>`;
         }
 
+        // Build the image block for a card
+        function imageHtml(r, animalName) {
+            const imgs   = (r.images && r.images.length) ? r.images : (val(r.image) ? [{ src: r.image, caption: animalName }] : []);
+            const hasImg = val(r.image) || imgs.length;
+
+            if (!hasImg) {
+                return '';   // no image, no placeholder emoji
+            }
+
+            const dataImgs = encodeURIComponent(JSON.stringify(imgs));
+            const label    = imgs.length > 1 ? `View ${imgs.length} Photos` : 'View Photo';
+            return `
+                <div class="rp-card-image" onclick="openLightbox(${dataImgs}, 0)" title="${label}">
+                    <img src="${r.image || imgs[0].src}" alt="${animalName}" loading="lazy" />
+                    <div class="rp-card-image-overlay"><span>${label}</span></div>
+                </div>`;
+        }
+
+        function openLightbox(encodedImgs, startIndex) {
+            lbImages = typeof encodedImgs === 'string' ? JSON.parse(decodeURIComponent(encodedImgs)) : encodedImgs;
+            lbIndex  = startIndex;
+            showLbSlide();
+            document.getElementById('rp-lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('rp-lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function showLbSlide() {
+            const item = lbImages[lbIndex];
+            document.getElementById('lb-img').src          = item.src;
+            document.getElementById('lb-img').alt          = item.caption || '';
+            document.getElementById('lb-caption').textContent = item.caption || '';
+            document.getElementById('lb-counter').textContent = lbImages.length > 1 ? `${lbIndex + 1} / ${lbImages.length}` : '';
+            document.getElementById('lb-prev').style.display = lbImages.length > 1 ? '' : 'none';
+            document.getElementById('lb-next').style.display = lbImages.length > 1 ? '' : 'none';
+        }
+
+        function lbPrev() { lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length; showLbSlide(); }
+        function lbNext() { lbIndex = (lbIndex + 1) % lbImages.length; showLbSlide(); }
+
         function buildReptileCard(r, status) {
-            const badgeLabels = {
-                current:  'Currently Owned',
-                previous: 'Previously Owned',
-                wishlist: 'Wishlist',
-                memorial: 'In Memoriam'
-            };
-            const latinStr   = val(r.latin)   ? ` <em>${r.latin}</em>` : '';
-            const nameStr    = val(r.name)     ? r.name                 : r.species;
-            const nameLabel  = val(r.name)     ? `${r.name}` : r.species;
-            const latinLabel = val(r.name) && val(r.latin) ? ` <em>${r.latin}</em>` : (val(r.latin) && !val(r.name)) ? ` <em>${r.latin}</em>` : '';
+            const badgeLabels = { current:'Currently Owned', previous:'Previously Owned', wishlist:'Wishlist', memorial:'In Memoriam' };
+            const nameLabel   = val(r.name) ? r.name : r.species;
+            const latinLabel  = val(r.latin) ? ` <em>${r.latin}</em>` : '';
 
             let statsHtml = '';
-            if (status !== 'wishlist') {
+            if (status === 'wishlist') {
+                statsHtml = val(r.latin) ? `<div class="rp-card-stats"><div class="rp-stat full"><span class="rp-stat-label">Scientific Name</span><span class="rp-stat-value"><em>${r.latin}</em></span></div></div>` : '';
+            } else {
                 statsHtml = `
                     <div class="rp-card-stats">
                         ${statHtml('Age',       r.age)}
@@ -356,44 +418,36 @@
                         ${statHtml('Acquired',  r.acquired)}
                         ${val(r.enclosure) ? statHtml('Enclosure', r.enclosure) : ''}
                     </div>`;
-            } else {
-                // Wishlist: show latin if available
-                statsHtml = val(r.latin) ? `<div class="rp-card-stats"><div class="rp-stat full"><span class="rp-stat-label">Scientific Name</span><span class="rp-stat-value"><em>${r.latin}</em></span></div></div>` : '';
             }
-
-            const notesHtml = val(r.notes)
-                ? `<p class="rp-card-notes">${r.notes}</p>`
-                : '';
 
             return `
                 <div class="rp-card status-${status}">
                     <div class="rp-card-accent"></div>
+                    ${imageHtml(r, nameLabel)}
                     <div class="rp-card-body">
                         <div class="rp-card-badge">${badgeLabels[status]}</div>
                         <p class="rp-card-species">${r.species}</p>
                         <h3 class="rp-card-name">${nameLabel}${latinLabel}</h3>
                         ${statsHtml}
-                        ${notesHtml}
+                        ${val(r.notes) ? `<p class="rp-card-notes">${r.notes}</p>` : ''}
                     </div>
                 </div>`;
         }
 
         function buildMemorialCard(r) {
             const latinLabel = val(r.latin) ? ` <em>${r.latin}</em>` : '';
-            const causeStr   = val(r.cause) ? r.cause : null;
-
             return `
                 <div class="rp-card status-memorial">
                     <div class="rp-card-accent"></div>
+                    ${imageHtml(r, r.name)}
                     <div class="rp-card-body">
                         <div class="rp-card-badge">In Memoriam</div>
                         <p class="rp-card-species">${r.species}</p>
                         <h3 class="rp-card-name">${r.name}${latinLabel}</h3>
                         <div class="rp-card-stats">
-                            ${statHtml('Age',     r.age)}
-                            ${statHtml('Morph',   r.morph)}
-                            ${statHtml('Sex',     r.sex)}
-                            ${val(causeStr) ? `<div class="rp-stat full"><span class="rp-stat-label">Cause</span><span class="rp-stat-value">${causeStr}</span></div>` : ''}
+                            ${statHtml('Age',  r.age)}
+                            ${statHtml('Sex',  r.sex)}
+                            ${val(r.cause) ? `<div class="rp-stat full"><span class="rp-stat-label">Cause</span><span class="rp-stat-value">${r.cause}</span></div>` : ''}
                         </div>
                         ${val(r.notes) ? `<p class="rp-memorial-epitaph">${r.notes}</p>` : ''}
                     </div>
@@ -409,32 +463,27 @@
                 </div>`;
         }
 
-        function renderGrid(arrayData, containerId, status, buildFn) {
-            const el = document.getElementById(containerId);
+        function renderGrid(data, id, status, buildFn) {
+            const el = document.getElementById(id);
             if (!el) return;
-            if (!arrayData.length) {
-                el.innerHTML = `<div class="rp-wishlist-placeholder">Nothing here yet — check back soon.</div>`;
-                return;
-            }
-            el.innerHTML = arrayData.map(r => buildFn ? buildFn(r) : buildReptileCard(r, status)).join('');
+            el.innerHTML = data.length
+                ? data.map(r => buildFn ? buildFn(r) : buildReptileCard(r, status)).join('')
+                : `<div class="rp-wishlist-placeholder">Nothing here yet — check back soon.</div>`;
         }
 
         document.addEventListener('DOMContentLoaded', function () {
 
-            // Render all sections
+            // Render sections
             renderGrid(CURRENT_REPTILES,  'grid-current',    'current');
             renderGrid(PREVIOUS_REPTILES, 'grid-previous',   'previous');
             renderGrid(WISHLIST_REPTILES, 'grid-wishlist',   'wishlist');
-            renderGrid(CARE_TIPS,         'grid-care',       null,       buildCareCard);
-            renderGrid(OBITUARIES,        'grid-obituaries', null,       buildMemorialCard);
+            renderGrid(OBITUARIES,        'grid-obituaries', null, buildMemorialCard);
+            renderGrid(CARE_TIPS,         'grid-care',       null, buildCareCard);
 
-            // Breeding — simple placeholder or list
+            // Breeding
             const breedingEl = document.getElementById('grid-breeding');
-            if (BREEDING_PROJECTS.length === 0) {
-                breedingEl.innerHTML = `
-                    <div class="rp-breeding-placeholder">
-                        <p>No active breeding projects yet. This section will be updated when projects are underway.</p>
-                    </div>`;
+            if (!BREEDING_PROJECTS.length) {
+                breedingEl.innerHTML = `<div class="rp-breeding-placeholder"><p>No active breeding projects yet. This section will be updated when projects are underway.</p></div>`;
             } else {
                 breedingEl.classList.add('rp-card-grid');
                 breedingEl.innerHTML = BREEDING_PROJECTS.map(p => `
@@ -449,33 +498,40 @@
                     </div>`).join('');
             }
 
-            // ── Active nav link highlighting on scroll ─────────
-            const sections = document.querySelectorAll('.rp-section, #rp-obituaries');
-            const navLinks  = document.querySelectorAll('.rp-nav-link');
+            // Lightbox controls
+            document.getElementById('lb-close').addEventListener('click', closeLightbox);
+            document.getElementById('lb-prev').addEventListener('click', lbPrev);
+            document.getElementById('lb-next').addEventListener('click', lbNext);
+            document.getElementById('rp-lightbox').addEventListener('click', function(e) {
+                if (e.target === this) closeLightbox();
+            });
+            document.addEventListener('keydown', function(e) {
+                const lb = document.getElementById('rp-lightbox');
+                if (!lb.classList.contains('open')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft')  lbPrev();
+                if (e.key === 'ArrowRight') lbNext();
+            });
 
+            // Active nav highlight on scroll
+            const navLinks = document.querySelectorAll('.rp-nav-link');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        navLinks.forEach(link => link.classList.remove('active'));
-                        const id = entry.target.id;
-                        const activeLink = document.querySelector(`.rp-nav-link[href="#${id}"]`);
-                        if (activeLink) activeLink.classList.add('active');
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        const link = document.querySelector(`.rp-nav-link[href="#${entry.target.id}"]`);
+                        if (link) link.classList.add('active');
                     }
                 });
             }, { rootMargin: '-30% 0px -60% 0px' });
 
-            document.querySelectorAll('.rp-section, #rp-obituaries').forEach(s => observer.observe(s));
+            document.querySelectorAll('.rp-section').forEach(s => observer.observe(s));
         });
         </script>
 
-        <!-- Scripts (your existing ones) -->
+        <!-- Site scripts -->
         <script src="../assets/js/jquery.min.js"></script>
         <script src="../assets/js/jquery.scrolly.min.js"></script>
         <script src="../assets/js/jquery.scrollex.min.js"></script>
         <script src="../assets/js/browser.min.js"></script>
-        <script src="../assets/js/breakpoints.min.js"></script>
-        <script src="../assets/js/util.js"></script>
-        <script src="../assets/js/main.js"></script>
-
-    </body>
-</html>
+        <script src="../ass

@@ -1,329 +1,719 @@
-/* 🔹 Achievements Page Styling (Works with `main.css`) */
+/* ============================================================
+   ACHIEVEMENT MANAGER — achievement.css
+   Aesthetic: Dark tactical / HUD-inspired
+   Fonts: Rajdhani (headers) + Share Tech Mono (body/labels)
+
+   LOAD ORDER: This file loads AFTER main.css. All rules are
+   scoped to #main to avoid bleeding into the site header/nav
+   that main.css owns. Font-size and heading resets at the top
+   undo main.css globals that would otherwise distort the UI.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+/* ─────────────────────────────────────────────────────────────
+   CSS VARIABLES
+   ───────────────────────────────────────────────────────────── */
+:root {
+    --color-bg-void:        #080c10;
+    --color-bg-panel:       #0d1520;
+    --color-bg-card:        #111d2e;
+    --color-bg-card-hover:  #162438;
+    --color-bg-input:       #0a1220;
+    --color-border:         #1e3050;
+    --color-border-subtle:  #152238;
+
+    --color-accent:         #00c8ff;
+    --color-accent-dim:     #0090bb;
+    --color-accent-glow:    rgba(0, 200, 255, 0.15);
+
+    --color-success:        #00e676;
+    --color-success-dim:    rgba(0, 230, 118, 0.12);
+    --color-danger:         #ff3d5a;
+    --color-danger-dim:     rgba(255, 61, 90, 0.12);
+    --color-warning:        #ffab00;
+    --color-warning-dim:    rgba(255, 171, 0, 0.12);
+
+    --color-text-primary:   #ddeeff;
+    --color-text-secondary: #6a8aaa;
+    --color-text-muted:     #334455;
+
+    --font-display: 'Rajdhani', sans-serif;
+    --font-mono:    'Share Tech Mono', monospace;
+
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+
+    --radius-sm: 3px;
+    --radius-md: 6px;
+
+    --transition-fast: 0.15s ease;
+    --transition-mid:  0.25s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MAIN.CSS CONFLICT RESETS
+   main.css sets aggressive globals (19pt body font, h2 at 2em
+   with -1px letter-spacing, p/ul margin-bottom: 2em, etc.)
+   that all bleed into our UI. Scoped to #main so the site
+   header and nav panel are completely untouched.
+   ───────────────────────────────────────────────────────────── */
+#main {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    background: var(--color-bg-void);
+}
+
+#main h1, #main h2, #main h3,
+#main h4, #main h5, #main h6 {
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: normal;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+#main p  { margin-bottom: 0; }
+#main ul { margin-bottom: 0; list-style: none; }
+#main a, #main a:hover { color: inherit; border-bottom: none; }
+
+#main *, #main *::before, #main *::after {
+    box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TOP MENU BAR
+   ───────────────────────────────────────────────────────────── */
+.top-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: var(--color-bg-panel);
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+    background-image: repeating-linear-gradient(
+        0deg,
+        transparent, transparent 2px,
+        rgba(0, 200, 255, 0.015) 2px,
+        rgba(0, 200, 255, 0.015) 4px
+    );
+}
+
+.top-menu::before {
+    content: '// XIRTAM ACHIEVEMENT MANAGER';
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    margin-right: auto;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   UNIFIED BUTTON SYSTEM
+   ───────────────────────────────────────────────────────────── */
+.top-menu button,
+#left-panel button,
+.achievement-actions button,
+.import-export-buttons button,
+.back-btn,
+.game-btn {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-card);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        box-shadow var(--transition-fast);
+    white-space: nowrap;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.top-menu button {
+    background: transparent;
+    border-color: var(--color-accent-dim);
+    color: var(--color-accent);
+}
+.top-menu button:hover {
+    background: var(--color-accent-glow);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 12px var(--color-accent-glow);
+    color: var(--color-accent);
+}
+
+#sign-out {
+    background: transparent;
+    border-color: rgba(255, 61, 90, 0.4);
+    color: var(--color-danger);
+    margin-left: auto;
+}
+#sign-out:hover {
+    background: var(--color-danger-dim);
+    border-color: var(--color-danger);
+    box-shadow: 0 0 10px rgba(255, 61, 90, 0.2);
+}
+
+#left-panel button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin-bottom: var(--space-sm);
+    padding: 10px var(--space-md);
+    background: var(--color-bg-card);
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+}
+#left-panel button:hover {
+    background: var(--color-bg-card-hover);
+    border-color: var(--color-accent-dim);
+    color: var(--color-accent);
+}
+
+.back-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border-color: var(--color-border-subtle);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-md);
+    font-size: 12px;
+}
+.back-btn:hover {
+    background: var(--color-bg-card);
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+}
 
 .import-export-buttons {
     display: flex;
-    gap: 10px; /* Space between buttons */
-    margin-bottom: 15px; /* Extra spacing below */
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
 }
-
 .import-export-buttons button {
     flex: 1;
-    background: #4caf50;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 14px;
+    background: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    padding: var(--space-sm);
+    text-align: center;
+    margin-bottom: 0;
+    width: auto;
+    display: block;
 }
-
 .import-export-buttons button:hover {
-    background: #45a049;
+    border-color: var(--color-accent-dim);
+    color: var(--color-accent);
+    background: var(--color-accent-glow);
 }
 
-#achievement-filter {
-    width: 100%;
-    padding: 50px;
-    margin-top: 15px; /* Adds spacing between title and filter */
+.achievement-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    flex-shrink: 0;
+}
+.achievement-actions button {
+    font-size: 11px;
+    padding: 5px 10px;
+    background: var(--color-bg-input);
+    color: var(--color-text-secondary);
+    width: auto;
+    text-align: center;
+    margin-bottom: 0;
+    display: block;
+}
+.achievement-actions .edit-achievement:hover {
+    border-color: var(--color-accent-dim);
+    color: var(--color-accent);
+    background: var(--color-accent-glow);
+}
+.achievement-actions .remove-achievement:hover {
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+    background: var(--color-danger-dim);
+}
+.achievement-actions .toggle-completion-achievement:hover {
+    border-color: var(--color-success);
+    color: var(--color-success);
+    background: var(--color-success-dim);
 }
 
-    /* 🔹 TOP MENU - MANAGEMENT MENU */
-        .top-menu {
-            display: flex;
-            justify-content: center;
-            background: #1a1a1a;
-            padding: 10px;
-            border-bottom: 2px solid #444;
-        }
-
-        .top-menu button {
-            background: #4caf50;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            color: white;
-            font-size: 14px;
-            border-radius: 5px;
-            margin: 0 5px; /* ✅ Reduces spacing */
-        }
-
-        .top-menu button:hover {
-            background: #45a049;
-        }
-    /* */
-
-    /* 🔹 LEFT PANEL MENU  */
-
-        #left-panel {
-            width: 25%;
-            background: #333;
-            padding: 20px;
-            border-right: 2px solid #444;
-            overflow-y: auto;
-            min-height: 600px;
-        }
-
-        #left-panel button {
-            display: block;
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            background: #4caf50;
-            border: none;
-            cursor: pointer;
-            color: white;
-            font-size: 14px;
-            border-radius: 5px;
-        }
-
-
-        #left-panel button:hover {
-            background: #45a049;
-        }
-
-        /* 🔹 Left Sidebar: Game Selection */
-        .game-list {
-            width: 25%;
-            background: #333;
-            padding: 20px;
-            border-right: 2px solid #444;
-            overflow-y: auto;
-        }
-
-        .game-list h3 {
-            color: #f05a5a;
-        }
-
-        .game-list select, .game-list button {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-        }
-
-    /* */
-
-/* 🔹 Achievements Container Layout */
+/* ─────────────────────────────────────────────────────────────
+   LAYOUT
+   ───────────────────────────────────────────────────────────── */
 .achievements-container {
     display: flex;
     width: 100%;
-    height: calc(100vh - 60px);
-    margin: 0 auto;
-    padding: 20px;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
 }
 
-/* 🔹 Main Achievements Section */
-.achievement-container {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background: #2a2a2a;
-}
-
-.achievement-container h2 {
-    text-align: center;
-}
-
-/* 🔹 Increase Icon Size */
-.achievement-icon {
-    width: 80px;  /* Increased size */
-    height: 80px;
-    border-radius: 10px;
-}
-
-/* 🔹 Text alignment inside each achievement box */
-.achievement-details {
-    flex-grow: 1;
+/* ─────────────────────────────────────────────────────────────
+   SIDEBAR
+   ───────────────────────────────────────────────────────────── */
+.game-list {
+    width: 280px;
+    min-width: 280px;
     display: flex;
     flex-direction: column;
+    background: var(--color-bg-panel);
+    border-right: 1px solid var(--color-border);
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
-/* 🔹 Style for achievement title */
-.achievement-details h4 {
-    font-size: 18px;
-    margin-bottom: 4px;
-    color: #fff;
-}
-
-/* 🔹 Style for achievement description */
-.achievement-details p {
-    font-size: 14px;
-    color: #bbb;
-}
-
-/* 🔹 Achievements List */
-#steam-achievements, #custom-achievements-list {
-    list-style: none;
-    padding: 0;
-}
-
-/* 🔹 Style for ALL achievements (Steam & Non-Steam) */
-.achievement-item {
+/* Zone 1: Profile strip — never wiped by JS */
+#profile-info {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    background: #2c2f33;
-    border: 1px solid #444;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-void);
+    flex-shrink: 0;
 }
 
-/* 🔹 Icon size & positioning */
-.achievement-item img.achievement-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 8px;
-    margin-right: 15px;
+#steam-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    object-fit: cover;
+    background: var(--color-bg-card);
+    flex-shrink: 0;
 }
 
-/* 🔹 Style for the "Mark as Complete" button */
-.achievement-details button {
-    margin-top: 5px;
-    padding: 6px 10px;
-    background: #218838;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-.achievement-details button:hover {
-    background: #28a745;
-}
-
-#custom-achievements-list li {
-    background: #444;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-}
-
-#steam-achievements li img, #custom-achievements-list li img {
-    width: 40px;
-    vertical-align: middle;
-    margin-right: 10px;
-}
-
-/* 🔹 Responsive Fix */
-@media (max-width: 1024px) {
-    .achievements-container {
-        flex-direction: column;
-    }
-    #left-panel {
-        width: 100%;
-        border-right: none;
-        border-bottom: 2px solid #444;
-    }
-}
-
-/* 🔹 Non-Steam Game List */
-.non-steam-game-list {
-    list-style: none;
-    padding: 0;
-}
-
-.non-steam-game-item {
+.profile-text {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: none;
-    padding: 5px;
-    margin: 5px 0;
-    border-radius: 5px;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
 }
 
-/* 🔹 Game Container - Aligns Buttons in One Row */
-.game-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;  /* ✅ Ensures full width */
-    gap: 10px;  /* ✅ Adds spacing */
-}
-
-/* 🔹 Game Button - Bigger Text & Centered */
-.game-btn {
-    flex-grow: 1;  /* ✅ Ensures button takes full available space */
-    background: #4caf50;
-    color: white;
-    border: none;
-    padding: 15px 20px;  /* ✅ Slightly increased padding for better spacing */
-    font-size: 20px;  /* ✅ Bigger text */
-    text-align: center; /* ✅ Centers text */
-    border-radius: 5px;
-    cursor: pointer;
-    width: auto;
-    min-width: 200px;
+#steam-name {
+    font-family: var(--font-display) !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: var(--color-text-primary) !important;
+    letter-spacing: 0.04em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+.profile-status {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+#profile-info.is-connected .profile-status {
+    color: var(--color-success);
+}
+
+/* Zone 2: Dynamic nav content */
+#left-panel {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-md);
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+}
+#left-panel::-webkit-scrollbar { width: 4px; }
+#left-panel::-webkit-scrollbar-track { background: transparent; }
+#left-panel::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+#left-panel h3 {
+    font-family: var(--font-display) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase;
+    color: var(--color-text-muted) !important;
+    margin: 0 0 var(--space-md) 0 !important;
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+#left-panel h4 {
+    font-family: var(--font-display) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary) !important;
+    margin: var(--space-md) 0 var(--space-sm) 0 !important;
+}
+
+#left-panel p {
+    font-size: 12px !important;
+    color: var(--color-text-secondary) !important;
+    line-height: 1.6;
+    margin: 0 0 var(--space-sm) 0 !important;
+}
+
+#left-panel input[type="text"],
+#left-panel textarea,
+#left-panel input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-sm);
+    background: var(--color-bg-input);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-primary);
+    font-family: var(--font-mono);
+    font-size: 12px !important;
+    font-weight: 400;
+    line-height: 1.5;
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+#left-panel input[type="text"]:focus,
+#left-panel textarea:focus {
+    outline: none;
+    border-color: var(--color-accent-dim);
+    box-shadow: 0 0 0 2px var(--color-accent-glow);
+}
+#left-panel input::placeholder,
+#left-panel textarea::placeholder { color: var(--color-text-muted); }
+#left-panel textarea { min-height: 72px; resize: vertical; }
+
+#left-panel label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   NON-STEAM GAME LIST
+   ───────────────────────────────────────────────────────────── */
+.non-steam-game-list {
+    list-style: none !important;
+    padding: 0;
+    margin: 0 !important;
+}
+.non-steam-game-item { margin-bottom: var(--space-xs); }
+.game-container { display: flex; align-items: center; gap: var(--space-sm); }
+
+.game-btn {
+    flex: 1;
+    text-align: left !important;
+    background: var(--color-bg-card) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text-primary) !important;
+    padding: 10px var(--space-md) !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    margin-bottom: 0 !important;
+    font-size: 13px !important;
+    display: block;
+}
 .game-btn:hover {
-    background: #45a049;
+    background: var(--color-bg-card-hover) !important;
+    border-color: var(--color-accent-dim) !important;
+    color: var(--color-accent) !important;
 }
 
-/* 🔹 Simple Clickable `❌` */
 .remove-game-icon {
-    color: red;
-    font-size: 18px;
+    flex-shrink: 0;
+    font-size: 13px;
     cursor: pointer;
-    margin-right: 10px; /* ✅ Spacing between `❌` and game name */
+    opacity: 0.35;
+    transition: opacity var(--transition-fast);
+    padding: var(--space-xs);
+    line-height: 1;
+}
+.remove-game-icon:hover { opacity: 1; }
+
+/* ─────────────────────────────────────────────────────────────
+   RIGHT PANEL
+   ───────────────────────────────────────────────────────────── */
+.achievement-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--color-bg-void);
+    min-width: 0;
 }
 
-.remove-game-icon:hover {
-    color: darkred;
+.achievement-container > h2 {
+    font-family: var(--font-display) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.25em !important;
+    text-transform: uppercase;
+    color: var(--color-text-muted) !important;
+    margin: 0;
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--color-border-subtle);
+    flex-shrink: 0;
 }
 
-/* 🔹 Back Button */
-.back-btn {
-    background: #5a5a5a;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 16px;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    display: block;
-    width: 100%;
+#filter-container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    padding: var(--space-sm) var(--space-lg);
+    border-bottom: 1px solid var(--color-border-subtle);
+    background: var(--color-bg-panel);
+    flex-shrink: 0;
 }
 
-.back-btn:hover {
-    background: #444;
+#achievement-filter-input {
+    flex: 1;
+    min-width: 160px;
+    padding: 6px var(--space-md);
+    background: var(--color-bg-input);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-primary);
+    font-family: var(--font-mono);
+    font-size: 12px !important;
+    font-weight: 400;
+    line-height: 1.5;
+}
+#achievement-filter-input:focus {
+    outline: none;
+    border-color: var(--color-accent-dim);
+    box-shadow: 0 0 0 2px var(--color-accent-glow);
+}
+#achievement-filter-input::placeholder { color: var(--color-text-muted); }
+
+#apply-achievement-filter {
+    background: transparent !important;
+    border-color: var(--color-accent-dim) !important;
+    color: var(--color-accent) !important;
+    padding: 6px var(--space-md) !important;
+    margin-bottom: 0 !important;
+    width: auto !important;
+    display: inline-block !important;
+}
+#apply-achievement-filter:hover {
+    background: var(--color-accent-glow) !important;
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 0 10px var(--color-accent-glow) !important;
 }
 
+.achievement-list-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-lg);
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+}
+.achievement-list-scroll::-webkit-scrollbar { width: 4px; }
+.achievement-list-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
 
-/* 🔹 Warning Message */
+#steam-achievements,
+#custom-achievements-list {
+    list-style: none !important;
+    padding: 0;
+    margin: 0 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ACHIEVEMENT CARDS
+   ───────────────────────────────────────────────────────────── */
+.achievement-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-sm);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-subtle);
+    transition:
+        background var(--transition-mid),
+        border-color var(--transition-mid),
+        transform var(--transition-mid);
+    position: relative;
+    overflow: hidden;
+}
+
+.achievement-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--color-border);
+    transition: background var(--transition-mid);
+}
+
+.achievement-item:hover {
+    background: var(--color-bg-card-hover);
+    border-color: var(--color-border);
+    transform: translateX(2px);
+}
+.achievement-item:hover::before { background: var(--color-accent); }
+
+/* Steam badge */
+.achievement-item.is-steam::after {
+    content: 'STEAM';
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted);
+    background: var(--color-bg-input);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 2px 6px;
+}
+
+/* Custom badge */
+.achievement-item.is-custom::after {
+    content: 'CUSTOM';
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-accent-dim);
+    background: var(--color-bg-input);
+    border: 1px solid var(--color-accent-dim);
+    border-radius: var(--radius-sm);
+    padding: 2px 6px;
+}
+
+/* Completed state */
+.achievement-item.is-completed {
+    border-color: rgba(0, 230, 118, 0.2);
+    background: linear-gradient(
+        135deg,
+        var(--color-bg-card) 0%,
+        rgba(0, 230, 118, 0.04) 100%
+    );
+}
+.achievement-item.is-completed::before {
+    background: var(--color-success);
+    box-shadow: 0 0 8px rgba(0, 230, 118, 0.5);
+}
+
+.achievement-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--color-bg-input);
+}
+
+.achievement-details { flex: 1; min-width: 0; }
+
+.achievement-details h4 {
+    font-family: var(--font-display) !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em;
+    color: var(--color-text-primary) !important;
+    margin: 0 0 var(--space-xs) 0 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 60px; /* clear the STEAM/CUSTOM badge */
+}
+
+.achievement-details p {
+    font-size: 12px !important;
+    color: var(--color-text-secondary) !important;
+    margin: 0 0 var(--space-sm) 0 !important;
+    line-height: 1.5;
+}
+
+.achievement-details span {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    background: var(--color-bg-input);
+}
+.achievement-item.is-completed .achievement-details span {
+    color: var(--color-success);
+    border-color: rgba(0, 230, 118, 0.3);
+    background: var(--color-success-dim);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   EMPTY / WARNING STATES
+   ───────────────────────────────────────────────────────────── */
 .no-achievements {
-    background: #ffcc00;
-    color: black;
-    padding: 10px;
-    border-radius: 5px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--color-warning);
+    border: 1px solid rgba(255, 171, 0, 0.25);
+    background: var(--color-warning-dim);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
     text-align: center;
 }
 
-/* 🔹 Custom Achievements Buttons */
-.create-custom-btn, .back-btn {
-    display: block;
-    width: 100%;
-    margin-top: 10px;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVE — matches main.css breakpoint at 960px
+   ───────────────────────────────────────────────────────────── */
+@media screen and (max-width: 960px) {
+    .achievements-container {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+    }
+    .game-list {
+        width: 100%;
+        min-width: unset;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+    }
+    #left-panel { max-height: 45vh; }
+    .achievement-container { overflow: visible; }
+    .achievement-list-scroll { overflow: visible; }
+    .top-menu::before { display: none; }
 }
-
-.create-custom-btn {
-    background: #007bff;
-    color: white;
-    border: none;
-}
-
-.create-custom-btn:hover {
-    background: #0056b3;
-}
-

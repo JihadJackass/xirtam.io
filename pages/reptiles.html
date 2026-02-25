@@ -1,117 +1,474 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Xirtam 3</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../assets/css/main.css" />
-		<link rel="stylesheet" href="../assets/css/reptiles.css" />
-	</head>
-	<body class="is-preload">
+    <head>
+        <title>Xirtam 3 — Reptiles</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="../assets/css/main.css" />
+        <link rel="stylesheet" href="../assets/css/reptiles.css" />
+    </head>
+    <body class="is-preload">
 
-		<!-- Header -->
+        <!-- Header (unchanged — your existing site sidebar) -->
         <div id="header">
             <div class="top">
-
-                <!-- Side Panel -->
                 <div id="logo">
                     <span class="image avatar48"><img src="../assets/images/avatars/avatar.jpg" alt="" /></span>
                     <h1 id="title">Noah Gamble JihadiJackass</h1>
                     <p>Computer Programmer</p>
                     <p>Mod Developer</p>
-                    </div>
-
-				<!-- Navigation Menu -->
+                </div>
                 <nav id="nav">
                     <ul>
-                        <li><a href="../index.html" id="top-link"><span class="icon solid fa-home">Home</span></a></li>
-                        <li><a href="../pages/projects.html" id="projects-link"><span class="icon solid fa-user">Projects</span></a></li>
-                        <li><a href="../pages/documentation.html" id="documentation-link"><span class="icon solid fa-user">Documentation</span></a></li>
-                        <li><a href="../pages/airsoft.html" id="airsoft-link"><span class="icon solid fa-user">Airsoft</span></a></li>
-                        <li><a href="../pages/reptiles.html" id="reptiles-link"><span class="icon solid fa-user">Reptiles</span></a></li>
-                        <li><a href="../pages/images.html" id="images-link"><span class="icon solid fa-user">Images</span></a></li>
-                        <li><a href="../pages/about.html" id="about-link"><span class="icon solid fa-user">About</span></a></li>
+                        <li><a href="../index.html"               id="top-link">          <span class="icon solid fa-home">Home</span></a></li>
+                        <li><a href="../pages/projects.html"      id="projects-link">     <span class="icon solid fa-code">Projects</span></a></li>
+                        <li><a href="../pages/documentation.html" id="documentation-link"><span class="icon solid fa-book">Documentation</span></a></li>
+                        <li><a href="../pages/airsoft.html"       id="airsoft-link">      <span class="icon solid fa-crosshairs">Airsoft</span></a></li>
+                        <li><a href="../pages/reptiles.html"      id="reptiles-link">     <span class="icon solid fa-dragon">Reptiles</span></a></li>
+                        <li><a href="../pages/images.html"        id="images-link">       <span class="icon solid fa-images">Images</span></a></li>
+                        <li><a href="../pages/about.html"         id="about-link">        <span class="icon solid fa-user">About</span></a></li>
                     </ul>
                 </nav>
             </div>
-        <div class="bottom">
-
-        <!-- Social Icons -->
-        <ul class="icons">
-                <li><a href="https://github.com/JihadJackass" class="icon brands fa-github"><span class="label">Github</span></a></li>
-                <li><a href="mailto:todosupportemail?Subject=Xirtam3" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+            <div class="bottom">
+                <ul class="icons">
+                    <li><a href="https://github.com/JihadJackass" class="icon brands fa-github"><span class="label">Github</span></a></li>
+                    <li><a href="mailto:todosupportemail?Subject=Xirtam3" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+                </ul>
             </div>
         </div>
 
-        <!-- Main -->
-
+        <!-- =====================================================
+             MAIN CONTENT
+             ===================================================== -->
         <div id="main">
-            <body class="reptile-theme">
-                <div id="background"></div>
-                <div id="fog-layer"></div>
-                <nav class="reptile-theme">
+            <div class="reptile-page">
+
+                <!-- Layered jungle background -->
+                <div class="rp-background">
+                    <div class="rp-bg-base"></div>
+                    <div class="rp-trees-far"></div>
+                    <div class="rp-trees-left"></div>
+                    <div class="rp-trees-right"></div>
+                    <div class="rp-trees-mid"></div>
+                    <div class="rp-canopy-top"></div>
+                    <div class="rp-mist-1"></div>
+                    <div class="rp-mist-2"></div>
+                    <div class="rp-mist-3"></div>
+                    <div class="rp-light-rays"></div>
+                </div>
+
+                <!-- Sub-navigation -->
+                <nav class="rp-subnav" id="rp-subnav">
                     <ul>
-                        <li><a href="#current">Currently Owned</a></li>
-                        <li><a href="#previous">Previously Owned</a></li>
-                        <li><a href="#wishlist">Wishlist</a></li>
-                        <li><a href="#care">Care Tips</a></li>
-                        <li><a href="#breeding">Breeding Projects</a></li>
-                        <li><a href="#obituaries" id="toggle-obituaries">Obituaries ▼</a></li>
+                        <li><a href="#rp-current"   class="rp-nav-link">Currently Owned</a></li>
+                        <li><a href="#rp-previous"  class="rp-nav-link">Previously Owned</a></li>
+                        <li><a href="#rp-wishlist"  class="rp-nav-link">Wishlist</a></li>
+                        <li><a href="#rp-care"      class="rp-nav-link">Care Tips</a></li>
+                        <li><a href="#rp-breeding"  class="rp-nav-link">Breeding</a></li>
+                        <li><a href="#rp-obituaries" class="rp-nav-link obituaries-toggle" id="toggle-obituaries">Obituaries</a></li>
                     </ul>
                 </nav>
-                <section id="current">
-                    <h2>Currently Owned Reptiles</h2>
-                    <div class="reptile-container">
-                        <h3>Leopard Gecko - Leo</h3>
-                        <p><strong>Age:</strong> Unknown</p>
-                        <p><strong>Morph:</strong> Unknown</p>
-                    </div>
-                </section>
-                <section id="previous">
-                    <h2>Previously Owned Reptiles</h2>
-                    <div class="reptile-container">
-                        <h3>Crested Gecko - Zeus</h3>
-                    </div>
-                </section>
-                <section id="wishlist">
-                    <h2>Wishlist Reptiles</h2>
-                    <p>Dream reptiles I'd love to own in the future.</p>
-                </section>
-                <section id="care">
-                    <h2>Reptile Care Tips</h2>
-                    <p>Advice on feeding, handling, and setting up enclosures.</p>
-                </section>
-                <section id="breeding">
-                    <h2>Breeding Projects</h2>
-                    <p>Details on reptile breeding experiments.</p>
-                </section>
-                <section id="obituaries" class="hidden">
-                    <h2>Obituaries</h2>
-                    Bearded Dragon - Mushu - 13 Years - My first reptile - Struggled with MBD but lived a decent life; 
-                        If I could have done things differently I absolutely would.
-                </section>
-            </body>
-        </div>
 
-		<!-- Scripts -->
+                <!-- Content wrapper -->
+                <div class="rp-content">
+
+                    <!-- CURRENTLY OWNED -->
+                    <section id="rp-current" class="rp-section">
+                        <div class="rp-section-header">
+                            <span class="rp-section-label">In My Care</span>
+                            <h2>Currently Owned</h2>
+                            <div class="rp-section-divider"></div>
+                        </div>
+                        <div class="rp-card-grid" id="grid-current"></div>
+                    </section>
+                    <div class="rp-section-sep"></div>
+
+                    <!-- PREVIOUSLY OWNED -->
+                    <section id="rp-previous" class="rp-section">
+                        <div class="rp-section-header">
+                            <span class="rp-section-label">Past Companions</span>
+                            <h2>Previously Owned</h2>
+                            <div class="rp-section-divider"></div>
+                        </div>
+                        <div class="rp-card-grid" id="grid-previous"></div>
+                    </section>
+                    <div class="rp-section-sep"></div>
+
+                    <!-- WISHLIST -->
+                    <section id="rp-wishlist" class="rp-section">
+                        <div class="rp-section-header">
+                            <span class="rp-section-label">Dream Roster</span>
+                            <h2>Wishlist</h2>
+                            <div class="rp-section-divider"></div>
+                        </div>
+                        <div class="rp-card-grid" id="grid-wishlist"></div>
+                    </section>
+                    <div class="rp-section-sep"></div>
+
+                    <!-- CARE TIPS -->
+                    <section id="rp-care" class="rp-section">
+                        <div class="rp-section-header">
+                            <span class="rp-section-label">Husbandry Notes</span>
+                            <h2>Care Tips</h2>
+                            <div class="rp-section-divider"></div>
+                        </div>
+                        <div class="rp-care-grid" id="grid-care"></div>
+                    </section>
+                    <div class="rp-section-sep"></div>
+
+                    <!-- BREEDING PROJECTS -->
+                    <section id="rp-breeding" class="rp-section">
+                        <div class="rp-section-header">
+                            <span class="rp-section-label">Projects</span>
+                            <h2>Breeding</h2>
+                            <div class="rp-section-divider"></div>
+                        </div>
+                        <div id="grid-breeding"></div>
+                    </section>
+
+                    <!-- OBITUARIES (always visible) -->
+                    <section id="rp-obituaries" class="rp-content open">
+                        <div class="rp-section-header">
+                            <span class="rp-section-label">In Memoriam</span>
+                            <h2>Obituaries</h2>
+                            <div class="rp-section-divider"></div>
+                        </div>
+                        <div class="rp-card-grid" id="grid-obituaries"></div>
+                    </section>
+
+                </div><!-- /rp-content -->
+            </div><!-- /reptile-page -->
+        </div><!-- /main -->
+
+        <!-- =====================================================
+             REPTILE DATA
+             To add a reptile: copy one object, paste it into the
+             correct array, and fill in the fields.
+             Use null for unknown values.
+             ===================================================== -->
         <script>
-            // REPTILE SCRIPTS
-            document.addEventListener("DOMContentLoaded", function() {
-                const toggleObituaries = document.getElementById("toggle-obituaries");
-                const obituariesSection = document.getElementById("obituaries");
-                
-                toggleObituaries.addEventListener("click", function(event) {
-                    event.preventDefault();
-                    obituariesSection.classList.toggle("hidden");
-                    
-                    if (obituariesSection.classList.contains("hidden")) {
-                        toggleObituaries.textContent = "Obituaries ▼";
-                    } else {
-                        toggleObituaries.textContent = "Obituaries ▲";
+        // ── CURRENTLY OWNED ──────────────────────────────────────
+        const CURRENT_REPTILES = [
+            {
+                name:       "Leo",
+                species:    "Leopard Gecko",
+                latin:      "Eublepharis macularius",
+                morph:      "Male",           // null = displays as "Unknown"
+                sex:        null,
+                age:        null,
+                acquired:   null,
+                enclosure:  "40gal long",
+                notes:      "My current gecko. Still learning more about him — morph and age TBD as I get to know him better."
+            },
+            {
+                name:       "Lily",
+                species:    "Leopard Gecko",
+                latin:      "Eublepharis macularius",
+                morph:      "Male",           // null = displays as "Unknown"
+                sex:        null,
+                age:        null,
+                acquired:   null,
+                enclosure:  "40gal long",
+                notes:      "My current gecko. Still learning more about him — morph and age TBD as I get to know him better."
+            },
+            {
+                name:       "TODO",
+                species:    "Tokay Gecko",
+                latin:      "Gekko Gekko",
+                morph:      null,           // null = displays as "Unknown"
+                sex:        null,
+                age:        null,
+                acquired:   null,
+                enclosure:  "20gal long",
+                notes:      "My current gecko. Still learning more about him — morph and age TBD as I get to know him better."
+            },
+            {
+                name:       "TODO",
+                species:    "Tokay Gecko",
+                latin:      "Gekko Gekko",
+                morph:      null,           // null = displays as "Unknown"
+                sex:        null,
+                age:        null,
+                acquired:   null,
+                enclosure:  "20gal long",
+                notes:      "My current gecko. Still learning more about him — morph and age TBD as I get to know him better."
+            },
+            {
+                name:       "TODO",
+                species:    "Tokay Gecko",
+                latin:      "Gekko Gekko",
+                morph:      null,           // null = displays as "Unknown"
+                sex:        null,
+                age:        null,
+                acquired:   null,
+                enclosure:  "20gal long",
+                notes:      "My current gecko. Still learning more about him — morph and age TBD as I get to know him better."
+            },
+            // ── ADD NEW CURRENT REPTILE HERE ──
+            // {
+            //     name:      "Name",
+            //     species:   "Common Name",
+            //     latin:     "Genus species",
+            //     morph:     "Morph name",
+            //     sex:       "Male / Female / Unknown",
+            //     age:       "2 years",
+            //     acquired:  "Jan 2024",
+            //     enclosure: "40gal breeder",
+            //     notes:     "Notes about this animal."
+            // },
+        ];
+
+        // ── PREVIOUSLY OWNED ─────────────────────────────────────
+        const PREVIOUS_REPTILES = [
+            {
+                name:       "Johal",
+                species:    "Savannah Monitor Lizard",
+                latin:      "Varanus exanthematicus",
+                morph:      "Caramel",
+                sex:        "Male",
+                age:        "1",
+                acquired:   "2019",
+                enclosure:  null,
+                notes:      null
+            },
+            // ── ADD NEW PREVIOUS REPTILE HERE ──
+        ];
+
+        // ── WISHLIST ─────────────────────────────────────────────
+        const WISHLIST_REPTILES = [
+            // ── ADD WISHLIST ENTRIES HERE ──
+            {
+                name:    null,          // null = species only, no personal name yet
+                species: "Blue Tree Monitor",
+                latin:   "Varanus macraei",
+                notes:   "Dream animal. Would need a serious custom build."
+            },
+        ];
+
+        // ── CARE TIPS ─────────────────────────────────────────────
+        const CARE_TIPS = [
+            {
+                icon:  "🌡️",
+                title: "Temperature Gradients",
+                body:  "Always provide a thermal gradient — hot side, cool side, and a hiding spot at each. Reptiles regulate body temperature behaviourally and need the choice."
+            },
+            {
+                icon:  "💧",
+                title: "Humidity & Hydration",
+                body:  "Species requirements vary wildly. Leopard geckos prefer 30–40%, while crested geckos need 60–80%. A digital hygrometer is non-negotiable."
+            },
+            {
+                icon:  "🍖",
+                title: "Feeding & Gut-Loading",
+                body:  "Live feeders should be gut-loaded 24h before feeding. Dust with calcium (D3 twice monthly). Variety prevents nutritional deficiencies over time."
+            },
+            {
+                icon:  "🏠",
+                title: "Enrichment & Hides",
+                body:  "Reptiles need at least two hides — one warm, one cool. More is better. Enrichment like branches, cork bark, and leaf litter reduces stress significantly."
+            },
+            {
+                icon:  "🩺",
+                title: "Vet & Health Checks",
+                body:  "Find a reptile-specialist vet before you need one. Annual fecal exams catch parasites early. Know your animal\'s baseline weight — weigh monthly."
+            },
+            {
+                icon:  "🪨",
+                title: "Substrate Choices",
+                body:  "Loose substrate is fine for many species when humidity is controlled. Bioactive setups with microfauna are excellent long-term. Avoid cedar or pine."
+            },
+        ];
+
+        // ── BREEDING PROJECTS ────────────────────────────────────
+        const BREEDING_PROJECTS = [
+            // ── ADD BREEDING PROJECTS HERE ──
+            // {
+            //     title:    "Leo × ???",
+            //     species:  "Leopard Gecko",
+            //     status:   "Planning",
+            //     notes:    "Need to determine Leo's morph first before planning any pairing."
+            // },
+        ];
+
+        // ── OBITUARIES ───────────────────────────────────────────
+        const OBITUARIES = [
+            {
+                name:        "Mushu",
+                species:     "Bearded Dragon",
+                latin:       "Pogona vitticeps",
+                morph:       null,
+                sex:         null,
+                age:         "13 years",
+                acquired:    "2014",
+                enclosure:   null,
+                cause:       "Heat Stroke due to complications with Metabolic Bone Disease (MBD).",
+                notes:       "My first reptile, and the one who started all of this. I purchased him from Pet Smart at the age of roughly 16 and unfortunately had MBD from the start and so he struggled with MBD but lived a long, decent life. If I could go back and do things differently, I absolutely would — but I gave him everything I knew how to give at the time. Rest easy, buddy."
+            },
+            {
+                name:        "Zeus",
+                species:     "Crested Gecko",
+                latin:       "Correlophus ciliatus",
+                morph:       null,
+                sex:         "Male",
+                age:         "5",
+                acquired:    null,
+                enclosure:   null,
+                cause:       "Power Failiure",
+                notes:       "My second reptile - TODO."
+            },
+        ];
+
+        // =====================================================
+        //  CARD RENDERING — no need to edit below this line
+        // =====================================================
+
+        function val(v) {
+            return (v !== null && v !== undefined && v !== '') ? v : null;
+        }
+
+        function statHtml(label, value) {
+            const display = val(value)
+                ? `<span class="rp-stat-value">${value}</span>`
+                : `<span class="rp-stat-value unknown">Unknown</span>`;
+            return `<div class="rp-stat"><span class="rp-stat-label">${label}</span>${display}</div>`;
+        }
+
+        function buildReptileCard(r, status) {
+            const badgeLabels = {
+                current:  'Currently Owned',
+                previous: 'Previously Owned',
+                wishlist: 'Wishlist',
+                memorial: 'In Memoriam'
+            };
+            const latinStr   = val(r.latin)   ? ` <em>${r.latin}</em>` : '';
+            const nameStr    = val(r.name)     ? r.name                 : r.species;
+            const nameLabel  = val(r.name)     ? `${r.name}` : r.species;
+            const latinLabel = val(r.name) && val(r.latin) ? ` <em>${r.latin}</em>` : (val(r.latin) && !val(r.name)) ? ` <em>${r.latin}</em>` : '';
+
+            let statsHtml = '';
+            if (status !== 'wishlist') {
+                statsHtml = `
+                    <div class="rp-card-stats">
+                        ${statHtml('Age',       r.age)}
+                        ${statHtml('Morph',     r.morph)}
+                        ${statHtml('Sex',       r.sex)}
+                        ${statHtml('Acquired',  r.acquired)}
+                        ${val(r.enclosure) ? statHtml('Enclosure', r.enclosure) : ''}
+                    </div>`;
+            } else {
+                // Wishlist: show latin if available
+                statsHtml = val(r.latin) ? `<div class="rp-card-stats"><div class="rp-stat full"><span class="rp-stat-label">Scientific Name</span><span class="rp-stat-value"><em>${r.latin}</em></span></div></div>` : '';
+            }
+
+            const notesHtml = val(r.notes)
+                ? `<p class="rp-card-notes">${r.notes}</p>`
+                : '';
+
+            return `
+                <div class="rp-card status-${status}">
+                    <div class="rp-card-accent"></div>
+                    <div class="rp-card-body">
+                        <div class="rp-card-badge">${badgeLabels[status]}</div>
+                        <p class="rp-card-species">${r.species}</p>
+                        <h3 class="rp-card-name">${nameLabel}${latinLabel}</h3>
+                        ${statsHtml}
+                        ${notesHtml}
+                    </div>
+                </div>`;
+        }
+
+        function buildMemorialCard(r) {
+            const latinLabel = val(r.latin) ? ` <em>${r.latin}</em>` : '';
+            const causeStr   = val(r.cause) ? r.cause : null;
+
+            return `
+                <div class="rp-card status-memorial">
+                    <div class="rp-card-accent"></div>
+                    <div class="rp-card-body">
+                        <div class="rp-card-badge">In Memoriam</div>
+                        <p class="rp-card-species">${r.species}</p>
+                        <h3 class="rp-card-name">${r.name}${latinLabel}</h3>
+                        <div class="rp-card-stats">
+                            ${statHtml('Age',     r.age)}
+                            ${statHtml('Morph',   r.morph)}
+                            ${statHtml('Sex',     r.sex)}
+                            ${val(causeStr) ? `<div class="rp-stat full"><span class="rp-stat-label">Cause</span><span class="rp-stat-value">${causeStr}</span></div>` : ''}
+                        </div>
+                        ${val(r.notes) ? `<p class="rp-memorial-epitaph">${r.notes}</p>` : ''}
+                    </div>
+                </div>`;
+        }
+
+        function buildCareCard(tip) {
+            return `
+                <div class="rp-care-card">
+                    <span class="rp-care-icon">${tip.icon}</span>
+                    <h4>${tip.title}</h4>
+                    <p>${tip.body}</p>
+                </div>`;
+        }
+
+        function renderGrid(arrayData, containerId, status, buildFn) {
+            const el = document.getElementById(containerId);
+            if (!el) return;
+            if (!arrayData.length) {
+                el.innerHTML = `<div class="rp-wishlist-placeholder">Nothing here yet — check back soon.</div>`;
+                return;
+            }
+            el.innerHTML = arrayData.map(r => buildFn ? buildFn(r) : buildReptileCard(r, status)).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Render all sections
+            renderGrid(CURRENT_REPTILES,  'grid-current',    'current');
+            renderGrid(PREVIOUS_REPTILES, 'grid-previous',   'previous');
+            renderGrid(WISHLIST_REPTILES, 'grid-wishlist',   'wishlist');
+            renderGrid(CARE_TIPS,         'grid-care',       null,       buildCareCard);
+            renderGrid(OBITUARIES,        'grid-obituaries', null,       buildMemorialCard);
+
+            // Breeding — simple placeholder or list
+            const breedingEl = document.getElementById('grid-breeding');
+            if (BREEDING_PROJECTS.length === 0) {
+                breedingEl.innerHTML = `
+                    <div class="rp-breeding-placeholder">
+                        <p>No active breeding projects yet. This section will be updated when projects are underway.</p>
+                    </div>`;
+            } else {
+                breedingEl.classList.add('rp-card-grid');
+                breedingEl.innerHTML = BREEDING_PROJECTS.map(p => `
+                    <div class="rp-card status-current">
+                        <div class="rp-card-accent"></div>
+                        <div class="rp-card-body">
+                            <div class="rp-card-badge">${p.status || 'Active'}</div>
+                            <p class="rp-card-species">${p.species}</p>
+                            <h3 class="rp-card-name">${p.title}</h3>
+                            ${val(p.notes) ? `<p class="rp-card-notes">${p.notes}</p>` : ''}
+                        </div>
+                    </div>`).join('');
+            }
+
+            // ── Active nav link highlighting on scroll ─────────
+            const sections = document.querySelectorAll('.rp-section, #rp-obituaries');
+            const navLinks  = document.querySelectorAll('.rp-nav-link');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        const id = entry.target.id;
+                        const activeLink = document.querySelector(`.rp-nav-link[href="#${id}"]`);
+                        if (activeLink) activeLink.classList.add('active');
                     }
                 });
-            });
+            }, { rootMargin: '-30% 0px -60% 0px' });
+
+            document.querySelectorAll('.rp-section, #rp-obituaries').forEach(s => observer.observe(s));
+        });
         </script>
+
+        <!-- Scripts (your existing ones) -->
         <script src="../assets/js/jquery.min.js"></script>
         <script src="../assets/js/jquery.scrolly.min.js"></script>
         <script src="../assets/js/jquery.scrollex.min.js"></script>
@@ -119,5 +476,6 @@
         <script src="../assets/js/breakpoints.min.js"></script>
         <script src="../assets/js/util.js"></script>
         <script src="../assets/js/main.js"></script>
-	</body>
+
+    </body>
 </html>

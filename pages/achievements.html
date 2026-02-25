@@ -1,89 +1,108 @@
-    <!DOCTYPE HTML>
-    <html>
-        <head>
-            <title>Xirtam 3</title>
-            <meta charset="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-            <link rel="stylesheet" href="../assets/achievement/achievement.css" />
-            <link rel="stylesheet" href="../assets/css/main.css" />
-        </head>
-        <body class="is-preload">
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Xirtam 3 — Achievement Manager</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <!-- achievement.css must load AFTER main.css so our resets take effect -->
+        <link rel="stylesheet" href="../assets/css/main.css" />
+        <link rel="stylesheet" href="../assets/achievement/achievement.css" />
+    </head>
+    <body class="is-preload">
 
-            <!-- Header -->
-            <div id="header">
-                <div class="top">
+        <!-- ── Site Header (main.css owns this entirely, do not touch) ── -->
+        <div id="header">
+            <div class="top">
 
-                    <!-- Side Panel -->
-                    <div id="logo">
-                        <span class="image avatar48"><img src="../../assets/images/avatars/avatar.jpg" alt="" /></span>
-                        <h1 id="title">Noah Gamble JihadiJackass</h1>
-                        <p>Computer Programmer</p>
-                        <p>Mod Developer</p>
-                    </div>
-
-                    <!-- Navigation Menu -->
-                    <nav id="nav">
-                        <ul>
-                            <li><a href="../index.html" id="top-link"><span class="icon solid fa-home">Home</span></a></li>
-                            <li><a href="../pages/projects.html" id="projects-link"><span class="icon solid fa-user">Projects</span></a></li>
-                            <li><a href="../pages/documentation.html" id="documentation-link"><span class="icon solid fa-user">Documentation</span></a></li>
-                            <li><a href="../pages/airsoft.html" id="airsoft-link"><span class="icon solid fa-user">Airsoft</span></a></li>
-                            <li><a href="../pages/reptiles.html" id="reptiles-link"><span class="icon solid fa-user">Reptiles</span></a></li>
-                            <li><a href="../pages/images.html" id="images-link"><span class="icon solid fa-user">Images</span></a></li>
-                            <li><a href="../pages/about.html" id="about-link"><span class="icon solid fa-user">About</span></a></li>
-                        </ul>
-                    </nav>
+                <div id="logo">
+                    <span class="image avatar48"><img src="../../assets/images/avatars/avatar.jpg" alt="" /></span>
+                    <h1 id="title">Noah Gamble</h1>
+                    <p>Computer Programmer</p>
+                    <p>Mod Developer</p>
                 </div>
-            <div class="bottom">
 
-            <!-- Social Icons -->
-            <ul class="icons">
+                <nav id="nav">
+                    <ul>
+                        <li><a href="../index.html" id="top-link"><span class="icon solid fa-home">Home</span></a></li>
+                        <li><a href="../pages/projects.html" id="projects-link"><span class="icon solid fa-user">Projects</span></a></li>
+                        <li><a href="../pages/documentation.html" id="documentation-link"><span class="icon solid fa-user">Documentation</span></a></li>
+                        <li><a href="../pages/airsoft.html" id="airsoft-link"><span class="icon solid fa-user">Airsoft</span></a></li>
+                        <li><a href="../pages/reptiles.html" id="reptiles-link"><span class="icon solid fa-user">Reptiles</span></a></li>
+                        <li><a href="../pages/images.html" id="images-link"><span class="icon solid fa-user">Images</span></a></li>
+                        <li><a href="../pages/about.html" id="about-link"><span class="icon solid fa-user">About</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="bottom">
+                <ul class="icons">
                     <li><a href="https://github.com/JihadJackass" class="icon brands fa-github"><span class="label">Github</span></a></li>
                     <li><a href="mailto:todosupportemail?Subject=Xirtam3" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-                </div>
+                </ul>
             </div>
+        </div>
 
-            <!-- Main Content -->
-            <div id="main">
-                <!-- 🔹 Context Menu / Navigation -->
-                <nav class="top-menu">
-                    <button id="home-button">Home</button>
-                    <button id="open-steam-settings">Search Steam ID</button>
-                    <button id="open-game-selection">Game Selection</button>
-                    <button id="sign-out">Sign Out</button> <!-- New Sign Out Button -->
-                </nav>
+        <!-- ── Achievement Manager (achievement.css owns everything below) ── -->
+        <div id="main">
 
-                <!-- 🔹 Main Layout -->
-                <div class="achievements-container">
-                    
-                    <!-- LeftPanel (Blank by Default) -->
-                    <aside class="game-list" id="left-panel">
-                        <div id="profile-info">
-                            <img id="steam-avatar" src="" width="100">
-                            <p id="steam-name"></p>
+            <!-- Top action bar -->
+            <nav class="top-menu">
+                <button id="home-button">Home</button>
+                <button id="open-steam-settings">Search Steam ID</button>
+                <button id="open-game-selection">Game Selection</button>
+                <button id="sign-out">Sign Out</button>
+            </nav>
+
+            <div class="achievements-container">
+
+                <!-- ── Sidebar ── -->
+                <aside class="game-list">
+
+                    <!-- 
+                        ZONE 1: Profile strip.
+                        Lives OUTSIDE #left-panel so JS can never accidentally wipe it
+                        when it rebuilds the nav panel content.
+                    -->
+                    <div id="profile-info">
+                        <img id="steam-avatar" src="" alt="Steam Avatar" />
+                        <div class="profile-text">
+                            <span id="steam-name">Not Connected</span>
+                            <span class="profile-status" id="profile-status">○ Sign in via Steam</span>
                         </div>
+                    </div>
 
+                    <!-- 
+                        ZONE 2: Dynamic nav panel.
+                        JS rebuilds innerHTML here freely — profile info above is safe.
+                    -->
+                    <div id="left-panel">
+                        <!-- Default state — shown before any game is selected -->
                         <h3>Instructions</h3>
-                        <p>- First, you must either load your Steam Profile or Create an Account which can store your data respectively.<br>- You can then choose either Steam Games or Non-Steam Games<br>- Depending on your choice, you can track and mark achievements as complete as well as adding custom achievements.</p>
-                    </aside>
+                        <p>Search your Steam ID or add a Non-Steam game to get started. You can track, mark, and create custom achievements for any game.</p>
+                    </div>
 
-                    <!-- RightPanel: Achievements List -->
-                    <main class="achievement-container">
-                        <h2>Achievement List</h2><br>
+                </aside>
+
+                <!-- ── Right panel: achievement list ── -->
+                <main class="achievement-container">
+                    <h2>Achievement List</h2>
+                    <!-- Filter UI injected here by insertFilterUI() -->
+                    <div class="achievement-list-scroll">
                         <ul id="steam-achievements"></ul>
                         <ul id="custom-achievements-list"></ul>
-                    </main>
+                    </div>
+                </main>
 
-                </div>
             </div>
+        </div>
 
-            <script src="../../assets/js/jquery.min.js"></script>
-            <script src="../../assets/js/jquery.scrolly.min.js"></script>
-            <script src="../../assets/js/jquery.scrollex.min.js"></script>
-            <script src="../../assets/js/browser.min.js"></script>
-            <script src="../../assets/js/breakpoints.min.js"></script>
-            <script src="../../assets/js/util.js"></script>
-            <script src="../../assets/js/main.js"></script>
-            <script src="../../assets/achievement/achievement.js"></script>
-        </body>
-    </html>
+        <script src="../../assets/js/jquery.min.js"></script>
+        <script src="../../assets/js/jquery.scrolly.min.js"></script>
+        <script src="../../assets/js/jquery.scrollex.min.js"></script>
+        <script src="../../assets/js/browser.min.js"></script>
+        <script src="../../assets/js/breakpoints.min.js"></script>
+        <script src="../../assets/js/util.js"></script>
+        <script src="../../assets/js/main.js"></script>
+        <script src="../assets/achievement/achievement.js"></script>
+    </body>
+</html>

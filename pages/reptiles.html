@@ -241,7 +241,7 @@
                 notes:      "Izzie is a blind North African spiny-tailed lizard which I rescued from my volunteer work at a reptile store and sadly has a rather frustrating eye condition that seems to cause near or total blindness — ironically, I can relate as I am half blind myself. I give her a specialized cage which allows her not to hurt herself while still being reasonably enriched. She is a passionate eater and loves treats now and then such as raspberries and various fruits that aren't apart of her normal diet.",
                 image:      "../assets/images/reptiles/izzie_1.jpg",
                 images:     [
-                    { src: "../assets/images/reptiles/izzie_2.jpg", caption: "Description" },
+                    { src: "../assets/images/reptiles/izzie_1.jpg", caption: "Description" },
                     { src: "../assets/images/reptiles/izzie_2.jpg", caption: "Description" },
                 ],
             },
@@ -288,7 +288,15 @@
                 species: "Blue Tree Monitor",
                 latin:   "Varanus macraei",
                 notes:   "Dream animal. Would need a serious custom build.",
-                image:   null,
+                image:      "../assets/images/reptiles/wanted_blue_tree_monitor.jpg",
+                images:  [],
+            },
+            {
+                name:    null,
+                species: "Fire Bellied Newt",
+                latin:   "Cynops pyrrhogaster",
+                notes:   "These guys are gorgeous semiaquatic newts that originate from Japan and are very interesting - Though I've never dealt with semiaquatic creatures before and do not have the means currently to house any further reptiles, so for not it is purely a wishlist reptile.",
+                image:      "../assets/images/reptiles/wanted_fire_bellied_newt.jpg",
                 images:  [],
             },
             // ── ADD WISHLIST ENTRIES HERE ──
@@ -321,8 +329,11 @@
                 acquired: "2014",
                 cause:    "Heat Stroke due to complications with Metabolic Bone Disease (MBD).",
                 notes:    "My first reptile, and the one who started all of this. I purchased him from Pet Smart at the age of roughly 16 and unfortunately had MBD from the start and so he struggled with MBD but lived a long, decent life. I had much to learn then, and MBD was not something I realized could be overcome until later in life but by that point he had developed further issues as a result of MBD. He was always a friendly lizard and really enjoyed shitting on my comfortable blankets, which I suppose I understand to a degree.",
-                image:    null,
-                images:   [],
+                image:      "../assets/images/reptiles/mushu_1.jpg",
+                images:     [
+                    { src: "../assets/images/reptiles/mushu_1.jpg", caption: "Description" },
+                    { src: "../assets/images/reptiles/mushu_2.jpg", caption: "Description" },
+                ],
             },
             {
                 name:     "Zeus",
@@ -363,21 +374,22 @@
             const hasImg = val(r.image) || imgs.length;
 
             if (!hasImg) {
-                return '';   // no image, no placeholder emoji
+                return '';   // no image, no placeholder
             }
 
-            const dataImgs = encodeURIComponent(JSON.stringify(imgs));
+            // Store JSON in a data attribute — avoids encoding issues with inline onclick
+            const dataImgs = JSON.stringify(imgs).replace(/'/g, '&#39;');
             const label    = imgs.length > 1 ? `View ${imgs.length} Photos` : 'View Photo';
             return `
-                <div class="rp-card-image" onclick="openLightbox(${dataImgs}, 0)" title="${label}">
+                <div class="rp-card-image rp-gallery-trigger" data-images='${dataImgs}' title="${label}">
                     <img src="${r.image || imgs[0].src}" alt="${animalName}" loading="lazy" />
                     <div class="rp-card-image-overlay"><span>${label}</span></div>
                 </div>`;
         }
 
-        function openLightbox(encodedImgs, startIndex) {
-            lbImages = typeof encodedImgs === 'string' ? JSON.parse(decodeURIComponent(encodedImgs)) : encodedImgs;
-            lbIndex  = startIndex;
+        function openLightbox(imgsArray, startIndex) {
+            lbImages = imgsArray;
+            lbIndex  = startIndex || 0;
             showLbSlide();
             document.getElementById('rp-lightbox').classList.add('open');
             document.body.style.overflow = 'hidden';
@@ -504,6 +516,17 @@
             document.getElementById('lb-next').addEventListener('click', lbNext);
             document.getElementById('rp-lightbox').addEventListener('click', function(e) {
                 if (e.target === this) closeLightbox();
+            });
+
+            // Event delegation for gallery triggers — reads from data-images attribute
+            // This avoids any encoding/parsing issues with inline onclick handlers
+            document.getElementById('main').addEventListener('click', function(e) {
+                const trigger = e.target.closest('.rp-gallery-trigger');
+                if (!trigger) return;
+                e.preventDefault();
+                e.stopPropagation();
+                const imgs = JSON.parse(trigger.getAttribute('data-images'));
+                openLightbox(imgs, 0);
             });
             document.addEventListener('keydown', function(e) {
                 const lb = document.getElementById('rp-lightbox');

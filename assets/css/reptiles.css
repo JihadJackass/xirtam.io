@@ -247,15 +247,19 @@
 .rp-subnav {
     position: fixed;
     top: 0;
-    /* Match main.css: #main has margin-left:375px at default desktop width */
-    left: 375px;
+    left: 375px; /* matches #main default margin-left */
     right: 0;
     z-index: 150;
     background: linear-gradient(to bottom, rgba(10,21,9,0.97) 0%, rgba(13,26,15,0.93) 100%);
     border-bottom: 1px solid var(--glass-border);
+    -webkit-transition: left 0.4s ease;
+    -ms-transition: left 0.4s ease;
+    transition: left 0.4s ease;
 }
 
-/* Match main.css breakpoints for #main margin-left */
+/* When sidebar is collapsed, subnav fills full width */
+body.sidebar-collapsed .rp-subnav { left: 0; }
+
 @media screen and (min-width: 961px) and (max-width: 1880px) {
     .rp-subnav { left: 300px; }
 }

@@ -9,6 +9,11 @@
     </head>
     <body class="is-preload">
 
+        <!-- Sidebar toggle button — sits at the right edge of the sidebar -->
+        <div id="headerToggle">
+            <a class="toggle" href="#" aria-label="Toggle sidebar"></a>
+        </div>
+
         <!-- Sidebar — untouched -->
         <div id="header">
             <div class="top">
@@ -37,6 +42,9 @@
                 </ul>
             </div>
         </div>
+
+        <!-- Sidebar collapse toggle — sits at the right edge of #header -->
+        <button id="nav-toggle" aria-label="Toggle sidebar" title="Toggle sidebar"></button>
 
         <!-- MAIN -->
         <div id="main">
@@ -174,8 +182,11 @@
                 acquired:   "2018–2019",
                 enclosure:  "40gal long",
                 notes:      "Leo is my more skittish Leopard Gecko which prefers to keep to himself and does not come out much aside from food night crawling, and absolutely despises Lily everytime he sees her in her own cage.",
-                image:      null,   // e.g. "../assets/images/reptiles/leo.jpg"
-                images:     [],     // gallery — add objects: { src: "...", caption: "..." }
+                image:      "../assets/images/reptiles/leo_1.jpg",
+                images:     [
+                    { src: "../assets/images/reptiles/leo_1.jpg", caption: "Description" },
+                    { src: "../assets/images/reptiles/leo_2.jpg", caption: "Description" },
+                ],
             },
             {
                 name:       "Lily",
@@ -187,8 +198,10 @@
                 acquired:   "2018–2019",
                 enclosure:  "40gal long",
                 notes:      "Lily, despite being a male is much more interactive and friendly and constantly comes out seeking food and attention. Does not care about Leo one way or another and keeps to himself.",
-                image:      null,
-                images:     [],
+                image:      "../assets/images/reptiles/lily_1.jpg",
+                images:     [
+                    { src: "../assets/images/reptiles/lily_1.jpg", caption: "Description" },
+                ],
             },
             {
                 name:       "Pengu",
@@ -200,8 +213,10 @@
                 acquired:   "2025",
                 enclosure:  "30gal tall",
                 notes:      "Pengu is apart of my plan to own a horde of Tokay Geckos, as they are my favorite species of Gecko with how they can be both friendly and evil — moreso as an adult considering they hold more fear as a youngling.<br><br>Pengu and Pebbles names are based on the fact that they are siblings of which tokay geckos are known to be more communal in the sense that they will protect their young, so the name derives from how penguins will provide their partner with their favorite pebble.<br>(Pengu = Penguin | Pebbles = The Pebble )",
-                image:      null,
-                images:     [],
+                image:      "../assets/images/reptiles/pengu_1.jpg",
+                images:     [
+                    { src: "../assets/images/reptiles/pengu_1.jpg", caption: "Description" },
+                ],
             },
             {
                 name:       "Pebbles",
@@ -226,8 +241,15 @@
                 acquired:   "2021",
                 enclosure:  "60gal tall",
                 notes:      "Khan is my most beloved Tokay Gecko and is my Adult Male that I am hoping either Pebbles or Pengu will be able to breed with eventually should one be a girl, otherwise I will have 3 Male masters of war.",
-                image:      "../assets/images/reptiles/khan_1.jpg",
-                images:     [],
+                image:      "../assets/images/reptiles/khan_6.jpg",
+                images:     [
+                    { src: "../assets/images/reptiles/khan_6.jpg", caption: "Description" },
+                    { src: "../assets/images/reptiles/khan_1.jpg", caption: "Description" },
+                    { src: "../assets/images/reptiles/khan_3.jpg", caption: "Description" },
+                    { src: "../assets/images/reptiles/khan_4.jpg", caption: "Description" },
+                    { src: "../assets/images/reptiles/khan_2.jpg", caption: "Description" },
+                    { src: "../assets/images/reptiles/khan_5.jpg", caption: "Description" },
+                ],
             },
             {
                 name:       "Izzie",
@@ -549,6 +571,27 @@
             }, { rootMargin: '-30% 0px -60% 0px' });
 
             document.querySelectorAll('.rp-section').forEach(s => observer.observe(s));
+
+            // ── Sidebar toggle ──────────────────────────────────────────
+            // Uses localStorage so state persists across all pages sitewide.
+            function applySidebarState() {
+                if (localStorage.getItem('sidebar-collapsed') === '1') {
+                    document.body.classList.add('sidebar-collapsed');
+                } else {
+                    document.body.classList.remove('sidebar-collapsed');
+                }
+            }
+            applySidebarState();
+
+            var toggleBtn = document.getElementById('headerToggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var collapsed = document.body.classList.toggle('sidebar-collapsed');
+                    localStorage.setItem('sidebar-collapsed', collapsed ? '1' : '0');
+                });
+            }
+            // ────────────────────────────────────────────────────────────
         });
         </script>
 

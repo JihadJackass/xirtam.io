@@ -1,3 +1,35 @@
+/* ── SIDEBAR Z-INDEX FIX ──
+   Ensures the sidebar and its toggle button render above all page content. */
+#header {
+    z-index: 200 !important;
+}
+
+#headerToggle {
+    z-index: 201 !important;
+}
+
+/* ── SIDEBAR COLLAPSE BEHAVIOUR ──
+   When body has .sidebar-collapsed, slide sidebar off-screen and
+   let #main fill the full width. Transition matches main.css timing. */
+body.sidebar-collapsed #header {
+    left: -375px !important;
+}
+body.sidebar-collapsed #main {
+    margin-left: 0 !important;
+}
+body.sidebar-collapsed #headerToggle {
+    left: 0 !important;
+}
+
+/* Smooth transitions for sidebar show/hide */
+#header,
+#main,
+#headerToggle {
+    -webkit-transition: left 0.4s ease, margin-left 0.4s ease;
+    -ms-transition:     left 0.4s ease, margin-left 0.4s ease;
+    transition:         left 0.4s ease, margin-left 0.4s ease;
+}
+
 .projects-section {
   padding: 30px;
   background-color: #2e2e2e;

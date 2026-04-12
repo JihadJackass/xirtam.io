@@ -64,6 +64,7 @@
                     <div>
                         <br>
 
+                        <!-- Europa Universalis V -->
                         <div class="project-card">
                             <img src="assets/images/projects/europa_universalis_5/2.png" alt="Formable Nations Reworked" class="project-image">
                             <div class="project-content">
@@ -79,6 +80,9 @@
                                         <img src="assets/images/projects/europa_universalis_5/10.png" alt="Map">
                                         <img src="assets/images/projects/europa_universalis_5/6.png" alt="Map">
                                     </div>
+                                </p><br>
+                                <p class="project-description">
+                                    <br><a href="https://github.com/JihadJackass/Formable-Nations-Reworked-Uncensored-Version" class="project-page-link">Uncensored Version Available on Github</a>
                                 </p><br>
                             </div>
                         </div>  
@@ -167,5 +171,28 @@
         <script src="assets/js/breakpoints.min.js"></script>
         <script src="assets/js/util.js"></script>
         <script src="assets/js/main.js"></script>
+
+        <!-- Sidebar toggle -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function applySidebarState() {
+                if (localStorage.getItem('sidebar-collapsed') === '1') {
+                    document.body.classList.add('sidebar-collapsed');
+                } else {
+                    document.body.classList.remove('sidebar-collapsed');
+                }
+            }
+            applySidebarState();
+
+            var toggleBtn = document.getElementById('headerToggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var collapsed = document.body.classList.toggle('sidebar-collapsed');
+                    localStorage.setItem('sidebar-collapsed', collapsed ? '1' : '0');
+                });
+            }
+        });
+        </script>
 	</body>
 </html>

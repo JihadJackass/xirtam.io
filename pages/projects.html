@@ -1,284 +1,516 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Xirtam 3</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../assets/css/main.css" />
-	</head>
-	<body class="is-preload">
+    <head>
+        <title>Xirtam 3 — Projects</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="../assets/css/main.css" />
+        <link rel="stylesheet" href="../assets/css/projects_page.css" />
+    </head>
+    <body class="is-preload">
 
-        <!-- Sidebar toggle button — sits at the right edge of the sidebar -->
+        <!-- Sidebar toggle button -->
         <div id="headerToggle">
             <a class="toggle" href="#" aria-label="Toggle sidebar"></a>
         </div>
 
-		<!-- Header -->
-		<div id="header">
-
-				<div class="top">
-
-					<!-- Logo -->
-						<div id="logo">
-							<span class="image avatar48"><img src="../assets/images/avatars/avatar.jpg" alt="" /></span>
-							<h1 id="title">Noah Gamble JihadiJackass</h1>
-							<p>Computer Programmer</p>
-							<p>Mod Developer</p>
-						</div>
-
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li><a href="../index.html" id="top-link"><span class="icon solid fa-home">Home</span></a></li>
-                                <li><a href="../pages/projects.html" id="projects-link"><span class="icon solid fa-user">Projects</span></a></li>
-								<li><a href="#projects-paradox-interactive" id="projects-paradox-interactive-link">Paradox Interactive</a></li>
-								<li><a href="#projects-eu4" id="projects-eu4-link">Europa Universalis IV</a></li>
-                                <li><a href="#projects-eu4-formable-nations-reworked" id="formable-nations-reworked-link"><span><h1>Formable Nations: Reworked</h1></span></a></li>
-                                <li><a href="#projects-eu4-no-holy-roman-empire" id="no-holy-roman-empire-link"><span><h1>No Holy Roman Empire</h1></span></a></li>
-                                <li><a href="#projects-eu4-restoration-of-the-holy-roman-empire" id="restoration-of-the-holy-roman-empire-link"><span><h1>Restoration of the Holy Roman Empire</h1></span></a></li>
-                                <li><a href="#projects-eu4-no-holy-roman-empire-voltaires-nightmare" id="no-holy-roman-empire-voltaires-nightmare-link"><span><h1> No Holy Roman Empire - Voltaire's Nightmare</h1></span></a></li>
-                                <li><a href="#projects-eu4-no-holy-roman-empire-extended-timeline" id="no-holy-roman-empire-extended-timeline"><span><h1>No Holy Roman Empire - Extended Timeline</h1></span></a></li>
-                                <li><a href="#projects-eu4-more-diplomatic-actions" id="great_claims-link"><span><h1>Great Claims</h1></span></a></li>
-                                <li><a href="#projects-eu4-more-diplomatic-actions" id="subject_policies-link"><span><h1>Subject Policies</h1></span></a></li>
-                                <li><a href="#projects-eu4_religious_freedom" id="religious-freedom-link"><span><h1>Religious Freedom</h1></span></a></li>
-                                <li><a href="#projects-eu4_custom_nation_pack" id="custom-nation-pack-link"><span><h1>Custom Nation Pack</h1></span></a></li>
-                                <li><a href="#projects-hoi4" id="projects-hoi4-link">Hearts of Iron IV</a></li>
-                                <li><a href="#projects-hoi4-dragons-evolving" id="dragons-evolving-link"><span><h1>Dragons Evolving</h1></span></a></li>
-                                <li><a href="#projects-hoi4-verge-of-domination" id="verge-of-domination-link"><span><h1>Verge of Domination</h1></span></a></li>
-                                <li><a href="#projects-hoi4-rerum-novarum" id="rerum-novarum-link"><span><h1>Rerum Novarum</h1></span></a></li>
-                                <li><a href="#projects-imperator-rome" id="projects-imperator-rome-link">Imperator: Rome</a></li>
-                                <li><a href="../pages/documentation.html" id="documentation-link"><span class="icon solid fa-user">Documentation</span></a></li>
-								<li><a href="../pages/airsoft.html" id="airsoft-link"><span class="icon solid fa-user">Airsoft</span></a></li>
-                                <li><a href="../pages/reptiles.html" id="reptiles-link"><span class="icon solid fa-user">Reptiles</span></a></li>
-                                <li><a href="../pages/images.html" id="images-link"><span class="icon solid fa-user">Images</span></a></li>
-                                <li><a href="../pages/about.html" id="about-link"><span class="icon solid fa-user">About</span></a></li>
-							</ul>
-						</nav>
-				    </div>
-				<div class="bottom">
-
-         <!-- Social Icons -->
+        <!-- Header / Sidebar -->
+        <div id="header">
+            <div class="top">
+                <div id="logo">
+                    <span class="image avatar48"><img src="../assets/images/avatars/avatar.jpg" alt="" /></span>
+                    <h1 id="title">Noah Gamble JihadiJackass</h1>
+                    <p>Computer Programmer</p>
+                    <p>Mod Developer</p>
+                </div>
+                <nav id="nav">
+                    <ul>
+                        <li><a href="../index.html"               id="top-link">          <span class="icon solid fa-home">Home</span></a></li>
+                        <li><a href="../pages/projects.html"      id="projects-link">     <span class="icon solid fa-code">Projects</span></a></li>
+                        <li><a href="../pages/aars.html"          id="aars-link">         <span class="icon solid fa-user">After-Action Reports</span></a></li>
+                        <li><a href="../pages/achievements.html"  id="achievements-link"> <span class="icon solid fa-user">Achievement Manager</span></a></li>
+                        <li><a href="../pages/airsoft.html"       id="airsoft-link">      <span class="icon solid fa-crosshairs">Airsoft</span></a></li>
+                        <li><a href="../pages/reptiles.html"      id="reptiles-link">     <span class="icon solid fa-user">Reptiles</span></a></li>
+                        <li><a href="../pages/images.html"        id="images-link">       <span class="icon solid fa-user">Image Archive</span></a></li>
+                        <li><a href="../pages/merch.html"         id="merch-link">        <span class="icon solid fa-user">Buy Flags & Merch</span></a></li>
+                        <li><a href="../pages/pkmncrater2025.html" id="pokemon-link">     <span class="icon solid fa-user">Pokemon Crater 2025</span></a></li>
+                        <li><a href="../pages/2009scape/index.html" id="2009scape-link">  <span class="icon solid fa-user">2009Scape Calculator</span></a></li>
+                        <li><a href="../pages/about.html"         id="about-link">        <span class="icon solid fa-user">About</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="bottom">
                 <ul class="icons">
                     <li><a href="https://github.com/JihadJackass" class="icon brands fa-github"><span class="label">Github</span></a></li>
-                    <li><a href="mailto:noahrg3@hotmail.com?Subject=Xirtam3" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+                    <li><a href="mailto:todosupportemail?Subject=Xirtam3" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
                 </ul>
             </div>
         </div>
 
-		<!-- Main -->
-		<div id="main">
+        <!-- Main -->
+        <div id="main">
+            <div class="prj-page">
 
-                 <!-- Projects - Europa Universalis IV -->
-				<section id="projects-eu4" class="two">
-                    <div class="container">
-
-                            <a href="https://store.steampowered.com/app/236850/Europa_Universalis_IV/"><img id="projects-eu4" src="../assets/images/projects/europa_universalis_4/logo/logo.png"></a><br>
-
-
-                            <a href="../pages/projects/formable_nations_reworked.html" id="projects-eu4-formable-nations-reworked">
-                                <font color="gold">Formable Nations: Reworked</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Active_large.png">
-                            </a><br>- 200+ Formable Nations<br>- Reworked Vanilla Nations<br>- Reworked Colonial Nations<br>- Custom Missions<br>- Custom Events<br><br>
-
-                            <a href="../pages/projects/multiplayer_reworked.html" id="projects-eu4-multiplayer_reworked">
-                                <font color="gold">Multiplayer Reworked</font>
-                                <br><img id="wprojects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Active_large.png">
-                            </a><br>- A mod focused on improving and balancing the Multiplayer experience for small groups<br>- Intended for personal use but available to the public<br><br>
-
-                            <a href="../pages/projects/no_holy_roman_empire.html" id="projects-eu4-no-holy-roman-empire">
-                                <font color="gold">No Holy Roman Empire</font>
-                                <br><img id="wprojects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Active_large.png">
-                            </a><br>- Disables the Holy Roman Empire mechanic<br><br>
-
-                            <a href="../pages/projects/restore_the_holy_roman_empire.html" id="projects-eu4-restoration-of-the-holy-roman-empire">
-                                <font color="gold">Restore the Holy Roman Empire</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Active_large.png">
-                            </a><br>- Submod for <a href="../pages/projects/no_holy_roman_empire.html">No Holy Roman Empire</a> that allows you to form Holy Roman Empire without HRE system<br><br>
-
-                            <a href="../pages/projects/custom_nation_pack.html" id="projects-eu4_custom_nation_pack">
-                                <font color="gold">Custom Nation Pack</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Active_large.png">
-                            </a><br>- Allows players to create Custom Nations from the start of the game<br>- Adds more flag shapes<br>- Adds more flag colors</a><br><br>
-
-                            <a href="../pages/projects/single_player_magic.html" id="projects-eu4-single-player-magic">
-                                <font color="gold">Single Player Magic</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Active_large.png">
-                            </a><br>- This mod is intended for personal use but is public for others to use<br>- Adds various cheats and effects that help players to roleplay or map-paint in an SP or MP campaign.<br><br>
-
-                            <a href="../pages/projects/religious_freedom.html" id="projects-eu4-religious-freedom">
-                                <font color="gold">Religious Freedom</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Active_large.png">
-                            </a><br>- Allows any country to switch to any dominant religion<br>- Adds 20+ custom religions<br><br>
-
-                            <a href="../pages/projects/subject_policies.html" id="projects-eu4-subject-policies">
-                                <font color="gold">Subject Policies</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Active_large.png">
-                            </a><br>- Adds unique diplomacy options targeting Personal Unions, Vassals, Marches, and Colonies which allow you to reduce Libery Desire or other negative subject traits at a significant cost to various values<br>- Reworked vassal system<br><br>
-
-                            <a href="../pages/projects/great_claims.html" id="projects-eu4-great-claims">
-                                <font color="gold">Great Claims</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Active_large.png">
-                            </a><br>- Great Claims is a mod that adds a simple Great Power interaction where you can demand entire bordering regions of another nation as a significant cost<br>- Highly effective against nations such as Russia, Qing, and other nations with long borders.<br><br>
-
-                            <a href="../pages/projects/age_of_industrialization.html" id="projects-eu4-age-of-industrialization">
-                                <font color="gold">Age of Industrialization</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Active_large.png">
-                            </a><br>- Adds a new age following the Age of Revolutions that focuses on Industrialization and ends the Revolution system<br>- Custom nation-specific age bonuses<br><br>
-
-                            <a href="../pages/projects/no_holy_roman_empire_extended_timeline.html" id="projects-eu4-no-holy-roman-empire-extended-timeline">
-                                <font color="gold">No Holy Roman Empire - Extended Timeline</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png">&nbsp;<img src="../assets/images/projects/dev_icons/Archived_large.png">
-                            </a><br>- This mod functions the same as No Holy Roman Empire but is intended for the overhaul 'Extended Timeline'<br>- Archived due to lack of desire to follow Extended Timeline development ~ Might update eventually.<br><br>
-
-                            <a href="../pages/projects/no_holy_roman_empire_voltaires_nightmare.html" id="projects-eu4-no-holy-roman-empire-voltaires-nightmare">
-                                <font color="gold">No Holy Roman Empire - Voltaire's Nightmare</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png">&nbsp;<img src="../assets/images/projects/dev_icons/Archived_large.png">
-                            </a><br>- This mod functions the same as No Holy Roman Empire but is intended for the overhaul 'Voltaire's Nightmare'<br>- Archived due to lack of desire to follow Voltaire's Nightmare development ~ Might update eventually.<br><br>
-
-                            <a href="../pages/projects/fall_of_islam.html" id="projects-eu4-fall-of-islam">
-                                <font color="gold">Fall of Islam</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Hiatus_large.png">
-                            </a><br><br><br>
-
-                            <a href="../pages/projects/wealth_of_nations.html" id="projects-eu4-wealth-of-nations">
-                                <font color="gold">Wealth of Nations</font>
-                                <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Hiatus_large.png">
-                            </a><br>- Wealth of Nations is a total overhaul that adds unique history based on personal interests.
-
+                <!-- Page Header -->
+                <div class="prj-hero">
+                    <div class="prj-hero-inner">
+                        <span class="prj-hero-label">Workshop & Archive</span>
+                        <h1 class="prj-hero-title">Projects</h1>
+                        <p class="prj-hero-subtitle">Mods, tools, games, and other creations — organized by platform.</p>
+                        <div class="prj-hero-divider"></div>
                     </div>
-                </section>
+                </div>
 
-                <!-- Projects - Europa Universalis IV Ideas -->
-                <section id="projects-eu4-ideas">
-                    <div class="container">
-                        <header>
-                            <h2>Planned Mods for Europa Universalis IV</h2><br>
-                            This is a list of mods that are either ideas, or entirely planned out, most of these will most likely become a mod. It has been put into a dropdown menu for convenience.<br><br>
-                            <details>
-                                <summary>View Planned Mods</summary><br>
-                                    <div>
-                                        <li><b>New World</b></li>
-                                        <li><b>Leader and Advisor Assassination</b></li>
-                                        <li><b>Treasury Robbery</b></li>
-                                        <li><b>Cultural Uprising</b></li>
-                                        <li><b>Colonial Subjection</b></li>
-                                        <li><b>Offer Protectorate</b></li>
-                                        <li><b>Cut Down Rival CB (requires 100 dev each)</b></li>
-                                        <li><b>Native Enhancements</b></li>
-                                        <li><b>Aragon joins the empire</b></li>
-                                        <li><b>France joins the empire</b></li>
-                                        <li><b>Tunis becomes christian</b></li>
-                                        <li><b>Swiss Kingdom / Republic / Dictatorship</b></li>
-                                        <li><b>Collapse of Poland-Lithuania</b></li>
-                                        <li><b>Collapse of Ming into Triple Heavenly Kingdom</b></li>
-                                        <li><b>Collapse of Ottomans / Mamluks</b></li>
-                                        <li><b>Mongolian Empire Reborn</b></li>
-                                        <li><b>Alexanders Legacy (Macedonia Empire Reborn)</b></li>
-                                        <li><b>Hordes Remastered</b></li>
-                                        <li><b>Islamic Unity (Muslims can unite for a bit?)</b></li>
-                                        <li><b>Trade Empire Diplo Mod</b></li>
-                                        <li><b>Crusader States Reborn</b></li>
-                                        <li><b>Sacrifice / Suicide</b></li>
-                                        <li><b>Invest in Civil War for Enemy</b></li>
-                                        <li><b>Bahamanis-Vijayanagar Union</b></li>
-                                        <li><b>Greater Korea</b></li>
-                                        <li><b>Ainu Reborn</b></li>
-                                        <li><b>Bhutan Reborn</b></li>
-                                        <li><b>Anti-Major Pact (Low dev nations can ally against a large High dev nation) makes small nations more playable?</b></li>
-                                        <li><b>Fall of Burgundy (Dutch Empire Reborn)</b></li>
-                                        <li><b>Austria and Hungary Reborn</b></li>
-                                        <li><b>Slavic Religion Reborn</b></li>
-                                        <li><b>Paganism Reborn</b></li>
-                                        <li><b>Zoroastrian Reborn</b></li>
-                                        <li><b>Judaism Reborn</b></li>
-                                        <li><b>Fall of the Holy Roman Empire (Adds decision when you're at war with the emperor for 5+ years, you can offer to dismantle the HRE, or reform the HRE into a smaller, more centralized empire)</b></li>
-                                        <li><b>Fall of Aragon (Splits into Four Nations, Catalonia, Italy (or to naples), and sicily)</b></li>
-                                        <li><b>English Revolt (Upon the War of the Roses, nations can choose to split from the kingdom, forming new kingdoms and unique stuffs)</b></li>
-                                        <li><b>Horde Form a Monarchy (Leader must be old, and wise, and nation must be doing well)</b></li>
-                                        <li><b>Religous Defence (Catholics can defend the pope)</b></li>
-                                        <li><b>Reform Desire and Papal Influence Upgrades</b></li>
-                                        <li><b>Excommunication Upgrades</b></li>
-                                        <li><b>Cardinals Upgrades</b></li>
-                                        <li><b>Tolernace Upgrades</b></li>
-                                        <li><b>Byzantium Survives</b></li>
-                                        <li><b>More Buildings</b></li>
-                                        <li><b>Romania Reborn</b></li>
-                                        <li><b>Cultural Boom / Missionaries</b></li>
-                                        <li><b>Investment Mod (money for relations?)</b></li>
-                                        <li><b>Exchange/Trade Province (costs)</b></li>
-                                        <li><b>Send Emissary (Opinions and Bonuses?)</b></li>
-                                        <li><b>No Daimyos</b></li>
-                                        <li><b>No Empire of China</b></li>
-                                        <li><b>Broken China</b></li>
-                                        <li><b>Diplomatic Actions 4: Opinions and Relations</b></li>
-                                        <li><b>Westernization Mechanic (from EU3) for Natives and Africans</b></li>
-                                        <li><b>Dynastic Espionage</b></li>
-                                        <li><b>Empires Can Form Client States</b></li>
-                                        <li><b>Rebel Protection (Same Dynasty, Lost Denmark to stupid rebels?)</b></li>
-                                        <li><b>Theodoro Reborn</b></li>
-                                        <li><b>War Investment (Invest in Allied Wars)</b></li>
-                                        <li><b>Trust System Upgrades</b></li>
-                                        <li><b>Enforce Subject Monarchy/Republic/etc</b></li>
-                                        <li><b>Diplomatic Relations Expansion - Diplo mod #3</b></li>
-                                        <li><b>Dynasty Strength Espionage - Diplo mod #4</b></li>                                    </div>
-                            </details>
-                        </header>
-                    </div>
-                </section>
+                <!-- Filter / Subnav -->
+                <nav class="prj-subnav" id="prj-subnav"></nav>
 
-                <!-- Projects - Hearts of Iron IV -->
-                <section id="projects-hoi4" class="two">
-                    <div class="container">
+                <!-- Content -->
+                <div class="prj-content" id="prj-content"></div>
 
-                        <a href="https://store.steampowered.com/app/236850/Europa_Universalis_IV/"><img id="projects-hoi4" src="../assets/images/projects/hearts_of_iron_4/logo/hoi4_logo.png" width="200"></a><br><br>
+                <!-- Footer message -->
+                <div class="prj-footer-msg">
+                    From the deepest part of my heart, I thank you greatly for taking an interest in my work.
+                </div>
 
-                        <a href="projects/rerum_novarum.html" id="projects-hoi4-rerum-novarum">
-                            <font color="gold">Rerum Novarum</font>
-                            <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Hiatus_large.png">
-                        </a><br><br>
-
-                        <a href="dragons_evolving.html" id="projects-hoi4-dragons-evolving">
-                            <font color="gold">Dragons Evolving</font>
-                            <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Hiatus_large.png">
-                        </a><br><br>
-
-                        <a href="verge_of_domination.html" id="projects-hoi4-verge-of_domination">
-                            <font color="gold">Verge of Domination</font>
-                            <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Hiatus_large.png">
-                        </a><br><br>
-
-                        <a href="italian_empire.html" id="projects-hoi4-italian-empire">
-                            <font color="gold">Italian Empire</font>
-                            <br><img id="projects-eu4" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Hiatus_large.png">
-                        </a><br><br>
-                    </div>
-                </section>
-
-                <!-- Projects - Imperator: Rome -->
-                <section id="projects-imperator-rome" class="two">
-                    <div class="container">
-
-                        <a href="https://store.steampowered.com/app/859580/Imperator_Rome/"><img id="projects-imperator-rome" src="../assets/images/projects/imperator_rome/logo/rome_logo.png" width="200"></a><br><br>
-
-                        <a href="projects/formable_nations_reworked_rome.html" id="projects-imperator-rome">
-                            <font color="gold">Formable Nations: Reworked</font>
-                            <br><img id="projects-imperator-rome" src="../assets/images/projects/dev_icons/Status_large.png"><img src="../assets/images/projects/dev_icons/Hiatus_large.png">
-                        </a><br><br>
-
-                        <br><br>From the deepest part of my heart, I thank you greatly for taking an interest in my mod development.
-                    </div>
-                </section>
-
+            </div>
         </div>
 
-		<!-- Scripts -->
-			<script src="../assets/js/jquery.min.js"></script>
-			<script src="../assets/js/jquery.scrolly.min.js"></script>
-			<script src="../assets/js/jquery.scrollex.min.js"></script>
-			<script src="../assets/js/browser.min.js"></script>
-			<script src="../assets/js/breakpoints.min.js"></script>
-			<script src="../assets/js/util.js"></script>
-			<script src="../assets/js/main.js"></script>
+        <!-- =====================================================
+             PROJECT DATA
+             ─────────────────────────────────────────────────────
+             To add a new game/category:
+               1. Add a new object to PROJECTS below.
+               2. Give it a unique `id`, a `game` name, a `logo`
+                  path, and a `storeUrl`.
+               3. Fill in the `mods` array with your projects.
 
-	</body>
+             To add a new mod to an existing game:
+               1. Find the game object in PROJECTS.
+               2. Add a new object to its `mods` array.
+
+             Status options: "Active", "Hiatus", "Archived", "Planned"
+             ===================================================== -->
+        <script>
+        const PROJECTS = [
+            // ── EUROPA UNIVERSALIS V ────────────────────────────
+            {
+                id:       "eu5",
+                game:     "Europa Universalis V",
+                logo:     null,
+                storeUrl: "https://store.steampowered.com/app/2918500/Europa_Universalis_V/",
+                mods: [
+                    {
+                        name:        "Formable Nations: Reworked",
+                        status:      "Active",
+                        page:        "projects/formable_nations_reworked_EUV.html",
+                        steam:       "https://steamcommunity.com/sharedfiles/filedetails/?id=3599977147&tscn=1764434382",
+                        github:      "https://github.com/JihadJackass/Formable-Nations-Reworked-Uncensored-Version",
+                        description: "A complete overhaul of the formable nations system in EU5 — expanding gameplay options and reworking formation decisions.",
+                        features:    ["200+ Formable Nations", "Reworked Vanilla Nations", "Custom Missions & Events"],
+                        image:       "../assets/images/projects/europa_universalis_5/2.png",
+                    },
+                ],
+            },
+
+            // ── EUROPA UNIVERSALIS IV ───────────────────────────
+            {
+                id:       "eu4",
+                game:     "Europa Universalis IV",
+                logo:     "../assets/images/projects/europa_universalis_4/logo/logo.png",
+                storeUrl: "https://store.steampowered.com/app/236850/Europa_Universalis_IV/",
+                mods: [
+                    {
+                        name:        "Formable Nations: Reworked",
+                        status:      "Active",
+                        page:        "projects/formable_nations_reworked.html",
+                        steam:       "https://steamcommunity.com/sharedfiles/filedetails/?id=1810341847",
+                        description: "A complete overhaul of the formable nations system — expanding gameplay options and reworking formation decisions.",
+                        features:    ["200+ Formable Nations", "Reworked Vanilla Nations", "Reworked Colonial Nations", "Custom Missions", "Custom Events"],
+                        image:       "../assets/images/projects/thumbnails/formable_nations_thumbnail.png",
+                    },
+                    {
+                        name:        "Multiplayer Reworked",
+                        status:      "Active",
+                        page:        "projects/multiplayer_reworked.html",
+                        description: "A mod focused on improving and balancing the Multiplayer experience for small groups. Intended for personal use but available to the public.",
+                    },
+                    {
+                        name:        "No Holy Roman Empire",
+                        status:      "Active",
+                        page:        "projects/no_holy_roman_empire.html",
+                        description: "Disables the Holy Roman Empire mechanic entirely.",
+                    },
+                    {
+                        name:        "Restore the Holy Roman Empire",
+                        status:      "Active",
+                        page:        "projects/restore_the_holy_roman_empire.html",
+                        description: "Submod for No Holy Roman Empire — allows you to form the Holy Roman Empire without the HRE system.",
+                    },
+                    {
+                        name:        "Custom Nation Pack",
+                        status:      "Active",
+                        page:        "projects/custom_nation_pack.html",
+                        description: "Allows players to create Custom Nations from the start of the game.",
+                        features:    ["More flag shapes", "More flag colors"],
+                    },
+                    {
+                        name:        "Single Player Magic",
+                        status:      "Active",
+                        page:        "projects/single_player_magic.html",
+                        description: "Adds various cheats and effects that help players to roleplay or map-paint in SP or MP campaigns. Intended for personal use but public for others.",
+                    },
+                    {
+                        name:        "Religious Freedom",
+                        status:      "Active",
+                        page:        "projects/religious_freedom.html",
+                        description: "Allows any country to switch to any dominant religion.",
+                        features:    ["20+ Custom Religions"],
+                    },
+                    {
+                        name:        "Subject Policies",
+                        status:      "Active",
+                        page:        "projects/subject_policies.html",
+                        description: "Adds unique diplomacy options targeting Personal Unions, Vassals, Marches, and Colonies to reduce Liberty Desire or other negative subject traits at significant cost.",
+                        features:    ["Reworked vassal system"],
+                    },
+                    {
+                        name:        "Great Claims",
+                        status:      "Active",
+                        page:        "projects/great_claims.html",
+                        description: "Adds a Great Power interaction where you can demand entire bordering regions of another nation at significant cost. Highly effective against nations with long borders.",
+                    },
+                    {
+                        name:        "Age of Industrialization",
+                        status:      "Active",
+                        page:        "projects/age_of_industrialization.html",
+                        description: "Adds a new age following the Age of Revolutions that focuses on Industrialization and ends the Revolution system.",
+                        features:    ["Custom nation-specific age bonuses"],
+                    },
+                    {
+                        name:        "No Holy Roman Empire — Extended Timeline",
+                        status:      "Archived",
+                        page:        "projects/no_holy_roman_empire_extended_timeline.html",
+                        description: "Functions the same as No Holy Roman Empire but for the Extended Timeline overhaul. Archived due to lack of desire to follow ET development.",
+                    },
+                    {
+                        name:        "No Holy Roman Empire — Voltaire's Nightmare",
+                        status:      "Archived",
+                        page:        "projects/no_holy_roman_empire_voltaires_nightmare.html",
+                        description: "Functions the same as No Holy Roman Empire but for the Voltaire's Nightmare overhaul. Archived due to lack of desire to follow VN development.",
+                    },
+                    {
+                        name:        "Fall of Islam",
+                        status:      "Hiatus",
+                        page:        "projects/fall_of_islam.html",
+                        description: "",
+                    },
+                    {
+                        name:        "Wealth of Nations",
+                        status:      "Hiatus",
+                        page:        "projects/wealth_of_nations.html",
+                        description: "A total overhaul that adds unique history based on personal interests.",
+                    },
+                ],
+                planned: [
+                    "New World", "Leader and Advisor Assassination", "Treasury Robbery",
+                    "Cultural Uprising", "Colonial Subjection", "Offer Protectorate",
+                    "Cut Down Rival CB (requires 100 dev each)", "Native Enhancements",
+                    "Aragon joins the empire", "France joins the empire",
+                    "Tunis becomes christian", "Swiss Kingdom / Republic / Dictatorship",
+                    "Collapse of Poland-Lithuania", "Collapse of Ming into Triple Heavenly Kingdom",
+                    "Collapse of Ottomans / Mamluks", "Mongolian Empire Reborn",
+                    "Alexanders Legacy (Macedonia Empire Reborn)", "Hordes Remastered",
+                    "Islamic Unity", "Trade Empire Diplo Mod", "Crusader States Reborn",
+                    "Sacrifice / Suicide", "Invest in Civil War for Enemy",
+                    "Bahamanis-Vijayanagar Union", "Greater Korea", "Ainu Reborn",
+                    "Bhutan Reborn", "Anti-Major Pact", "Fall of Burgundy (Dutch Empire Reborn)",
+                    "Austria and Hungary Reborn", "Slavic Religion Reborn", "Paganism Reborn",
+                    "Zoroastrian Reborn", "Judaism Reborn", "Fall of the Holy Roman Empire",
+                    "Fall of Aragon", "English Revolt", "Horde Form a Monarchy",
+                    "Religious Defence", "Reform Desire and Papal Influence Upgrades",
+                    "Excommunication Upgrades", "Cardinals Upgrades", "Tolerance Upgrades",
+                    "Byzantium Survives", "More Buildings", "Romania Reborn",
+                    "Cultural Boom / Missionaries", "Investment Mod", "Exchange/Trade Province",
+                    "Send Emissary", "No Daimyos", "No Empire of China", "Broken China",
+                    "Diplomatic Actions 4: Opinions and Relations",
+                    "Westernization Mechanic (from EU3)", "Dynastic Espionage",
+                    "Empires Can Form Client States", "Rebel Protection",
+                    "Theodoro Reborn", "War Investment", "Trust System Upgrades",
+                    "Enforce Subject Monarchy/Republic/etc",
+                    "Diplomatic Relations Expansion", "Dynasty Strength Espionage",
+                ],
+            },
+
+            // ── HEARTS OF IRON IV ───────────────────────────────
+            {
+                id:       "hoi4",
+                game:     "Hearts of Iron IV",
+                logo:     "../assets/images/projects/hearts_of_iron_4/logo/hoi4_logo.png",
+                storeUrl: "https://store.steampowered.com/app/394360/Hearts_of_Iron_IV/",
+                mods: [
+                    {
+                        name:        "Rerum Novarum",
+                        status:      "Hiatus",
+                        page:        "projects/rerum_novarum.html",
+                        description: "",
+                    },
+                    {
+                        name:        "Dragons Evolving",
+                        status:      "Hiatus",
+                        page:        "projects/dragons_evolving.html",
+                        description: "",
+                    },
+                    {
+                        name:        "Verge of Domination",
+                        status:      "Hiatus",
+                        page:        "projects/verge_of_domination.html",
+                        description: "",
+                    },
+                    {
+                        name:        "Italian Empire",
+                        status:      "Hiatus",
+                        page:        "projects/italian_empire.html",
+                        description: "",
+                    },
+                ],
+            },
+
+            // ── IMPERATOR: ROME ─────────────────────────────────
+            {
+                id:       "imperator",
+                game:     "Imperator: Rome",
+                logo:     "../assets/images/projects/imperator_rome/logo/rome_logo.png",
+                storeUrl: "https://store.steampowered.com/app/859580/Imperator_Rome/",
+                mods: [
+                    {
+                        name:        "Formable Nations: Reworked",
+                        status:      "Hiatus",
+                        page:        "projects/formable_nations_reworked_rome.html",
+                        description: "",
+                    },
+                ],
+            },
+
+            // ── Pokemon Crater ─────────────────────────────────
+            {
+                id:       "pokemon",
+                game:     "pokemon",
+                mods: [
+                    {
+                        name:        "Pokemon Crater 2025",
+                        status:      "Active",
+                        page:        "projects/pkmncrater2025.html",
+                        description: "",
+                    },
+                    {
+                        name:        "Pokemon Mystery Dungeon Explorers of Sky Remake",
+                        status:      "Active",
+                        description: "",
+                    },
+                ],
+            },
+
+            // ── Lego ─────────────────────────────────
+            {
+                id:       "lego",
+                game:     "Lego",
+                logo:     "../assets/images/projects/imperator_rome/logo/rome_logo.png",
+                storeUrl: "https://store.steampowered.com/app/859580/Imperator_Rome/",
+                mods: [
+                    {
+                        name:        "Lego Dino Attack",
+                        status:      "Hiatus",
+                        page:        "projects/formable_nations_reworked_rome.html",
+                        description: "",
+                    },
+                ],
+            },
+
+            // ── ADD NEW GAME / PLATFORM HERE ────────────────────
+            // {
+            //     id:       "unique-id",
+            //     game:     "Game Name",
+            //     logo:     "../assets/images/projects/game/logo.png",
+            //     storeUrl: "https://store.steampowered.com/app/...",
+            //     mods: [
+            //         {
+            //             name:        "Mod Name",
+            //             status:      "Active",        // Active | Hiatus | Archived | Planned
+            //             page:        "projects/mod_page.html",
+            //             steam:       "https://steamcommunity.com/...",  // optional
+            //             github:      "https://github.com/...",          // optional
+            //             description: "What this mod does.",
+            //             features:    ["Feature 1", "Feature 2"],        // optional
+            //             image:       "../assets/images/projects/...",   // optional
+            //         },
+            //     ],
+            //     planned: ["Idea 1", "Idea 2"],  // optional
+            // },
+        ];
+
+
+        // =====================================================
+        //  RENDERING ENGINE
+        // =====================================================
+
+        function escHtml(str) {
+            const d = document.createElement('div');
+            d.textContent = str;
+            return d.innerHTML;
+        }
+
+        function statusClass(s) {
+            return (s || 'active').toLowerCase().replace(/\s+/g, '-');
+        }
+
+        function statusIcon(s) {
+            const map = { active: '◆', hiatus: '◇', archived: '▣', planned: '○' };
+            return map[(s || 'active').toLowerCase()] || '◆';
+        }
+
+        // Build subnav
+        function renderSubnav() {
+            const nav = document.getElementById('prj-subnav');
+            const ul = document.createElement('ul');
+            PROJECTS.forEach(g => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#prj-' + g.id;
+                a.className = 'prj-nav-link';
+                a.textContent = g.game;
+                li.appendChild(a);
+                ul.appendChild(li);
+            });
+            nav.appendChild(ul);
+        }
+
+        // Build a single mod card
+        function buildModCard(mod) {
+            const st = statusClass(mod.status);
+            const hasImage = mod.image ? true : false;
+
+            let featuresHtml = '';
+            if (mod.features && mod.features.length) {
+                featuresHtml = '<div class="prj-card-features">' +
+                    mod.features.map(f => '<span class="prj-feature-tag">' + escHtml(f) + '</span>').join('') +
+                    '</div>';
+            }
+
+            let linksHtml = '';
+            const links = [];
+            if (mod.page)   links.push('<a href="' + mod.page + '" class="prj-card-link">Details</a>');
+            if (mod.steam)  links.push('<a href="' + mod.steam + '" class="prj-card-link prj-link-steam" target="_blank" rel="noopener">Steam</a>');
+            if (mod.github) links.push('<a href="' + mod.github + '" class="prj-card-link prj-link-github" target="_blank" rel="noopener">Github</a>');
+            if (links.length) {
+                linksHtml = '<div class="prj-card-links">' + links.join('') + '</div>';
+            }
+
+            return '<div class="prj-card status-' + st + '">' +
+                '<div class="prj-card-accent"></div>' +
+                (hasImage ? '<div class="prj-card-thumb"><img src="' + mod.image + '" alt="' + escHtml(mod.name) + '" loading="lazy" /></div>' : '') +
+                '<div class="prj-card-body">' +
+                    '<div class="prj-card-head">' +
+                        '<span class="prj-card-badge status-' + st + '">' + statusIcon(mod.status) + ' ' + escHtml(mod.status || 'Active') + '</span>' +
+                    '</div>' +
+                    '<h3 class="prj-card-name">' + escHtml(mod.name) + '</h3>' +
+                    (mod.description ? '<p class="prj-card-desc">' + escHtml(mod.description) + '</p>' : '') +
+                    featuresHtml +
+                    linksHtml +
+                '</div>' +
+            '</div>';
+        }
+
+        // Build planned mods collapsible
+        function buildPlannedSection(planned) {
+            if (!planned || !planned.length) return '';
+            return '<div class="prj-planned">' +
+                '<details>' +
+                    '<summary class="prj-planned-toggle">Planned Mods (' + planned.length + ')</summary>' +
+                    '<div class="prj-planned-grid">' +
+                        planned.map(p => '<span class="prj-planned-item">' + escHtml(p) + '</span>').join('') +
+                    '</div>' +
+                '</details>' +
+            '</div>';
+        }
+
+        // Build an entire game section
+        function buildGameSection(game) {
+            const logoHtml = game.logo
+                ? '<a href="' + game.storeUrl + '" target="_blank" rel="noopener" class="prj-game-logo-link"><img src="' + game.logo + '" alt="' + escHtml(game.game) + '" class="prj-game-logo" /></a>'
+                : '';
+
+            // Count statuses
+            const counts = {};
+            game.mods.forEach(m => {
+                const s = (m.status || 'Active');
+                counts[s] = (counts[s] || 0) + 1;
+            });
+            const countHtml = Object.entries(counts).map(([s, n]) =>
+                '<span class="prj-count-badge status-' + statusClass(s) + '">' + n + ' ' + s + '</span>'
+            ).join('');
+
+            return '<section id="prj-' + game.id + '" class="prj-section">' +
+                '<div class="prj-section-header">' +
+                    logoHtml +
+                    '<h2 class="prj-section-title">' + escHtml(game.game) + '</h2>' +
+                    '<div class="prj-count-row">' + countHtml + '</div>' +
+                    '<div class="prj-section-divider"></div>' +
+                '</div>' +
+                '<div class="prj-card-grid">' +
+                    game.mods.map(m => buildModCard(m)).join('') +
+                '</div>' +
+                buildPlannedSection(game.planned) +
+            '</section>';
+        }
+
+        // Render everything
+        document.addEventListener('DOMContentLoaded', function () {
+            renderSubnav();
+
+            const content = document.getElementById('prj-content');
+            content.innerHTML = PROJECTS.map(g => buildGameSection(g)).join('');
+
+            // Active nav highlight on scroll
+            const navLinks = document.querySelectorAll('.prj-nav-link');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        const link = document.querySelector('.prj-nav-link[href="#' + entry.target.id + '"]');
+                        if (link) link.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-20% 0px -70% 0px' });
+            document.querySelectorAll('.prj-section').forEach(s => observer.observe(s));
+
+            // Sidebar toggle (matches reptiles page)
+            function applySidebarState() {
+                if (localStorage.getItem('sidebar-collapsed') === '1') {
+                    document.body.classList.add('sidebar-collapsed');
+                } else {
+                    document.body.classList.remove('sidebar-collapsed');
+                }
+            }
+            applySidebarState();
+
+            var toggleBtn = document.getElementById('headerToggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var collapsed = document.body.classList.toggle('sidebar-collapsed');
+                    localStorage.setItem('sidebar-collapsed', collapsed ? '1' : '0');
+                });
+            }
+        });
+        </script>
+
+        <!-- Site scripts -->
+        <script src="../assets/js/jquery.min.js"></script>
+        <script src="../assets/js/jquery.scrolly.min.js"></script>
+        <script src="../assets/js/jquery.scrollex.min.js"></script>
+        <script src="../assets/js/browser.min.js"></script>
+        <script src="../assets/js/breakpoints.min.js"></script>
+        <script src="../assets/js/util.js"></script>
+        <script src="../assets/js/main.js"></script>
+    </body>
 </html>

@@ -1,53 +1,294 @@
-<!DOCTYPE HTML> <!-- test -->
+<!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Xirtam 3</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../../assets/css/main.css" />
-	</head>
-	<body class="is-preload">
+    <head>
+        <title>Xirtam 3 — Formable Nations: Reworked (EUV)</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="../../assets/css/main.css" />
+        <style>
+/* ============================================================
+   FORMABLE NATIONS GUIDE — EU5 Edition
+   Matches site grey + gold cartographic aesthetic
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
-		<!-- Header -->
-			<div id="header">
+:root {
+    --fnr-bg:           #222729;
+    --fnr-card:         rgba(42, 47, 50, 0.92);
+    --fnr-card-border:  rgba(180, 160, 120, 0.12);
+    --fnr-card-hover:   rgba(180, 160, 120, 0.22);
+    --fnr-gold:         #c8a84e;
+    --fnr-gold-dim:     #8a7434;
+    --fnr-cream:        #e8dfc8;
+    --fnr-parchment:    #c4b896;
+    --fnr-muted:        #7a7060;
+    --fnr-modern:       #5a8ab0;
+    --fnr-historical:   #5ca868;
+    --fnr-nonhist:      #b08840;
+    --fnr-fantasy:      #9a68b0;
+    --fnr-althist:      #b07050;
+    --fnr-usstates:     #6080a0;
+    --fnr-controversial:#b05050;
+    --fnr-uncategorized: #7a7a8e;
+}
 
-				<div class="top">
+#header { z-index: 200 !important; }
+#headerToggle { z-index: 201 !important; }
 
-					<!-- Logo -->
-						<div id="logo">
-							<span class="image avatar48"><img src="../../assets/images/avatars/avatar.jpg"></span>
-							<h1 id="title">Noah Gamble JihadiJackass</h1>
-							<p>Computer Programmer</p>
-							<p>Mod Developer</p>
-						</div>
+#main .fnr-page {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    color: var(--fnr-cream);
+    min-height: 100vh;
+    position: relative;
+    background-color: var(--fnr-bg);
+    background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(200,168,78,0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 60%, rgba(200,168,78,0.02) 0%, transparent 50%);
+}
+#main .fnr-page::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none; opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+}
 
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li><a href="../../index.html" href="index.html" id="top-link"><span class="icon solid fa-home">Home</span></a></li>
-								<li><a href="../../pages/projects.html" id="projects-link"><span class="icon solid fa-user">Projects</span></a></li>
-                                <li><a href="#formable-nations-reworked" id="formable-nations-reworked-link"><span><h1>Formable Nations: Reworked</h1></span></a></li>
-                                <li><a href="#new-formable-nations" id="new-formable-nations-link"><span><h1>New Formable Nations</h1></span></a></li>
-                                <li><a href="#vanilla-formable-nations" id="vanilla-formable-nations-link"><span><h1>Vanilla Formable Nations</h1></span></a></li>
-                                <li><a href="#planned-formable-nations" id="planned-formable-nations-link"><span><h1>Planned Formable Nations</h1></span></a></li>
-                                <li><a href="#formable-nations-reworked-tags" id="formable-nations-reworked-tags-link"><span><h1>Country TAGs</h1></span></a></li>
-                                <li><a href="#formables-end-game-tags" id="formables-end-game-tags-link"><span><h1>End-Game TAGs</h1></span></a></li>
-                                <li><a href="#formables-changelog" id="formable-nations-reworked-changelog-link"><span><h1>Changelog</h1></span></a></li>
-                                <li><a href="#formables-compatibility" id="formables-compatibility-link"><span><h1>Compatibility</h1></span></a></li>
-                                <li><a href="#formables-images" id="formables-images-link"><span><h1>Images</h1></span></a></li>
-                                <li><a href="#formables-images" id="formables-downloads-link"><span><h1>Downloads</h1></span></a></li>
-                                <li><a href="#formables-team" id="formables-team-link"><span><h1>Development Team</h1></span></a></li>
-								<li><a href="../../pages/documentation.html" id="documentation-link"><span class="icon solid fa-user">Documentation</span></a></li>
-                                <li><a href="../../pages/airsoft.html" id="airsoft-link"><span class="icon solid fa-user">Airsoft</span></a></li>
-                                <li><a href="../../pages/reptiles.html" id="reptiles-link"><span class="icon solid fa-user">Reptiles</span></a></li>
-                                <li><a href="../../pages/images.html" id="images-link"><span class="icon solid fa-user">Images</span></a></li>
-                                <li><a href="../../pages/about.html" id="about-link"><span class="icon solid fa-user">About</span></a></li>
-							</ul>
-						</nav>
-				    </div>
-				<div class="bottom">
+/* ── HERO ── */
+.fnr-hero { position: relative; z-index: 10; padding: 48px 32px 20px; text-align: center; }
+.fnr-hero-inner { max-width: 760px; margin: 0 auto; }
+.fnr-hero-label {
+    font-family: 'Libre Baskerville', serif; font-size: 0.72rem;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--fnr-gold); display: block; margin-bottom: 8px; opacity: 0.85;
+}
+.fnr-hero-title {
+    font-family: 'Cinzel', serif; font-size: 2.4rem; font-weight: 700;
+    color: var(--fnr-cream); margin: 0 0 8px; letter-spacing: 0.04em; line-height: 1.15;
+}
+.fnr-hero-version {
+    font-family: 'Libre Baskerville', serif; font-size: 0.82rem;
+    color: var(--fnr-gold); margin: 0 0 12px; font-style: italic;
+}
+.fnr-hero-desc {
+    font-family: 'Libre Baskerville', serif; font-size: 0.9rem;
+    color: var(--fnr-parchment); opacity: 0.75; line-height: 1.65; margin: 0 0 16px;
+}
+.fnr-hero-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
+.fnr-hero-link {
+    font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.10em; text-transform: uppercase; text-decoration: none;
+    color: var(--fnr-parchment); padding: 6px 16px;
+    border: 1px solid rgba(180,160,120,0.18); border-radius: 4px;
+    transition: all 0.25s ease; opacity: 0.75;
+}
+.fnr-hero-link:hover { color: var(--fnr-gold); border-color: var(--fnr-gold-dim); background: rgba(200,168,78,0.06); opacity: 1; }
+.fnr-hero-divider { width: 100px; height: 1px; background: linear-gradient(to right, transparent, var(--fnr-gold-dim), transparent); margin: 20px auto 0; }
 
-         <!-- Social Icons -->
+/* ── STATS BAR ── */
+.fnr-stats-bar {
+    position: relative; z-index: 10;
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 16px;
+    padding: 18px 28px; max-width: 900px; margin: 0 auto;
+}
+.fnr-stat-chip {
+    font-family: 'Cinzel', serif; font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--fnr-parchment); background: rgba(42,47,50,0.6);
+    border: 1px solid rgba(180,160,120,0.08); padding: 5px 14px;
+    border-radius: 20px;
+}
+.fnr-stat-chip b { color: var(--fnr-gold); margin-right: 4px; }
+
+/* ── TOOLBAR ── */
+.fnr-toolbar {
+    position: sticky; top: 0; z-index: 100;
+    background: linear-gradient(to bottom, rgba(34,39,41,0.97) 0%, rgba(34,39,41,0.92) 100%);
+    border-bottom: 1px solid rgba(180,160,120,0.10);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    padding: 10px 20px;
+}
+.fnr-toolbar-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.fnr-search {
+    flex: 1; min-width: 180px;
+    font-family: 'Libre Baskerville', serif; font-size: 0.85rem;
+    color: var(--fnr-cream); background: rgba(20,24,28,0.6);
+    border: 1px solid rgba(180,160,120,0.12); border-radius: 6px;
+    padding: 8px 14px; outline: none;
+    transition: border-color 0.25s ease;
+}
+.fnr-search::placeholder { color: var(--fnr-muted); font-style: italic; }
+.fnr-search:focus { border-color: var(--fnr-gold-dim); }
+
+.fnr-filter-group { display: flex; gap: 4px; flex-wrap: wrap; }
+.fnr-filter-btn {
+    font-family: 'Cinzel', serif; font-size: 0.62rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--fnr-parchment); background: transparent;
+    border: 1px solid rgba(180,160,120,0.12); border-radius: 4px;
+    padding: 5px 10px; cursor: pointer;
+    transition: all 0.2s ease; opacity: 0.55;
+}
+.fnr-filter-btn:hover { opacity: 0.85; border-color: rgba(180,160,120,0.25); }
+.fnr-filter-btn.active { opacity: 1; color: var(--fnr-gold); border-color: var(--fnr-gold-dim); background: rgba(200,168,78,0.08); }
+
+.fnr-sort-select {
+    font-family: 'Libre Baskerville', serif; font-size: 0.78rem;
+    color: var(--fnr-cream); background: rgba(20,24,28,0.6);
+    border: 1px solid rgba(180,160,120,0.12); border-radius: 6px;
+    padding: 6px 10px; outline: none; cursor: pointer;
+}
+
+/* ── CONTENT ── */
+.fnr-content { position: relative; z-index: 10; max-width: 1100px; margin: 0 auto; padding: 20px 28px 60px; }
+.fnr-results-count { font-family: 'Libre Baskerville', serif; font-size: 0.78rem; color: var(--fnr-muted); margin-bottom: 16px; font-style: italic; }
+
+/* ── CARD GRID ── */
+.fnr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+/* ── NATION CARD ── */
+.fnr-card {
+    background: var(--fnr-card); border: 1px solid var(--fnr-card-border);
+    border-radius: 10px; overflow: hidden;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+}
+.fnr-card:hover {
+    transform: translateY(-3px); border-color: var(--fnr-card-hover);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.45), 0 0 12px rgba(200,168,78,0.05);
+}
+.fnr-card-accent { height: 3px; width: 100%; }
+.fnr-card.cat-Modern .fnr-card-accent       { background: linear-gradient(to right, var(--fnr-modern), #7aaac0); }
+.fnr-card.cat-Historical .fnr-card-accent    { background: linear-gradient(to right, var(--fnr-historical), var(--fnr-gold)); }
+.fnr-card.cat-Non-Historical .fnr-card-accent{ background: linear-gradient(to right, var(--fnr-nonhist), #c8a840); }
+.fnr-card.cat-Fantasy .fnr-card-accent       { background: linear-gradient(to right, var(--fnr-fantasy), #b088c0); }
+.fnr-card.cat-Alt-History .fnr-card-accent   { background: linear-gradient(to right, var(--fnr-althist), #c09070); }
+.fnr-card.cat-US-States .fnr-card-accent     { background: linear-gradient(to right, var(--fnr-usstates), #80a0c0); }
+.fnr-card.cat-Controversial .fnr-card-accent { background: linear-gradient(to right, var(--fnr-controversial), #c07070); }
+.fnr-card.cat-Uncategorized .fnr-card-accent { background: linear-gradient(to right, var(--fnr-uncategorized), #8a8a9e); }
+
+.fnr-card-body { padding: 14px 18px 16px; }
+
+.fnr-card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.fnr-card-tag {
+    font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.10em; color: var(--fnr-muted);
+    background: rgba(180,160,120,0.06); border: 1px solid rgba(180,160,120,0.08);
+    padding: 2px 8px; border-radius: 3px;
+}
+.fnr-card-cat {
+    font-family: 'Libre Baskerville', serif; font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.10em; text-transform: uppercase;
+    padding: 2px 9px; border-radius: 12px;
+}
+.cat-Modern .fnr-card-cat       { color: var(--fnr-modern);       background: rgba(90,138,176,0.12); border: 1px solid rgba(90,138,176,0.25); }
+.cat-Historical .fnr-card-cat   { color: var(--fnr-historical);   background: rgba(92,168,104,0.12); border: 1px solid rgba(92,168,104,0.25); }
+.cat-Non-Historical .fnr-card-cat{ color: var(--fnr-nonhist);     background: rgba(176,136,64,0.12);  border: 1px solid rgba(176,136,64,0.25); }
+.cat-Fantasy .fnr-card-cat      { color: var(--fnr-fantasy);      background: rgba(154,104,176,0.12); border: 1px solid rgba(154,104,176,0.25); }
+.cat-Alt-History .fnr-card-cat  { color: var(--fnr-althist);      background: rgba(176,112,80,0.12);  border: 1px solid rgba(176,112,80,0.25); }
+.cat-US-States .fnr-card-cat    { color: var(--fnr-usstates);     background: rgba(96,128,160,0.12);  border: 1px solid rgba(96,128,160,0.25); }
+.cat-Controversial .fnr-card-cat{ color: var(--fnr-controversial); background: rgba(176,80,80,0.12);  border: 1px solid rgba(176,80,80,0.25); }
+.cat-Uncategorized .fnr-card-cat{ color: var(--fnr-uncategorized); background: rgba(122,122,142,0.12); border: 1px solid rgba(122,122,142,0.25); }
+
+.fnr-card-name {
+    font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700;
+    color: var(--fnr-cream); margin: 0 0 8px; line-height: 1.25;
+}
+
+.fnr-card-meta { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-bottom: 6px; }
+.fnr-card-meta-item {
+    font-size: 0.72rem; color: var(--fnr-parchment); opacity: 0.7;
+}
+.fnr-card-meta-item b { color: var(--fnr-gold); font-weight: 400; opacity: 0.8; margin-right: 2px; }
+
+/* ── EXPANDED DETAIL (toggle) ── */
+.fnr-card-detail { display: none; padding-top: 10px; border-top: 1px solid rgba(180,160,120,0.08); margin-top: 8px; }
+.fnr-card.expanded .fnr-card-detail { display: block; }
+
+.fnr-detail-section { margin-bottom: 12px; }
+.fnr-detail-label {
+    font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fnr-gold); margin: 0 0 5px; opacity: 0.8;
+}
+.fnr-detail-value {
+    font-family: 'Libre Baskerville', serif; font-size: 0.82rem;
+    color: var(--fnr-parchment); line-height: 1.55;
+}
+.fnr-detail-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.fnr-detail-tag {
+    font-size: 0.7rem; color: var(--fnr-parchment);
+    background: rgba(180,160,120,0.06); border: 1px solid rgba(180,160,120,0.10);
+    padding: 2px 8px; border-radius: 3px;
+}
+
+/* Content placeholder for future expansion */
+.fnr-card-content-placeholder {
+    font-family: 'Libre Baskerville', serif; font-size: 0.78rem;
+    color: var(--fnr-muted); font-style: italic; opacity: 0.6;
+    padding: 8px 0 4px;
+}
+
+.fnr-expand-hint {
+    font-family: 'Libre Baskerville', serif; font-size: 0.68rem;
+    color: var(--fnr-muted); opacity: 0.5; font-style: italic;
+    text-align: right; margin-top: 4px;
+}
+.fnr-card.expanded .fnr-expand-hint { display: none; }
+
+/* ── DEV TEAM ── */
+.fnr-team { position: relative; z-index: 10; max-width: 600px; margin: 0 auto; text-align: center; padding: 40px 28px 80px; }
+.fnr-team h3 {
+    font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 600;
+    color: var(--fnr-cream); letter-spacing: 0.06em; margin: 0 0 12px;
+}
+.fnr-team p { font-family: 'Libre Baskerville', serif; font-size: 0.85rem; color: var(--fnr-parchment); opacity: 0.6; margin: 0; }
+
+/* ── ANIMATIONS ── */
+@keyframes fnrCardIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+    .fnr-hero-title { font-size: 1.7rem; }
+    .fnr-grid { grid-template-columns: 1fr; }
+    .fnr-content { padding: 16px 16px 40px; }
+    .fnr-toolbar-inner { flex-direction: column; align-items: stretch; }
+    .fnr-search { min-width: unset; }
+}
+        </style>
+    </head>
+    <body class="is-preload">
+
+        <div id="headerToggle"><a class="toggle" href="#" aria-label="Toggle sidebar"></a></div>
+
+        <div id="header">
+            <div class="top">
+                <div id="logo">
+                    <span class="image avatar48"><img src="../../assets/images/avatars/avatar.jpg" alt="" /></span>
+                    <h1 id="title">Noah Gamble JihadiJackass</h1>
+                    <p>Computer Programmer</p>
+                    <p>Mod Developer</p>
+                </div>
+                <nav id="nav">
+                    <ul>
+                        <li><a href="../../index.html" id="top-link"><span class="icon solid fa-home">Home</span></a></li>
+                        <li><a href="../../pages/projects.html" id="projects-link"><span class="icon solid fa-code">Projects</span></a></li>
+                        <li><a href="../../pages/aars.html" id="aars-link"><span class="icon solid fa-user">After-Action Reports</span></a></li>
+                        <li><a href="../../pages/airsoft.html" id="airsoft-link"><span class="icon solid fa-crosshairs">Airsoft</span></a></li>
+                        <li><a href="../../pages/reptiles.html" id="reptiles-link"><span class="icon solid fa-user">Reptiles</span></a></li>
+                        <li><a href="../../pages/images.html" id="images-link"><span class="icon solid fa-user">Image Archive</span></a></li>
+                        <li><a href="../../pages/about.html" id="about-link"><span class="icon solid fa-user">About</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="bottom">
                 <ul class="icons">
                     <li><a href="https://github.com/JihadJackass" class="icon brands fa-github"><span class="label">Github</span></a></li>
                     <li><a href="mailto:todosupportemail?Subject=Xirtam3" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
@@ -55,118 +296,317 @@
             </div>
         </div>
 
-		<!-- Main -->
-			<div id="main">
-                <!-- Formable Nations: Reworked -->
-                <section id="formable-nations-reworked">
-                    <div class="container">
-                        <header>
-                            <h2>Formable Nations: Reworked - EUV</h2>
-                            Version 2.0.0 MACAW<br><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3599977147"><img src="../../assets/images/social_media/steam.png"> Steam Workshop</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/JihadJackass/Formable-Nations-Reworked"><img src="../../assets/images/social_media/github.png"> Github</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.patreon.com/JihadiJackass/membership"><img src="../../assets/images/social_media/patreon.png"> Patreon</a>
-                            <p>Formable Nations: Reworked is a complete rework and overhaul of the highly popular mod <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=523302365">Basic Mods: Formable Nations</a>. With a team of dedicated developers and absolutely no lives we've recreated the mod into a functional, error-free, bug-squashed experience for all to play</p><br><p>Here you can find a list of nations that are available to you as a player, and the AI as well. They all have unique flags created by various talented artists online. By clicking a nation on this page you will be taken to a unique page for that nation which will contain information about the nation such as history, and how to form the nation similar to the eu4wiki if you were to google a nation when trying to form it allowing for all-in-one convenience of what you may be after!</p>
-                        </header>
+        <div id="main">
+            <div class="fnr-page">
+
+                <!-- Hero -->
+                <div class="fnr-hero">
+                    <div class="fnr-hero-inner">
+                        <span class="fnr-hero-label">Europa Universalis V Mod</span>
+                        <h1 class="fnr-hero-title">Formable Nations: Reworked</h1>
+                        <p class="fnr-hero-version">Version 2.6.4 TOKAY</p>
+                        <p class="fnr-hero-desc">A complete overhaul of the formable nations system — 200+ new and reworked nations with unique flags, conditions, and content. Click any nation below to see its formation requirements.</p>
+                        <div class="fnr-hero-links">
+                            <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3599977147" class="fnr-hero-link" target="_blank" rel="noopener">Steam Workshop</a>
+                            <a href="https://github.com/JihadJackass/Formable-Nations-Reworked" class="fnr-hero-link" target="_blank" rel="noopener">Github</a>
+                            <a href="https://github.com/JihadJackass/Formable-Nations-Reworked-Uncensored-Version" class="fnr-hero-link" target="_blank" rel="noopener">Uncensored Version</a>
+                            <a href="https://www.patreon.com/JihadiJackass/membership" class="fnr-hero-link" target="_blank" rel="noopener">Patreon</a>
+                        </div>
+                        <div class="fnr-hero-divider"></div>
                     </div>
-                <!--     <h2>Featured Countries:</h2><br> -->
-                <!--    <div class="slideshow-content" align="center"> -->
-                <!--         <img class="image-slide" href="/pages/fnr_eu4_guide/TODO.html" img src="../../assets/images/projects/europa_universalis_4/100x150_flags/TODO.png" a> -->
-                <!--         <img class="image-slide" href="/pages/fnr_eu4_guide/TODO.html" img src="../../assets/images/projects/europa_universalis_4/100x150_flags/TODO.png"> -->
-                <!--         <img class="image-slide" href="/pages/fnr_eu4_guide/TODO.html" img src="../../assets/images/projects/europa_universalis_4/100x150_flags/TODO.png"> -->
+                </div>
+
+                <!-- Stats bar -->
+                <div class="fnr-stats-bar" id="fnr-stats-bar"></div>
+
+                <!-- Toolbar: search, filter, sort -->
+                <div class="fnr-toolbar">
+                    <div class="fnr-toolbar-inner">
+                        <input type="text" class="fnr-search" id="fnr-search" placeholder="Search nations, cultures, tags..." />
+                        <div class="fnr-filter-group" id="fnr-filters"></div>
+                        <select class="fnr-sort-select" id="fnr-sort">
+                            <option value="name">Sort: Name</option>
+                            <option value="rank">Sort: Rank</option>
+                            <option value="category">Sort: Category</option>
+                        </select>
                     </div>
-                </section>
+                </div>
 
-                <!-- New Formable Nations -->
+                <!-- Content -->
+                <div class="fnr-content">
+                    <div class="fnr-results-count" id="fnr-results-count"></div>
+                    <div class="fnr-grid" id="fnr-grid"></div>
+                </div>
 
-                <section id="new-formable-nations">
-                    <div class="container">
-                        <header>
-                            <h2>New Formable Nations - NOT UPDATED YET 2025-11-29</h2>
-                        </header>
+                <!-- Team -->
+                <div class="fnr-team">
+                    <h3>Development Team</h3>
+                    <p>Noah — Lead Developer, Lead Programmer, Tester</p>
+                </div>
 
-                    </div>
-                </section>
-
-                <!-- Vanilla Formable Nations -->
-
-                <section id="vanilla-formable-nations">
-                    <div class="container">
-                        <header>
-                            <h2>Reworked Vanilla Formable Nations</h2>
-                            <p>These are nations that are in <i>unmodded vanilla Europa Universalis IV</i> that have been changed to follow the template/upgraded layout that the mod provides to the new nations to allow better functionality and quality of content.</p>
-                        </header>
-
-                    </div>
-                </section>
-
-                <!-- Country TAGs -->
-
-                <section id="formable-nations-reworked-tags">
-                    <div class="container">
-                        <header>
-                            <h2>Country TAGs</h2>
-                        </header>
-                    </div>
-                </section>
-
-                <!-- Compatibility -->
-
-                <section id="formables-compatibility">
-                    <div class="container">
-                        <header>
-                            <h2>Compatibility</h2>
-                        </header>
-                    </div>
-                </section>
-
-                <!-- Images -->
-
-                <br><section id="formables-images">
-                    <div class="container">
-                        <header>
-                            <h2>Images</h2>
-                            <p>Lots of cool images and screenshots of nations that have either formed naturally or through console for developer purposes.</p>
-                        </header>
-
-                    </div>
-                </section>
-                
-                <!-- Development Team -->
-
-                <section id="formables-team">
-                    <div class="container">
-                        <header>
-                            <h2>Development Team</h2>
-                        </header>
-
-                        Noah<br>
-                        <u>Lead Developer | Lead Programmer | Tester</u><br><br>
-                    </div>
-                </section>
             </div>
+        </div>
 
-    <!-- Scripts -->
-        <script src="/assets/js/jquery.min.js"></script>
-        <script src="/assets/js/jquery.scrolly.min.js"></script>
-        <script src="/assets/js/jquery.scrollex.min.js"></script>
-        <script src="/assets/js/browser.min.js"></script>
-        <script src="/assets/js/breakpoints.min.js"></script>
-        <script src="/assets/js/util.js"></script>
-        <script src="/assets/js/main.js"></script>
-        <!-- Carousel script -->
+        <!--
+        =====================================================
+        FORMABLE NATIONS DATA
+        ─────────────────────────────────────────────────────
+        Each nation object has:
+          tag             Country TAG (e.g. "PMSTN")
+          name            Display name
+          category        Modern | Historical | Non-Historical | Fantasy | Alt-History | US States | Controversial | Uncategorized
+          rank            1-5 (size/importance tier)
+          level           Formation level
+          requiredFraction Required territory fraction (0-1)
+          rule            "plausible" etc.
+          cultures        Array of eligible cultures
+          religions       Array of required religions (empty = any)
+          capitals        Array of required capital locations
+          provinces       Array of required provinces (optional)
+          areas           Array of required areas (optional)
+          regions         Array of required regions (optional)
+          locations       Array of specific required locations (optional)
+
+        FUTURE EXPANSION FIELDS (add per-nation as content is created):
+          description     Freeform HTML description / lore
+          missions        Array of custom mission names
+          events          Array of custom event names
+          ideas           National ideas description
+          image           Flag or map screenshot path
+          wikiUrl         Link to external wiki
+        ===================================================== -->
         <script>
-            var slideIndex = 0;
-            carousel();
-
-            function carousel() {
-              var i;
-              var x = document.getElementsByClassName("image-slide");
-              for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
-              }
-              slideIndex++;
-              if (slideIndex > x.length) {slideIndex = 1}
-              x[slideIndex-1].style.display = "block";
-              setTimeout(carousel, 3000);
-            }
+        // ── DATA (auto-generated from fnr_formable_countries.txt) ──
         </script>
-	</body>
+        <script src="../../assets/js/fnr_euv_data.js"></script>
+        <script>
+        // If FORMABLES isn't loaded from external file, check inline
+        if (typeof FORMABLES === 'undefined') {
+            console.warn('FORMABLES data not found. Make sure fnr_euv_data.js is in assets/js/');
+        }
+
+        // =====================================================
+        //  RENDERING ENGINE
+        // =====================================================
+
+        function esc(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+        var activeFilters = new Set();
+        var currentSort = 'name';
+        var searchQuery = '';
+
+        var CATEGORIES = ['Historical', 'Modern', 'Non-Historical', 'Alt-History', 'Fantasy', 'US States', 'Controversial', 'Uncategorized'];
+
+        function catClass(cat) {
+            return 'cat-' + (cat || 'Uncategorized').replace(/[\s]/g, '-');
+        }
+
+        function buildCard(n) {
+            var cls = catClass(n.category);
+
+            // Meta items
+            var meta = '';
+            if (n.cultures && n.cultures.length) meta += '<span class="fnr-card-meta-item"><b>Culture:</b> ' + n.cultures.map(esc).join(', ') + '</span>';
+            if (n.religions && n.religions.length) meta += '<span class="fnr-card-meta-item"><b>Religion:</b> ' + n.religions.map(esc).join(', ') + '</span>';
+            meta += '<span class="fnr-card-meta-item"><b>Rank:</b> ' + n.rank + '</span>';
+            meta += '<span class="fnr-card-meta-item"><b>Required:</b> ' + Math.round((n.requiredFraction || 0) * 100) + '%</span>';
+
+            // Detail sections
+            var detail = '';
+
+            // Potential (who can see it)
+            var potentialParts = [];
+            if (n.cultures && n.cultures.length) potentialParts.push('Must be <b>' + n.cultures.map(esc).join('</b> or <b>') + '</b> culture');
+            if (n.religions && n.religions.length) potentialParts.push('Must follow <b>' + n.religions.map(esc).join('</b> or <b>') + '</b>');
+            potentialParts.push('Nation <b>' + esc(n.tag) + '</b> must not already exist');
+            if (potentialParts.length) {
+                detail += '<div class="fnr-detail-section"><div class="fnr-detail-label">Potential (Visibility)</div><div class="fnr-detail-value">' + potentialParts.join('<br>') + '</div></div>';
+            }
+
+            // Allow (formation requirements)
+            var allowParts = [];
+            if (n.cultures && n.cultures.length) allowParts.push('Culture: <b>' + n.cultures.map(esc).join('</b> or <b>') + '</b>');
+            if (n.capitals && n.capitals.length) allowParts.push('Capital: <b>' + n.capitals.map(esc).join('</b> or <b>') + '</b>');
+            if (n.religions && n.religions.length) allowParts.push('Religion: <b>' + n.religions.map(esc).join('</b> or <b>') + '</b>');
+            if (allowParts.length) {
+                detail += '<div class="fnr-detail-section"><div class="fnr-detail-label">Formation Requirements</div><div class="fnr-detail-value">' + allowParts.join('<br>') + '</div></div>';
+            }
+
+            // Territory
+            var territory = [];
+            if (n.regions && n.regions.length) territory.push('<div class="fnr-detail-section"><div class="fnr-detail-label">Required Regions</div><div class="fnr-detail-tags">' + n.regions.map(function(r){return '<span class="fnr-detail-tag">' + esc(r) + '</span>';}).join('') + '</div></div>');
+            if (n.provinces && n.provinces.length) territory.push('<div class="fnr-detail-section"><div class="fnr-detail-label">Required Provinces</div><div class="fnr-detail-tags">' + n.provinces.map(function(p){return '<span class="fnr-detail-tag">' + esc(p) + '</span>';}).join('') + '</div></div>');
+            if (n.areas && n.areas.length) territory.push('<div class="fnr-detail-section"><div class="fnr-detail-label">Required Areas</div><div class="fnr-detail-tags">' + n.areas.map(function(a){return '<span class="fnr-detail-tag">' + esc(a) + '</span>';}).join('') + '</div></div>');
+            if (n.locations && n.locations.length) territory.push('<div class="fnr-detail-section"><div class="fnr-detail-label">Required Locations</div><div class="fnr-detail-tags">' + n.locations.map(function(l){return '<span class="fnr-detail-tag">' + esc(l) + '</span>';}).join('') + '</div></div>');
+            if (n.subContinents && n.subContinents.length) territory.push('<div class="fnr-detail-section"><div class="fnr-detail-label">Required Sub-Continents</div><div class="fnr-detail-tags">' + n.subContinents.map(function(s){return '<span class="fnr-detail-tag">' + esc(s) + '</span>';}).join('') + '</div></div>');
+            detail += territory.join('');
+
+            // Formation effects
+            if (n.formEffects) {
+                var fx = [];
+                if (n.formEffects.rankUpgrade) fx.push('Upgrades rank to <b>' + esc(n.formEffects.rankUpgrade) + '</b>');
+                if (n.formEffects.governmentChange) fx.push('Changes government to <b>' + esc(n.formEffects.governmentChange) + '</b>');
+                if (n.formEffects.reforms && n.formEffects.reforms.length) fx.push('Adds reforms: <b>' + n.formEffects.reforms.map(esc).join('</b>, <b>') + '</b>');
+                if (n.formEffects.stabilityCost) fx.push('Stability: <b>' + n.formEffects.stabilityCost + '</b>');
+                if (fx.length) {
+                    detail += '<div class="fnr-detail-section"><div class="fnr-detail-label">Formation Effects</div><div class="fnr-detail-value">' + fx.join('<br>') + '</div></div>';
+                }
+            }
+
+            // Excluded tags
+            if (n.excludedTags && n.excludedTags.length) {
+                detail += '<div class="fnr-detail-section"><div class="fnr-detail-label">Cannot Be Formed By</div><div class="fnr-detail-tags">' + n.excludedTags.map(function(t){return '<span class="fnr-detail-tag">' + esc(t) + '</span>';}).join('') + '</div></div>';
+            }
+
+            // Content placeholder
+            if (n.description) {
+                detail += '<div class="fnr-detail-section"><div class="fnr-detail-label">Description</div><div class="fnr-detail-value">' + n.description + '</div></div>';
+            }
+            if (n.missions || n.events || n.ideas) {
+                var content = [];
+                if (n.missions) content.push('Custom Missions: ' + (Array.isArray(n.missions) ? n.missions.length : 'Yes'));
+                if (n.events)   content.push('Custom Events: '   + (Array.isArray(n.events) ? n.events.length : 'Yes'));
+                if (n.ideas)    content.push('National Ideas: Yes');
+                detail += '<div class="fnr-detail-section"><div class="fnr-detail-label">Custom Content</div><div class="fnr-detail-value">' + content.join('<br>') + '</div></div>';
+            }
+
+            return '<div class="fnr-card ' + cls + '" data-tag="' + esc(n.tag) + '" style="animation: fnrCardIn 0.3s ease both">' +
+                '<div class="fnr-card-accent"></div>' +
+                '<div class="fnr-card-body">' +
+                    '<div class="fnr-card-head">' +
+                        '<span class="fnr-card-tag">' + esc(n.tag) + '</span>' +
+                        '<span class="fnr-card-cat">' + esc(n.category) + '</span>' +
+                    '</div>' +
+                    '<h3 class="fnr-card-name">' + esc(n.name) + '</h3>' +
+                    '<div class="fnr-card-meta">' + meta + '</div>' +
+                    '<div class="fnr-expand-hint">Click to expand</div>' +
+                    '<div class="fnr-card-detail">' + detail + '</div>' +
+                '</div>' +
+            '</div>';
+        }
+
+        function getFiltered() {
+            var list = (typeof FORMABLES !== 'undefined') ? FORMABLES : [];
+            // Filter by category
+            if (activeFilters.size > 0) {
+                list = list.filter(function(n) { return activeFilters.has(n.category); });
+            }
+            // Filter by search
+            if (searchQuery) {
+                var q = searchQuery.toLowerCase();
+                list = list.filter(function(n) {
+                    return (n.name || '').toLowerCase().indexOf(q) !== -1 ||
+                           (n.tag || '').toLowerCase().indexOf(q) !== -1 ||
+                           (n.cultures || []).join(' ').toLowerCase().indexOf(q) !== -1 ||
+                           (n.religions || []).join(' ').toLowerCase().indexOf(q) !== -1 ||
+                           (n.category || '').toLowerCase().indexOf(q) !== -1 ||
+                           (n.capitals || []).join(' ').toLowerCase().indexOf(q) !== -1;
+                });
+            }
+            // Sort
+            list = list.slice().sort(function(a, b) {
+                if (currentSort === 'rank') return a.rank - b.rank || a.name.localeCompare(b.name);
+                if (currentSort === 'category') return a.category.localeCompare(b.category) || a.name.localeCompare(b.name);
+                return a.name.localeCompare(b.name);
+            });
+            return list;
+        }
+
+        function render() {
+            var list = getFiltered();
+            var grid = document.getElementById('fnr-grid');
+            grid.innerHTML = list.map(buildCard).join('');
+            document.getElementById('fnr-results-count').textContent = 'Showing ' + list.length + ' of ' + ((typeof FORMABLES !== 'undefined') ? FORMABLES.length : 0) + ' formable nations';
+        }
+
+        function renderStats() {
+            var bar = document.getElementById('fnr-stats-bar');
+            if (typeof FORMABLES === 'undefined') return;
+            var total = FORMABLES.length;
+            var counts = {};
+            FORMABLES.forEach(function(n) { counts[n.category] = (counts[n.category] || 0) + 1; });
+            bar.innerHTML = '<span class="fnr-stat-chip"><b>' + total + '</b> Total Nations</span>' +
+                Object.entries(counts).sort(function(a,b){return b[1]-a[1];}).map(function(e) {
+                    return '<span class="fnr-stat-chip"><b>' + e[1] + '</b> ' + e[0] + '</span>';
+                }).join('');
+        }
+
+        function renderFilters() {
+            var group = document.getElementById('fnr-filters');
+            group.innerHTML = '<button class="fnr-filter-btn active" data-cat="all">All</button>' +
+                CATEGORIES.map(function(c) {
+                    return '<button class="fnr-filter-btn" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
+                }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderStats();
+            renderFilters();
+            render();
+
+            // Search
+            document.getElementById('fnr-search').addEventListener('input', function() {
+                searchQuery = this.value;
+                render();
+            });
+
+            // Sort
+            document.getElementById('fnr-sort').addEventListener('change', function() {
+                currentSort = this.value;
+                render();
+            });
+
+            // Category filters
+            document.getElementById('fnr-filters').addEventListener('click', function(e) {
+                var btn = e.target.closest('.fnr-filter-btn');
+                if (!btn) return;
+                var cat = btn.getAttribute('data-cat');
+                if (cat === 'all') {
+                    activeFilters.clear();
+                    document.querySelectorAll('.fnr-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+                } else {
+                    document.querySelector('.fnr-filter-btn[data-cat="all"]').classList.remove('active');
+                    if (activeFilters.has(cat)) {
+                        activeFilters.delete(cat);
+                        btn.classList.remove('active');
+                    } else {
+                        activeFilters.add(cat);
+                        btn.classList.add('active');
+                    }
+                    if (activeFilters.size === 0) {
+                        document.querySelector('.fnr-filter-btn[data-cat="all"]').classList.add('active');
+                    }
+                }
+                render();
+            });
+
+            // Card expand/collapse
+            document.getElementById('fnr-grid').addEventListener('click', function(e) {
+                var card = e.target.closest('.fnr-card');
+                if (!card) return;
+                card.classList.toggle('expanded');
+            });
+
+            // Sidebar toggle
+            if (localStorage.getItem('sidebar-collapsed') === '1') document.body.classList.add('sidebar-collapsed');
+            var toggleBtn = document.getElementById('headerToggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var collapsed = document.body.classList.toggle('sidebar-collapsed');
+                    localStorage.setItem('sidebar-collapsed', collapsed ? '1' : '0');
+                });
+            }
+        });
+        </script>
+
+        <script src="../../assets/js/jquery.min.js"></script>
+        <script src="../../assets/js/jquery.scrolly.min.js"></script>
+        <script src="../../assets/js/jquery.scrollex.min.js"></script>
+        <script src="../../assets/js/browser.min.js"></script>
+        <script src="../../assets/js/breakpoints.min.js"></script>
+        <script src="../../assets/js/util.js"></script>
+        <script src="../../assets/js/main.js"></script>
+    </body>
 </html>

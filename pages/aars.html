@@ -1,157 +1,650 @@
-    <!DOCTYPE HTML>
-    <html>
-        <head>
-            <title>Xirtam 3</title>
-            <meta charset="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-            <link rel="stylesheet" href="../assets/css/main.css" />
-            <link rel="stylesheet" href="../assets/css/achievements.css" />
-            <link rel="stylesheet" href="../assets/css/paradox_aars.css" />
-        </head>
-        <body class="is-preload">
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Xirtam 3 — After-Action Reports</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="../assets/css/main.css" />
+        <link rel="stylesheet" href="../assets/css/aars_page.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    </head>
+    <body class="is-preload">
 
-            <!-- Header -->
-            <div id="header">
-                <div class="top">
+        <!-- Sidebar toggle button -->
+        <div id="headerToggle">
+            <a class="toggle" href="#" aria-label="Toggle sidebar"></a>
+        </div>
 
-                    <!-- Side Panel -->
-                    <div id="logo">
-                        <span class="image avatar48"><img src="../assets/images/avatars/avatar.jpg" alt="" /></span>
-                        <h1 id="title">Noah Gamble JihadiJackass</h1>
-                        <p>Computer Programmer</p>
-                        <p>Mod Developer</p>
-                    </div>
-
-                    <!-- Navigation Menu -->
-                    <nav id="nav">
-                        <ul>
-                            <li><a href="../index.html" id="top-link"><span class="icon solid fa-home">Home</span></a></li>
-                            <li><a href="../pages/projects.html" id="projects-link"><span class="icon solid fa-user">Projects</span></a></li>
-                            <li><a href="../pages/aars.html" id="aars-link"><span class="icon solid fa-user">After-Action Reports</span></a></li>
-                            <li><a href="../pages/airsoft.html" id="airsoft-link"><span class="icon solid fa-user">Airsoft</span></a></li>
-                            <li><a href="../pages/reptiles.html" id="reptiles-link"><span class="icon solid fa-user">Reptiles</span></a></li>
-                            <li><a href="../pages/images.html" id="images-link"><span class="icon solid fa-user">Images</span></a></li>
-                            <li><a href="../pages/about.html" id="about-link"><span class="icon solid fa-user">About</span></a></li>
-                        </ul>
-                    </nav>
+        <!-- Header / Sidebar -->
+        <div id="header">
+            <div class="top">
+                <div id="logo">
+                    <span class="image avatar48"><img src="../assets/images/avatars/avatar.jpg" alt="" /></span>
+                    <h1 id="title">Noah Gamble JihadiJackass</h1>
+                    <p>Computer Programmer</p>
+                    <p>Mod Developer</p>
                 </div>
+                <nav id="nav">
+                    <ul>
+                        <li><a href="../index.html"               id="top-link">          <span class="icon solid fa-home">Home</span></a></li>
+                        <li><a href="../pages/projects.html"      id="projects-link">     <span class="icon solid fa-code">Projects</span></a></li>
+                        <li><a href="../pages/aars.html"          id="aars-link">         <span class="icon solid fa-scroll">After-Action Reports</span></a></li>
+                        <li><a href="../pages/achievements.html"  id="achievements-link"> <span class="icon solid fa-user">Achievement Manager</span></a></li>
+                        <li><a href="../pages/airsoft.html"       id="airsoft-link">      <span class="icon solid fa-crosshairs">Airsoft</span></a></li>
+                        <li><a href="../pages/reptiles.html"      id="reptiles-link">     <span class="icon solid fa-user">Reptiles</span></a></li>
+                        <li><a href="../pages/images.html"        id="images-link">       <span class="icon solid fa-user">Image Archive</span></a></li>
+                        <li><a href="../pages/merch.html"         id="merch-link">        <span class="icon solid fa-user">Buy Flags & Merch</span></a></li>
+                        <li><a href="../pages/pkmncrater2025.html" id="pokemon-link">     <span class="icon solid fa-user">Pokemon Crater 2025</span></a></li>
+                        <li><a href="../pages/2009scape/index.html" id="2009scape-link">  <span class="icon solid fa-user">2009Scape Calculator</span></a></li>
+                        <li><a href="../pages/about.html"         id="about-link">        <span class="icon solid fa-user">About</span></a></li>
+                    </ul>
+                </nav>
+            </div>
             <div class="bottom">
-
-            <!-- Social Icons -->
-            <ul class="icons">
+                <ul class="icons">
                     <li><a href="https://github.com/JihadJackass" class="icon brands fa-github"><span class="label">Github</span></a></li>
                     <li><a href="mailto:todosupportemail?Subject=Xirtam3" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main -->
+        <div id="main">
+            <div class="aar-page">
+
+                <!-- Hero -->
+                <div class="aar-hero">
+                    <div class="aar-hero-inner">
+                        <span class="aar-hero-label">Campaign Archives</span>
+                        <h1 class="aar-hero-title">After-Action Reports</h1>
+                        <p class="aar-hero-subtitle">Detailed records of completed campaigns — maps, statistics, wars, and diplomatic history.</p>
+                        <div class="aar-hero-divider"></div>
+                    </div>
+                </div>
+
+                <!-- Game filter subnav -->
+                <nav class="aar-subnav" id="aar-subnav"></nav>
+
+                <!-- Content -->
+                <div class="aar-content" id="aar-content"></div>
+
+                <!-- Footer -->
+                <div class="aar-footer-msg">
+                    Campaign data extracted via <a href="https://www.skanderbeg.pm/" target="_blank" rel="noopener">Skanderbeg</a>, <a href="https://pdx.tools/" target="_blank" rel="noopener">PDX Tools</a>, and manual documentation.
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Zoomable Map Viewer (Leaflet-powered) -->
+        <div class="aar-viewer" id="aar-viewer">
+            <div class="aar-viewer-toolbar">
+                <div class="aar-viewer-caption" id="aar-viewer-caption"></div>
+                <div class="aar-viewer-controls">
+                    <span class="aar-viewer-counter" id="aar-viewer-counter"></span>
+                    <button class="aar-viewer-btn" id="aar-viewer-prev" aria-label="Previous" title="Previous map">&#8592;</button>
+                    <button class="aar-viewer-btn" id="aar-viewer-next" aria-label="Next" title="Next map">&#8594;</button>
+                    <button class="aar-viewer-btn" id="aar-viewer-reset" aria-label="Reset zoom" title="Reset zoom">⟲</button>
+                    <button class="aar-viewer-btn" id="aar-viewer-bg" aria-label="Toggle background" title="Toggle background brightness">◐</button>
+                    <button class="aar-viewer-btn aar-viewer-close-btn" id="aar-viewer-close" aria-label="Close" title="Close">&#x2715;</button>
                 </div>
             </div>
+            <div class="aar-viewer-map" id="aar-viewer-map"></div>
+            <div class="aar-viewer-hint" id="aar-viewer-hint">Scroll to zoom · Drag to pan</div>
+        </div>
 
-            <!-- Main -->
+        <!-- =====================================================
+             AAR CAMPAIGN DATA
+             ─────────────────────────────────────────────────────
+             HOW TO ADD A NEW CAMPAIGN:
+               1. Find the game section in CAMPAIGNS (or add a new game).
+               2. Add a new campaign object to its `campaigns` array.
 
-            <div id="main">
-                <!-- Documentation Listing Page -->
-                <section id="Documentation">
-                    <div class="container">
-                        <header>
-                            <h2>Various Documentation</h2>
-                        </header><br>
+             FIELD REFERENCE:
+               name        (required) Campaign / nation name
+               subtitle    (optional) Short tagline
+               startDate   (optional) Campaign start date (e.g. "1444-11-11")
+               endDate     (optional) Campaign end date
+               status      (optional) "Complete" | "In Progress" | "Abandoned"
+               mapImage    (required) Primary political map screenshot
+               maps        (optional) Array of { src, caption } for additional map modes
+               skanderbeg  (optional) URL to skanderbeg save page
+               pdxTools    (optional) URL to PDX Tools analysis
+               mods        (optional) Array of mod names used
 
-                        <section id="paradox-aars">
-                            <div class="container">
-                                <header>
-                                    <h2>Paradox Interactive AARs & Mapping</h2>
-                                    <p>After-Action Reports (AARs) tracking detailed campaigns from games such as Europa Universalis IV, Hearts of Iron IV, and more.</p>
-                                    <button id="toggle-aar-section">Show/Hide AARs</button>
-                                </header>
-                                
-                                <div id="aar-content" class="grid-container" style="display: none;">
-                                    <div class="aar-item" onclick="openAARModal('The Spanish Empire - 1572', '../assets/images/documentation/Spanish Accord.png', 'A historical overview of the Spanish Empire during its peak in 1572.')">
-                                        <img src="../assets/images/documentation/Spanish Accord.png" alt="The Spanish Empire - 1572">
-                                        <figcaption>The Spanish Empire - 1572</figcaption>
-                                    </div>
-                                    <div class="aar-item" onclick="openAARModal('The Mexican Federal Republic - 1638', '../assets/images/documentation/Mexican Federal Republic 1638.png', 'A report on the Mexican Federal Republic’s development and wars in 1638.')">
-                                        <img src="../assets/images/documentation/Mexican Federal Republic 1638.png" alt="The Mexican Federal Republic - 1638">
-                                        <figcaption>The Mexican Federal Republic - 1638</figcaption>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        
-                        <!-- AAR Floating Modal -->
-                        <div id="aar-modal" class="modal">
-                            <div class="modal-content">
-                                <span id="close-modal-btn" class="close-btn">&times;</span>
-                                <h2 id="aar-title"></h2>
-                                <img id="aar-image" src="" alt="">
-                                <p id="aar-description"></p>
+               overview    (optional) Object with quick stats:
+                 { development, provinces, income, manpower, armySize,
+                   navySize, greatPower, score, institutions, techGroup,
+                   government, religion, culture, tradeNode }
 
-                                <div class="aar-details">
-                                    <h3>Notable Wars</h3>
-                                    <p>Placeholder for wars and conflicts fought in this campaign.</p>
+               economy     (optional) Object:
+                 { totalIncome, tax, production, trade, gold,
+                   expenses, inflation, loans, mercantilism }
 
-                                    <h3>Economic Overview</h3>
-                                    <p>Placeholder for economic data and trade performance.</p>
+               military    (optional) Object:
+                 { armySize, manpower, maxManpower, forceLimit,
+                   armyTradition, navyTradition, discipline,
+                   morale, totalCasualtiesInflicted, totalCasualtiesTaken,
+                   warScore }
 
-                                    <h3>Diplomatic Relations</h3>
-                                    <p>Placeholder for major alliances, enemies, and political movements.</p>
-                                </div>
-                            </div>
-                        </div>            
+               diplomacy   (optional) Object:
+                 { allies, rivals, subjects, royalMarriages,
+                   personalUnions, guarantees }
 
-                    </div>
-                </section>
-            </div>
+               wars        (optional) Array of war objects:
+                 [{ name, result, startYear, endYear, enemyLeader,
+                    casualties, notes }]
 
-            <!-- Scripts -->
+               notes       (optional) Freeform HTML string of campaign notes
+             ===================================================== -->
+        <script>
+        const CAMPAIGNS = [
+            // ── EUROPA UNIVERSALIS IV ───────────────────────────
+            {
+                id:   "eu4",
+                game: "Europa Universalis IV",
+                logo: "../assets/images/projects/europa_universalis_4/logo/logo.png",
+                campaigns: [
+                    {
+                        name:       "The Spanish Empire",
+                        subtitle:   "Sol Invictus — The Sun Never Sets",
+                        startDate:  "1444-11-11",
+                        endDate:    "1572-03-15",
+                        status:     "Complete",
+                        mapImage:   "../assets/images/documentation/Spanish Accord.png",
+                        maps: [
+                            { src: "../assets/images/documentation/Spanish Accord.png", caption: "Political Map — 1572" },
+                        ],
+                        skanderbeg: null,
+                        mods: ["Formable Nations: Reworked"],
 
-            <script>
-            document.addEventListener("DOMContentLoaded", function () {
+                        overview: {
+                            development:  null,
+                            provinces:    null,
+                            income:       null,
+                            manpower:     null,
+                            armySize:     null,
+                            greatPower:   "1st",
+                            government:   "Monarchy",
+                            religion:     "Catholic",
+                            culture:      "Castilian",
+                        },
 
-                function openAARModal(title, imageUrl, description) {
-                    var modal = document.getElementById("aar-modal");
-                    document.getElementById("aar-title").innerText = title;
-                    document.getElementById("aar-image").src = imageUrl;
-                    document.getElementById("aar-description").innerText = description;
-                    modal.style.display = "flex"; // Ensure visibility
-                }
+                        economy: null,
 
-                function closeAARModal() {
-                    document.getElementById("aar-modal").style.display = "none";
-                }
+                        military: null,
 
-                // Attach event listeners to AAR items dynamically
-                document.querySelectorAll(".aar-item").forEach(item => {
-                    item.addEventListener("click", function () {
-                        const title = this.querySelector("figcaption").innerText;
-                        const imageUrl = this.querySelector("img").src;
-                        const description = "Detailed description of the campaign events."; // Placeholder
+                        diplomacy: null,
 
-                        openAARModal(title, imageUrl, description);
-                    });
+                        wars: [
+                            // { name: "War of Iberian Unification", result: "Victory", startYear: "1450", endYear: "1458", enemyLeader: "Portugal", casualties: "~12,000", notes: "" },
+                        ],
+
+                        notes: "A historical overview of the Spanish Empire during its peak in 1572.",
+                    },
+                    {
+                        name:       "The Mexican Federal Republic",
+                        subtitle:   "From Colony to Superpower",
+                        startDate:  "1444-11-11",
+                        endDate:    "1638-08-22",
+                        status:     "Complete",
+                        mapImage:   "../assets/images/documentation/Mexican Federal Republic 1638.png",
+                        maps: [
+                            { src: "../assets/images/documentation/Mexican Federal Republic 1638.png", caption: "Political Map — 1638" },
+                        ],
+                        skanderbeg: null,
+                        mods: [],
+
+                        overview: {
+                            government:   "Republic",
+                            religion:     "Nahuatl",
+                        },
+
+                        economy: null,
+                        military: null,
+                        diplomacy: null,
+                        wars: [],
+                        notes: "A report on the Mexican Federal Republic's development and wars in 1638.",
+                    },
+
+                    // ── ADD EU4 CAMPAIGN HERE ──
+                    // Copy the template below and fill in your data:
+                    // {
+                    //     name:       "Campaign Name",
+                    //     subtitle:   "Optional tagline",
+                    //     startDate:  "1444-11-11",
+                    //     endDate:    "1821-01-02",
+                    //     status:     "Complete",
+                    //     mapImage:   "../assets/images/documentation/your_map.png",
+                    //     maps:       [{ src: "...", caption: "..." }],
+                    //     skanderbeg: "https://skanderbeg.pm/browse.php?id=XXXXXX",
+                    //     mods:       ["Mod 1", "Mod 2"],
+                    //     overview:   { development: "1500", provinces: "200", income: "450", manpower: "250K", ... },
+                    //     economy:    { totalIncome: "450", tax: "120", production: "180", trade: "150", ... },
+                    //     military:   { armySize: "120K", manpower: "250K", discipline: "115%", ... },
+                    //     diplomacy:  { allies: ["France", "Austria"], rivals: ["Ottomans"], subjects: ["Naples"] },
+                    //     wars:       [{ name: "Great War", result: "Victory", startYear: "1600", endYear: "1605", enemyLeader: "Ottomans", casualties: "80K" }],
+                    //     notes:      "Your freeform notes about this campaign.",
+                    // },
+                ],
+            },
+
+            // ── EUROPA UNIVERSALIS V ────────────────────────────
+            {
+                id:   "eu5",
+                game: "Europa Universalis V",
+                logo: null,
+                campaigns: [
+                    // Add EU5 campaigns here when ready
+                ],
+            },
+
+            // ── HEARTS OF IRON IV ───────────────────────────────
+            {
+                id:   "hoi4",
+                game: "Hearts of Iron IV",
+                logo: "../assets/images/projects/hearts_of_iron_4/logo/hoi4_logo.png",
+                campaigns: [
+                    // Add HOI4 campaigns here
+                    // HOI4 campaigns might use different stat fields:
+                    // overview: { factories: "150", divisions: "80", airWings: "40", convoys: "200", ... }
+                ],
+            },
+
+            // ── CRUSADER KINGS III ──────────────────────────────
+            // {
+            //     id:   "ck3",
+            //     game: "Crusader Kings III",
+            //     logo: null,
+            //     campaigns: [],
+            // },
+
+            // ── ADD NEW GAME HERE ───────────────────────────────
+        ];
+
+
+        // =====================================================
+        //  RENDERING ENGINE
+        // =====================================================
+
+        // Lightbox / Viewer state
+        let lbImages = [], lbIndex = 0;
+        let leafletMap = null;
+        let currentLayer = null;
+
+        function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+        function val(v) { return v !== null && v !== undefined && v !== ''; }
+
+        // ── Leaflet Zoom Viewer ──
+        function openViewer(imgs, idx) {
+            lbImages = imgs;
+            lbIndex = idx || 0;
+
+            const viewer = document.getElementById('aar-viewer');
+            viewer.classList.add('open');
+            document.body.style.overflow = 'hidden';
+
+            // Init Leaflet once
+            if (!leafletMap) {
+                leafletMap = L.map('aar-viewer-map', {
+                    crs: L.CRS.Simple,
+                    zoomSnap: 0.25,
+                    zoomDelta: 0.5,
+                    minZoom: -3,
+                    maxZoom: 5,
+                    zoomControl: false,
+                    attributionControl: false,
                 });
+                // Add zoom control bottom-right
+                L.control.zoom({ position: 'bottomright' }).addTo(leafletMap);
+            }
 
-                // Close button functionality
-                document.getElementById("close-modal-btn").addEventListener("click", closeAARModal);
+            showViewerSlide();
 
-                // Background click to close modal
-                document.getElementById("aar-modal").addEventListener("click", function (event) {
-                    if (event.target === this) {
-                        closeAARModal();
+            // Show hint briefly
+            var hint = document.getElementById('aar-viewer-hint');
+            hint.style.opacity = '1';
+            setTimeout(function() { hint.style.opacity = '0'; }, 3000);
+        }
+
+        function showViewerSlide() {
+            var item = lbImages[lbIndex];
+
+            // Update caption & counter
+            document.getElementById('aar-viewer-caption').textContent = item.caption || '';
+            document.getElementById('aar-viewer-counter').textContent = lbImages.length > 1 ? (lbIndex + 1) + ' / ' + lbImages.length : '';
+            document.getElementById('aar-viewer-prev').style.display = lbImages.length > 1 ? '' : 'none';
+            document.getElementById('aar-viewer-next').style.display = lbImages.length > 1 ? '' : 'none';
+
+            // Remove previous layer
+            if (currentLayer) {
+                leafletMap.removeLayer(currentLayer);
+                currentLayer = null;
+            }
+
+            // Load image to get dimensions, then add as overlay
+            var img = new Image();
+            img.onload = function() {
+                var w = img.naturalWidth;
+                var h = img.naturalHeight;
+
+                // Map pixel coords to Leaflet coords
+                var southWest = leafletMap.unproject([0, h], leafletMap.getMaxZoom());
+                var northEast = leafletMap.unproject([w, 0], leafletMap.getMaxZoom());
+                var bounds = new L.LatLngBounds(southWest, northEast);
+
+                currentLayer = L.imageOverlay(item.src, bounds).addTo(leafletMap);
+                leafletMap.setMaxBounds(bounds.pad(0.5));
+                leafletMap.fitBounds(bounds);
+
+                // Invalidate size after render
+                setTimeout(function() { leafletMap.invalidateSize(); }, 100);
+            };
+            img.src = item.src;
+        }
+
+        function closeViewer() {
+            document.getElementById('aar-viewer').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function viewerPrev() { lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length; showViewerSlide(); }
+        function viewerNext() { lbIndex = (lbIndex + 1) % lbImages.length; showViewerSlide(); }
+        function viewerReset() { if (leafletMap && currentLayer) { leafletMap.fitBounds(currentLayer.getBounds()); } }
+
+        // Background brightness modes: pitch black → dark grey → mid grey
+        var bgModes = ['#060608', '#1a1c20', '#2a2d32', '#3a3e44'];
+        var bgIndex = 0;
+        function viewerToggleBg() {
+            bgIndex = (bgIndex + 1) % bgModes.length;
+            document.getElementById('aar-viewer-map').style.background = bgModes[bgIndex];
+        }
+
+        // ── Stat row builder ──
+        function statRow(label, value) {
+            if (!val(value)) return '';
+            return '<div class="aar-stat"><span class="aar-stat-label">' + esc(label) + '</span><span class="aar-stat-value">' + esc(String(value)) + '</span></div>';
+        }
+
+        // ── Build overview panel ──
+        function buildOverview(o) {
+            if (!o) return '';
+            const fields = [
+                ['Development', o.development], ['Provinces', o.provinces],
+                ['Monthly Income', o.income],    ['Manpower', o.manpower],
+                ['Army Size', o.armySize],        ['Navy Size', o.navySize],
+                ['Great Power', o.greatPower],    ['Score', o.score],
+                ['Government', o.government],     ['Religion', o.religion],
+                ['Culture', o.culture],            ['Tech Group', o.techGroup],
+                ['Trade Node', o.tradeNode],       ['Institutions', o.institutions],
+                // HOI4-specific
+                ['Factories', o.factories],        ['Divisions', o.divisions],
+                ['Air Wings', o.airWings],         ['Convoys', o.convoys],
+                ['Political Power', o.politicalPower], ['Stability', o.stability],
+                ['War Support', o.warSupport],     ['Ideology', o.ideology],
+            ];
+            const rows = fields.map(f => statRow(f[0], f[1])).filter(Boolean).join('');
+            if (!rows) return '';
+            return '<div class="aar-panel"><h4 class="aar-panel-title">Overview</h4><div class="aar-stat-grid">' + rows + '</div></div>';
+        }
+
+        // ── Build economy panel ──
+        function buildEconomy(e) {
+            if (!e) return '';
+            const fields = [
+                ['Total Income', e.totalIncome], ['Tax', e.tax],
+                ['Production', e.production],     ['Trade', e.trade],
+                ['Gold', e.gold],                  ['Expenses', e.expenses],
+                ['Inflation', e.inflation],        ['Loans', e.loans],
+                ['Mercantilism', e.mercantilism],
+            ];
+            const rows = fields.map(f => statRow(f[0], f[1])).filter(Boolean).join('');
+            if (!rows) return '';
+            return '<div class="aar-panel"><h4 class="aar-panel-title">Economy</h4><div class="aar-stat-grid">' + rows + '</div></div>';
+        }
+
+        // ── Build military panel ──
+        function buildMilitary(m) {
+            if (!m) return '';
+            const fields = [
+                ['Army Size', m.armySize],          ['Manpower', m.manpower],
+                ['Max Manpower', m.maxManpower],    ['Force Limit', m.forceLimit],
+                ['Army Tradition', m.armyTradition],['Navy Tradition', m.navyTradition],
+                ['Discipline', m.discipline],       ['Morale', m.morale],
+                ['Casualties Inflicted', m.totalCasualtiesInflicted],
+                ['Casualties Taken', m.totalCasualtiesTaken],
+                ['Total War Score', m.warScore],
+            ];
+            const rows = fields.map(f => statRow(f[0], f[1])).filter(Boolean).join('');
+            if (!rows) return '';
+            return '<div class="aar-panel"><h4 class="aar-panel-title">Military</h4><div class="aar-stat-grid">' + rows + '</div></div>';
+        }
+
+        // ── Build diplomacy panel ──
+        function buildDiplomacy(d) {
+            if (!d) return '';
+            function listRow(label, arr) {
+                if (!arr || !arr.length) return '';
+                return '<div class="aar-stat full"><span class="aar-stat-label">' + esc(label) + '</span><span class="aar-stat-value">' + arr.map(esc).join(', ') + '</span></div>';
+            }
+            const rows = [
+                listRow('Allies', d.allies),
+                listRow('Rivals', d.rivals),
+                listRow('Subjects', d.subjects),
+                listRow('Royal Marriages', d.royalMarriages),
+                listRow('Personal Unions', d.personalUnions),
+                listRow('Guarantees', d.guarantees),
+            ].filter(Boolean).join('');
+            if (!rows) return '';
+            return '<div class="aar-panel"><h4 class="aar-panel-title">Diplomacy</h4><div class="aar-stat-grid">' + rows + '</div></div>';
+        }
+
+        // ── Build wars table ──
+        function buildWars(wars) {
+            if (!wars || !wars.length) return '';
+            let rows = wars.map(w => {
+                const resultClass = (w.result || '').toLowerCase() === 'victory' ? 'war-victory' :
+                                    (w.result || '').toLowerCase() === 'defeat' ? 'war-defeat' : 'war-draw';
+                return '<tr>' +
+                    '<td>' + esc(w.name) + '</td>' +
+                    '<td class="' + resultClass + '">' + esc(w.result) + '</td>' +
+                    '<td>' + esc(w.startYear || '') + (w.endYear ? ' – ' + esc(w.endYear) : '') + '</td>' +
+                    '<td>' + esc(w.enemyLeader || '—') + '</td>' +
+                    '<td>' + esc(w.casualties || '—') + '</td>' +
+                    '<td>' + esc(w.notes || '') + '</td>' +
+                '</tr>';
+            }).join('');
+
+            return '<div class="aar-panel aar-panel-wide">' +
+                '<h4 class="aar-panel-title">Wars & Conflicts</h4>' +
+                '<div class="aar-table-wrap">' +
+                '<table class="aar-wars-table">' +
+                    '<thead><tr><th>War</th><th>Result</th><th>Years</th><th>Enemy</th><th>Casualties</th><th>Notes</th></tr></thead>' +
+                    '<tbody>' + rows + '</tbody>' +
+                '</table></div></div>';
+        }
+
+        // ── Build campaign card (expanded view) ──
+        function buildCampaignCard(c) {
+            const statusClass = (c.status || 'complete').toLowerCase().replace(/\s+/g, '-');
+            const statusLabels = { 'complete': '✦ Complete', 'in-progress': '◆ In Progress', 'abandoned': '◇ Abandoned' };
+            const statusLabel = statusLabels[statusClass] || c.status;
+
+            // Map gallery data
+            const allMaps = (c.maps && c.maps.length) ? c.maps :
+                            (c.mapImage ? [{ src: c.mapImage, caption: c.name }] : []);
+            const mapsJson = JSON.stringify(allMaps).replace(/'/g, '&#39;');
+            const mapCount = allMaps.length;
+            const mapLabel = mapCount > 1 ? 'View ' + mapCount + ' Maps' : 'View Map';
+
+            // Mods
+            let modsHtml = '';
+            if (c.mods && c.mods.length) {
+                modsHtml = '<div class="aar-mods">' + c.mods.map(m => '<span class="aar-mod-tag">' + esc(m) + '</span>').join('') + '</div>';
+            }
+
+            // External links
+            let linksHtml = '';
+            const links = [];
+            if (c.skanderbeg) links.push('<a href="' + c.skanderbeg + '" class="aar-ext-link" target="_blank" rel="noopener">Skanderbeg</a>');
+            if (c.pdxTools)   links.push('<a href="' + c.pdxTools   + '" class="aar-ext-link" target="_blank" rel="noopener">PDX Tools</a>');
+            if (links.length) linksHtml = '<div class="aar-ext-links">' + links.join('') + '</div>';
+
+            // Date range
+            let dateHtml = '';
+            if (val(c.startDate) || val(c.endDate)) {
+                dateHtml = '<span class="aar-date-range">' + esc(c.startDate || '?') + ' — ' + esc(c.endDate || 'Present') + '</span>';
+            }
+
+            return '<div class="aar-campaign status-' + statusClass + '">' +
+                // Map image
+                (c.mapImage ?
+                    '<div class="aar-map-image aar-gallery-trigger" data-images=\'' + mapsJson + '\' title="' + mapLabel + '">' +
+                        '<img src="' + c.mapImage + '" alt="' + esc(c.name) + '" loading="lazy" />' +
+                        '<div class="aar-map-overlay"><span>' + mapLabel + '</span></div>' +
+                    '</div>'
+                : '') +
+
+                '<div class="aar-campaign-body">' +
+                    // Header row
+                    '<div class="aar-campaign-header">' +
+                        '<div>' +
+                            '<span class="aar-badge status-' + statusClass + '">' + statusLabel + '</span>' +
+                            dateHtml +
+                        '</div>' +
+                    '</div>' +
+                    '<h3 class="aar-campaign-name">' + esc(c.name) + '</h3>' +
+                    (c.subtitle ? '<p class="aar-campaign-subtitle">' + esc(c.subtitle) + '</p>' : '') +
+                    (c.notes ? '<p class="aar-campaign-notes">' + c.notes + '</p>' : '') +
+                    modsHtml +
+                    linksHtml +
+
+                    // Data panels
+                    '<div class="aar-panels">' +
+                        buildOverview(c.overview) +
+                        buildEconomy(c.economy) +
+                        buildMilitary(c.military) +
+                        buildDiplomacy(c.diplomacy) +
+                    '</div>' +
+                    buildWars(c.wars) +
+                '</div>' +
+            '</div>';
+        }
+
+        // ── Build game section ──
+        function buildGameSection(game) {
+            if (!game.campaigns.length) return '';
+
+            const logoHtml = game.logo
+                ? '<img src="' + game.logo + '" alt="' + esc(game.game) + '" class="aar-game-logo" />'
+                : '';
+
+            return '<section id="aar-' + game.id + '" class="aar-section">' +
+                '<div class="aar-section-header">' +
+                    logoHtml +
+                    '<h2 class="aar-section-title">' + esc(game.game) + '</h2>' +
+                    '<span class="aar-campaign-count">' + game.campaigns.length + ' Campaign' + (game.campaigns.length !== 1 ? 's' : '') + '</span>' +
+                    '<div class="aar-section-divider"></div>' +
+                '</div>' +
+                '<div class="aar-campaign-list">' +
+                    game.campaigns.map(c => buildCampaignCard(c)).join('') +
+                '</div>' +
+            '</section>';
+        }
+
+        // ── Subnav ──
+        function renderSubnav() {
+            const nav = document.getElementById('aar-subnav');
+            const ul = document.createElement('ul');
+            CAMPAIGNS.forEach(g => {
+                if (!g.campaigns.length) return;
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#aar-' + g.id;
+                a.className = 'aar-nav-link';
+                a.textContent = g.game;
+                li.appendChild(a);
+                ul.appendChild(li);
+            });
+            nav.appendChild(ul);
+        }
+
+        // ── Init ──
+        document.addEventListener('DOMContentLoaded', function () {
+            renderSubnav();
+
+            const content = document.getElementById('aar-content');
+            const html = CAMPAIGNS.map(g => buildGameSection(g)).filter(Boolean).join('');
+            content.innerHTML = html || '<div class="aar-empty">No campaigns recorded yet. Add your first campaign to the data array above.</div>';
+
+            // Viewer controls
+            document.getElementById('aar-viewer-close').addEventListener('click', closeViewer);
+            document.getElementById('aar-viewer-prev').addEventListener('click', viewerPrev);
+            document.getElementById('aar-viewer-next').addEventListener('click', viewerNext);
+            document.getElementById('aar-viewer-reset').addEventListener('click', viewerReset);
+            document.getElementById('aar-viewer-bg').addEventListener('click', viewerToggleBg);
+
+            // Gallery click delegation
+            document.getElementById('aar-content').addEventListener('click', function(e) {
+                const trigger = e.target.closest('.aar-gallery-trigger');
+                if (!trigger) return;
+                e.preventDefault();
+                const imgs = JSON.parse(trigger.getAttribute('data-images'));
+                openViewer(imgs, 0);
+            });
+
+            // Keyboard nav
+            document.addEventListener('keydown', function(e) {
+                const v = document.getElementById('aar-viewer');
+                if (!v.classList.contains('open')) return;
+                if (e.key === 'Escape') closeViewer();
+                if (e.key === 'ArrowLeft') viewerPrev();
+                if (e.key === 'ArrowRight') viewerNext();
+            });
+
+            // Scroll-based nav highlight
+            const navLinks = document.querySelectorAll('.aar-nav-link');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        const link = document.querySelector('.aar-nav-link[href="#' + entry.target.id + '"]');
+                        if (link) link.classList.add('active');
                     }
                 });
+            }, { rootMargin: '-20% 0px -70% 0px' });
+            document.querySelectorAll('.aar-section').forEach(s => observer.observe(s));
 
-                // Toggle AAR Section Visibility
-                document.getElementById("toggle-aar-section").addEventListener("click", function () {
-                    var aarContent = document.getElementById("aar-content");
-                    aarContent.style.display = (aarContent.style.display === "none" || aarContent.style.display === "") ? "grid" : "none";
+            // Sidebar toggle
+            function applySidebarState() {
+                if (localStorage.getItem('sidebar-collapsed') === '1') {
+                    document.body.classList.add('sidebar-collapsed');
+                } else {
+                    document.body.classList.remove('sidebar-collapsed');
+                }
+            }
+            applySidebarState();
+            var toggleBtn = document.getElementById('headerToggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var collapsed = document.body.classList.toggle('sidebar-collapsed');
+                    localStorage.setItem('sidebar-collapsed', collapsed ? '1' : '0');
                 });
-            })
-            </script>
+            }
+        });
+        </script>
 
-            <script src="assets/js/jquery.min.js"></script>
-            <script src="assets/js/jquery.scrolly.min.js"></script>
-            <script src="assets/js/jquery.scrollex.min.js"></script>
-            <script src="assets/js/browser.min.js"></script>
-            <script src="assets/js/breakpoints.min.js"></script>
-            <script src="assets/js/util.js"></script>
-            <script src="assets/js/main.js"></script>
-        </body>
-    </html>
+        <!-- Leaflet (zoomable map viewer) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+        <!-- Site scripts -->
+        <script src="../assets/js/jquery.min.js"></script>
+        <script src="../assets/js/jquery.scrolly.min.js"></script>
+        <script src="../assets/js/jquery.scrollex.min.js"></script>
+        <script src="../assets/js/browser.min.js"></script>
+        <script src="../assets/js/breakpoints.min.js"></script>
+        <script src="../assets/js/util.js"></script>
+        <script src="../assets/js/main.js"></script>
+    </body>
+</html>

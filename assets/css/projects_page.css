@@ -1,0 +1,533 @@
+/* ============================================================
+   PROJECTS PAGE — Cartographic / War-Room Aesthetic
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+    --prj-bg:           #222729;
+    --prj-surface:      #282d31;
+    --prj-card:         rgba(42, 47, 50, 0.92);
+    --prj-card-border:  rgba(180, 160, 120, 0.12);
+    --prj-card-hover:   rgba(180, 160, 120, 0.22);
+    --prj-gold:         #c8a84e;
+    --prj-gold-dim:     #8a7434;
+    --prj-cream:        #e8dfc8;
+    --prj-parchment:    #c4b896;
+    --prj-muted:        #7a7060;
+    --prj-ink:          #2a2520;
+    --prj-active:       #5ca868;
+    --prj-active-bg:    rgba(92,168,104,0.12);
+    --prj-hiatus:       #b08840;
+    --prj-hiatus-bg:    rgba(176,136,64,0.12);
+    --prj-archived:     #7a7a8e;
+    --prj-archived-bg:  rgba(122,122,142,0.12);
+    --prj-planned:      #5a8ab0;
+    --prj-planned-bg:   rgba(90,138,176,0.12);
+}
+
+/* ── SIDEBAR Z-INDEX FIX ── */
+#header { z-index: 200 !important; }
+#headerToggle { z-index: 201 !important; }
+
+/* ── BASE ── */
+#main .prj-page {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    color: var(--prj-cream);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--prj-bg);
+    background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(200,168,78,0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 60%, rgba(200,168,78,0.02) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 90%, rgba(120,100,70,0.03) 0%, transparent 40%);
+}
+
+/* Subtle parchment-grain texture overlay */
+#main .prj-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+}
+
+/* ============================================================
+   HERO / PAGE HEADER
+   ============================================================ */
+.prj-hero {
+    position: relative;
+    z-index: 10;
+    padding: 56px 32px 24px;
+    text-align: center;
+}
+
+.prj-hero-inner {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.prj-hero-label {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--prj-gold);
+    display: block;
+    margin-bottom: 10px;
+    opacity: 0.85;
+}
+
+.prj-hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--prj-cream);
+    margin: 0 0 12px;
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+}
+
+.prj-hero-subtitle {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1rem;
+    color: var(--prj-parchment);
+    opacity: 0.7;
+    margin: 0;
+    font-style: italic;
+}
+
+.prj-hero-divider {
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--prj-gold-dim), transparent);
+    margin: 24px auto 0;
+}
+
+/* ============================================================
+   SUBNAV
+   ============================================================ */
+.prj-subnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(34,39,41,0.97) 0%, rgba(34,39,41,0.92) 100%);
+    border-bottom: 1px solid rgba(180,160,120,0.10);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.prj-subnav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.prj-subnav ul li a {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--prj-parchment);
+    text-decoration: none;
+    padding: 14px 20px;
+    position: relative;
+    transition: color 0.25s ease;
+    opacity: 0.65;
+}
+
+.prj-subnav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    height: 2px;
+    background: var(--prj-gold);
+    transition: left 0.25s ease, right 0.25s ease;
+}
+
+.prj-subnav ul li a:hover,
+.prj-subnav ul li a.active {
+    color: var(--prj-gold);
+    opacity: 1;
+}
+
+.prj-subnav ul li a:hover::after,
+.prj-subnav ul li a.active::after {
+    left: 16px;
+    right: 16px;
+}
+
+/* ============================================================
+   CONTENT WRAPPER
+   ============================================================ */
+.prj-content {
+    position: relative;
+    z-index: 10;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px 60px;
+}
+
+/* ============================================================
+   SECTION (one per game)
+   ============================================================ */
+.prj-section {
+    padding: 48px 0 28px;
+    animation: prjFadeUp 0.5s ease both;
+}
+
+.prj-section + .prj-section {
+    border-top: 1px solid rgba(180,160,120,0.08);
+}
+
+.prj-section-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.prj-game-logo-link { display: inline-block; margin-bottom: 12px; }
+.prj-game-logo {
+    max-height: 60px;
+    width: auto;
+    opacity: 0.85;
+    transition: opacity 0.3s ease;
+    filter: brightness(0.9);
+}
+.prj-game-logo-link:hover .prj-game-logo {
+    opacity: 1;
+    filter: brightness(1);
+}
+
+.prj-section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--prj-cream);
+    margin: 0 0 12px;
+    letter-spacing: 0.04em;
+}
+
+.prj-count-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.prj-count-badge {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 12px;
+    border-radius: 20px;
+}
+.prj-count-badge.status-active   { background: var(--prj-active-bg);   color: var(--prj-active);   border: 1px solid rgba(74,140,84,0.25); }
+.prj-count-badge.status-hiatus   { background: var(--prj-hiatus-bg);   color: var(--prj-hiatus);   border: 1px solid rgba(138,104,48,0.25); }
+.prj-count-badge.status-archived { background: var(--prj-archived-bg); color: var(--prj-archived); border: 1px solid rgba(90,90,106,0.25); }
+.prj-count-badge.status-planned  { background: var(--prj-planned-bg);  color: var(--prj-planned);  border: 1px solid rgba(74,106,138,0.25); }
+
+.prj-section-divider {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(180,160,120,0.25), transparent);
+    margin: 14px auto 0;
+}
+
+/* ============================================================
+   CARD GRID
+   ============================================================ */
+.prj-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+/* ============================================================
+   MOD CARD
+   ============================================================ */
+.prj-card {
+    background: var(--prj-card);
+    border: 1px solid var(--prj-card-border);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 3px 18px rgba(0,0,0,0.4);
+    animation: prjCardIn 0.45s ease both;
+}
+.prj-card:nth-child(2) { animation-delay: 0.06s; }
+.prj-card:nth-child(3) { animation-delay: 0.12s; }
+.prj-card:nth-child(4) { animation-delay: 0.18s; }
+.prj-card:nth-child(5) { animation-delay: 0.24s; }
+
+.prj-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--prj-card-hover);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.55), 0 0 16px rgba(200,168,78,0.06);
+}
+
+/* Accent stripe at top */
+.prj-card-accent {
+    height: 3px;
+    width: 100%;
+}
+.prj-card.status-active   .prj-card-accent { background: linear-gradient(to right, var(--prj-active), var(--prj-gold)); }
+.prj-card.status-hiatus   .prj-card-accent { background: linear-gradient(to right, var(--prj-hiatus), #5a4420); }
+.prj-card.status-archived .prj-card-accent { background: linear-gradient(to right, var(--prj-archived), #3a3a46); }
+.prj-card.status-planned  .prj-card-accent { background: linear-gradient(to right, var(--prj-planned), #3a5a7a); }
+
+/* Thumbnail */
+.prj-card-thumb {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    background: rgba(30,34,38,0.5);
+}
+.prj-card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.82) saturate(0.9);
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+.prj-card:hover .prj-card-thumb img {
+    transform: scale(1.04);
+    filter: brightness(0.95) saturate(1);
+}
+
+/* Card body */
+.prj-card-body {
+    padding: 18px 22px 22px;
+}
+
+.prj-card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+/* Status badge */
+.prj-card-badge {
+    display: inline-block;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+.prj-card-badge.status-active   { background: var(--prj-active-bg);   color: var(--prj-active);   border: 1px solid rgba(74,140,84,0.3); }
+.prj-card-badge.status-hiatus   { background: var(--prj-hiatus-bg);   color: var(--prj-hiatus);   border: 1px solid rgba(138,104,48,0.3); }
+.prj-card-badge.status-archived { background: var(--prj-archived-bg); color: var(--prj-archived); border: 1px solid rgba(90,90,106,0.3); }
+.prj-card-badge.status-planned  { background: var(--prj-planned-bg);  color: var(--prj-planned);  border: 1px solid rgba(74,106,138,0.3); }
+
+/* Card name */
+.prj-card-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--prj-cream);
+    margin: 0 0 10px;
+    line-height: 1.25;
+}
+
+/* Description */
+.prj-card-desc {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.85rem;
+    color: var(--prj-parchment);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin: 0 0 12px;
+}
+
+/* Feature tags */
+.prj-card-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.prj-feature-tag {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.68rem;
+    color: var(--prj-gold);
+    background: rgba(200,168,78,0.08);
+    border: 1px solid rgba(200,168,78,0.15);
+    padding: 3px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+}
+
+/* Links row */
+.prj-card-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(180,160,120,0.08);
+    padding-top: 12px;
+    margin-top: 4px;
+}
+
+.prj-card-link {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--prj-parchment);
+    padding: 5px 14px;
+    border: 1px solid rgba(180,160,120,0.18);
+    border-radius: 4px;
+    transition: all 0.25s ease;
+    opacity: 0.75;
+}
+
+.prj-card-link:hover {
+    color: var(--prj-gold);
+    border-color: var(--prj-gold-dim);
+    background: rgba(200,168,78,0.06);
+    opacity: 1;
+}
+
+.prj-link-steam:hover  { color: #66c0f4; border-color: rgba(102,192,244,0.3); background: rgba(102,192,244,0.06); }
+.prj-link-github:hover { color: #c9d1d9; border-color: rgba(201,209,217,0.3); background: rgba(201,209,217,0.06); }
+
+/* ============================================================
+   PLANNED MODS (collapsible)
+   ============================================================ */
+.prj-planned {
+    margin-top: 28px;
+}
+
+.prj-planned details {
+    background: rgba(42,47,50,0.5);
+    border: 1px solid rgba(180,160,120,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.prj-planned-toggle {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--prj-parchment);
+    padding: 16px 24px;
+    cursor: pointer;
+    transition: color 0.25s ease, background 0.25s ease;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.prj-planned-toggle::-webkit-details-marker { display: none; }
+
+.prj-planned-toggle::before {
+    content: '▸';
+    font-size: 0.9rem;
+    transition: transform 0.25s ease;
+    color: var(--prj-gold-dim);
+}
+
+details[open] > .prj-planned-toggle::before {
+    transform: rotate(90deg);
+}
+
+.prj-planned-toggle:hover {
+    color: var(--prj-gold);
+    background: rgba(200,168,78,0.03);
+}
+
+.prj-planned-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 4px 24px 20px;
+}
+
+.prj-planned-item {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.78rem;
+    color: var(--prj-parchment);
+    opacity: 0.65;
+    background: rgba(180,160,120,0.04);
+    border: 1px solid rgba(180,160,120,0.08);
+    padding: 5px 14px;
+    border-radius: 4px;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.prj-planned-item:hover {
+    opacity: 0.9;
+    border-color: rgba(180,160,120,0.2);
+}
+
+/* ============================================================
+   FOOTER MESSAGE
+   ============================================================ */
+.prj-footer-msg {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--prj-parchment);
+    opacity: 0.5;
+    padding: 40px 28px 80px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes prjFadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes prjCardIn {
+    from { opacity: 0; transform: translateY(14px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 720px) {
+    .prj-hero-title { font-size: 2rem; }
+    .prj-section-title { font-size: 1.4rem; }
+    .prj-card-grid { grid-template-columns: 1fr; }
+    .prj-content { padding: 0 16px 40px; }
+    .prj-subnav ul li a { padding: 11px 12px; font-size: 0.7rem; }
+    .prj-hero { padding: 40px 20px 20px; }
+}
+
+@media (max-width: 480px) {
+    .prj-hero-title { font-size: 1.6rem; }
+    .prj-card-name { font-size: 1.05rem; }
+    .prj-planned-grid { padding: 4px 16px 16px; }
+}

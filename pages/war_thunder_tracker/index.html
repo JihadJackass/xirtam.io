@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>War Thunder Stats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #0a0c0b;
+  --bg-panel: #111614;
+  --bg-panel-alt: #151a17;
+  --bg-hover: #1a211d;
+  --border: #2a332d;
+  --border-bright: #3d4a42;
+  --olive: #5c7a3a;
+  --olive-bright: #7da64e;
+  --amber: #d4a842;
+  --amber-dim: #a67f2e;
+  --red: #c44b4b;
+  --red-dim: #8a3232;
+  --nuke-orange: #e8812a;
+  --nuke-glow: #ff9b3a;
+  --text-primary: #d4d8d5;
+  --text-secondary: #8a9189;
+  --text-dim: #5a6560;
+  --text-bright: #eef0ee;
+}
+
+html { font-size: 15px; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* == HEADER == */
+.header {
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+  padding: 2rem 2.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--olive);
+}
+
+.header-top {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.player-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  letter-spacing: 0.05em;
+  color: var(--text-bright);
+  line-height: 1;
+}
+
+.clan-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.1rem;
+  color: var(--olive-bright);
+  background: rgba(92, 122, 58, 0.15);
+  padding: 0.15em 0.5em;
+  border: 1px solid rgba(92, 122, 58, 0.3);
+}
+
+.player-title {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: 0.3rem;
+}
+
+.header-meta {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+}
+
+.meta-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.4rem;
+  color: var(--amber);
+}
+
+.last-updated {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+  letter-spacing: 0.05em;
+}
+
+/* == NUKE SECTION == */
+.nuke-section {
+  border: 1px solid var(--nuke-orange);
+  background: var(--bg-panel);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.nuke-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80px center, rgba(232,129,42,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.nuke-icon-area {
+  width: 110px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(232, 129, 42, 0.06);
+  border-right: 1px solid rgba(232, 129, 42, 0.2);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.nuke-symbol {
+  font-size: 3.2rem;
+  line-height: 1;
+  position: relative;
+}
+
+.nuke-symbol::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,155,58,0.15) 0%, transparent 70%);
+  animation: nukePulse 3s ease-in-out infinite;
+}
+
+@keyframes nukePulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+.nuke-data {
+  padding: 1.2rem 1.8rem;
+  flex: 1;
+}
+
+.nuke-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--nuke-orange);
+  margin-bottom: 0.15rem;
+}
+
+.nuke-count {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  color: var(--nuke-glow);
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(255,155,58,0.3);
+}
+
+.nuke-sub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 0.15rem;
+}
+
+.nuke-extra {
+  padding: 1.2rem 1.8rem;
+  border-left: 1px solid rgba(232, 129, 42, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.nuke-extra-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.nuke-extra-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+}
+
+.nuke-extra-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+/* == MODE TABS == */
+.mode-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 1.5rem;
+}
+
+.mode-tab {
+  flex: 1;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.mode-tab:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+.mode-tab.active {
+  background: var(--bg-panel-alt);
+  color: var(--amber);
+  border-bottom-color: var(--amber);
+}
+
+.mode-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--amber);
+}
+
+/* == STAT GRID == */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2px;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 1.2rem 1.4rem;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.stat-card:hover { border-color: var(--border-bright); }
+
+.stat-card-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  margin-bottom: 0.3rem;
+}
+
+.stat-card-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.8rem;
+  color: var(--text-bright);
+  line-height: 1.1;
+}
+
+.stat-card-sub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 0.2rem;
+}
+
+.stat-card.highlight .stat-card-value { color: var(--amber); }
+.stat-card.positive .stat-card-value { color: var(--olive-bright); }
+.stat-card.negative .stat-card-value { color: var(--red); }
+
+/* == KILL BAR == */
+.kill-bar-section {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 1.4rem 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.kill-bar-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  margin-bottom: 0.8rem;
+}
+
+.kill-bar-container {
+  display: flex;
+  height: 28px;
+  border-radius: 2px;
+  overflow: hidden;
+  gap: 2px;
+}
+
+.kill-bar-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--bg-deep);
+  font-weight: 700;
+  min-width: 40px;
+  transition: flex 0.4s ease;
+}
+
+.kill-bar-segment.air { background: var(--amber); }
+.kill-bar-segment.ground { background: var(--olive-bright); }
+.kill-bar-segment.naval { background: #4a8fb8; }
+
+.kill-bar-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.6rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.legend-dot { width: 8px; height: 8px; border-radius: 1px; }
+.legend-dot.air { background: var(--amber); }
+.legend-dot.ground { background: var(--olive-bright); }
+.legend-dot.naval { background: #4a8fb8; }
+
+/* == VEHICLES TABLE == */
+.vehicles-section {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+}
+
+.vehicles-header {
+  padding: 1.2rem 1.8rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.vehicles-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+}
+
+.vehicles-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.vehicles-count {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.vehicle-search {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.7rem;
+  outline: none;
+  width: 180px;
+  transition: border-color 0.2s;
+}
+
+.vehicle-search:focus { border-color: var(--amber-dim); }
+.vehicle-search::placeholder { color: var(--text-dim); }
+
+.vehicles-table-wrap {
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-bright) var(--bg-panel);
+}
+
+.vehicles-table-wrap::-webkit-scrollbar { width: 6px; }
+.vehicles-table-wrap::-webkit-scrollbar-track { background: var(--bg-panel); }
+.vehicles-table-wrap::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+
+.vehicles-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.vehicles-table th {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  padding: 0.7rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-weight: 500;
+  position: sticky;
+  top: 0;
+  background: var(--bg-panel);
+  cursor: pointer;
+  user-select: none;
+  z-index: 2;
+}
+
+.vehicles-table th:hover { color: var(--text-secondary); }
+.vehicles-table th.sorted-asc::after { content: ' \u25B2'; color: var(--amber-dim); }
+.vehicles-table th.sorted-desc::after { content: ' \u25BC'; color: var(--amber-dim); }
+
+.vehicles-table td {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid rgba(42, 51, 45, 0.4);
+  color: var(--text-primary);
+}
+
+.vehicles-table tbody tr { transition: background 0.15s; }
+.vehicles-table tbody tr:hover { background: var(--bg-hover); }
+
+.vehicle-name {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  color: var(--text-bright);
+  font-size: 0.85rem;
+}
+
+.kd-positive { color: var(--olive-bright); }
+.kd-negative { color: var(--red); }
+.kd-neutral { color: var(--amber); }
+.wr-good { color: var(--olive-bright); }
+.wr-mid { color: var(--amber); }
+.wr-bad { color: var(--red); }
+
+.mini-bar {
+  display: inline-block;
+  height: 4px;
+  background: var(--olive);
+  border-radius: 1px;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+  opacity: 0.6;
+}
+
+/* == LEADERBOARD == */
+.leaderboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2px;
+  margin-bottom: 1.5rem;
+}
+
+.lb-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 1rem 1.2rem;
+}
+
+.lb-card-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.lb-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.2rem;
+}
+
+.lb-period { font-size: 0.7rem; color: var(--text-secondary); }
+.lb-rank { font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: var(--amber); }
+.lb-value { font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--text-dim); }
+
+/* == SECTION LABELS == */
+.section-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  margin-bottom: 0.6rem;
+  padding-left: 0.5rem;
+  border-left: 3px solid var(--border);
+}
+
+/* == LOADING / ERROR == */
+.loading-state, .error-state {
+  text-align: center;
+  padding: 6rem 2rem;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--text-dim);
+}
+
+.error-state { color: var(--red); }
+
+.loading-dots::after { content: ''; animation: dots 1.5s steps(4, end) infinite; }
+@keyframes dots {
+  0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; }
+}
+
+/* == RESPONSIVE == */
+@media (max-width: 700px) {
+  .container { padding: 1rem; }
+  .header { padding: 1.2rem 1.5rem; clip-path: none; }
+  .player-name { font-size: 2.2rem; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-card-value { font-size: 1.4rem; }
+  .vehicles-table td, .vehicles-table th { padding: 0.5rem 0.6rem; font-size: 0.7rem; }
+  .header-meta { gap: 1.5rem; }
+  .vehicles-section { clip-path: none; }
+  .nuke-section { flex-wrap: wrap; }
+  .nuke-icon-area { width: 80px; min-height: 80px; }
+  .nuke-count { font-size: 2.5rem; }
+  .nuke-extra { border-left: none; border-top: 1px solid rgba(232,129,42,0.15); flex-direction: row; gap: 1.5rem; width: 100%; }
+  .vehicle-search { width: 140px; }
+}
+
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .leaderboard-grid { grid-template-columns: 1fr; }
+  .mode-tab { font-size: 1rem; padding: 0.6rem 0.5rem; }
+}
+
+/* == ANIMATIONS == */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeSlideUp 0.4s ease forwards;
+  opacity: 0;
+}
+
+.animate-in:nth-child(1) { animation-delay: 0.05s; }
+.animate-in:nth-child(2) { animation-delay: 0.1s; }
+.animate-in:nth-child(3) { animation-delay: 0.15s; }
+.animate-in:nth-child(4) { animation-delay: 0.2s; }
+.animate-in:nth-child(5) { animation-delay: 0.25s; }
+.animate-in:nth-child(6) { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <div class="loading-state" id="loading">
+    LOADING STATS<span class="loading-dots"></span>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const STATS_URL = './wt_stats.json';
+
+// Human-readable vehicle names — expand this as you discover
+// your vehicle IDs. The fetcher outputs internal IDs like
+// "t_34_85_d_5t" and this map turns them into display names.
+// Any ID not listed here gets auto-formatted.
+const VEHICLE_NAMES = {
+  't_34_85_d_5t': 'T-34-85 (D-5T)',
+  'bf_109g_6': 'Bf 109 G-6',
+  'm4a3_76w_sherman': 'M4A3 (76) W',
+  'tiger_h1': 'Tiger H1',
+  'p_51d_30': 'P-51D-30',
+  'panther_d': 'Panther D',
+  'la_7': 'La-7',
+  'is_2': 'IS-2',
+  'fw_190a_4': 'Fw 190 A-4',
+  'spitfire_mk9': 'Spitfire Mk IX',
+  'm18_gmc': 'M18 GMC',
+  'leopard_1': 'Leopard 1',
+  't_54_1949': 'T-54 (1949)',
+  'yak_3': 'Yak-3',
+  'm4a1_76w_sherman': 'M4A1 (76) W',
+  'pz_iv_h': 'Pz.IV H',
+  'a6m5_zero': 'A6M5 Zero',
+  'su_85': 'SU-85',
+  'kv_1_zis_5': 'KV-1 (ZiS-5)',
+  'f4u_1d_corsair': 'F4U-1D Corsair',
+  'churchill_mk7': 'Churchill Mk VII',
+  'il_2_1942': 'IL-2 (1942)',
+  'stug_iii_g': 'StuG III G',
+  'type_89': 'Type 89',
+  'pt_76b': 'PT-76B',
+};
+
+function formatVehicleName(id) {
+  if (VEHICLE_NAMES[id]) return VEHICLE_NAMES[id];
+  return id.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function formatNumber(n) {
+  if (n == null) return '--';
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return n.toLocaleString();
+  return n.toString();
+}
+
+function formatRank(n) {
+  if (n == null) return '--';
+  if (n >= 1000000) return '#' + (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return '#' + (n / 1000).toFixed(1) + 'K';
+  return '#' + n;
+}
+
+function kdClass(kd) {
+  if (kd >= 1.2) return 'kd-positive';
+  if (kd >= 0.9) return 'kd-neutral';
+  return 'kd-negative';
+}
+
+function wrClass(wr) {
+  if (wr >= 55) return 'wr-good';
+  if (wr >= 48) return 'wr-mid';
+  return 'wr-bad';
+}
+
+function timeSince(isoStr) {
+  const d = new Date(isoStr);
+  const now = new Date();
+  const mins = Math.floor((now - d) / 60000);
+  if (mins < 60) return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  return Math.floor(hrs / 24) + 'd ago';
+}
+
+function escHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s || '';
+  return d.innerHTML;
+}
+
+// ============================================================
+// STATE
+// ============================================================
+let currentMode = 'realistic';
+let currentSort = { col: 'battles', dir: 'desc' };
+let vehicleFilter = '';
+let statsData = null;
+
+// ============================================================
+// RENDER
+// ============================================================
+function render(data) {
+  statsData = data;
+  const app = document.getElementById('app');
+  const modes = Object.keys(data.modes);
+  if (!data.modes[currentMode]) {
+    currentMode = modes.includes('realistic') ? 'realistic' : modes[0];
+  }
+
+  app.innerHTML = `
+    ${renderHeader(data.player, data.fetched_at)}
+    ${renderNukeSection(data.manual_stats)}
+    ${renderModeTabs(modes)}
+    <div id="mode-content">${renderModeContent(data)}</div>
+  `;
+}
+
+function renderHeader(p, fetchedAt) {
+  return `
+    <div class="header animate-in">
+      <div class="header-top">
+        <div class="player-name">${escHtml(p.nickname)}</div>
+        ${p.clan_tag ? `<span class="clan-tag">[${escHtml(p.clan_tag)}]</span>` : ''}
+      </div>
+      ${p.title ? `<div class="player-title">${escHtml(p.title)}</div>` : ''}
+      <div class="header-meta">
+        <div class="meta-item">
+          <span class="meta-label">Level</span>
+          <span class="meta-value">${p.level}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Experience</span>
+          <span class="meta-value">${formatNumber(p.exp)}</span>
+        </div>
+        ${p.clan_name ? `
+        <div class="meta-item">
+          <span class="meta-label">Squadron</span>
+          <span class="meta-value" style="font-size:1rem;color:var(--text-primary)">${escHtml(p.clan_name)}</span>
+        </div>` : ''}
+      </div>
+      <div class="last-updated">DATA UPDATED: ${timeSince(fetchedAt)} // ${new Date(fetchedAt).toUTCString()}</div>
+    </div>
+  `;
+}
+
+function renderNukeSection(manual) {
+  if (!manual) return '';
+  const nukes = manual.nukes || 0;
+  const fav = manual.favorite_vehicle || '';
+  const notes = manual.notes || '';
+
+  // Don't render if everything is empty/zero
+  if (nukes === 0 && !fav && !notes) return '';
+
+  return `
+    <div class="nuke-section animate-in">
+      <div class="nuke-icon-area">
+        <div class="nuke-symbol">\u2622</div>
+      </div>
+      <div class="nuke-data">
+        <div class="nuke-label">Nuclear Strikes Deployed</div>
+        <div class="nuke-count">${nukes}</div>
+        <div class="nuke-sub">manually tracked</div>
+      </div>
+      ${(fav || notes) ? `
+      <div class="nuke-extra">
+        ${fav ? `
+        <div class="nuke-extra-item">
+          <span class="nuke-extra-label">Favorite Vehicle</span>
+          <span class="nuke-extra-value">${escHtml(fav)}</span>
+        </div>` : ''}
+        ${notes ? `
+        <div class="nuke-extra-item">
+          <span class="nuke-extra-label">Notes</span>
+          <span class="nuke-extra-value">${escHtml(notes)}</span>
+        </div>` : ''}
+      </div>` : ''}
+    </div>
+  `;
+}
+
+function renderModeTabs(modes) {
+  const labels = {
+    arcade: 'ARCADE', realistic: 'REALISTIC', simulator: 'SIMULATOR',
+    tank_arcade: 'GRB ARCADE', tank_realistic: 'GRB REALISTIC',
+    air_arcade: 'AIR ARCADE', air_realistic: 'AIR REALISTIC',
+    ship_arcade: 'NAVAL AB', ship_realistic: 'NAVAL RB',
+  };
+  return `
+    <div class="mode-tabs animate-in">
+      ${modes.map(m => `
+        <div class="mode-tab ${m === currentMode ? 'active' : ''}" onclick="switchMode('${m}')">
+          ${labels[m] || m.toUpperCase()}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderModeContent(data) {
+  const mode = data.modes[currentMode];
+  if (!mode) return '<div class="error-state">No data for this mode</div>';
+
+  const pvp = mode.pvp || {};
+  const totalKills = (pvp.air_kills || 0) + (pvp.ground_kills || 0) + (pvp.naval_kills || 0);
+
+  return `
+    <div class="stats-grid">
+      <div class="stat-card animate-in ${mode.kd_ratio >= 1 ? 'positive' : 'negative'}">
+        <div class="stat-card-label">K/D Ratio</div>
+        <div class="stat-card-value">${mode.kd_ratio}</div>
+        <div class="stat-card-sub">${formatNumber(mode.kills)} kills / ${formatNumber(mode.deaths)} deaths</div>
+      </div>
+      <div class="stat-card animate-in highlight">
+        <div class="stat-card-label">Win Rate</div>
+        <div class="stat-card-value">${pvp.win_rate || 0}%</div>
+        <div class="stat-card-sub">${formatNumber(pvp.victories)} / ${formatNumber(pvp.finished)} battles</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-card-label">Battles</div>
+        <div class="stat-card-value">${formatNumber(pvp.finished)}</div>
+        <div class="stat-card-sub">${formatNumber(pvp.victories)} victories</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-card-label">Total Kills</div>
+        <div class="stat-card-value">${formatNumber(totalKills)}</div>
+        <div class="stat-card-sub">across all targets</div>
+      </div>
+      ${mode.effectiveness != null ? `
+      <div class="stat-card animate-in">
+        <div class="stat-card-label">Effectiveness</div>
+        <div class="stat-card-value">${mode.effectiveness}%</div>
+      </div>` : ''}
+    </div>
+
+    ${totalKills > 0 ? renderKillBar(pvp) : ''}
+
+    ${mode.leaderboard && Object.keys(mode.leaderboard).length > 0
+      ? renderLeaderboard(mode.leaderboard) : ''}
+
+    ${renderVehicleTable(data.vehicles)}
+  `;
+}
+
+function renderKillBar(pvp) {
+  const air = pvp.air_kills || 0;
+  const ground = pvp.ground_kills || 0;
+  const naval = pvp.naval_kills || 0;
+  const total = air + ground + naval;
+  if (total === 0) return '';
+
+  return `
+    <div class="kill-bar-section animate-in">
+      <div class="kill-bar-title">Kill Distribution</div>
+      <div class="kill-bar-container">
+        ${air > 0 ? `<div class="kill-bar-segment air" style="flex:${air}">${((air/total)*100).toFixed(1)}%</div>` : ''}
+        ${ground > 0 ? `<div class="kill-bar-segment ground" style="flex:${ground}">${((ground/total)*100).toFixed(1)}%</div>` : ''}
+        ${naval > 0 ? `<div class="kill-bar-segment naval" style="flex:${naval}">${((naval/total)*100).toFixed(1)}%</div>` : ''}
+      </div>
+      <div class="kill-bar-legend">
+        <div class="legend-item"><span class="legend-dot air"></span> Air ${formatNumber(air)}</div>
+        <div class="legend-item"><span class="legend-dot ground"></span> Ground ${formatNumber(ground)}</div>
+        ${naval > 0 ? `<div class="legend-item"><span class="legend-dot naval"></span> Naval ${formatNumber(naval)}</div>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderLeaderboard(lb) {
+  const labels = {
+    victories_battles: 'Victories', ground_kills: 'Ground Kills',
+    air_kills: 'Air Kills', naval_kills: 'Naval Kills',
+    average_score: 'Avg Score', pvp_ratio: 'PVP Ratio',
+    deaths: 'Deaths', flyouts: 'Flyouts', time_pvp_played: 'Time Played',
+  };
+
+  const cards = Object.entries(lb).map(([key, val]) => `
+    <div class="lb-card animate-in">
+      <div class="lb-card-label">${labels[key] || key}</div>
+      <div class="lb-card-row">
+        <span class="lb-period">All-time</span>
+        <span class="lb-rank">${formatRank(val.place_total)}</span>
+        <span class="lb-value">(${formatNumber(val.value_total)})</span>
+      </div>
+      <div class="lb-card-row">
+        <span class="lb-period">This month</span>
+        <span class="lb-rank">${formatRank(val.place_month)}</span>
+        <span class="lb-value">(${formatNumber(val.value_month)})</span>
+      </div>
+    </div>
+  `).join('');
+
+  return `
+    <div class="section-label" style="margin-top:0.5rem">LEADERBOARD POSITIONS</div>
+    <div class="leaderboard-grid">${cards}</div>
+  `;
+}
+
+function renderVehicleTable(vehicles) {
+  // Filter by current mode
+  let filtered = vehicles.filter(v => v.mode === currentMode);
+  if (filtered.length === 0) filtered = vehicles;
+
+  // Apply text search
+  if (vehicleFilter) {
+    const q = vehicleFilter.toLowerCase();
+    filtered = filtered.filter(v => formatVehicleName(v.id).toLowerCase().includes(q) || v.id.toLowerCase().includes(q));
+  }
+
+  // Sort
+  filtered.sort((a, b) => {
+    let va = a[currentSort.col], vb = b[currentSort.col];
+    if (currentSort.col === 'id') {
+      va = formatVehicleName(va).toLowerCase();
+      vb = formatVehicleName(vb).toLowerCase();
+    }
+    if (currentSort.dir === 'desc') return vb > va ? 1 : vb < va ? -1 : 0;
+    return va > vb ? 1 : va < vb ? -1 : 0;
+  });
+
+  const maxBattles = Math.max(...filtered.map(v => v.battles), 1);
+
+  const cols = [
+    { key: 'id', label: 'Vehicle' },
+    { key: 'battles', label: 'Battles' },
+    { key: 'win_rate', label: 'Win %' },
+    { key: 'total_kills', label: 'Kills' },
+    { key: 'deaths', label: 'Deaths' },
+    { key: 'kd_ratio', label: 'K/D' },
+  ];
+
+  const thHtml = cols.map(c => {
+    let cls = '';
+    if (currentSort.col === c.key) cls = currentSort.dir === 'asc' ? 'sorted-asc' : 'sorted-desc';
+    return `<th class="${cls}" onclick="sortVehicles('${c.key}')">${c.label}</th>`;
+  }).join('');
+
+  const rowsHtml = filtered.map(v => `
+    <tr>
+      <td class="vehicle-name">${escHtml(formatVehicleName(v.id))}</td>
+      <td>${v.battles}<span class="mini-bar" style="width:${(v.battles/maxBattles)*60}px"></span></td>
+      <td class="${wrClass(v.win_rate)}">${v.win_rate}%</td>
+      <td>${v.total_kills}</td>
+      <td>${v.deaths}</td>
+      <td class="${kdClass(v.kd_ratio)}">${v.kd_ratio}</td>
+    </tr>
+  `).join('');
+
+  return `
+    <div class="vehicles-section animate-in">
+      <div class="vehicles-header">
+        <div class="vehicles-title">VEHICLE STATS</div>
+        <div class="vehicles-controls">
+          <input type="text" class="vehicle-search" placeholder="Search vehicles..."
+            value="${escHtml(vehicleFilter)}" oninput="filterVehicles(this.value)">
+          <div class="vehicles-count">${filtered.length} vehicles</div>
+        </div>
+      </div>
+      <div class="vehicles-table-wrap">
+        <table class="vehicles-table">
+          <thead><tr>${thHtml}</tr></thead>
+          <tbody>${rowsHtml || '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem">No vehicles match</td></tr>'}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================
+// INTERACTIONS
+// ============================================================
+function switchMode(mode) {
+  currentMode = mode;
+  vehicleFilter = '';
+  render(statsData);
+}
+
+function sortVehicles(col) {
+  if (currentSort.col === col) {
+    currentSort.dir = currentSort.dir === 'desc' ? 'asc' : 'desc';
+  } else {
+    currentSort = { col, dir: col === 'id' ? 'asc' : 'desc' };
+  }
+  document.getElementById('mode-content').innerHTML = renderModeContent(statsData);
+  // Re-focus search if it had text
+  if (vehicleFilter) {
+    const input = document.querySelector('.vehicle-search');
+    if (input) { input.focus(); input.selectionStart = input.selectionEnd = input.value.length; }
+  }
+}
+
+function filterVehicles(val) {
+  vehicleFilter = val;
+  document.getElementById('mode-content').innerHTML = renderModeContent(statsData);
+  // Keep focus on search input
+  const input = document.querySelector('.vehicle-search');
+  if (input) { input.focus(); input.selectionStart = input.selectionEnd = input.value.length; }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+fetch(STATS_URL)
+  .then(r => {
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.json();
+  })
+  .then(data => render(data))
+  .catch(err => {
+    document.getElementById('app').innerHTML = `
+      <div class="error-state">
+        FAILED TO LOAD STATS<br>
+        <span style="font-size:0.8rem;color:var(--text-dim)">${escHtml(err.message)}<br>
+        Make sure wt_stats.json is in the same directory.</span>
+      </div>
+    `;
+  });
+</script>
+</body>
+</html>

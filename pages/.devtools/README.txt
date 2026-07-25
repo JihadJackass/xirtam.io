@@ -1,0 +1,1 @@
+To use the parser, simply drop the formable countries file onto the FNR5_Guide_Parser.py

@@ -1,0 +1,109 @@
+{
+  "fetched_at": "2026-05-18T19:30:00+00:00",
+  "player": {
+    "nickname": "YourNickHere",
+    "user_id": "12345678",
+    "title": "Tank Ace",
+    "clan_tag": "CLAN",
+    "clan_name": "Steel Vanguard",
+    "level": 72,
+    "exp": 8412350
+  },
+  "manual_stats": {
+    "nukes": 14,
+    "favorite_vehicle": "Tiger H1",
+    "notes": "Grinding USSR air tree"
+  },
+  "modes": {
+    "arcade": {
+      "kills": 4812,
+      "deaths": 5930,
+      "kd_ratio": 0.81,
+      "effectiveness": 52.3,
+      "rating": 1420,
+      "pvp": {
+        "victories": 2105,
+        "finished": 3847,
+        "win_rate": 54.7,
+        "air_kills": 1203,
+        "ground_kills": 3104,
+        "naval_kills": 505
+      },
+      "leaderboard": {
+        "victories_battles": { "value_total": 2105, "place_total": 184502, "value_month": 48, "place_month": 92104 },
+        "ground_kills": { "value_total": 3104, "place_total": 112340, "value_month": 71, "place_month": 78021 },
+        "air_kills": { "value_total": 1203, "place_total": 203100, "value_month": 22, "place_month": 105440 },
+        "average_score": { "value_total": 1180, "place_total": 156200, "value_month": 1240, "place_month": 131000 }
+      }
+    },
+    "realistic": {
+      "kills": 7621,
+      "deaths": 6140,
+      "kd_ratio": 1.24,
+      "effectiveness": 68.1,
+      "rating": 1870,
+      "pvp": {
+        "victories": 3412,
+        "finished": 5890,
+        "win_rate": 57.9,
+        "air_kills": 2840,
+        "ground_kills": 4210,
+        "naval_kills": 571
+      },
+      "leaderboard": {
+        "victories_battles": { "value_total": 3412, "place_total": 98400, "value_month": 82, "place_month": 54200 },
+        "ground_kills": { "value_total": 4210, "place_total": 67100, "value_month": 103, "place_month": 41800 },
+        "air_kills": { "value_total": 2840, "place_total": 54300, "value_month": 61, "place_month": 38100 },
+        "average_score": { "value_total": 1640, "place_total": 82100, "value_month": 1710, "place_month": 71200 }
+      }
+    },
+    "simulator": {
+      "kills": 412,
+      "deaths": 289,
+      "kd_ratio": 1.43,
+      "effectiveness": 71.4,
+      "rating": 1640,
+      "pvp": {
+        "victories": 198,
+        "finished": 310,
+        "win_rate": 63.9,
+        "air_kills": 280,
+        "ground_kills": 104,
+        "naval_kills": 28
+      },
+      "leaderboard": {
+        "victories_battles": { "value_total": 198, "place_total": 24100, "value_month": 12, "place_month": 11200 },
+        "ground_kills": { "value_total": 104, "place_total": 31200, "value_month": 8, "place_month": 18400 },
+        "air_kills": { "value_total": 280, "place_total": 18900, "value_month": 18, "place_month": 9800 },
+        "average_score": { "value_total": 1520, "place_total": 19400, "value_month": 1610, "place_month": 14300 }
+      }
+    }
+  },
+  "vehicles": [
+    { "id": "t_34_85_d_5t", "mode": "realistic", "battles": 412, "victories": 241, "win_rate": 58.5, "deaths": 380, "flyouts": 520, "air_kills": 2, "ground_kills": 486, "naval_kills": 0, "total_kills": 488, "kd_ratio": 1.28, "exp": 412000 },
+    { "id": "bf_109g_6", "mode": "realistic", "battles": 389, "victories": 230, "win_rate": 59.1, "deaths": 310, "flyouts": 445, "air_kills": 520, "ground_kills": 45, "naval_kills": 0, "total_kills": 565, "kd_ratio": 1.82, "exp": 398000 },
+    { "id": "m4a3_76w_sherman", "mode": "realistic", "battles": 345, "victories": 192, "win_rate": 55.7, "deaths": 340, "flyouts": 410, "air_kills": 5, "ground_kills": 378, "naval_kills": 0, "total_kills": 383, "kd_ratio": 1.13, "exp": 310000 },
+    { "id": "tiger_h1", "mode": "realistic", "battles": 298, "victories": 180, "win_rate": 60.4, "deaths": 260, "flyouts": 340, "air_kills": 1, "ground_kills": 410, "naval_kills": 0, "total_kills": 411, "kd_ratio": 1.58, "exp": 340000 },
+    { "id": "p_51d_30", "mode": "realistic", "battles": 275, "victories": 155, "win_rate": 56.4, "deaths": 220, "flyouts": 310, "air_kills": 340, "ground_kills": 38, "naval_kills": 0, "total_kills": 378, "kd_ratio": 1.72, "exp": 280000 },
+    { "id": "panther_d", "mode": "realistic", "battles": 241, "victories": 148, "win_rate": 61.4, "deaths": 210, "flyouts": 280, "air_kills": 0, "ground_kills": 320, "naval_kills": 0, "total_kills": 320, "kd_ratio": 1.52, "exp": 260000 },
+    { "id": "la_7", "mode": "realistic", "battles": 210, "victories": 118, "win_rate": 56.2, "deaths": 180, "flyouts": 240, "air_kills": 290, "ground_kills": 12, "naval_kills": 0, "total_kills": 302, "kd_ratio": 1.68, "exp": 220000 },
+    { "id": "is_2", "mode": "realistic", "battles": 189, "victories": 114, "win_rate": 60.3, "deaths": 170, "flyouts": 210, "air_kills": 0, "ground_kills": 245, "naval_kills": 0, "total_kills": 245, "kd_ratio": 1.44, "exp": 210000 },
+    { "id": "fw_190a_4", "mode": "realistic", "battles": 165, "victories": 90, "win_rate": 54.5, "deaths": 140, "flyouts": 190, "air_kills": 210, "ground_kills": 22, "naval_kills": 0, "total_kills": 232, "kd_ratio": 1.66, "exp": 175000 },
+    { "id": "spitfire_mk9", "mode": "realistic", "battles": 148, "victories": 88, "win_rate": 59.5, "deaths": 120, "flyouts": 165, "air_kills": 198, "ground_kills": 8, "naval_kills": 0, "total_kills": 206, "kd_ratio": 1.72, "exp": 160000 },
+    { "id": "m18_gmc", "mode": "realistic", "battles": 132, "victories": 72, "win_rate": 54.5, "deaths": 155, "flyouts": 180, "air_kills": 3, "ground_kills": 195, "naval_kills": 0, "total_kills": 198, "kd_ratio": 1.28, "exp": 140000 },
+    { "id": "leopard_1", "mode": "realistic", "battles": 118, "victories": 64, "win_rate": 54.2, "deaths": 110, "flyouts": 140, "air_kills": 1, "ground_kills": 152, "naval_kills": 0, "total_kills": 153, "kd_ratio": 1.39, "exp": 135000 },
+    { "id": "t_54_1949", "mode": "realistic", "battles": 105, "victories": 61, "win_rate": 58.1, "deaths": 98, "flyouts": 125, "air_kills": 0, "ground_kills": 134, "naval_kills": 0, "total_kills": 134, "kd_ratio": 1.37, "exp": 118000 },
+    { "id": "yak_3", "mode": "realistic", "battles": 97, "victories": 58, "win_rate": 59.8, "deaths": 78, "flyouts": 110, "air_kills": 142, "ground_kills": 6, "naval_kills": 0, "total_kills": 148, "kd_ratio": 1.90, "exp": 102000 },
+    { "id": "m4a1_76w_sherman", "mode": "realistic", "battles": 91, "victories": 48, "win_rate": 52.7, "deaths": 88, "flyouts": 108, "air_kills": 2, "ground_kills": 95, "naval_kills": 0, "total_kills": 97, "kd_ratio": 1.10, "exp": 86000 },
+    { "id": "pz_iv_h", "mode": "realistic", "battles": 88, "victories": 50, "win_rate": 56.8, "deaths": 82, "flyouts": 102, "air_kills": 0, "ground_kills": 110, "naval_kills": 0, "total_kills": 110, "kd_ratio": 1.34, "exp": 78000 },
+    { "id": "a6m5_zero", "mode": "realistic", "battles": 82, "victories": 44, "win_rate": 53.7, "deaths": 72, "flyouts": 95, "air_kills": 108, "ground_kills": 3, "naval_kills": 0, "total_kills": 111, "kd_ratio": 1.54, "exp": 71000 },
+    { "id": "su_85", "mode": "realistic", "battles": 76, "victories": 42, "win_rate": 55.3, "deaths": 70, "flyouts": 88, "air_kills": 0, "ground_kills": 92, "naval_kills": 0, "total_kills": 92, "kd_ratio": 1.31, "exp": 62000 },
+    { "id": "kv_1_zis_5", "mode": "realistic", "battles": 68, "victories": 40, "win_rate": 58.8, "deaths": 58, "flyouts": 75, "air_kills": 0, "ground_kills": 82, "naval_kills": 0, "total_kills": 82, "kd_ratio": 1.41, "exp": 58000 },
+    { "id": "f4u_1d_corsair", "mode": "realistic", "battles": 62, "victories": 32, "win_rate": 51.6, "deaths": 55, "flyouts": 70, "air_kills": 68, "ground_kills": 24, "naval_kills": 0, "total_kills": 92, "kd_ratio": 1.67, "exp": 52000 },
+    { "id": "churchill_mk7", "mode": "realistic", "battles": 54, "victories": 34, "win_rate": 63.0, "deaths": 42, "flyouts": 60, "air_kills": 0, "ground_kills": 58, "naval_kills": 0, "total_kills": 58, "kd_ratio": 1.38, "exp": 45000 },
+    { "id": "il_2_1942", "mode": "realistic", "battles": 48, "victories": 24, "win_rate": 50.0, "deaths": 44, "flyouts": 55, "air_kills": 12, "ground_kills": 68, "naval_kills": 0, "total_kills": 80, "kd_ratio": 1.82, "exp": 41000 },
+    { "id": "stug_iii_g", "mode": "realistic", "battles": 42, "victories": 25, "win_rate": 59.5, "deaths": 38, "flyouts": 48, "air_kills": 0, "ground_kills": 54, "naval_kills": 0, "total_kills": 54, "kd_ratio": 1.42, "exp": 35000 },
+    { "id": "type_89", "mode": "realistic", "battles": 38, "victories": 18, "win_rate": 47.4, "deaths": 40, "flyouts": 45, "air_kills": 4, "ground_kills": 42, "naval_kills": 0, "total_kills": 46, "kd_ratio": 1.15, "exp": 30000 },
+    { "id": "pt_76b", "mode": "realistic", "battles": 32, "victories": 15, "win_rate": 46.9, "deaths": 35, "flyouts": 38, "air_kills": 0, "ground_kills": 28, "naval_kills": 0, "total_kills": 28, "kd_ratio": 0.80, "exp": 22000 }
+  ]
+}

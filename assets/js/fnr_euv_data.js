@@ -188,11 +188,11 @@ const FORMABLES = [
         "areas": ["Bulgaria", "Wallachia", "Moldavia"]
     }
 
-    // Netherlands — Uncategorized
+    // Netherlands — Historical
     ,{
         "tag": "NED",
         "name": "Netherlands",
-        "category": "Uncategorized",
+        "category": "Historical",
         "rank": 2,
         "level": 2,
         "requiredFraction": 0.3,
@@ -205,7 +205,7 @@ const FORMABLES = [
     }
 
     // ═══════════════════════════════════════════
-    //  RANK 3 (129 nations)
+    //  RANK 3 (128 nations)
     // ═══════════════════════════════════════════
 
     // Gobi — Modern
@@ -332,7 +332,7 @@ const FORMABLES = [
         "category": "Non-Historical",
         "rank": 3,
         "level": 3,
-        "requiredFraction": 0.01,
+        "requiredFraction": 0.85,
         "rule": "plausible",
         "cultures": ["Balti", "Burusho", "Chitrali", "Hazara", "Nuristani", "Ormur", "Pamiri", "Pashayi", "Shina", "Tajik"],
         "capitals": ["Fayzabad"],
@@ -662,11 +662,11 @@ const FORMABLES = [
         ]
     }
 
-    // Alaska — Modern
+    // Alaska — US States
     ,{
         "tag": "ALSKA",
         "name": "Alaska",
-        "category": "Modern",
+        "category": "US States",
         "rank": 3,
         "level": 3,
         "requiredFraction": 0.7,
@@ -1420,19 +1420,6 @@ const FORMABLES = [
         "regions": ["Ruthenia"]
     }
 
-    // Donetsk Peoples Republic — Modern
-    ,{
-        "tag": "DNTPR",
-        "name": "Donetsk Peoples Republic",
-        "category": "Modern",
-        "rank": 3,
-        "level": 3,
-        "requiredFraction": 0.9,
-        "rule": "plausible",
-        "cultures": ["Mishar", "Polish (Group)"],
-        "regions": ["Steppes", "Ruthenia"]
-    }
-
     // Emilia-Romagna — Alt-History
     ,{
         "tag": "EMLRO",
@@ -1651,7 +1638,7 @@ const FORMABLES = [
         "level": 3,
         "requiredFraction": 1.0,
         "rule": "plausible",
-        "cultures": ["Confucian (Group)"],
+        "cultures": ["Confucian (Group)", "Korean"],
         "regions": ["Korea"]
     }
 
@@ -1690,7 +1677,7 @@ const FORMABLES = [
         "level": 3,
         "requiredFraction": 1.0,
         "rule": "plausible",
-        "cultures": ["Confucian (Group)"],
+        "cultures": ["Confucian (Group)", "Korean"],
         "areas": ["Gwanseo", "Haeseo", "Gwanbuk"]
     }
 
@@ -1703,7 +1690,7 @@ const FORMABLES = [
         "level": 3,
         "requiredFraction": 1.0,
         "rule": "plausible",
-        "cultures": ["Confucian (Group)"],
+        "cultures": ["Confucian (Group)", "Korean"],
         "areas": ["Honam", "Hoseo", "Yeongnam", "Gyeonggi", "Gwandong"]
     }
 
@@ -2329,6 +2316,7 @@ const FORMABLES = [
         "level": 4,
         "requiredFraction": 0.65,
         "rule": "plausible",
+        "cultures": ["Tungusic (Group)"],
         "regions": ["East Siberia", "West Siberia", "Alaska"],
         "formEffects": {
             "rankUpgrade": "Empire"
@@ -2359,8 +2347,9 @@ const FORMABLES = [
         "category": "Modern",
         "rank": 4,
         "level": 4,
-        "requiredFraction": 1.0,
+        "requiredFraction": 0.85,
         "rule": "plausible",
+        "cultures": ["Japanese (Group)"],
         "provinces": ["Southern Sakhalin"],
         "regions": ["Japan"]
     }
@@ -2372,8 +2361,9 @@ const FORMABLES = [
         "category": "Modern",
         "rank": 4,
         "level": 5,
-        "requiredFraction": 1.0,
+        "requiredFraction": 0.01,
         "rule": "plausible",
+        "cultures": ["Japanese (Group)"],
         "capitals": ["Toshima Kanto"],
         "provinces": ["Southern Sakhalin"],
         "regions": ["Japan", "Korea"],

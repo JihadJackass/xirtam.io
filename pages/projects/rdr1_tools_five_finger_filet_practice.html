@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RDR1 Five Finger Fillet Trainer</title>
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Courier Prime', monospace;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(120,80,30,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(60,30,10,0.4) 0%, transparent 60%),
+      linear-gradient(175deg, #2a1a0e 0%, #1a1008 40%, #0f0a05 100%);
+    color: #e8dcc8; min-height: 100vh; padding: 24px 16px; position: relative;
+  }
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; opacity:0.04;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size:128px;
+  }
+  .container { max-width:540px; margin:0 auto; position:relative; }
+  .header { text-align:center; margin-bottom:24px; }
+  .header-sub { font-family:'Rye',serif; font-size:11px; letter-spacing:6px; color:#a08050; text-transform:uppercase; }
+  .header h1 { font-family:'Rye',serif; font-size:26px; margin:4px 0; color:#e8dcc8; text-shadow:0 2px 8px rgba(0,0,0,0.6); }
+  .header-line { width:120px; height:1px; margin:12px auto 0; background:linear-gradient(90deg,transparent,#a08050,transparent); }
+  .section { background:rgba(255,255,255,0.03); border:1px solid rgba(232,220,200,0.08); border-radius:6px; padding:16px 18px; margin-bottom:16px; }
+  .section-title { font-family:'Rye',serif; font-size:13px; color:#a08050; letter-spacing:3px; text-transform:uppercase; margin-bottom:12px; border-bottom:1px solid rgba(232,220,200,0.08); padding-bottom:8px; }
+  .opp-btn {
+    display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:6px; cursor:pointer;
+    width:100%; text-align:left; background:rgba(0,0,0,0.2); border:1px solid rgba(232,220,200,0.06);
+    color:#e8dcc8; font-family:'Courier Prime',monospace; margin-bottom:6px;
+  }
+  .opp-btn.active { background:rgba(160,100,40,0.2); border-color:#a08050; }
+  .opp-btn .opp-name { font-family:'Rye',serif; font-size:14px; min-width:100px; }
+  .opp-btn .opp-bet { font-size:12px; color:#a08050; }
+  .opp-btn .opp-desc { font-size:11px; color:#706040; margin-left:auto; }
+  .row { display:flex; justify-content:space-between; align-items:center; padding:5px 0; }
+  .row-label { font-size:13px; color:#c8b898; }
+  .rep-btn {
+    width:32px; height:28px; border-radius:4px; margin:0 2px; cursor:pointer;
+    font-family:'Courier Prime',monospace; font-size:13px; font-weight:700;
+    background:rgba(255,255,255,0.05); border:1px solid rgba(232,220,200,0.1); color:#706040;
+  }
+  .rep-btn.active { background:rgba(160,100,40,0.25); border-color:#a08050; color:#e8dcc8; }
+  .chunk-row { display:flex; align-items:center; gap:6px; margin-bottom:6px; }
+  .chunk-label { font-size:10px; color:#706040; min-width:30px; }
+  .chunk-key {
+    width:24px; height:24px; border-radius:4px; display:flex; align-items:center; justify-content:center;
+    font-family:'Courier Prime',monospace; font-size:12px; font-weight:700;
+  }
+  .key-cap {
+    width:60px; height:60px; border-radius:8px; display:flex; align-items:center; justify-content:center;
+    font-family:'Rye',serif; font-size:27px; color:#e8dcc8; transition:all 0.08s ease; position:relative;
+  }
+  .key-cap.inactive { background:rgba(255,255,255,0.06); border:2px solid rgba(232,220,200,0.15); opacity:0.4; }
+  .key-cap .wrong-x {
+    position:absolute; top:-6px; right:-6px; width:20px; height:20px; background:#ff4444;
+    border-radius:50%; font-size:12px; display:flex; align-items:center; justify-content:center;
+    font-family:'Courier Prime',monospace; font-weight:700;
+  }
+  .strip-key {
+    width:28px; height:28px; border-radius:5px; display:flex; align-items:center; justify-content:center;
+    font-family:'Courier Prime',monospace; font-size:13px; font-weight:700; transition:all 0.1s;
+  }
+  .progress-bar { height:4px; background:rgba(255,255,255,0.08); border-radius:2px; margin-bottom:16px; overflow:hidden; }
+  .progress-fill { height:100%; background:#4a7c3f; border-radius:2px; transition:width 0.1s; }
+  .next-key { font-family:'Rye',serif; font-size:48px; text-align:center; margin-top:8px; }
+  .next-sub { font-size:11px; color:#706040; text-align:center; margin-top:4px; }
+  .stat-box { text-align:center; }
+  .stat-label { font-size:10px; color:#a08050; }
+  .stat-val { font-family:'Courier Prime',monospace; font-size:16px; font-weight:700; }
+  .result-title { font-family:'Rye',serif; font-size:24px; text-align:center; margin-bottom:8px; }
+  .result-stat-val { font-family:'Courier Prime',monospace; font-size:20px; font-weight:700; }
+  .btn-row { display:flex; gap:8px; margin-bottom:16px; }
+  .action-btn {
+    flex:1; padding:12px; border-radius:6px; cursor:pointer;
+    font-family:'Rye',serif; font-size:14px; color:#d4a030;
+    background:rgba(212,160,48,0.15); border:1px solid rgba(212,160,48,0.3);
+  }
+  .action-btn:disabled { color:#706040; cursor:default; }
+  .action-btn.go { background:rgba(74,124,63,0.2); border-color:rgba(74,124,63,0.4); color:#4a7c3f; }
+  .action-btn.go.playing { background:rgba(194,90,58,0.2); border-color:rgba(194,90,58,0.4); color:#c25a3a; }
+  .action-btn.stop { flex:none; padding:12px 16px; background:rgba(255,255,255,0.05); border:1px solid rgba(232,220,200,0.1); color:#706040; }
+  .tips div { font-size:12px; color:#8a7a60; line-height:1.8; }
+  .tips span { color:#a08050; }
+  .footer { text-align:center; font-size:11px; color:#5a4a30; line-height:1.6; margin-top:16px; }
+  input[type=range] { width:120px; accent-color:#a08050; }
+</style>
+</head>
+<body>
+<div class="container" id="app"></div>
+<script>
+const PATTERNS = [
+  { name:"Opponent 1", bet:"$1–$4", keys:[1], desc:"Just mash 1" },
+  { name:"Opponent 2", bet:"$5–$9", keys:[1,2,1,2,1,2,1,2,1,2], desc:"Alternating 1-2" },
+  { name:"Opponent 3", bet:"$10–$24", keys:[1,2,1,3,1,2,1,3,1,2], desc:"1-2-1-3 repeating" },
+  { name:"Opponent 4", bet:"$25–$100", keys:[1,2,1,3,1,4,1,2,1,3], desc:"The full nightmare" },
+];
+const KC = { 1:"#c25a3a", 2:"#d4a030", 3:"#4a7c3f", 4:"#5a7ab5" };
+
+const S = {
+  patIdx: 1, speed: 400, mode: "idle", curKey: 0, reps: 3,
+  pressed: null, wrong: null, demoIdx: 0,
+  hits: 0, misses: 0, streak: 0, bestStreak: 0, time: 0, startTime: 0,
+};
+let demoTimer = null;
+let pressTimer = null;
+let wrongTimer = null;
+
+function fullPattern() {
+  const p = PATTERNS[S.patIdx];
+  const fp = [];
+  for (let r = 0; r < S.reps; r++) fp.push(...p.keys);
+  if (p.keys.length > 1) fp.push(p.keys[0]);
+  return fp;
+}
+
+function speedLabel(s) { return s >= 500 ? "Slow" : s >= 350 ? "Medium" : s >= 200 ? "Fast" : "Insane"; }
+
+function render() {
+  const p = PATTERNS[S.patIdx];
+  const fp = fullPattern();
+  const expected = S.mode === "playing" ? fp[S.curKey] : null;
+  const demoKey = S.mode === "demo" ? fp[S.demoIdx] : null;
+  const progress = S.mode === "playing" ? (S.curKey / fp.length * 100) : 0;
+
+  let h = `
+  <div class="header">
+    <div class="header-sub">Red Dead Redemption</div>
+    <h1>Five Finger Fillet</h1>
+    <div class="header-sub" style="letter-spacing:4px">Practice Trainer</div>
+    <div class="header-line"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Select Opponent</div>
+    ${PATTERNS.map((o,i) => `<button class="opp-btn ${i===S.patIdx?'active':''}" onclick="selectOpp(${i})">
+      <span class="opp-name">${o.name}</span><span class="opp-bet">${o.bet}</span><span class="opp-desc">${o.desc}</span>
+    </button>`).join('')}
+  </div>
+
+  <div class="section">
+    <div class="section-title">Pattern — ${p.keys.length > 1 ? p.keys.join('-') + ' (×' + S.reps + ' + end)' : 'mash 1'}</div>
+    ${Array.from({length:S.reps},(_,r) => `<div class="chunk-row">
+      <span class="chunk-label">Rep ${r+1}</span>
+      <div style="display:flex;gap:3px">${p.keys.map(k => `<div class="chunk-key" style="background:${KC[k]}33;border:1px solid ${KC[k]}66;color:${KC[k]}">${k}</div>`).join('')}</div>
+    </div>`).join('')}
+    ${p.keys.length > 1 ? `<div class="chunk-row"><span class="chunk-label">End</span><div class="chunk-key" style="background:${KC[p.keys[0]]}33;border:1px solid ${KC[p.keys[0]]}66;color:${KC[p.keys[0]]}">${p.keys[0]}</div></div>` : ''}
+
+    <div class="row" style="margin-top:8px">
+      <span class="row-label">Repetitions</span>
+      <div style="display:flex">${[2,3,4,5].map(n => `<button class="rep-btn ${n===S.reps?'active':''}" onclick="setReps(${n})">${n}</button>`).join('')}</div>
+    </div>
+    <div class="row" style="margin-top:4px">
+      <span class="row-label">Demo Speed</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <input type="range" min="100" max="600" step="50" value="${S.speed}" oninput="setSpeed(this.value)">
+        <span style="font-size:12px;color:#a08050;min-width:50px">${speedLabel(S.speed)}</span>
+      </div>
+    </div>
+  </div>`;
+
+  // Keyboard section
+  const secAccent = S.mode === "playing" ? "border-left:3px solid #c25a3a" : S.mode === "result" ? "border-left:3px solid #4a7c3f" : "";
+  const secTitleColor = S.mode === "playing" ? "#c25a3a" : S.mode === "result" ? "#4a7c3f" : "#a08050";
+  const secTitle = S.mode === "idle" ? "Keyboard" : S.mode === "demo" ? "Watch the Pattern" : S.mode === "playing" ? "GO! Press the Keys" : "Results";
+
+  h += `<div class="section" style="${secAccent}">
+    <div class="section-title" style="color:${secTitleColor}">${secTitle}</div>`;
+
+  if (S.mode === "playing") {
+    h += `<div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>`;
+  }
+
+  // Keys
+  h += `<div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px">`;
+  for (let n = 1; n <= 4; n++) {
+    const active = S.mode === "demo" ? demoKey === n : S.mode === "playing" ? expected === n : false;
+    const pressed = S.pressed === n;
+    const wrong = S.wrong === n;
+    const bg = wrong ? "#8b2020" : active ? KC[n] : "rgba(255,255,255,0.06)";
+    const border = active ? KC[n] : "rgba(232,220,200,0.15)";
+    const scale = pressed ? 0.9 : active ? 1.08 : 1;
+    const glow = active ? `0 0 20px ${KC[n]}66, 0 0 40px ${KC[n]}33` : "none";
+    const opacity = active ? 1 : 0.4;
+    h += `<div class="key-cap" style="background:${bg};border:2px solid ${border};transform:scale(${scale});box-shadow:${glow};opacity:${opacity};text-shadow:${active?'0 2px 4px rgba(0,0,0,0.5)':'none'}">
+      ${n}${wrong ? '<div class="wrong-x">✗</div>' : ''}
+    </div>`;
+  }
+  h += `</div>`;
+
+  // Pattern strip
+  if (S.mode === "playing" || S.mode === "demo") {
+    const idx = S.mode === "demo" ? S.demoIdx : S.curKey;
+    h += `<div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;padding:12px 0">`;
+    for (let i = 0; i < fp.length; i++) {
+      const k = fp[i];
+      const done = i < idx;
+      const cur = i === idx;
+      const c = KC[k];
+      const bg = done ? c + '44' : cur ? c : 'rgba(255,255,255,0.06)';
+      const brd = cur ? `2px solid ${c}` : done ? `1px solid ${c}66` : '1px solid rgba(232,220,200,0.1)';
+      const col = done ? c + '88' : cur ? '#e8dcc8' : 'rgba(232,220,200,0.3)';
+      const shadow = cur ? `0 0 12px ${c}44` : 'none';
+      h += `<div class="strip-key" style="background:${bg};border:${brd};color:${col};box-shadow:${shadow}">${k}</div>`;
+    }
+    h += `</div>`;
+  }
+
+  // Next key callout
+  if (S.mode === "playing" && expected) {
+    h += `<div class="next-key" style="color:${KC[expected]};text-shadow:0 0 30px ${KC[expected]}44">${expected}</div>
+    <div class="next-sub">${S.curKey + 1} / ${fp.length}</div>`;
+  }
+
+  // Results
+  if (S.mode === "result") {
+    const title = S.misses === 0 ? "Perfect Run!" : S.misses <= 2 ? "Good Run!" : "Keep Practicing";
+    const titleColor = S.misses === 0 ? "#4a7c3f" : S.misses <= 2 ? "#d4a030" : "#c25a3a";
+    const avg = (S.time / fp.length).toFixed(0);
+    h += `<div style="text-align:center;padding:12px 0">
+      <div class="result-title" style="color:${titleColor}">${title}</div>
+      <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
+        <div class="stat-box"><div class="stat-label">TIME</div><div class="result-stat-val" style="color:#e8dcc8">${(S.time/1000).toFixed(2)}s</div></div>
+        <div class="stat-box"><div class="stat-label">HITS</div><div class="result-stat-val" style="color:#4a7c3f">${S.hits}</div></div>
+        <div class="stat-box"><div class="stat-label">MISSES</div><div class="result-stat-val" style="color:${S.misses>0?'#c25a3a':'#4a7c3f'}">${S.misses}</div></div>
+        <div class="stat-box"><div class="stat-label">BEST STREAK</div><div class="result-stat-val" style="color:#d4a030">${S.bestStreak}</div></div>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:#706040">Avg: ${avg}ms per key${parseInt(avg)<200?' — fast enough for the game!':''}</div>
+    </div>`;
+  }
+
+  // Live stats
+  if (S.mode === "playing") {
+    h += `<div style="display:flex;justify-content:center;gap:24px;margin-top:12px">
+      <div class="stat-box"><div class="stat-label">STREAK</div><div class="stat-val" style="color:#d4a030">${S.streak}</div></div>
+      <div class="stat-box"><div class="stat-label">MISSES</div><div class="stat-val" style="color:${S.misses>0?'#c25a3a':'#4a7c3f'}">${S.misses}</div></div>
+    </div>`;
+  }
+
+  h += `</div>`; // close keyboard section
+
+  // Buttons
+  h += `<div class="btn-row">
+    <button class="action-btn" onclick="startDemo()" ${S.mode==='playing'?'disabled':''}>Watch Demo</button>
+    <button class="action-btn go ${S.mode==='playing'?'playing':''}" onclick="startPractice()">${S.mode==='playing'?'Restart':S.mode==='result'?'Try Again':'Start Practice'}</button>
+    ${S.mode==='playing'?'<button class="action-btn stop" onclick="stopPractice()">Stop</button>':''}
+  </div>`;
+
+  // Tips
+  h += `<div class="section">
+    <div class="section-title">Tips</div>
+    <div class="tips">
+      <div><span>★</span> Memorize the pattern — don't react to on-screen prompts</div>
+      <div><span>★</span> Use a steady rhythm, not max speed — accuracy beats pace</div>
+      <div><span>★</span> Let the opponent finish their turn — skipping gives you less time</div>
+      <div><span>★</span> Rebind keys to WASD to use both hands</div>
+      <div><span>★</span> Don't watch the knife — watch the button prompts or your keyboard</div>
+      <div><span>★</span> Aim for under 200ms per key to beat the hardest opponents</div>
+    </div>
+  </div>
+  <div class="footer">Press number keys 1–4 to practice. Pattern repeats ${S.reps}× then ends with key 1.</div>`;
+
+  document.getElementById('app').innerHTML = h;
+}
+
+function selectOpp(i) { S.patIdx = i; S.mode = "idle"; clearDemo(); render(); }
+function setReps(n) { S.reps = n; S.mode = "idle"; clearDemo(); render(); }
+function setSpeed(v) { S.speed = parseInt(v); render(); }
+
+function clearDemo() { if (demoTimer) { clearInterval(demoTimer); demoTimer = null; } }
+
+function startDemo() {
+  clearDemo();
+  S.mode = "demo"; S.demoIdx = 0;
+  render();
+  const fp = fullPattern();
+  demoTimer = setInterval(() => {
+    if (S.demoIdx >= fp.length - 1) {
+      clearDemo();
+      setTimeout(() => { S.mode = "idle"; render(); }, 600);
+      return;
+    }
+    S.demoIdx++;
+    render();
+  }, S.speed);
+}
+
+function startPractice() {
+  clearDemo();
+  S.mode = "playing"; S.curKey = 0;
+  S.hits = 0; S.misses = 0; S.streak = 0; S.bestStreak = 0; S.time = 0;
+  S.startTime = Date.now();
+  S.pressed = null; S.wrong = null;
+  render();
+}
+
+function stopPractice() { S.mode = "idle"; clearDemo(); render(); }
+
+document.addEventListener('keydown', function(e) {
+  if (S.mode !== "playing") return;
+  const num = parseInt(e.key);
+  if (![1,2,3,4].includes(num)) return;
+  e.preventDefault();
+
+  const fp = fullPattern();
+  const expected = fp[S.curKey];
+
+  S.pressed = num;
+  clearTimeout(pressTimer);
+  pressTimer = setTimeout(() => { S.pressed = null; render(); }, 100);
+
+  if (num === expected) {
+    S.hits++;
+    S.streak++;
+    S.bestStreak = Math.max(S.bestStreak, S.streak);
+    if (S.curKey >= fp.length - 1) {
+      S.time = Date.now() - S.startTime;
+      S.mode = "result";
+    } else {
+      S.curKey++;
+    }
+  } else {
+    S.wrong = num;
+    clearTimeout(wrongTimer);
+    wrongTimer = setTimeout(() => { S.wrong = null; render(); }, 300);
+    S.misses++;
+    S.streak = 0;
+  }
+  render();
+});
+
+render();
+</script>
+</body>
+</html>

@@ -361,7 +361,7 @@ def parse_formables(filepath: str) -> list:
 #  OUTPUT GENERATION
 # ═══════════════════════════════════════════════════════════════
 def generate_js(nations: list, var_name: str = 'FORMABLES') -> str:
-    """Generate a JavaScript file with the nations data array."""
+    """Generate a readable, well-formatted JavaScript file with the nations data array."""
     
     # Remove empty arrays to keep output clean
     cleaned = []
@@ -375,15 +375,103 @@ def generate_js(nations: list, var_name: str = 'FORMABLES') -> str:
             obj[k] = v
         cleaned.append(obj)
     
-    js_entries = []
+    # Field ordering — controls the order fields appear in each entry
+    FIELD_ORDER = [
+        'tag', 'name', 'flag', 'category', 'rank', 'level',
+        'requiredFraction', 'rule',
+        'cultures', 'religions', 'capitals',
+        'provinces', 'areas', 'regions', 'locations', 'subContinents',
+        'excludedTags', 'formEffects',
+        # Future expansion fields
+        'description', 'missions', 'events', 'ideas', 'image', 'wikiUrl',
+    ]
+    
+    def format_value(val, indent=2):
+        """Format a JS value with readable indentation."""
+        if isinstance(val, str):
+            return json.dumps(val, ensure_ascii=False)
+        if isinstance(val, bool):
+            return 'true' if val else 'false'
+        if isinstance(val, (int, float)):
+            return str(val)
+        if isinstance(val, list):
+            if not val:
+                return '[]'
+            # Short arrays (all strings, fits on one line) → inline
+            if all(isinstance(v, str) for v in val) and sum(len(v) for v in val) < 80:
+                return '[' + ', '.join(json.dumps(v, ensure_ascii=False) for v in val) + ']'
+            # Long arrays → multiline
+            pad = '    ' * (indent + 1)
+            items = (',\n' + pad).join(json.dumps(v, ensure_ascii=False) for v in val)
+            return '[\n' + pad + items + '\n' + '    ' * indent + ']'
+        if isinstance(val, dict):
+            return format_obj(val, indent)
+        return json.dumps(val, ensure_ascii=False)
+    
+    def format_obj(obj, indent=2):
+        """Format a JS object with one field per line."""
+        pad = '    ' * indent
+        inner_pad = '    ' * (indent + 1)
+        lines = []
+        for k, v in obj.items():
+            lines.append(f'{inner_pad}{json.dumps(k)}: {format_value(v, indent + 1)}')
+        return '{\n' + ',\n'.join(lines) + '\n' + pad + '}'
+    
+    # Group by rank for readability
+    by_rank = {}
     for n in cleaned:
-        js_entries.append('    ' + json.dumps(n, ensure_ascii=False))
+        r = n.get('rank', 0)
+        by_rank.setdefault(r, []).append(n)
     
-    output = f'const {var_name} = [\n'
-    output += ',\n'.join(js_entries)
-    output += '\n];\n'
+    output_parts = []
+    output_parts.append(f'const {var_name} = [')
     
-    return output
+    first_entry = True
+    for rank in sorted(by_rank.keys()):
+        rank_nations = by_rank[rank]
+        output_parts.append(f'')
+        output_parts.append(f'    // ═══════════════════════════════════════════')
+        output_parts.append(f'    //  RANK {rank} ({len(rank_nations)} nations)')
+        output_parts.append(f'    // ═══════════════════════════════════════════')
+        
+        for n in rank_nations:
+            # Build ordered object
+            ordered = {}
+            for key in FIELD_ORDER:
+                if key in n:
+                    ordered[key] = n[key]
+            # Any remaining keys not in FIELD_ORDER
+            for key in n:
+                if key not in ordered:
+                    ordered[key] = n[key]
+            
+            comma = '' if first_entry else ','
+            if not first_entry:
+                # Close previous entry with comma
+                pass
+            
+            # Nation comment
+            cat_label = f' — {n.get("category", "")}' if n.get('category') else ''
+            output_parts.append(f'')
+            output_parts.append(f'    // {n.get("name", n.get("tag", "?"))}{cat_label}')
+            
+            # Build the object
+            inner_lines = []
+            for k, v in ordered.items():
+                formatted = format_value(v, 2)
+                inner_lines.append(f'        {json.dumps(k)}: {formatted}')
+            
+            entry = '    {\n' + ',\n'.join(inner_lines) + '\n    }'
+            
+            if first_entry:
+                output_parts.append(entry)
+                first_entry = False
+            else:
+                output_parts.append('    ,' + entry[4:])  # replace leading spaces with comma
+    
+    output_parts.append('];\n')
+    
+    return '\n'.join(output_parts)
 
 
 def print_summary(nations: list):
@@ -421,6 +509,63 @@ def print_summary(nations: list):
     print(f'{"═" * 56}\n')
 
 
+def generate_tooltips_template(nations: list) -> str:
+    """Generate a JS tooltips file with empty entries for all reforms/effects."""
+    
+    # Collect all unique reform names and effects
+    all_reforms = set()
+    all_effects = set()
+    
+    for n in nations:
+        fx = n.get('formEffects', {})
+        if fx:
+            if fx.get('rankUpgrade'):
+                all_effects.add('Rank: ' + fx['rankUpgrade'])
+            if fx.get('governmentChange'):
+                all_effects.add('Gov: ' + fx['governmentChange'])
+            for r in fx.get('reforms', []):
+                all_reforms.add(r)
+    
+    lines = []
+    lines.append('// ═══════════════════════════════════════════════════════')
+    lines.append('//  FNR TOOLTIP DATA')
+    lines.append('//  Auto-generated template — fill in descriptions and')
+    lines.append('//  modifiers for each reform / effect.')
+    lines.append('//')
+    lines.append('//  Modifier types: "positive", "negative", "neutral"')
+    lines.append('// ═══════════════════════════════════════════════════════')
+    lines.append('')
+    lines.append('// Merge into the TOOLTIPS object on the guide page.')
+    lines.append('// Load this file AFTER the main page script.')
+    lines.append('')
+    
+    # Reforms
+    lines.append('// ── REFORMS (' + str(len(all_reforms)) + ') ──')
+    for r in sorted(all_reforms):
+        safe = json.dumps(r, ensure_ascii=False)
+        lines.append(f'TOOLTIPS[{safe}] = {{')
+        lines.append(f'    desc: "",')
+        lines.append(f'    modifiers: [')
+        lines.append(f'        // {{ text: "+10% Tax Income", type: "positive" }},')
+        lines.append(f'        // {{ text: "-5% Stability", type: "negative" }},')
+        lines.append(f'    ]')
+        lines.append(f'}};')
+        lines.append('')
+    
+    # Rank upgrades and government changes
+    if all_effects:
+        lines.append('// ── RANK & GOVERNMENT EFFECTS (' + str(len(all_effects)) + ') ──')
+        for e in sorted(all_effects):
+            safe = json.dumps(e, ensure_ascii=False)
+            lines.append(f'TOOLTIPS[{safe}] = {{')
+            lines.append(f'    desc: "",')
+            lines.append(f'    modifiers: []')
+            lines.append(f'}};')
+            lines.append('')
+    
+    return '\n'.join(lines)
+
+
 # ═══════════════════════════════════════════════════════════════
 #  CLI
 # ═══════════════════════════════════════════════════════════════
@@ -430,6 +575,13 @@ def main():
     
     if not args or '--help' in args or '-h' in args:
         print(__doc__)
+        print()
+        print('FLAGS:')
+        print('  --type fnr|vanilla    Set output variable name (default: fnr)')
+        print('  --tooltips            Also generate a tooltips template file')
+        print('  --flags <dir>         Scan directory for flag PNGs and auto-assign')
+        print('                        Expects files named TAG.png (e.g. PMSTN.png)')
+        print()
         sys.exit(0)
     
     input_file = args[0]
@@ -448,6 +600,19 @@ def main():
         if idx + 1 < len(args):
             file_type = args[idx + 1]
     
+    gen_tooltips = '--tooltips' in args
+    
+    # Flags directory
+    flags_dir = None
+    flags_prefix = ''
+    if '--flags' in args:
+        idx = args.index('--flags')
+        if idx + 1 < len(args):
+            flags_dir = args[idx + 1]
+            # Optional web path prefix (relative to HTML file)
+            if idx + 2 < len(args) and not args[idx + 2].startswith('--'):
+                flags_prefix = args[idx + 2]
+    
     var_name = 'FORMABLES' if file_type == 'fnr' else 'VANILLA_FORMABLES'
     
     # Parse
@@ -458,6 +623,37 @@ def main():
     nations = parse_formables(input_file)
     print_summary(nations)
     
+    # Scan for flag images
+    if flags_dir:
+        if os.path.isdir(flags_dir):
+            available = {}
+            for fname in os.listdir(flags_dir):
+                if fname.lower().endswith('.png'):
+                    tag = os.path.splitext(fname)[0]
+                    available[tag] = fname
+                    available[tag.upper()] = fname  # case-insensitive match
+            
+            matched = 0
+            for n in nations:
+                tag = n['tag']
+                if tag in available:
+                    web_path = flags_prefix + '/' + available[tag] if flags_prefix else available[tag]
+                    n['flag'] = web_path
+                    matched += 1
+                elif tag.upper() in available:
+                    web_path = flags_prefix + '/' + available[tag.upper()] if flags_prefix else available[tag.upper()]
+                    n['flag'] = web_path
+                    matched += 1
+            
+            print(f'  Flags: {matched}/{len(nations)} matched from {flags_dir}')
+            missing = [n['tag'] for n in nations if 'flag' not in n]
+            if missing and len(missing) <= 20:
+                print(f'  Missing flags: {", ".join(missing)}')
+            elif missing:
+                print(f'  Missing flags: {len(missing)} nations without flag images')
+        else:
+            print(f'  Warning: flags directory not found: {flags_dir}')
+    
     # Generate JS
     js_output = generate_js(nations, var_name)
     
@@ -467,6 +663,19 @@ def main():
     
     print(f'Written {len(js_output):,} bytes to {output_file}')
     print(f'Load in HTML with: <script src="{output_file}"></script>')
+    
+    # Generate tooltips template
+    if gen_tooltips:
+        tooltips_file = os.path.splitext(output_file)[0].replace('_data', '') + '_tooltips.js'
+        tt_output = generate_tooltips_template(nations)
+        with open(tooltips_file, 'w', encoding='utf-8') as f:
+            f.write(tt_output)
+        print(f'Tooltips template: {tooltips_file} ({len(tt_output):,} bytes)')
+        
+        # Count
+        reform_count = sum(1 for n in nations for r in n.get('formEffects', {}).get('reforms', []))
+        print(f'  {reform_count} reform references across all nations')
+    
     print()
 
 

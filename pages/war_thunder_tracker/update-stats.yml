@@ -1,0 +1,51 @@
+# .github/workflows/update-stats.yml
+#
+# Checks every hour. If the JSON changed, commits and pushes.
+# The actual "every 6 hours commit" logic is handled by only committing on diff.
+#
+# SETUP:
+#   1. Add your War Thunder nickname as a repository secret:
+#      Settings > Secrets > Actions > New: WT_NICKNAME = YourExactNick
+#   2. Ensure GitHub Pages is enabled on your repo (Settings > Pages)
+#   3. The workflow needs write permissions - this is configured below.
+
+name: Update War Thunder Stats
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # Every hour on the hour
+  workflow_dispatch:        # Manual trigger from Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install wt-profile-tool
+
+      - name: Fetch stats
+        run: python fetch_stats.py --nick "${{ secrets.WT_NICKNAME }}" --output wt_stats.json
+
+      - name: Check for changes and commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add wt_stats.json
+          if git diff --cached --quiet; then
+            echo "No changes detected, skipping commit."
+          else
+            git commit -m "Update War Thunder stats $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+            echo "Stats updated and pushed."
+          fi

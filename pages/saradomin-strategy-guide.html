@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saradomin (Mirror Hub)/Strategies - Isotope Wiki</title>
+<style>
+  :root{
+    color-scheme:dark;
+    --page-bg:#0B141C;        /* deep slate behind the article */
+    --content-bg:#131F29;
+    --ink:#C9D4DC;
+    --muted:#8598A5;
+    --rule:#31485A;
+    --tan-border:#3A5568;     /* infobox + table frame */
+    --tan-header:#1F3648;     /* infobox title band */
+    --tan-row:#1B2E3D;        /* table header rows */
+    --parchment:#172835;      /* infobox body */
+    --link:#7FBBE8;
+    --chatbox:#403E36;        /* 718 dark chat panel */
+    /* the three in-game message colours, verbatim from SaradominFight */
+    --col-boss:#2e9bff; --col-mech:#e8c651; --col-danger:#ff6b6b;
+    --col-boss-chat:#2e9bff; --col-mech-chat:#e8c651; --col-danger-chat:#ff4f4f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page-bg);color:var(--ink);
+    font:14px/1.6 "Helvetica Neue",Helvetica,Arial,sans-serif;}
+  .article{max-width:1080px;margin:24px auto;background:var(--content-bg);
+    border:1px solid var(--tan-border);padding:28px 34px 44px;}
+  .sitenote{font-size:11.5px;color:var(--muted);margin:0 0 6px;}
+  h1{font-size:26px;font-weight:600;margin:0 0 2px;padding-bottom:5px;
+    border-bottom:1px solid var(--rule);}
+  h2{font-size:19px;font-weight:600;margin:30px 0 10px;padding-bottom:4px;
+    border-bottom:1px solid var(--rule);}
+  h3{font-size:15px;margin:20px 0 6px;}
+  p{margin:9px 0}
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .tagline{font-size:12.5px;color:var(--muted);font-style:italic;margin:0 0 16px;}
+
+  /* ---------- infobox ---------- */
+  .infobox{float:right;width:290px;margin:0 0 16px 22px;background:var(--parchment);
+    border:1px solid var(--tan-border);font-size:12.5px;}
+  .infobox caption{background:var(--tan-header);border-bottom:1px solid var(--tan-border);
+    font-weight:700;font-size:14px;padding:6px 8px;}
+  .infobox td,.infobox th{padding:4px 8px;vertical-align:top;text-align:left;}
+  .infobox th{width:42%;font-weight:700;}
+  .infobox tr+tr td,.infobox tr+tr th{border-top:1px solid #24394A;}
+  .infobox .sect td{background:var(--tan-header);font-weight:700;text-align:center;
+    border-top:1px solid var(--tan-border);border-bottom:1px solid var(--tan-border);}
+  .examine{font-style:italic}
+
+  /* ---------- toc ---------- */
+  .toc{display:inline-block;background:var(--parchment);border:1px solid var(--tan-border);
+    padding:10px 18px 10px 14px;font-size:12.5px;margin:4px 0 10px;}
+  .toc b{display:block;text-align:center;margin-bottom:4px}
+  .toc ol{margin:0;padding-left:22px}
+  .toc ol ol{padding-left:18px}
+
+  /* ---------- tables ---------- */
+  table.wikitable{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0;}
+  table.wikitable th,table.wikitable td{border:1px solid var(--tan-border);
+    padding:6px 9px;text-align:left;vertical-align:top;}
+  table.wikitable th{background:var(--tan-row);}
+  table.wikitable td.c{text-align:center}
+  .style-magic{color:#6FB0F0;font-weight:600}
+  .style-ranged{color:#84C95E;font-weight:600}
+  .style-typeless{color:#C09CEC;font-weight:600}
+  .style-mech{color:#E0C15E;font-weight:600}
+
+  /* ---------- signature: in-game chat legend ---------- */
+  /* 718-era chatbox: dark translucent panel, light text - matches the
+     server's actual chat, not the old parchment style */
+  .chatmock{background:#403E36;border:1px solid #23221D;border-radius:2px;
+    padding:10px 12px;margin:12px 0;max-width:640px;
+    font:13px/1.7 Verdana,Geneva,sans-serif;color:#EDEDE6;
+    text-shadow:1px 1px 0 rgba(0,0,0,.55);}
+  .chatmock .m{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cm-boss{color:var(--col-boss-chat)}
+  .cm-mech{color:var(--col-mech-chat)}
+  .cm-danger{color:var(--col-danger-chat)}
+
+  ul.msgkey{list-style:none;margin:10px 0;padding:0;font-size:13.5px;}
+  ul.msgkey li{margin:6px 0;padding-left:18px;position:relative;}
+  ul.msgkey li::before{content:"\2022";position:absolute;left:2px;font-size:16px;line-height:1.4;}
+  ul.msgkey li.k-boss, ul.msgkey li.k-boss::before{color:var(--col-boss);}
+  ul.msgkey li.k-mech, ul.msgkey li.k-mech::before{color:var(--col-mech);}
+  ul.msgkey li.k-danger, ul.msgkey li.k-danger::before{color:var(--col-danger);}
+  .keybox{background:var(--parchment);border:1px solid var(--tan-border);
+    padding:8px 12px;font-size:12.5px;margin:10px 0;}
+  .warn{border-left:4px solid var(--col-danger);padding-left:10px;}
+  kbd{background:#1D3242;border:1px solid var(--tan-border);border-radius:3px;
+    padding:0 5px;font-size:12px;}
+  @media (max-width:760px){
+    .article{margin:0;padding:18px 14px 34px;border:none}
+    .infobox{float:none;width:100%;margin:0 0 16px}
+  }
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="article">
+  <p class="sitenote">Isotope Wiki &nbsp;&middot;&nbsp; This article is about the boss encounter. For the storyline NPC, see <a href="#getting-there">Wizard Traiborn</a>.</p>
+  <h1>Saradomin (Mirror Hub)/Strategies</h1>
+  <p class="tagline">"Kneel, and be spared."</p>
+
+  <table class="infobox">
+    <caption>Saradomin</caption>
+    <tr><td colspan="2" style="text-align:center;padding:10px 8px 4px">
+      <img src="https://runescape.wiki/images/Saradomin_priest.png?0b02b"
+           alt="Saradomin's projection" width="123"
+           style="max-width:60%;height:auto;image-rendering:auto;
+                  filter:drop-shadow(0 0 14px rgba(46,155,255,.35));">
+    </td></tr>
+    <tr><td colspan="2" class="examine" style="text-align:center">A projection of the God of Order, anchored to a mirror of the Hub itself.</td></tr>
+    <tr class="sect"><td colspan="2">Combat info</td></tr>
+    <tr><th>Combat level</th><td>Not shown <i>(masked)</i></td></tr>
+    <tr><th>Life points</th><td>6,000</td></tr>
+    <tr><th>Attack styles</th><td><span class="style-magic">Magic</span>, <span class="style-ranged">Ranged</span>, <span class="style-typeless">Typeless</span></td></tr>
+    <tr><th>Max hit</th><td>380 (Magic, enraged);<br>Judgement scales with your prayer</td></tr>
+    <tr><th>Aggressive</th><td>Yes &ndash; engages on arrival</td></tr>
+    <tr><th>Multicombat</th><td>Yes (Nex-style shared fight)</td></tr>
+    <tr><th>Poisonous</th><td>No</td></tr>
+    <tr class="sect"><td colspan="2">Encounter</td></tr>
+    <tr><th>Location</th><td>The Mirror Hub (instanced)</td></tr>
+    <tr><th>Respawn</th><td>60 seconds while players remain</td></tr>
+    <tr><th>Death</th><td>Safe &ndash; you wake at the real Hub</td></tr>
+    <tr><th>Escape</th><td>Any teleport works</td></tr>
+    <tr class="sect"><td colspan="2">Drops</td></tr>
+    <tr><th>Always</th><td>Bones + a resource roll, per participant</td></tr>
+    <tr><th>Rare</th><td>Spirit shard hoard (1/8 kills)</td></tr>
+    <tr><th>Very rare</th><td>Enchanted Saradomin godsword (1/250 kills)</td></tr>
+  </table>
+
+  <div class="toc"><b>Contents</b>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#getting-there">Getting there</a></li>
+      <li><a href="#phases">Phases</a></li>
+      <li><a href="#attacks">Attacks and mechanics</a></li>
+      <li><a href="#messages">Messages</a></li>
+      <li><a href="#strategy">Strategy</a></li>
+      <li><a href="#group">Group encounters</a></li>
+      <li><a href="#drops">Drops</a></li>
+      <li><a href="#trivia">Trivia</a></li>
+    </ol>
+  </div>
+
+  <h2 id="overview">Overview</h2>
+  <p>Saradomin's projection is a multi-way group boss fought on the <b>Mirror Hub</b> &ndash; an instanced copy of the Hub island that serves as the anchor for his power. The fight is shared: everyone sent to the island fights the <b>same</b> boss in the same instance, and every attack he makes strikes <b>every player present</b>, not just his target.</p>
+  <p>The encounter is forgiving to attempt (death is safe and any teleport is an exit) but punishes autopilot play: his signature attack turns your own prayer points into damage, and from 70% health he begins praying, reflecting damage, freezing, and repositioning.</p>
+
+  <h2 id="getting-there">Getting there</h2>
+  <p><b>First visit:</b> speak to the <b>Isotope Guide</b> at the Hub and ask how to fight back against Saradomin. He directs you to <b>Wizard Traiborn</b> at the tower, who offers a boat to "the source of Saradomin's power". Take the boat. The voyage does not go as advertised; you will wash ashore on the Mirror Hub, and the projection will gather from a column of light to meet you.</p>
+  <p><b>Returning (skip the story):</b> once you have survived a visit, you can confront Traiborn &ndash; <i>"You sent me to him. You KNEW."</i> After he confirms it, his dialogue permanently drops the act and offers <b>Send me to him. Now.</b> You can also demand he grant his sending-power to the Isotope Guide; after that, the Guide's fight-back option becomes a direct <b>Send me to the mirror</b>.</p>
+  <div class="keybox">The instance persists while anyone is inside and for 3 minutes after it empties, then resets. The boss respawns 60 seconds after each kill while players remain.</div>
+
+  <h2 id="phases">Phases</h2>
+  <table class="wikitable">
+    <tr><th style="width:16%">Phase</th><th style="width:20%">Life points</th><th>Behaviour</th></tr>
+    <tr>
+      <td><b>Phase 1</b></td><td class="c">6,000 &ndash; 4,500 (100&ndash;75%)</td>
+      <td><b>The Sermon.</b> A fixed rotation: Barrage, Barrage, Judgement. He holds his anchor and does not move &ndash; learn the rhythm here.</td>
+    </tr>
+    <tr>
+      <td><b>Phase 2</b></td><td class="c">4,500 &ndash; 3,000 (75&ndash;50%)</td>
+      <td><b>The Tempest.</b> Rotation: Barrage, Ice, Barrage, Judgement &ndash; plus <b>Divine Chains</b>, his branching repositioning sequence (below). Pure mobility and control; no defensive tools yet.</td>
+    </tr>
+    <tr>
+      <td><b>Phase 3</b></td><td class="c">3,000 &ndash; 1,800 (50&ndash;30%)</td>
+      <td><b>The Host.</b> Rotation: Barrage, Ice, Judgement &ndash; and his turtle kit arrives together: <b>knights</b> (2, renewed ~25s), <b>protection prayers</b> (halves one style, re-rolled every 6 attacks), and <b>Vengeance</b>, which living knights multiply. Everything defensive he owns lives in this phase.</td>
+    </tr>
+    <tr>
+      <td><b>Enrage</b></td><td class="c">1,800 &ndash; 0 (30&ndash;0%)</td>
+      <td><b>The Wrath.</b> Opened by a one-time <b>Wrath Nova</b> &ndash; a typeless burst on every player as he declares <i>"ENOUGH."</i> The Host kit continues, faster, with twin barrage bolts and harsher Judgement.</td>
+    </tr>
+  </table>
+
+  <h2 id="attacks">Attacks and mechanics</h2>
+  <table class="wikitable">
+    <tr><th>Attack</th><th style="width:9%">Style</th><th style="width:11%">Phase</th><th style="width:15%">Max hit</th><th>Notes</th></tr>
+    <tr>
+      <td><b>Staff Barrage</b></td>
+      <td class="style-magic">Magic</td><td class="c">All</td>
+      <td class="c">300<br><i>380 + 200 enraged</i></td>
+      <td>A bolt of light at <b>every player</b>. Fully affected by Protect from Magic. Enraged, a second weaker bolt follows on a short delay.</td>
+    </tr>
+    <tr>
+      <td><b>Divine Judgement</b></td>
+      <td class="style-typeless">Typeless</td><td class="c">All<br><i>(not while kiting)</i></td>
+      <td class="c">100 + &frac14; of your prayer points<br><i>150 + &#8531; enraged</i></td>
+      <td>He hurls a mote of light and holy fire crashes on every player. <b>Pierces protection prayers</b>, and additionally <b>drains one third of your prayer points</b>. A prayerless player takes only the base hit.</td>
+    </tr>
+    <tr>
+      <td><b>Ice Barrage</b></td>
+      <td class="style-magic">Magic</td><td class="c">2+</td>
+      <td class="c">260<br><i>320 enraged</i></td>
+      <td>Freezing multi-hit: roots every player for <b>8 seconds</b>. Prayable.</td>
+    </tr>
+    <tr>
+      <td><b>Light-arrow Volley</b></td>
+      <td class="style-ranged">Ranged</td><td class="c">Chains sequence only</td>
+      <td class="c">280<br><i>340 enraged</i></td>
+      <td>A volley at every player. Fully affected by Protect from Missiles.</td>
+    </tr>
+    <tr>
+      <td><b>Divine Chains</b></td>
+      <td class="style-mech">Sequence</td><td class="c">2+<br><i>(30s cooldown)</i></td>
+      <td class="c">&ndash;</td>
+      <td><i>"None escape the light."</i> Chains root every player for 5 seconds &ndash; but his <b>primary target resists 50% of the time under Protect/Deflect Magic</b>. He blinks to the far corner, then branches:<br>
+      <b>Chained:</b> he casts <b>Sap the Faithless</b> on you, then throws 3 ranged volleys.<br>
+      <b>Resisted:</b> no sap &ndash; 2 quick volleys, then <i>"Then the light comes to YOU."</i> as he moves in early.<br>
+      Either way he ends adjacent to a <b>random</b> player. Ranged never appears outside this sequence.</td>
+    </tr>
+    <tr>
+      <td><b>Sap the Faithless</b></td>
+      <td class="style-mech">Mechanic</td><td class="c">Chains sequence<br><i>(chained branch)</i></td>
+      <td class="c">&ndash;</td>
+      <td>Drains <b>15% of your Defence level</b> before the volleys begin. Only happens if his chains landed on you &ndash; resisting the chains skips it entirely.</td>
+    </tr>
+    <tr>
+      <td><b>Wrath Nova</b></td>
+      <td class="style-typeless">Typeless</td><td class="c">Once, at 30%</td>
+      <td class="c">200</td>
+      <td>A burst on every player as the enrage begins. Unavoidable; be above 300 health when he approaches the threshold.</td>
+    </tr>
+    <tr>
+      <td><b>Summon the Host</b></td>
+      <td class="style-mech">Mechanic</td><td class="c">3+<br><i>(25s wave cooldown)</i></td>
+      <td class="c">&ndash;</td>
+      <td><i>"To me, knights of the light!"</i> Knights of Saradomin (melee, 1,350 life points) arrive in columns of light beside him &ndash; 2 at a time, in every phase. They fight until slain and are renewed on cooldown; they vanish when the projection falls. While any stand, his Vengeance grows crueller.</td>
+    </tr>
+    <tr>
+      <td><b>Vengeance</b></td>
+      <td class="style-mech">Mechanic</td><td class="c">3+<br><i>(15s cooldown)</i></td>
+      <td class="c">75% reflected</td>
+      <td>Cast silently &ndash; the only tell is the spell graphic. The next hit he takes above 20 damage is reflected to its source: 75% alone, <b>x1.5 with one knight alive, x3 with two</b>. Feed it a weak hit, clear the knights first, or pause. <b>Do not cast Vengeance yourself:</b> his answer to a mirrored spell is a fourfold reflection of your recoil.</td>
+    </tr>
+    <tr>
+      <td><b>Protection prayers</b></td>
+      <td class="style-mech">Mechanic</td><td class="c">3+</td>
+      <td class="c">Halves one style</td>
+      <td><i>"The light shields me from your [blades/arrows/spells]!"</i> One combat style deals half damage until he re-rolls, every 4 of his attacks. Your reduced hits produce a gold notice.</td>
+    </tr>
+  </table>
+
+  <h2 id="messages">Messages</h2>
+  <div class="chatmock">
+    <span class="m cm-boss">You drag yourself ashore... but this island looks like the Hub itself.</span>
+    <span class="m cm-mech">His prayer turns aside half of your spells!</span>
+    <span class="m cm-mech">Holy chains root you in place!</span>
+    <span class="m cm-danger">Your own prayers are turned against you!</span>
+    <span class="m cm-danger">Saradomin closes the distance on YOU!</span>
+  </div>
+  <ul class="msgkey">
+    <li class="k-boss">The state of the island and the projection &ndash; arrivals, his death, and his return.</li>
+    <li class="k-mech">One of his mechanics has taken hold of you &ndash; your damage is being halved, or you have been rooted.</li>
+    <li class="k-danger">Respond immediately &ndash; a Judgement has landed on your prayer pool, or the closing blink has chosen you and his next attack is coming at point-blank.</li>
+  </ul>
+
+  <h2 id="strategy">Strategy</h2>
+  <h3>Prayer management is the fight</h3>
+  <p>Divine Judgement's damage is <b>your current prayer points divided by four</b> (three, enraged) on top of a flat base, and it pierces protection prayers &ndash; so a full prayer bar is a weapon pointed at you. Two workable approaches:</p>
+  <p><b>Low-prayer method:</b> fight with a modest pool (enough to flick protects) and let his drains keep it low. Judgement then hits close to its base only.</p>
+  <p><b>Full-protect method:</b> keep Protect from Magic up for the barrages and eat the Judgements. Budget supplies for hits over 200 mid-enrage, and expect the one-third drain to eat your restores.</p>
+  <h3>Learn the rotations</h3>
+  <p>He no longer rolls dice &ndash; each phase repeats a fixed cycle (Sermon: Barrage, Barrage, Judgement; Tempest adds Ice; Host trims back to three). Count his casts and you always know the next attack, which makes prayer flicking genuinely rewarding rather than reactive.</p>
+  <h3>The Chains decision</h3>
+  <p>Divine Chains is where Protect from Magic earns double duty: it halves his barrages AND gives you a 50% resist against the root. Resist, and you skip the Defence sap, eat only 2 volleys, and he comes to you; get chained, and it is sap plus 3 volleys &ndash; switch to Protect from Missiles the moment you see the chains, because ranged exists nowhere else in the fight.</p>
+  <h3>The Host</h3>
+  <p>His entire defensive kit arrives at 50% together: knights, rotating prayers (re-rolled every 6 attacks &ndash; swap style on his callout or accept half damage), and Vengeance, cast silently with only the spell graphic as a tell.</p>
+  <h3>Phase 3: the host</h3>
+  <p>The knights are pure melee &ndash; Protect from Melee blanks them entirely, but that competes with the protect you want against his barrages. In a group, one player draws and holds the knights under Protect from Melee at the arena edge while the rest stay on the boss; solo, killing the wave is now doubly worthwhile: they die permanently until the ~25 second renewal, buying a clean window, and every living knight multiplies his Vengeance reflection (x1.5 with one, x3 with two &ndash; a 300 you land into a two-knight Vengeance comes back as 675). Do not let the knights stack on you during a rooted Repositioning &ndash; that is where phase 3 kills people.</p>
+  <h3>Do not bring Vengeance</h3>
+  <p class="warn">If your own Vengeance recoils against him, he reflects that recoil back at you <b>fourfold</b>. A Vengeance that returns 200 of his barrage becomes an 800 on your own head &ndash; comfortably lethal. Lunar spellbook users: leave the habit at the dock.</p>
+  <h3>The closing blink</h3>
+  <p>The end of kite mode targets a <b>random</b> player, not whoever he was attacking. If the red warning names you, you have his next attack incoming at point-blank &ndash; keep a protect up and be ready to eat.</p>
+  <h3>Enrage</h3>
+  <p class="warn">From 35% he attacks faster and the barrage becomes two bolts &ndash; the second bolt is unaffected by the first being blocked, so Protect from Magic matters more, not less. Don't sit at 50% food "for later"; the last third of the fight is where deaths happen.</p>
+
+  <h2 id="group">Group encounters</h2>
+  <p>The boss does not gain life points with group size, but <b>every attack hits every player</b> &ndash; a bigger team kills faster yet consumes more total supplies. Since the closing blink and Judgement ignore aggro, there is no true tank role; everyone prays and eats for themselves.</p>
+<p>Knights make group play meaningfully easier: a designated off-tank praying melee can hold the entire wave at no supply cost while everyone else ignores phase 3. Solo players must treat the knight windows with respect.</p>
+<p>Bones and the resource roll are per-participant and uncontested. The rare rolls are different: one roll per kill, one recipient, with each participant's odds proportional to the damage they dealt &ndash; carrying the fight raises your chances, leeching lowers them. A larger team therefore kills faster without producing more shard hoards or godswords per kill.</p>
+  <p>Late joiners enter the same instance mid-fight through Traiborn or the Guide. Leaving (teleport, death, or logout) removes you from the fight; the island resets 3 minutes after the last player leaves.</p>
+
+  <h2 id="drops">Drops</h2>
+  <p>Every participant receives their own bones and one roll on the main table, dropped at the boss tile and visible only to them. The rare table rolls <b>once per kill</b> for a single, damage-weighted recipient. Drop rates are exact.</p>
+
+  <h3>100%</h3>
+  <table class="wikitable">
+    <tr><th>Item</th><th class="c" style="width:14%">Quantity</th><th style="width:24%">Rarity</th><th>Notes</th></tr>
+    <tr><td>Bones</td><td class="c">1</td><td>Always</td><td>Per participant.</td></tr>
+  </table>
+
+  <h3>Weapons and armour</h3>
+  <table class="wikitable">
+    <tr><th>Item</th><th class="c" style="width:14%">Quantity</th><th style="width:24%">Rarity</th><th>Notes</th></tr>
+    <tr><td><b>Enchanted Saradomin godsword</b></td><td class="c">1</td><td>1/250 <i>(per kill)</i></td><td>Announced worldwide. Damage-weighted recipient.</td></tr>
+    <tr><td>Monk's robe top</td><td class="c">1</td><td>Common (8/100)</td><td></td></tr>
+  </table>
+
+  <h3>Runes</h3>
+  <table class="wikitable">
+    <tr><th>Item</th><th class="c" style="width:14%">Quantity</th><th style="width:24%">Rarity</th><th>Notes</th></tr>
+    <tr><td>Water rune</td><td class="c">100&ndash;200</td><td>Common (10/100)</td><td></td></tr>
+    <tr><td>Blood rune</td><td class="c">20&ndash;50</td><td>Common (9/100)</td><td></td></tr>
+    <tr><td>Soul rune</td><td class="c">15&ndash;40</td><td>Common (8/100)</td><td></td></tr>
+  </table>
+
+  <h3>Herbs and potions</h3>
+  <table class="wikitable">
+    <tr><th>Item</th><th class="c" style="width:14%">Quantity</th><th style="width:24%">Rarity</th><th>Notes</th></tr>
+    <tr><td>Grimy ranarr</td><td class="c">5&ndash;10 <i>(noted)</i></td><td>Common (8/100)</td><td></td></tr>
+    <tr><td>Prayer potion (4)</td><td class="c">2&ndash;4 <i>(noted)</i></td><td>Common (8/100)</td><td></td></tr>
+    <tr><td>Prayer potion (1)</td><td class="c">1</td><td>Common (8/100)</td><td>His idea of mercy.</td></tr>
+  </table>
+
+  <h3>Seeds</h3>
+  <table class="wikitable">
+    <tr><th>Item</th><th class="c" style="width:14%">Quantity</th><th style="width:24%">Rarity</th><th>Notes</th></tr>
+    <tr><td>Ranarr seed</td><td class="c">1&ndash;2</td><td>Uncommon (5/100)</td><td></td></tr>
+    <tr><td>Snapdragon seed</td><td class="c">1</td><td>Uncommon (3/100)</td><td></td></tr>
+  </table>
+
+  <h3>Materials</h3>
+  <table class="wikitable">
+    <tr><th>Item</th><th class="c" style="width:14%">Quantity</th><th style="width:24%">Rarity</th><th>Notes</th></tr>
+    <tr><td>Shark</td><td class="c">10&ndash;20 <i>(noted)</i></td><td>Common (9/100)</td><td></td></tr>
+    <tr><td>Magic logs</td><td class="c">20&ndash;40 <i>(noted)</i></td><td>Common (9/100)</td><td></td></tr>
+    <tr><td>Rune bar</td><td class="c">3&ndash;6 <i>(noted)</i></td><td>Uncommon (4/100)</td><td></td></tr>
+    <tr><td>Uncut dragonstone</td><td class="c">1</td><td>Uncommon (3/100)</td><td></td></tr>
+  </table>
+
+  <h3>Other</h3>
+  <table class="wikitable">
+    <tr><th>Item</th><th class="c" style="width:14%">Quantity</th><th style="width:24%">Rarity</th><th>Notes</th></tr>
+    <tr><td>Holy symbol</td><td class="c">1</td><td>Common (8/100)</td><td>He insists.</td></tr>
+    <tr><td>Spirit shard</td><td class="c">2,500&ndash;5,000</td><td>1/8 <i>(per kill)</i></td><td>Announced to the fight. Damage-weighted recipient.</td></tr>
+  </table>
+
+  <p>The Enchanted Saradomin godsword requires 75 Attack. It carries roughly 12% higher bonuses than the godsword line, and its special attack (50% adrenaline) deals 1.2x damage, heals for 60% of the hit, and restores prayer from a third of it &ndash; the projection drops the one blade built to survive his own Judgement.</p>
+
+  <h2 id="trivia">Trivia</h2>
+  <p>&bull; Nothing Wizard Traiborn says before the betrayal is technically false &ndash; including "you will stand before the god himself."</p>
+  <p>&bull; The Isotope Guide admits he has never met Traiborn when he first mentions him. Listen closely.</p>
+  <p>&bull; The projection displays no combat level. The Hub's scholars maintain that gods do not have one; the Hub's warriors maintain that he is hiding it.</p>
+  <p>&bull; The ground within ten paces of his anchor is scoured bare of trees and brush &ndash; the light tolerates no cover.</p>
+</div>
+</body>
+</html>

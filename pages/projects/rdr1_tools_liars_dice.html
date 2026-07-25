@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RDR1 Liar's Dice Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Courier Prime', monospace;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(120,80,30,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(60,30,10,0.4) 0%, transparent 60%),
+      linear-gradient(175deg, #2a1a0e 0%, #1a1008 40%, #0f0a05 100%);
+    color: #e8dcc8;
+    min-height: 100vh;
+    padding: 24px 16px;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 128px;
+  }
+
+  .container { max-width: 540px; margin: 0 auto; position: relative; }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 24px; }
+  .header-sub { font-family: 'Rye', serif; font-size: 11px; letter-spacing: 6px; color: #a08050; text-transform: uppercase; margin-bottom: 4px; }
+  .header h1 { font-family: 'Rye', serif; font-size: 28px; margin: 4px 0; color: #e8dcc8; text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 0 30px rgba(160,100,40,0.15); }
+  .header-line { width: 120px; height: 1px; margin: 12px auto 0; background: linear-gradient(90deg, transparent, #a08050, transparent); }
+
+  /* Section */
+  .section { background: rgba(255,255,255,0.03); border: 1px solid rgba(232,220,200,0.08); border-radius: 6px; padding: 16px 18px; margin-bottom: 16px; }
+  .section.accent-red { border-left: 3px solid #c25a3a; }
+  .section.accent-brown { border-left: 3px solid #8b6a3a; }
+  .section.accent-green { border-left: 3px solid #4a7c3f; }
+  .section.accent-darkred { border-left: 3px solid #8b3a3a; }
+  .section-title { font-family: 'Rye', serif; font-size: 13px; color: #a08050; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; border-bottom: 1px solid rgba(232,220,200,0.08); padding-bottom: 8px; }
+  .section.accent-red .section-title { color: #c25a3a; }
+  .section.accent-brown .section-title { color: #8b6a3a; }
+  .section.accent-green .section-title { color: #4a7c3f; }
+  .section.accent-darkred .section-title { color: #8b3a3a; }
+
+  /* Row */
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; }
+  .row-label { font-size: 14px; color: #c8b898; }
+
+  /* Stepper */
+  .stepper { display: flex; align-items: center; }
+  .stepper button {
+    width: 30px; height: 30px; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(232,220,200,0.15); color: #e8dcc8;
+    cursor: pointer; font-family: 'Rye', serif; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .stepper button:disabled { color: #4a3a2a; cursor: default; }
+  .stepper button:first-child { border-radius: 4px 0 0 4px; }
+  .stepper button:last-child { border-radius: 0 4px 4px 0; }
+  .stepper .stepper-val {
+    width: 36px; height: 30px; background: rgba(0,0,0,0.3);
+    border-top: 1px solid rgba(232,220,200,0.15); border-bottom: 1px solid rgba(232,220,200,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Courier Prime', monospace; font-size: 16px; font-weight: 700; color: #e8dcc8;
+  }
+
+  /* Toggle */
+  .toggle-btn {
+    border: 1px solid rgba(232,220,200,0.2); border-radius: 4px; padding: 4px 14px;
+    cursor: pointer; font-family: 'Courier Prime', monospace; font-size: 13px; color: #e8dcc8;
+  }
+  .toggle-btn.on { background: #4a7c3f; }
+  .toggle-btn.off { background: rgba(255,255,255,0.08); }
+
+  /* Dice */
+  .dice-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .die-wrap { text-align: center; cursor: pointer; }
+  .die-wrap .die-hint { font-size: 10px; color: #a08050; margin-top: 3px; }
+
+  /* Face selector */
+  .face-selector { display: flex; gap: 3px; }
+  .face-btn {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(232,220,200,0.12);
+    border-radius: 5px; padding: 2px; cursor: pointer;
+  }
+  .face-btn.active { background: rgba(160,100,40,0.3); border: 2px solid #a08050; }
+  .face-btn.active-brown { background: rgba(139,106,58,0.3); border: 2px solid #8b6a3a; }
+
+  /* Bid area */
+  .bid-row { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .bid-label { font-size: 10px; color: #a08050; margin-bottom: 4px; text-align: center; }
+  .bid-x { font-family: 'Rye', serif; font-size: 18px; color: #a08050; padding-top: 14px; }
+
+  /* Legality */
+  .legal-box { margin-top: 12px; padding: 8px 12px; border-radius: 5px; text-align: center; font-size: 12px; font-weight: 700; }
+  .legal-box.legal { background: rgba(74,124,63,0.15); border: 1px solid rgba(74,124,63,0.3); color: #4a7c3f; }
+  .legal-box.illegal { background: rgba(139,58,58,0.2); border: 1px solid rgba(139,58,58,0.4); color: #c25a3a; }
+
+  /* Verdict */
+  .verdict { text-align: center; margin-top: 14px; }
+  .verdict-pct { font-family: 'Rye', serif; font-size: 34px; font-weight: 700; }
+  .verdict-text { font-family: 'Rye', serif; font-size: 13px; margin-top: 2px; }
+  .verdict-detail { font-size: 11px; color: #706040; margin-top: 6px; }
+
+  /* Recommend */
+  .recommend { border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; text-align: center; }
+  .recommend-label { font-family: 'Rye', serif; font-size: 11px; letter-spacing: 3px; color: #a08050; text-transform: uppercase; margin-bottom: 6px; }
+  .recommend-action { font-family: 'Rye', serif; font-size: 18px; }
+  .recommend-prob { font-size: 12px; color: #a08050; margin-top: 4px; }
+
+  /* Challenge cards */
+  .challenge-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .challenge-card { flex: 1; min-width: 170px; background: rgba(0,0,0,0.25); border-radius: 6px; padding: 14px; border: 1px solid rgba(232,220,200,0.08); }
+  .challenge-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .challenge-title { font-family: 'Rye', serif; font-size: 14px; }
+  .challenge-desc { font-size: 11px; color: #a08050; line-height: 1.5; }
+  .challenge-verdict { display: block; margin-top: 4px; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 4px; margin-bottom: 14px; }
+  .tab-btn {
+    flex: 1; padding: 6px 6px; border-radius: 4px; cursor: pointer;
+    font-family: 'Courier Prime', monospace; font-size: 11px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(232,220,200,0.08); color: #706040;
+  }
+  .tab-btn.active { background: rgba(160,100,40,0.25); border-color: #a08050; color: #e8dcc8; }
+
+  /* Alt list */
+  .alt-list { display: flex; flex-direction: column; gap: 4px; }
+  .alt-btn {
+    display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 5px;
+    cursor: pointer; background: rgba(0,0,0,0.2); border: 1px solid rgba(232,220,200,0.06);
+    text-align: left; width: 100%; color: #e8dcc8; font-family: 'Courier Prime', monospace;
+  }
+  .alt-btn:hover { background: rgba(160,100,40,0.15); }
+  .alt-btn.top { background: rgba(74,124,63,0.12); border-color: rgba(74,124,63,0.3); }
+  .alt-qty { font-family: 'Rye', serif; font-size: 14px; min-width: 40px; }
+  .alt-hand { font-size: 10px; color: #4a7c3f; background: rgba(74,124,63,0.15); padding: 2px 6px; border-radius: 3px; white-space: nowrap; }
+
+  .empty-msg { text-align: center; padding: 16px 0; color: #706040; font-style: italic; font-size: 13px; }
+  .hint { font-size: 11px; color: #5a4a30; margin-top: 10px; text-align: center; font-style: italic; }
+
+  /* Expand btn */
+  .expand-btn { background: none; border: none; cursor: pointer; color: #a08050; font-family: 'Courier Prime', monospace; font-size: 12px; padding: 8px 0 0; display: flex; align-items: center; gap: 6px; }
+  .opponent-grid { padding: 8px 0 0 12px; }
+
+  /* Rules */
+  .rules-list { font-size: 12px; color: #8a7a60; line-height: 1.8; }
+  .rules-list span { color: #a08050; }
+
+  .footer { text-align: center; margin-top: 20px; font-size: 11px; color: #5a4a30; line-height: 1.6; }
+  .info-line { font-size: 12px; color: #706040; text-align: center; margin-top: 8px; }
+
+  .prob-badge { font-family: 'Courier Prime', monospace; font-weight: 700; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="container" id="app"></div>
+
+<script>
+/* ── Math ── */
+function comb(n,k){if(k<0||k>n)return 0;if(k===0||k===n)return 1;let r=1;for(let i=0;i<Math.min(k,n-k);i++)r=(r*(n-i))/(i+1);return r}
+function binomPMF(n,k,p){return comb(n,k)*Math.pow(p,k)*Math.pow(1-p,n-k)}
+function binomCDF(n,k,p){let s=0;for(let i=k;i<=n;i++)s+=binomPMF(n,i,p);return s}
+function pPerDie(face,wild){return face===1?1/6:wild?2/6:1/6}
+function countMatch(face,dice,wild){return dice.reduce((c,d)=>{if(d===face)return c+1;if(wild&&face!==1&&d===1)return c+1;return c},0)}
+function calcProb(qty,face,dice,unk,wild){const m=countMatch(face,dice,wild),need=qty-m;if(need<=0)return 1;if(need>unk)return 0;return binomCDF(unk,need,pPerDie(face,wild))}
+function calcExact(qty,face,dice,unk,wild){const m=countMatch(face,dice,wild),need=qty-m;if(need<0||need>unk)return 0;return binomPMF(unk,need,pPerDie(face,wild))}
+function isLegal(nQ,nF,pQ,pF){if(pQ<=0)return true;if(nQ<1)return false;if(nF===1&&pF!==1)return nQ>=Math.ceil(pQ/2);if(pF===1&&nF!==1)return nQ>=pQ*2+1;if(nF===pF)return nQ>pQ;if(nF>pF)return nQ>=pQ;return nQ>pQ}
+function illegalMsg(nQ,nF,pQ,pF){if(pQ<=0)return'';if(nF===1&&pF!==1){const m=Math.ceil(pQ/2);if(nQ<m)return`Switching to 1s needs ≥${m}× (half of ${pQ})`}if(pF===1&&nF!==1){const m=pQ*2+1;if(nQ<m)return`From 1s needs ≥${m}× (${pQ}×2+1)`}if(nF===pF&&nQ<=pQ)return`Same face: need >${pQ}`;if(nF>pF&&nQ<pQ)return`Higher face: need ≥${pQ}`;if(nF<pF&&nQ<=pQ)return`Lower face: need >${pQ}`;return''}
+function probColor(p){return p>=.7?'#4a7c3f':p>=.45?'#b5922d':p>=.25?'#b06a2a':'#8b3a3a'}
+
+/* ── State ── */
+const S = {
+  players: 4,
+  perPlayer: [5,5,5,5],
+  myDice: [1,3,3,5,6],
+  wild: false,
+  showAdv: false,
+  prevQty: 0, prevFace: 3,
+  bidQty: 4, bidFace: 3,
+  altTab: 'smart'
+};
+
+function totalDice(){return S.perPlayer.slice(0,S.players).reduce((a,b)=>a+b,0)}
+function unknownDice(){return totalDice()-S.perPlayer[0]}
+
+/* ── Dice SVG ── */
+function diceSVG(val, size){
+  const dots={1:[[50,50]],2:[[28,28],[72,72]],3:[[28,28],[50,50],[72,72]],4:[[28,28],[72,28],[28,72],[72,72]],5:[[28,28],[72,28],[50,50],[28,72],[72,72]],6:[[28,28],[72,28],[28,50],[72,50],[28,72],[72,72]]};
+  const r=size<28?5:size<36?6:8;
+  const circles=(dots[val]||[]).map(([cx,cy])=>`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#3a2a1a"/>`).join('');
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100"><rect x="2" y="2" width="96" height="96" rx="14" fill="#f5f0e1" stroke="#3a2a1a" stroke-width="3"/>${circles}</svg>`;
+}
+
+function probBadge(p){const pct=(p*100).toFixed(1);return `<span class="prob-badge" style="color:${probColor(p)};text-shadow:0 0 8px ${probColor(p)}33">${pct}%</span>`}
+
+/* ── Render ── */
+function render(){
+  const td=totalDice(), ud=unknownDice();
+  const bidOk=isLegal(S.bidQty,S.bidFace,S.prevQty,S.prevFace);
+  const bidMsg=illegalMsg(S.bidQty,S.bidFace,S.prevQty,S.prevFace);
+  const bp=calcProb(S.bidQty,S.bidFace,S.myDice,ud,S.wild);
+  const lp=S.prevQty>0?1-calcProb(S.prevQty,S.prevFace,S.myDice,ud,S.wild):0;
+  const sp=S.prevQty>0?calcExact(S.prevQty,S.prevFace,S.myDice,ud,S.wild):0;
+  const pp=S.prevQty>0?calcProb(S.prevQty,S.prevFace,S.myDice,ud,S.wild):0;
+
+  // Alternatives
+  const alts=[];
+  for(let f=1;f<=6;f++)for(let q=1;q<=td;q++){
+    if(q===S.bidQty&&f===S.bidFace)continue;
+    if(!isLegal(q,f,S.prevQty,S.prevFace))continue;
+    const prob=calcProb(q,f,S.myDice,ud,S.wild);
+    const mm=countMatch(f,S.myDice,S.wild);
+    alts.push({qty:q,face:f,prob,mm});
+  }
+  const smart=[...alts].filter(a=>a.prob>=.35).sort((a,b)=>(b.prob+b.mm/10)-(a.prob+a.mm/10)).slice(0,10);
+  const safe=[...alts].filter(a=>a.prob>=.6).sort((a,b)=>b.prob-a.prob).slice(0,10);
+  const bluff=[...alts].filter(a=>a.prob<.4&&a.prob>.05).sort((a,b)=>b.prob-a.prob).slice(0,10);
+  const disp=S.altTab==='smart'?smart:S.altTab==='safe'?safe:bluff;
+
+  // Best action
+  let bestAction=null;
+  if(S.prevQty>0){
+    const acts=[];
+    acts.push({type:'liar',prob:lp,label:'Call Liar'});
+    acts.push({type:'spoton',prob:sp,label:'Spot On'});
+    if(smart[0])acts.push({type:'bid',prob:smart[0].prob,label:`Bid ${smart[0].qty}× ${smart[0].face}'s`});
+    acts.sort((a,b)=>b.prob-a.prob);
+    bestAction=acts[0];
+  }
+
+  const vc=probColor(bp);
+  const verdict=bp>=.7?'Safe bet, partner':bp>=.45?'Coin flip — risky':bp>=.25?"Bluffin' territory":"Lyin' through your teeth";
+  const myMatch=countMatch(S.bidFace,S.myDice,S.wild);
+  const needed=Math.max(0,S.bidQty-myMatch);
+
+  let html=`
+  <div class="header">
+    <div class="header-sub">Red Dead Redemption</div>
+    <h1>Liar's Dice</h1>
+    <div class="header-sub" style="letter-spacing:4px">Probability Calculator</div>
+    <div class="header-line"></div>
+  </div>
+
+  <!-- Setup -->
+  <div class="section">
+    <div class="section-title">Game Setup</div>
+    <div class="row"><span class="row-label">Players</span>${stepper('players',S.players,2,6)}</div>
+    <div class="row"><span class="row-label">My dice</span>${stepper('mydice',S.perPlayer[0],1,5)}</div>
+    <div class="row"><span class="row-label">1s are wild</span><button class="toggle-btn ${S.wild?'on':'off'}" onclick="toggleWild()">${S.wild?'ON':'OFF'}</button></div>
+    <button class="expand-btn" onclick="toggleAdv()">${S.showAdv?'▾':'▸'} Opponent dice counts</button>
+    ${S.showAdv?`<div class="opponent-grid">${Array.from({length:S.players-1},(_,i)=>`<div class="row"><span class="row-label">Opponent ${i+1}</span>${stepper('opp'+i,S.perPlayer[i+1],0,5)}</div>`).join('')}</div>`:''}
+    <div class="info-line">${td} total dice · ${ud} unknown</div>
+  </div>
+
+  <!-- Hand -->
+  <div class="section">
+    <div class="section-title">My Hand</div>
+    <div class="dice-row">${S.myDice.map((d,i)=>`<div class="die-wrap" onclick="cycleDie(${i})">${diceSVG(d,48)}<div class="die-hint">tap</div></div>`).join('')}</div>
+  </div>
+
+  <!-- Prev Bid -->
+  <div class="section accent-brown">
+    <div class="section-title">Last Bid (Opponent)</div>
+    <div class="bid-row">
+      <div><div class="bid-label">QUANTITY</div>${stepper('prevqty',S.prevQty,0,td)}</div>
+      <div class="bid-x">×</div>
+      <div><div class="bid-label">FACE</div><div class="face-selector">${[1,2,3,4,5,6].map(f=>`<button class="face-btn ${f===S.prevFace?'active-brown':''}" onclick="setPrevFace(${f})">${diceSVG(f,26)}</button>`).join('')}</div></div>
+    </div>
+    ${S.prevQty===0?'<div class="info-line" style="font-style:italic;margin-top:8px">Set to 0 if you\'re bidding first</div>':`<div style="text-align:center;margin-top:10px;font-size:12px;color:#a08050">Their bid is true: ${probBadge(pp)}</div>`}
+  </div>`;
+
+  // Recommend
+  if(bestAction&&S.prevQty>0){
+    html+=`<div class="recommend" style="background:rgba(${bestAction.prob>=.5?'74,124,63':'139,58,58'},0.12);border:1px solid ${probColor(bestAction.prob)}44">
+      <div class="recommend-label">Recommended Play</div>
+      <div class="recommend-action" style="color:${probColor(bestAction.prob)}">${bestAction.label}</div>
+      <div class="recommend-prob">${probBadge(bestAction.prob)} chance of success</div>
+    </div>`;
+  }
+
+  // Challenge
+  if(S.prevQty>0){
+    const lv=lp>=.55?'★ Good call — odds favor you':lp>=.35?'Could go either way':'They probably have it';
+    const sv=sp>=.15?'★ Decent odds — worth a shot':'Long shot — high reward';
+    html+=`<div class="section accent-red">
+      <div class="section-title">Challenge Options</div>
+      <div class="challenge-row">
+        <div class="challenge-card">
+          <div class="challenge-header"><span class="challenge-title" style="color:#c25a3a">Call Liar</span>${probBadge(lp)}</div>
+          <div class="challenge-desc">Fewer than ${S.prevQty}× ${S.prevFace}'s exist.<span class="challenge-verdict" style="color:${probColor(lp)};font-weight:${lp>=.55?700:400}">${lv}</span></div>
+        </div>
+        <div class="challenge-card">
+          <div class="challenge-header"><span class="challenge-title" style="color:#d4a030">Spot On</span>${probBadge(sp)}</div>
+          <div class="challenge-desc">Exactly ${S.prevQty}× ${S.prevFace}'s on the table.<span class="challenge-verdict" style="color:${probColor(sp)};font-weight:${sp>=.15?700:400}">${sv}</span></div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Your bid
+  const bidAccent=bidOk?'accent-green':'accent-darkred';
+  html+=`<div class="section ${bidAccent}">
+    <div class="section-title">Your Bid</div>
+    <div class="bid-row">
+      <div><div class="bid-label">QUANTITY</div>${stepper('bidqty',S.bidQty,1,td)}</div>
+      <div class="bid-x">×</div>
+      <div><div class="bid-label">FACE</div><div class="face-selector">${[1,2,3,4,5,6].map(f=>`<button class="face-btn ${f===S.bidFace?'active':''}" onclick="setBidFace(${f})">${diceSVG(f,26)}</button>`).join('')}</div></div>
+    </div>
+    ${S.prevQty>0?`<div class="legal-box ${bidOk?'legal':'illegal'}">${bidOk?'✓ Legal bid':`✗ Illegal — ${bidMsg}`}</div>`:''}
+    ${bidOk?`<div class="verdict">
+      <div class="verdict-pct" style="color:${vc};text-shadow:0 0 20px ${vc}44">${(bp*100).toFixed(1)}%</div>
+      <div class="verdict-text" style="color:${vc}">${verdict}</div>
+      <div class="verdict-detail">You hold ${myMatch} matching · need ${needed} from ${ud} unknown</div>
+    </div>`:''}
+  </div>`;
+
+  // Alternatives
+  const tabLabels={smart:'★ Smart Picks',safe:'Safe (60%+)',bluff:'Bluffs'};
+  const emptyMsg=S.altTab==='safe'?'No safe bids left — consider calling Liar':S.altTab==='bluff'?'No bluffs in range':'No legal bids available';
+  html+=`<div class="section">
+    <div class="section-title">Legal Alternatives</div>
+    <div class="tabs">${['smart','safe','bluff'].map(k=>`<button class="tab-btn ${S.altTab===k?'active':''}" onclick="setTab('${k}')">${tabLabels[k]}</button>`).join('')}</div>
+    ${disp.length===0?`<div class="empty-msg">${emptyMsg}</div>`:
+    `<div class="alt-list">${disp.map((a,i)=>{
+      const isTop=i===0&&S.altTab==='smart';
+      return `<button class="alt-btn ${isTop?'top':''}" onclick="pickAlt(${a.qty},${a.face})">
+        ${isTop?'<span style="color:#4a7c3f;font-size:14px">★</span>':''}
+        <span class="alt-qty">${a.qty}×</span>
+        ${diceSVG(a.face,22)}
+        ${a.mm>0?`<span class="alt-hand">${a.mm} in hand</span>`:''}
+        <span style="flex:1"></span>
+        ${probBadge(a.prob)}
+      </button>`;
+    }).join('')}</div>`}
+    <div class="hint">All bids verified legal · tap to load</div>
+  </div>`;
+
+  // Rules
+  html+=`<div class="section">
+    <div class="section-title">RDR1 Bid Rules</div>
+    <div class="rules-list">
+      <div><span>Same face:</span> must increase quantity</div>
+      <div><span>Higher face:</span> same or higher quantity</div>
+      <div><span>Lower face:</span> must increase quantity</div>
+      <div><span>→ Switch to 1s:</span> at least ½ prev. qty (rounded up)</div>
+      <div><span>→ Switch from 1s:</span> at least double prev. qty + 1</div>
+    </div>
+  </div>
+  <div class="footer">Assumes random opponent dice. ${S.wild?'1s count as wild.':'1s are NOT wild (RDR1 default).'}</div>`;
+
+  document.getElementById('app').innerHTML=html;
+}
+
+/* ── Stepper HTML ── */
+function stepper(id,val,min,max){
+  return `<div class="stepper">
+    <button ${val<=min?'disabled':''} onclick="stepDown('${id}')">−</button>
+    <div class="stepper-val">${val}</div>
+    <button ${val>=max?'disabled':''} onclick="stepUp('${id}')">+</button>
+  </div>`;
+}
+
+/* ── Event handlers ── */
+function clamp(v,lo,hi){return Math.max(lo,Math.min(hi,v))}
+
+function stepUp(id){stepChange(id,1)}
+function stepDown(id){stepChange(id,-1)}
+function stepChange(id,d){
+  const td_val=totalDice();
+  if(id==='players'){S.players=clamp(S.players+d,2,6);while(S.perPlayer.length<S.players)S.perPlayer.push(5);S.perPlayer=S.perPlayer.slice(0,S.players)}
+  else if(id==='mydice'){const c=clamp(S.perPlayer[0]+d,1,5);S.perPlayer[0]=c;while(S.myDice.length<c)S.myDice.push(1);S.myDice=S.myDice.slice(0,c)}
+  else if(id==='prevqty'){S.prevQty=clamp(S.prevQty+d,0,totalDice())}
+  else if(id==='bidqty'){S.bidQty=clamp(S.bidQty+d,1,totalDice())}
+  else if(id.startsWith('opp')){const i=parseInt(id.slice(3));S.perPlayer[i+1]=clamp(S.perPlayer[i+1]+d,0,5)}
+  render();
+}
+
+function toggleWild(){S.wild=!S.wild;render()}
+function toggleAdv(){S.showAdv=!S.showAdv;render()}
+function cycleDie(i){S.myDice[i]=S.myDice[i]>=6?1:S.myDice[i]+1;render()}
+function setPrevFace(f){S.prevFace=f;render()}
+function setBidFace(f){S.bidFace=f;render()}
+function setTab(t){S.altTab=t;render()}
+function pickAlt(q,f){S.bidQty=q;S.bidFace=f;render()}
+
+render();
+</script>
+</body>
+</html>

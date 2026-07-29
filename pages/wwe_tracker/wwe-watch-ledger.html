@@ -546,38 +546,29 @@
   html.wide .feudwrap{grid-template-columns:270px 1fr}
   html.wide .row{grid-template-columns:22px 150px 1fr auto}
 
-  /* ---------- ticker ---------- */
+  /* ---------- ticker ----------
+     Scrolled with scrollLeft rather than a transform. Every previous attempt
+     leaned on something that can silently fail -- a CSS animation killed by a
+     prefers-reduced-motion rule, then position:absolute plus width:max-content
+     plus transform plus contain. scrollLeft needs none of that: an element
+     with overflow:hidden is still programmatically scrollable. */
   html.noticker .ticker{display:none}
   .ticker{position:relative;margin-top:14px;border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);background:var(--deep);overflow:hidden;height:30px;
-    contain:layout paint}
+    border-bottom:1px solid var(--line);background:var(--deep);height:30px;overflow:hidden}
   .ticker:before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.42) 0 1px,transparent 1px 2px)}
   .ticker:after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
     background:linear-gradient(90deg,var(--deep),transparent 7%,transparent 93%,var(--deep))}
-  /* width:max-content is load-bearing. Absolutely positioned elements shrink to
-     fit but are capped at the containing block, so without it the track is only
-     as wide as the bar and translateX(-50%) barely moves -- it looks frozen. */
-  /* Driven by requestAnimationFrame, not a CSS animation. A global
-     prefers-reduced-motion rule sets animation-duration to .001ms on
-     everything, which silently froze this bar for anyone with reduce
-     motion switched on at the OS level. rAF is immune to that, and
-     lets us give those users a non-moving fallback instead of a
-     dead strip of text. */
-  .tickertrack{position:absolute;top:0;left:0;height:30px;width:max-content;display:flex;align-items:center;
-    white-space:nowrap;will-change:transform;transform:translate3d(0,0,0);backface-visibility:hidden;
+  .tickerscroll{position:absolute;inset:0;z-index:1;overflow:hidden;white-space:nowrap}
+  .tickertrack{display:inline-block;white-space:nowrap;height:30px;line-height:30px;
     font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
-  .ticker.still .tickertrack{position:static;padding-left:15px;transform:none!important;
-    width:auto;max-width:100%;overflow:hidden}
+  .ticker.still .tickertrack{padding-left:15px}
   .ticker.still .tsep{display:none}
-  .ticker.still .ti{opacity:0;transition:opacity .28s}
-  .ticker.still .ti.show{opacity:1}
-  /* Glow only on the live item. A text-shadow on every span meant the whole
-     strip repainted each frame instead of being composited. */
+  .ticker.still .ti{display:none}
+  .ticker.still .ti.show{display:inline}
   .ti{color:var(--chrome);padding:0 4px}
   .ti.hot{color:var(--red);text-shadow:0 0 10px currentColor;font-weight:500}
   .tsep{color:var(--dim2);padding:0 16px;opacity:.6}
-
 
   /* ---------- wrestler screen ---------- */
   .wcard{border:1px solid var(--line);background:var(--panel);padding:18px 20px;margin-bottom:22px;
@@ -696,7 +687,9 @@
     </div>
   </div>
 
-  <div class="ticker" id="ticker"><div class="tickertrack" id="tickerTrack"></div></div>
+  <div class="ticker" id="ticker">
+    <div class="tickerscroll" id="tickerScroll"><div class="tickertrack" id="tickerTrack"></div></div>
+  </div>
 
   <section class="tron" id="tron">
     <div class="stamp" id="stamp">Watched</div>
@@ -821,6 +814,12 @@
       <p>Kept per device, alongside the theme.</p>
       <label class="keepme"><input type="checkbox" id="prefWide"> Widescreen &mdash; use the full window instead of a centred column</label>
       <label class="keepme"><input type="checkbox" id="prefTicker"> Show the ticker under the title</label>
+      <details style="margin-top:12px">
+        <summary style="cursor:pointer;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--dim2)">Ticker diagnostics</summary>
+        <pre id="tickerDiag" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);
+          background:var(--deep);border:1px solid var(--line);padding:11px 13px;margin:9px 0 0;
+          white-space:pre-wrap;line-height:1.6"></pre>
+      </details>
       <label class="keepme"><input type="checkbox" id="prefFaces"> Show wrestler icons on episodes that have a match card</label>
       <label class="keepme"><input type="checkbox" id="prefAutoFaces"> Fetch portraits and bios from Wikipedia automatically</label>
       <div class="field" style="margin-top:15px;max-width:280px">
@@ -2638,63 +2637,62 @@ function tickerSoon(){          // coalesce bursts of renderAll into one rebuild
   clearTimeout(tickerSoonTimer);
   tickerSoonTimer=setTimeout(renderTicker,400);
 }
-let tickerTimer=null, tickerRAF=null, tickerX=0, tickerHalf=0,
-    tickerHold=false, tickerRotate=null, tickerIdx=0;
-const TICKER_SPEED=44;   // pixels per second
 
-/* Evaluated once and kept up to date by a listener. Calling matchMedia inside
-   the animation loop cost a style recalculation on every frame. */
-let RM_ON=false, RM_MQ=null;
+/* Reduced-motion is read once and kept current by a listener. Calling
+   matchMedia inside the frame loop cost a style recalculation every frame. */
+let RM_ON=false;
 try{
-  RM_MQ=matchMedia('(prefers-reduced-motion: reduce)');
-  RM_ON=RM_MQ.matches;
+  const mq=matchMedia('(prefers-reduced-motion: reduce)');
+  RM_ON=mq.matches;
   const onRM=e=>{ RM_ON=e.matches; lastTickerHTML=''; renderTicker(); };
-  if(RM_MQ.addEventListener) RM_MQ.addEventListener('change',onRM);
-  else if(RM_MQ.addListener) RM_MQ.addListener(onRM);
+  if(mq.addEventListener) mq.addEventListener('change',onRM);
+  else if(mq.addListener) mq.addListener(onRM);
 }catch(e){}
 function reduceMotion(){ return RM_ON; }
 
-let tickerEl=null, tickerBar=null, lastTickerHTML='', tickerMeasure=false;
+let tickerEl=null, tickerBar=null, tickerScroll=null;
+let lastTickerHTML='', tickerHalf=0, tickerX=0, tickerHold=false;
+let tickerTimer=null, tickerRAF=null, tickerRotate=null, tickerIdx=0;
+let tickerFrames=0, tickerLastErr='';
+const TICKER_SPEED=44;   // pixels per second
+
 function tickerNodes(){
   if(!tickerEl) tickerEl=document.getElementById('tickerTrack');
   if(!tickerBar) tickerBar=document.getElementById('ticker');
-  return tickerEl&&tickerBar;
+  if(!tickerScroll) tickerScroll=document.getElementById('tickerScroll');
+  return !!(tickerEl&&tickerBar&&tickerScroll);
 }
 
 function renderTicker(){
-  if(!tickerNodes()) return;
-  const el=tickerEl, bar=tickerBar;
+  if(!tickerNodes()){ tickerLastErr='markup missing'; return; }
   const items=tickerItems();
   const still=reduceMotion();
-  bar.classList.toggle('still', still);
+  tickerBar.classList.toggle('still', still);
 
+  const run=items.map(i=>`<span class="ti${i.hot?' hot':''}">${esc(i.txt)}</span>`)
+    .join('<span class="tsep">\u25C6</span>');
+  const html=still
+    ? items.map((i,n)=>`<span class="ti${i.hot?' hot':''}${n===0?' show':''}">${esc(i.txt)}</span>`).join('')
+    : run+'<span class="tsep">\u25C6</span>'+run+'<span class="tsep">\u25C6</span>';
+
+  if(html!==lastTickerHTML){
+    lastTickerHTML=html;
+    tickerEl.innerHTML=html;
+    tickerHalf=0;                       // remeasure on the next frame
+  }
+
+  clearInterval(tickerRotate); tickerRotate=null;
   if(still){
-    /* No movement, but not frozen either: hold each line, then swap. */
-    el.innerHTML=items.map((i,n)=>
-      `<span class="ti${i.hot?' hot':''}${n===0?' show':''}" style="${n?'position:absolute;left:15px;':''}">${esc(i.txt)}</span>`).join('');
     cancelAnimationFrame(tickerRAF); tickerRAF=null;
-    clearInterval(tickerRotate);
     tickerIdx=0;
     if(items.length>1) tickerRotate=setInterval(()=>{
-      const kids=el.querySelectorAll('.ti');
+      const kids=tickerEl.querySelectorAll('.ti');
       if(!kids.length) return;
       kids[tickerIdx%kids.length].classList.remove('show');
       tickerIdx=(tickerIdx+1)%kids.length;
       kids[tickerIdx].classList.add('show');
     },5000);
   } else {
-    clearInterval(tickerRotate); tickerRotate=null;
-    const run=items.map(i=>`<span class="ti${i.hot?' hot':''}">${esc(i.txt)}</span>`)
-      .join('<span class="tsep">\u25C6</span>');
-    const html=run+'<span class="tsep">\u25C6</span>'+run+'<span class="tsep">\u25C6</span>';
-    /* Rebuilding identical markup on every render threw away the DOM and
-       snapped the scroll back to where it started -- which is what made this
-       look like stutter. Only touch it when the text has actually changed. */
-    if(html!==lastTickerHTML){
-      lastTickerHTML=html;
-      el.innerHTML=html;
-      tickerMeasure=true;          // measured after paint, never inline
-    }
     startTicker();
   }
   clearTimeout(tickerTimer);
@@ -2703,25 +2701,41 @@ function renderTicker(){
 
 function startTicker(){
   if(tickerRAF||!tickerNodes()) return;
-  const el=tickerEl;
   let last=performance.now();
   const step=now=>{
     if(!tickerEl||RM_ON){ tickerRAF=null; return; }
-    if(tickerMeasure){                    // one reflow, after the browser painted
-      tickerMeasure=false;
-      tickerHalf=el.scrollWidth/2 || el.getBoundingClientRect().width/2;
-      if(-tickerX>tickerHalf) tickerX=0;
+    if(!tickerHalf){
+      const w=tickerEl.scrollWidth||tickerEl.offsetWidth||0;
+      if(w>2) tickerHalf=w/2;
     }
     const dt=Math.min(0.05,(now-last)/1000); last=now;
-    if(!tickerHold && document.visibilityState!=='hidden' && tickerHalf>0){
-      tickerX-=TICKER_SPEED*dt;
-      if(-tickerX>=tickerHalf) tickerX+=tickerHalf;   // seamless wrap
-      el.style.transform='translate3d('+tickerX.toFixed(1)+'px,0,0)';
+    if(!tickerHold && document.visibilityState!=='hidden' && tickerHalf>1){
+      tickerX+=TICKER_SPEED*dt;
+      if(tickerX>=tickerHalf) tickerX-=tickerHalf;   // seamless: copy 2 takes over
+      tickerScroll.scrollLeft=tickerX;
+      tickerFrames++;
     }
     tickerRAF=requestAnimationFrame(step);
   };
   tickerRAF=requestAnimationFrame(step);
 }
+
+function tickerDiagnostics(){
+  if(!tickerNodes()) return 'ticker markup not found';
+  return [
+    'reduce motion   : '+(RM_ON?'ON  (scrolling disabled by your OS setting)':'off'),
+    'track width     : '+(tickerEl.scrollWidth||0)+'px',
+    'visible width   : '+Math.round(tickerScroll.clientWidth||0)+'px',
+    'one loop        : '+Math.round(tickerHalf)+'px',
+    'scroll position : '+Math.round(tickerX)+'px',
+    'actual scrollLeft: '+Math.round(tickerScroll.scrollLeft)+'px',
+    'frames drawn    : '+tickerFrames,
+    'loop running    : '+(tickerRAF?'yes':'no'),
+    'items           : '+tickerItems().length,
+    tickerLastErr?('last error      : '+tickerLastErr):''
+  ].filter(Boolean).join('\n');
+}
+
 (function tickerHover(){
   const bar=document.getElementById('ticker');
   if(!bar) return;
@@ -3561,6 +3575,15 @@ document.getElementById('prefWide').onchange=e=>{ prefs.wide=e.target.checked; s
 document.getElementById('prefTicker').onchange=e=>{ prefs.ticker=e.target.checked; savePrefs(); renderTicker(); };
 document.getElementById('prefHome').onchange=e=>{ prefs.home=e.target.value; savePrefs(); };
 document.getElementById('prefFaces').onchange=e=>{ prefs.faces=e.target.checked; savePrefs(); renderLedger(); };
+let diagTimer=null;
+function startDiag(){
+  stopDiag();
+  const el=document.getElementById('tickerDiag');
+  if(!el) return;
+  const tick=()=>{ el.textContent=tickerDiagnostics(); };
+  tick(); diagTimer=setInterval(tick,500);
+}
+function stopDiag(){ clearInterval(diagTimer); diagTimer=null; }
 document.getElementById('prefAutoFaces').onchange=e=>{ prefs.autoFaces=e.target.checked; savePrefs(); };
 document.getElementById('feudFaces').onclick=async function(){
   const b=this;
@@ -3612,7 +3635,7 @@ document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   if(t.dataset.tab==='feuds') renderFeuds();
   if(t.dataset.tab==='stats') renderStats();
   if(t.dataset.tab==='shows') renderShows();
-  if(t.dataset.tab==='data'){ syncUI(); paintDevice(); renderHealth(); }
+  if(t.dataset.tab==='data'){ syncUI(); paintDevice(); renderHealth(); startDiag(); } else stopDiag();
 });
 let toastTimer;
 function toast(m){

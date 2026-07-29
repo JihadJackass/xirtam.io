@@ -392,6 +392,42 @@
     background:var(--red);color:#fff;padding:12px 22px;font-size:11px;font-weight:800;
     letter-spacing:.11em;text-transform:uppercase;opacity:0;transition:.22s;pointer-events:none;z-index:60}
   .toast.on{opacity:1;transform:translateX(-50%)}
+  /* ---------- phones ----------
+     Six tabs will not fit across a narrow screen, and the hover-revealed row
+     tools are both invisible and too small to hit on a touch screen. */
+  @media(max-width:700px){
+    .wrap{padding:0 13px 70px}
+    .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{padding:11px 13px;white-space:nowrap;flex:0 0 auto}
+    .masthead h1{font-size:22px}
+    .masthead .stat{font-size:10px}
+    .decade{grid-template-columns:48px 1fr 84px;gap:9px}
+    .decade .n{font-size:9.5px}
+    .figs{grid-template-columns:repeat(auto-fit,minmax(128px,1fr))}
+    .fig b{font-size:25px}
+    .healthrow{grid-template-columns:1fr auto;gap:7px}
+    .feudhd{grid-template-columns:1fr}
+    .filters{gap:7px}
+    .filters select,.filters input[type="text"]{flex:1 1 130px;min-width:0}
+    .count{margin-left:0;width:100%}
+    .searchbar input{font-size:16px}          /* under 16px iOS zooms the page in */
+    input[type="text"],input[type="date"],input[type="number"],select,textarea{font-size:16px}
+    .modal{padding:17px}
+    .bttl{font-size:clamp(32px,12vw,60px)}
+    .tron{padding:19px 18px 17px}
+    .marquee{font-size:clamp(28px,10vw,48px)}
+  }
+  /* Touch devices: no hover, so the row tools must always show and be tappable */
+  @media(hover:none){
+    .row .tools{opacity:1}
+    .row .tools button{padding:7px 10px;font-size:10px;min-height:30px}
+    .row{padding:10px 10px}
+    .swatches button{width:22px;height:32px}
+    .rfilters button{padding:7px 10px;font-size:10px}
+    .person{padding:11px 12px}
+    .btn.sm{padding:8px 12px}
+  }
   .foot{margin-top:38px;padding-top:16px;border-top:1px solid var(--line);
     font-family:'DM Mono',monospace;font-size:10.5px;color:var(--dim2);line-height:1.7}
   @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
@@ -655,6 +691,9 @@
   .wnote{font-size:11.5px;color:var(--dim2);margin:13px 0 0;line-height:1.55}
 
   /* ---------- data health ---------- */
+  .anchorrow{display:grid;grid-template-columns:1fr 130px 78px auto;gap:11px;align-items:center;
+    padding:7px 0;border-bottom:1px solid var(--rowline);font-size:13px}
+  @media(max-width:560px){.anchorrow{grid-template-columns:1fr auto}}
   .healthrow{display:grid;grid-template-columns:150px 1fr 130px 68px;gap:12px;align-items:center;
     padding:7px 0 7px 10px;border-bottom:1px solid var(--rowline);border-left:2px solid var(--bc)}
   .healthrow .hn{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--dim2);text-align:right}
@@ -935,6 +974,46 @@
     </div>
 
     <div class="card2">
+      <h3>Fix event dates automatically</h3>
+      <p>Every pay-per-view date except WrestleMania is a guess at which Sunday it fell on. Wikipedia states
+      the real date in the opening line of each event's article, so this reads it and corrects the ledger.
+      A date is only accepted within 120 days of the estimate, so a mismatched article cannot quietly move
+      an event to the wrong year.</p>
+      <div class="acts">
+        <button class="btn primary" id="btnFixDates">Check event dates</button>
+        <button class="btn" id="btnStopDates" style="display:none">Stop</button>
+      </div>
+      <pre id="dateLog" style="display:none;font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);
+        background:var(--deep);border:1px solid var(--line);padding:11px 13px;margin:12px 0 0;
+        white-space:pre-wrap;line-height:1.6;max-height:240px;overflow:auto"></pre>
+    </div>
+
+    <div class="card2">
+      <h3>Episode numbering</h3>
+      <p>The generator assumes a weekly show never missed its slot. Raw did &mdash; it ran 20 episodes ahead
+      of reality by 2012. Anchors pin numbering to dates you know are right and spread the correction between
+      them. Weeks where two episodes share a number are marked &ldquo;Number approx.&rdquo; in the ledger.</p>
+      <div id="anchorList" style="margin-bottom:12px"></div>
+      <div class="grid2">
+        <div class="field"><label for="anShow">Show</label><select id="anShow"></select></div>
+        <div class="field"><label for="anNum">Episode number</label><input type="number" id="anNum" min="1" placeholder="1000"></div>
+        <div class="field"><label for="anDate">Aired on</label><input type="date" id="anDate"></div>
+      </div>
+      <div class="acts"><button class="btn primary" id="btnAddAnchor">Add anchor</button></div>
+    </div>
+
+    <div class="card2">
+      <h3>Move to another device</h3>
+      <p>Storage is per browser, so your phone starts empty. Copy this code on one device and paste it on the
+      other &mdash; it carries ticks, ratings, cards, portraits and your watchlist.</p>
+      <div class="acts">
+        <button class="btn" id="btnCopyTransfer">Copy transfer code</button>
+        <button class="btn primary" id="btnApplyTransfer">Apply pasted code</button>
+      </div>
+      <textarea id="transferBox" placeholder="Paste a transfer code here, then press Apply" style="margin-top:11px"></textarea>
+    </div>
+
+    <div class="card2">
       <h3>Back up your ticks</h3>
       <p>Ticks, ratings, notes, match cards and title fixes. The catalogue itself is rebuilt on every load, so this file stays small.</p>
       <div class="acts">
@@ -984,7 +1063,19 @@
    rows: "SmackDown aired Thursdays 1999-2005, Fridays to 2016,
    Tuesdays to 2019, Fridays since." Episodes generate from that.
    ============================================================ */
-const BUILD_ID='2026-07-29 15:34 UTC';
+const BUILD_ID='2026-07-29 15:44 UTC';
+
+/* Known (episode number, date) pairs. The generator assumes a weekly show
+   never missed its slot, which is false -- Raw was pre-empted often enough to
+   run 20 episodes ahead of reality by 2012. Anchors pin the numbering to
+   dates we know, and the offset is interpolated between them. Add your own
+   under Data, or ship them in data/anchors.json. */
+const ANCHORS=[
+  {show:'raw',       num:1,    date:'1993-01-11'},
+  {show:'raw',       num:1000, date:'2012-07-23'},
+  {show:'smackdown', num:1,    date:'1999-08-26'},
+  {show:'smackdown', num:1000, date:'2018-10-16'}
+];
 const D = {SUN:0,MON:1,TUE:2,WED:3,THU:4,FRI:5,SAT:6};
 
 const SHOWS = [
@@ -1769,6 +1860,57 @@ function nthSunday(year, month, nth){
   return addDays(first, ((7-first.getDay())%7) + (nth-1)*7);
 }
 
+/* Shift generated numbering onto the anchors, interpolating the offset by
+   date between them and holding it flat outside the outermost pair. */
+function applyAnchors(eps, showId){
+  const mine=(ANCHORS||[])
+    .concat((typeof REPO_ANCHORS!=='undefined'?REPO_ANCHORS:[]))
+    .concat((typeof state!=='undefined' && state && state.anchors)?state.anchors:[])
+    .filter(a=>a && a.show===showId && a.num>0 && /^\d{4}-\d{2}-\d{2}$/.test(a.date||''))
+    .sort((a,b)=>a.date<b.date?-1:1);
+  if(!mine.length || !eps.length) return eps;
+
+  const pts=[];
+  for(const a of mine){
+    let best=null, bestGap=Infinity;
+    for(const e of eps){
+      const gap=Math.abs(parse(e.date)-parse(a.date));
+      if(gap<bestGap){ bestGap=gap; best=e; }
+    }
+    if(best && bestGap<=1000*60*60*24*10) pts.push({t:parse(a.date).getTime(), off:a.num-best.num});
+  }
+  if(!pts.length) return eps;
+
+  const offAt=t=>{
+    if(t<=pts[0].t) return pts[0].off;
+    if(t>=pts[pts.length-1].t) return pts[pts.length-1].off;
+    for(let i=0;i<pts.length-1;i++){
+      const a=pts[i], b=pts[i+1];
+      if(t>=a.t && t<=b.t){
+        const f=(t-a.t)/(b.t-a.t||1);
+        return a.off+(b.off-a.off)*f;
+      }
+    }
+    return 0;
+  };
+  /* The offset drifts by a fraction of an episode per week, so forcing a
+     strict +1 would cancel the whole correction out. Equal numbers are allowed
+     instead: where two consecutive weeks share a number, that is the model
+     admitting reality probably had no show that week. Marked so the ledger
+     can say so rather than looking like a bug. */
+  let prev=-Infinity;
+  for(const e of eps){
+    let n=e.num+Math.round(offAt(parse(e.date).getTime()));
+    if(n<prev) n=prev;
+    if(n<1) n=1;
+    e.approxNum = (n===prev);
+    prev=n; e.num=n; e.title=SHOW_META_SHORT[showId]+' #'+n;
+  }
+  return eps;
+}
+const SHOW_META_SHORT={};
+SHOWS.forEach(s=>SHOW_META_SHORT[s.id]=s.short);
+
 function buildCatalogue(){
   const out=[];
   for(const show of SHOWS){
@@ -1785,6 +1927,10 @@ function buildCatalogue(){
         n++; d = addDays(d,7);
       }
     }
+  }
+  for(const s of SHOWS){
+    const mine=out.filter(e=>e.show===s.id);
+    if(mine.length) applyAnchors(mine, s.id);
   }
   for(const [date,title,n] of MANIA)
     out.push({id:'event:'+date, show:'event', date, title, run:240, kind:'event',
@@ -2188,7 +2334,9 @@ function renderLedger(){
     const meta=SHOW_META[e.show], seen=isSeen(e.id), rec=state.seen[e.id]||{};
     const fav=!!(state.fav||{})[e.id];
     const faces=(prefs.faces!==false && e.card) ? cardFaces(e.card,2) : '';
-    const badge = e.kind==='event' ? '<span class="badge ev">Event</span>'+(e.est?'<span class="badge est">Est. date</span>':'') : '';
+    const badge = e.kind==='event'
+      ? '<span class="badge ev">Event</span>'+(e.est?'<span class="badge est">Est. date</span>':'')
+      : (e.approxNum?'<span class="badge est" title="Numbering is uncertain here \u2014 the show was probably pre-empted this week">Number approx.</span>':'');
     const spot=SPOT&&SPOT.ids.has(e.id), queued=(state.queue||[]).includes(e.id);
     out.push(
       `<div class="row${seen?' seen':''}${spot?' spot':''}${queued?' queued':''}" data-id="${e.id}" style="--bc:${meta.bc}" tabindex="0" role="button" aria-pressed="${seen}">
@@ -2780,7 +2928,7 @@ function tickerDiagnostics(){
    profile, on every device, and live in version control rather
    than in one browser. Absent file, no problem.
    ============================================================ */
-let REPO_DATA=[], REPO_STATE='none', REPO_FEUDS=[];
+let REPO_DATA=[], REPO_STATE='none', REPO_FEUDS=[], REPO_ANCHORS=[];
 
 async function loadRepoData(){
   try{
@@ -2800,6 +2948,14 @@ async function loadRepoData(){
         .map((f,i)=>Object.assign({id:'r'+i, shows:['raw','smackdown','event']},f));
     }
   }catch(e){ REPO_FEUDS=[]; }
+  try{
+    const r=await fetch('./data/anchors.json',{cache:'no-cache'});
+    if(r.ok){
+      const j=await r.json();
+      const rows=Array.isArray(j)?j:(j.anchors||[]);
+      REPO_ANCHORS=rows.filter(a=>a&&a.show&&a.num>0&&/^\d{4}-\d{2}-\d{2}$/.test(a.date||''));
+    }
+  }catch(e){ REPO_ANCHORS=[]; }
 }
 
 /* provenance: where did this record's detail come from */
@@ -3884,6 +4040,35 @@ document.getElementById('feudFaces').onclick=async function(){
 };
 document.getElementById('btnExportCorr').onclick=exportCorrections;
 document.getElementById('btnBinge').onclick=openBinge;
+function renderAnchors(){
+  const el=document.getElementById('anchorList'); if(!el) return;
+  const built=(ANCHORS||[]).map(a=>Object.assign({},a,{src:'built in'}));
+  const repo=(typeof REPO_ANCHORS!=='undefined'?REPO_ANCHORS:[]).map(a=>Object.assign({},a,{src:'from repo'}));
+  const mine=(state.anchors||[]).map((a,i)=>Object.assign({},a,{src:'yours',idx:i}));
+  const all=built.concat(repo).concat(mine);
+  el.innerHTML=all.length?all.map(a=>{
+    const m=SHOW_META[a.show];
+    return `<div class="anchorrow"><span class="upname">${esc(m?m.short:a.show)} #${a.num}</span>
+      <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--dim)">${fmtDate(a.date)}</span>
+      <span style="font-size:9.5px;color:var(--dim2);text-transform:uppercase;letter-spacing:.11em">${a.src}</span>
+      ${a.src==='yours'?`<button class="btn sm" data-anchor="${a.idx}">Remove</button>`:'<span></span>'}</div>`;
+  }).join(''):'<p style="color:var(--dim);font-size:13px">No anchors yet.</p>';
+}
+document.getElementById('anchorList').addEventListener('click',ev=>{
+  const b=ev.target.closest('[data-anchor]'); if(!b) return;
+  state.anchors=(state.anchors||[]).filter((_,i)=>i!==Number(b.dataset.anchor));
+  save(); rebuildCatalogue(); renderAnchors(); renderAll(); toast('Anchor removed');
+});
+document.getElementById('btnAddAnchor').onclick=()=>{
+  const show=document.getElementById('anShow').value;
+  const num=Number(document.getElementById('anNum').value);
+  const date=document.getElementById('anDate').value;
+  if(!show||!num||!date){ toast('Needs a show, a number and a date'); return; }
+  state.anchors=(state.anchors||[]).concat([{show,num,date}]);
+  save(); rebuildCatalogue(); renderAnchors(); renderAll();
+  document.getElementById('anNum').value='';
+  toast('Anchor added \u2014 numbering rebuilt');
+};
 document.getElementById('btnFixDates').onclick=async function(){
   const log=document.getElementById('dateLog'), stop=document.getElementById('btnStopDates');
   this.disabled=true; stop.style.display='inline-block'; log.style.display='block';
@@ -3954,7 +4139,7 @@ document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   if(t.dataset.tab==='feuds') renderFeuds();
   if(t.dataset.tab==='stats'){ renderStats(); renderPace(); }
   if(t.dataset.tab==='shows') renderShows();
-  if(t.dataset.tab==='data'){ syncUI(); paintDevice(); renderHealth(); startDiag(); } else stopDiag();
+  if(t.dataset.tab==='data'){ syncUI(); paintDevice(); renderHealth(); renderAnchors(); startDiag(); } else stopDiag();
 });
 let toastTimer;
 function toast(m, action){
@@ -3985,6 +4170,7 @@ function fillSelects(){
   const shows=SHOWS.concat([SHOW_META['event']]);
   $('fShow').innerHTML='<option value="">Every show</option>'+shows.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
   $('addShow').innerHTML=shows.map(s=>`<option value="${s.id}"${s.id==='event'?' selected':''}>${esc(s.name)}</option>`).join('');
+  document.getElementById('anShow').innerHTML=SHOWS.map(s=>`<option value="${s.id}"${s.id==='raw'?' selected':''}>${esc(s.name)}</option>`).join('');
   const years=[...new Set(CAT.map(e=>e.date.slice(0,4)))].sort();
   $('fYear').innerHTML='<option value="">Every year</option>'+years.map(y=>`<option>${y}</option>`).join('');
 }

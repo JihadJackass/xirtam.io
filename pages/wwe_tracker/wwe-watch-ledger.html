@@ -392,51 +392,109 @@
     background:var(--red);color:#fff;padding:12px 22px;font-size:11px;font-weight:800;
     letter-spacing:.11em;text-transform:uppercase;opacity:0;transition:.22s;pointer-events:none;z-index:60}
   .toast.on{opacity:1;transform:translateX(-50%)}
+  /* ---------- phones ----------
+     Six tabs will not fit across a narrow screen, and the hover-revealed row
+     tools are both invisible and too small to hit on a touch screen. */
+  @media(max-width:700px){
+    .wrap{padding:0 13px 70px}
+    .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{padding:11px 13px;white-space:nowrap;flex:0 0 auto}
+    .masthead h1{font-size:22px}
+    .masthead .stat{font-size:10px}
+    .decade{grid-template-columns:48px 1fr 84px;gap:9px}
+    .decade .n{font-size:9.5px}
+    .figs{grid-template-columns:repeat(auto-fit,minmax(128px,1fr))}
+    .fig b{font-size:25px}
+    .healthrow{grid-template-columns:1fr auto;gap:7px}
+    .feudhd{grid-template-columns:1fr}
+    .filters{gap:7px}
+    .filters select,.filters input[type="text"]{flex:1 1 130px;min-width:0}
+    .count{margin-left:0;width:100%}
+    .searchbar input{font-size:16px}          /* under 16px iOS zooms the page in */
+    input[type="text"],input[type="date"],input[type="number"],select,textarea{font-size:16px}
+    .modal{padding:17px}
+    .bttl{font-size:clamp(32px,12vw,60px)}
+    .tron{padding:19px 18px 17px}
+    .marquee{font-size:clamp(28px,10vw,48px)}
+  }
+  /* Touch devices: no hover, so the row tools must always show and be tappable */
+  @media(hover:none){
+    .row .tools{opacity:1}
+    .row .tools button{padding:7px 10px;font-size:10px;min-height:30px}
+    .row{padding:10px 10px}
+    .swatches button{width:22px;height:32px}
+    .rfilters button{padding:7px 10px;font-size:10px}
+    .person{padding:11px 12px}
+    .btn.sm{padding:8px 12px}
+  }
   .foot{margin-top:38px;padding-top:16px;border-top:1px solid var(--line);
     font-family:'DM Mono',monospace;font-size:10.5px;color:var(--dim2);line-height:1.7}
   @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 </style>
 <style>
-  /* ---------- credential / lock screen ---------- */
+  /* ---------- sign in ---------- */
   .gate{position:fixed;inset:0;z-index:100;background:var(--bg);
-    background-image:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(226,0,26,.20),transparent 70%);
+    background-image:radial-gradient(ellipse 70% 50% at 50% 0%,var(--glow1,rgba(226,0,26,.20)),transparent 70%);
     display:none;place-items:center;padding:22px;overflow:auto}
   .gate.on{display:grid}
-  .pass{width:100%;max-width:420px;background:linear-gradient(165deg,#1B1B23,#0D0D12);
-    border:1px solid var(--line);padding:0 0 24px;overflow:hidden;
+  .pass{width:100%;max-width:430px;background:linear-gradient(165deg,#1B1B23,#0D0D12);
+    border:1px solid var(--line);overflow:hidden;
     clip-path:polygon(0 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%)}
-  .pass .strip{background:var(--red);padding:9px 22px;display:flex;align-items:center;justify-content:space-between}
-  .pass .strip span{font-size:9.5px;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:#fff}
-  .pass .hd{padding:22px 24px 0}
-  .pass h2{font-size:27px;line-height:.92}
-  .pass .tag{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim2);font-weight:800;margin-top:7px}
-  .pass form,.pass .form{padding:20px 24px 0}
-  .pass label{display:block;font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;font-weight:800;color:var(--dim2);margin-bottom:6px}
-  .idbox{width:100%;font-family:'DM Mono',monospace!important;font-size:27px!important;
-    letter-spacing:.26em;text-align:center;text-transform:uppercase;padding:12px 8px!important;
+  .pass .strip{background:var(--red);padding:9px 22px;display:flex;justify-content:space-between;gap:10px}
+  .pass .strip span{font-size:9.5px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:#fff}
+  .pass .hd{padding:21px 24px 0}
+  .pass h2{font-size:29px;line-height:.92}
+  .pass .tag{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim2);font-weight:800;margin-top:6px}
+  .gbody{padding:19px 24px 22px}
+  .glabel{display:block;font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;
+    font-weight:800;color:var(--dim2);margin:0 0 7px}
+  .gbody .glabel:not(:first-child){margin-top:16px}
+  .row2{display:flex;gap:8px;align-items:stretch}
+  .row2 .pwbox,.row2 .idbox{flex:1;min-width:0}
+  .pwbox{width:100%;font-size:16px!important;padding:12px 13px!important;background:var(--deep)!important;
+    border:1px solid var(--line)!important;color:var(--txt)!important;font-family:inherit}
+  .pwbox:focus{border-color:var(--red)!important;outline:none}
+  .idbox{font-family:'DM Mono',monospace!important;font-size:24px!important;letter-spacing:.24em;
+    text-align:center;text-transform:uppercase;padding:11px 8px!important;
     background:var(--deep)!important;border:1px solid var(--line)!important;color:var(--red)!important}
-  .idbox::placeholder{color:#33333E;letter-spacing:.26em}
-  .pwbox{width:100%;font-size:15px!important;padding:11px 12px!important;background:var(--deep)!important}
-  .pass .hint{font-size:11px;color:var(--dim2);margin:7px 0 0;line-height:1.5}
-  .pass .err{font-size:12.5px;color:#FF5566;margin:13px 0 0;min-height:1px;font-weight:600}
-  .pass .go{width:100%;margin-top:17px;padding:13px;font-size:12px}
-  .pass .alt{display:flex;gap:14px;justify-content:center;margin-top:15px;flex-wrap:wrap}
-  .pass .alt button{background:none;border:0;color:var(--dim);font-size:11.5px;
-    text-decoration:underline;text-underline-offset:3px;padding:2px}
-  .pass .alt button:hover{color:var(--txt)}
-  .known{padding:0 24px;margin-top:16px}
-  .known h5{font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--dim2);font-weight:800;margin:0 0 8px}
-  .known .ids{display:flex;gap:7px;flex-wrap:wrap}
-  .known .ids button{font-family:'DM Mono',monospace;background:var(--panel3);border:1px solid var(--line);
-    padding:5px 11px;font-size:13px;letter-spacing:.12em;color:var(--chrome)}
-  .known .ids button:hover{border-color:var(--red);color:#fff}
-  .row2{display:flex;gap:9px}
-  .row2 .pwbox{flex:1}
-  .whoami{display:flex;align-items:center;gap:9px}
-  .whoami .badge2{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;
-    background:var(--panel2);border:1px solid var(--line);padding:4px 10px;color:var(--chrome)}
-  .warnbox{border:1px solid #4A3A12;background:rgba(227,178,60,.07);padding:12px 14px;margin-top:14px;
-    font-size:12px;color:#D9BC72;line-height:1.55}
+  .idbox::placeholder{color:#33333E}
+  .peek{flex:0 0 auto;min-width:66px}
+  .ghint{font-size:11.5px;color:var(--dim2);margin:7px 0 0;line-height:1.5}
+  .err{font-size:13px;color:#FF5566;margin:14px 0 0;font-weight:600;line-height:1.5}
+  .gnote{font-size:12.5px;color:var(--gold);margin:12px 0 0;line-height:1.5}
+  .gcaps{font-size:12px;color:var(--gold);margin:9px 0 0;font-weight:600}
+  .gcaps:before{content:"\26A0";margin-right:6px}
+  .go{width:100%;margin-top:18px;padding:14px;font-size:12px}
+  .galt{display:flex;gap:14px;justify-content:center;margin-top:15px;flex-wrap:wrap}
+  .galt button{background:none;border:0;color:var(--dim);font-size:12px;
+    text-decoration:underline;text-underline-offset:3px;padding:4px;cursor:pointer}
+  .galt button:hover{color:var(--txt)}
+  .gcards{display:flex;flex-direction:column;gap:8px}
+  .gcard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+    background:var(--panel2);border:1px solid var(--line);padding:14px 15px;cursor:pointer;
+    transition:border-color .12s,background .12s}
+  .gcard:hover{border-color:var(--red);background:var(--panel3)}
+  .gcid{font-family:'DM Mono',monospace;font-size:20px;letter-spacing:.2em;color:var(--red)}
+  .gcmeta{font-size:11px;color:var(--dim2);flex:1}
+  .gcgo{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  .gcard:hover .gcgo{color:var(--txt)}
+  .gwho{display:flex;align-items:center;justify-content:space-between;gap:10px;
+    background:var(--panel2);border:1px solid var(--line);padding:11px 14px}
+  .gempty{font-size:13.5px;color:var(--dim);line-height:1.6;margin:0}
+  .gfoot{padding:11px 24px 14px;border-top:1px solid var(--line);
+    font-family:'DM Mono',monospace;font-size:10px;color:var(--dim2);letter-spacing:.05em}
+  .warnbox{border:1px solid #4A3A12;background:rgba(227,178,60,.07);padding:12px 14px;margin-top:15px;
+    font-size:12.5px;color:#D9BC72;line-height:1.55}
+  [data-theme="handbill"] .pass,[data-theme="newsprint"] .pass{background:linear-gradient(165deg,var(--panel),var(--panel2))}
+  @media(max-width:520px){
+    .gate{padding:12px;align-items:start}
+    .pass{max-width:100%}
+    .gbody{padding:17px 17px 20px}
+    .pass .hd{padding:18px 17px 0}
+    .gfoot{padding:10px 17px 12px}
+  }
+
   .keepme{display:flex;align-items:center;gap:9px;margin-top:16px;font-size:12.5px;color:var(--dim);cursor:pointer;font-weight:400}
   .keepme input{width:16px;height:16px;accent-color:var(--red);cursor:pointer;flex:0 0 16px}
   .keepme:hover{color:var(--txt)}
@@ -655,6 +713,9 @@
   .wnote{font-size:11.5px;color:var(--dim2);margin:13px 0 0;line-height:1.55}
 
   /* ---------- data health ---------- */
+  .anchorrow{display:grid;grid-template-columns:1fr 130px 78px auto;gap:11px;align-items:center;
+    padding:7px 0;border-bottom:1px solid var(--rowline);font-size:13px}
+  @media(max-width:560px){.anchorrow{grid-template-columns:1fr auto}}
   .healthrow{display:grid;grid-template-columns:150px 1fr 130px 68px;gap:12px;align-items:center;
     padding:7px 0 7px 10px;border-bottom:1px solid var(--rowline);border-left:2px solid var(--bc)}
   .healthrow .hn{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--dim2);text-align:right}
@@ -669,51 +730,11 @@
   <div class="pass">
     <div class="strip"><span>Talent credential</span><span id="gateMode">Sign in</span></div>
     <div class="hd">
-      <h2 id="gateTitle">Matchbook</h2>
+      <h2>Matchbook</h2>
       <div class="tag">WWE watch ledger</div>
     </div>
-    <form class="form" id="gForm" autocomplete="on">
-      <label for="gid">Ledger ID</label>
-      <input class="idbox" type="text" id="gid" name="username" maxlength="6" placeholder="L22A1" autocomplete="username" spellcheck="false" autocapitalize="characters">
-      <p class="hint" id="gidHint">4 to 6 letters and numbers.</p>
-
-      <div style="margin-top:15px">
-        <label for="gpw">Password</label>
-        <div class="row2">
-          <input class="pwbox" type="password" id="gpw" name="password" autocomplete="current-password">
-          <button class="btn" id="gShow" type="button" title="Show password">Show</button>
-        </div>
-      </div>
-
-      <div id="gExtra" style="display:none;margin-top:15px">
-        <label for="gpw2">Confirm password</label>
-        <div class="row2">
-          <input class="pwbox" type="password" id="gpw2" name="password2" autocomplete="new-password">
-          <button class="btn" id="gShow2" type="button" title="Show or hide both passwords">Show</button>
-        </div>
-        <div class="warnbox" id="gLegacy" style="display:none">
-          There is already a ledger saved on this device from before profiles existed.
-          <label style="display:flex;align-items:center;gap:8px;margin-top:9px;color:var(--txt);text-transform:none;letter-spacing:0;font-size:12.5px;font-weight:400">
-            <input type="checkbox" id="gImport" checked> Move it into this profile
-          </label>
-        </div>
-      </div>
-
-      <p class="err" id="gErr"></p>
-      <label class="keepme" id="gKeepWrap">
-          <input type="checkbox" id="gKeep"> Keep me signed in on this device
-        </label>
-        <button class="btn primary go" id="gGo" type="submit">Sign in</button>
-      <div class="alt">
-        <button type="button" id="gToggle">Create a profile</button>
-        <button type="button" id="gSuggest" style="display:none">Suggest an ID</button>
-        <button type="button" id="gRecover">Use a recovery key</button>
-      </div>
-    </form>
-    <div class="known" id="gKnown" style="display:none">
-      <h5>On this device</h5>
-      <div class="ids" id="gIds"></div>
-    </div>
+    <div id="gatePanel"></div>
+    <div class="gfoot" id="gateFoot"></div>
   </div>
 </div>
 
@@ -935,6 +956,46 @@
     </div>
 
     <div class="card2">
+      <h3>Fix event dates automatically</h3>
+      <p>Every pay-per-view date except WrestleMania is a guess at which Sunday it fell on. Wikipedia states
+      the real date in the opening line of each event's article, so this reads it and corrects the ledger.
+      A date is only accepted within 120 days of the estimate, so a mismatched article cannot quietly move
+      an event to the wrong year.</p>
+      <div class="acts">
+        <button class="btn primary" id="btnFixDates">Check event dates</button>
+        <button class="btn" id="btnStopDates" style="display:none">Stop</button>
+      </div>
+      <pre id="dateLog" style="display:none;font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);
+        background:var(--deep);border:1px solid var(--line);padding:11px 13px;margin:12px 0 0;
+        white-space:pre-wrap;line-height:1.6;max-height:240px;overflow:auto"></pre>
+    </div>
+
+    <div class="card2">
+      <h3>Episode numbering</h3>
+      <p>The generator assumes a weekly show never missed its slot. Raw did &mdash; it ran 20 episodes ahead
+      of reality by 2012. Anchors pin numbering to dates you know are right and spread the correction between
+      them. Weeks where two episodes share a number are marked &ldquo;Number approx.&rdquo; in the ledger.</p>
+      <div id="anchorList" style="margin-bottom:12px"></div>
+      <div class="grid2">
+        <div class="field"><label for="anShow">Show</label><select id="anShow"></select></div>
+        <div class="field"><label for="anNum">Episode number</label><input type="number" id="anNum" min="1" placeholder="1000"></div>
+        <div class="field"><label for="anDate">Aired on</label><input type="date" id="anDate"></div>
+      </div>
+      <div class="acts"><button class="btn primary" id="btnAddAnchor">Add anchor</button></div>
+    </div>
+
+    <div class="card2">
+      <h3>Move to another device</h3>
+      <p>Storage is per browser, so your phone starts empty. Copy this code on one device and paste it on the
+      other &mdash; it carries ticks, ratings, cards, portraits and your watchlist.</p>
+      <div class="acts">
+        <button class="btn" id="btnCopyTransfer">Copy transfer code</button>
+        <button class="btn primary" id="btnApplyTransfer">Apply pasted code</button>
+      </div>
+      <textarea id="transferBox" placeholder="Paste a transfer code here, then press Apply" style="margin-top:11px"></textarea>
+    </div>
+
+    <div class="card2">
       <h3>Back up your ticks</h3>
       <p>Ticks, ratings, notes, match cards and title fixes. The catalogue itself is rebuilt on every load, so this file stays small.</p>
       <div class="acts">
@@ -984,7 +1045,19 @@
    rows: "SmackDown aired Thursdays 1999-2005, Fridays to 2016,
    Tuesdays to 2019, Fridays since." Episodes generate from that.
    ============================================================ */
-const BUILD_ID='2026-07-29 15:34 UTC';
+const BUILD_ID='2026-07-29 22:12 UTC';
+
+/* Known (episode number, date) pairs. The generator assumes a weekly show
+   never missed its slot, which is false -- Raw was pre-empted often enough to
+   run 20 episodes ahead of reality by 2012. Anchors pin the numbering to
+   dates we know, and the offset is interpolated between them. Add your own
+   under Data, or ship them in data/anchors.json. */
+const ANCHORS=[
+  {show:'raw',       num:1,    date:'1993-01-11'},
+  {show:'raw',       num:1000, date:'2012-07-23'},
+  {show:'smackdown', num:1,    date:'1999-08-26'},
+  {show:'smackdown', num:1000, date:'2018-10-16'}
+];
 const D = {SUN:0,MON:1,TUE:2,WED:3,THU:4,FRI:5,SAT:6};
 
 const SHOWS = [
@@ -1655,6 +1728,7 @@ const Auth={
   }
 };
 
+/* legacy key kept for the pre-profiles migration path */
 function blankState(){
   return {seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},
           queue:[],nope:{},fav:{},faces:{},faceSrc:{},feuds:[],from:null,to:null};
@@ -1769,6 +1843,57 @@ function nthSunday(year, month, nth){
   return addDays(first, ((7-first.getDay())%7) + (nth-1)*7);
 }
 
+/* Shift generated numbering onto the anchors, interpolating the offset by
+   date between them and holding it flat outside the outermost pair. */
+function applyAnchors(eps, showId){
+  const mine=(ANCHORS||[])
+    .concat((typeof REPO_ANCHORS!=='undefined'?REPO_ANCHORS:[]))
+    .concat((typeof state!=='undefined' && state && state.anchors)?state.anchors:[])
+    .filter(a=>a && a.show===showId && a.num>0 && /^\d{4}-\d{2}-\d{2}$/.test(a.date||''))
+    .sort((a,b)=>a.date<b.date?-1:1);
+  if(!mine.length || !eps.length) return eps;
+
+  const pts=[];
+  for(const a of mine){
+    let best=null, bestGap=Infinity;
+    for(const e of eps){
+      const gap=Math.abs(parse(e.date)-parse(a.date));
+      if(gap<bestGap){ bestGap=gap; best=e; }
+    }
+    if(best && bestGap<=1000*60*60*24*10) pts.push({t:parse(a.date).getTime(), off:a.num-best.num});
+  }
+  if(!pts.length) return eps;
+
+  const offAt=t=>{
+    if(t<=pts[0].t) return pts[0].off;
+    if(t>=pts[pts.length-1].t) return pts[pts.length-1].off;
+    for(let i=0;i<pts.length-1;i++){
+      const a=pts[i], b=pts[i+1];
+      if(t>=a.t && t<=b.t){
+        const f=(t-a.t)/(b.t-a.t||1);
+        return a.off+(b.off-a.off)*f;
+      }
+    }
+    return 0;
+  };
+  /* The offset drifts by a fraction of an episode per week, so forcing a
+     strict +1 would cancel the whole correction out. Equal numbers are allowed
+     instead: where two consecutive weeks share a number, that is the model
+     admitting reality probably had no show that week. Marked so the ledger
+     can say so rather than looking like a bug. */
+  let prev=-Infinity;
+  for(const e of eps){
+    let n=e.num+Math.round(offAt(parse(e.date).getTime()));
+    if(n<prev) n=prev;
+    if(n<1) n=1;
+    e.approxNum = (n===prev);
+    prev=n; e.num=n; e.title=SHOW_META_SHORT[showId]+' #'+n;
+  }
+  return eps;
+}
+const SHOW_META_SHORT={};
+SHOWS.forEach(s=>SHOW_META_SHORT[s.id]=s.short);
+
 function buildCatalogue(){
   const out=[];
   for(const show of SHOWS){
@@ -1785,6 +1910,10 @@ function buildCatalogue(){
         n++; d = addDays(d,7);
       }
     }
+  }
+  for(const s of SHOWS){
+    const mine=out.filter(e=>e.show===s.id);
+    if(mine.length) applyAnchors(mine, s.id);
   }
   for(const [date,title,n] of MANIA)
     out.push({id:'event:'+date, show:'event', date, title, run:240, kind:'event',
@@ -2188,7 +2317,9 @@ function renderLedger(){
     const meta=SHOW_META[e.show], seen=isSeen(e.id), rec=state.seen[e.id]||{};
     const fav=!!(state.fav||{})[e.id];
     const faces=(prefs.faces!==false && e.card) ? cardFaces(e.card,2) : '';
-    const badge = e.kind==='event' ? '<span class="badge ev">Event</span>'+(e.est?'<span class="badge est">Est. date</span>':'') : '';
+    const badge = e.kind==='event'
+      ? '<span class="badge ev">Event</span>'+(e.est?'<span class="badge est">Est. date</span>':'')
+      : (e.approxNum?'<span class="badge est" title="Numbering is uncertain here \u2014 the show was probably pre-empted this week">Number approx.</span>':'');
     const spot=SPOT&&SPOT.ids.has(e.id), queued=(state.queue||[]).includes(e.id);
     out.push(
       `<div class="row${seen?' seen':''}${spot?' spot':''}${queued?' queued':''}" data-id="${e.id}" style="--bc:${meta.bc}" tabindex="0" role="button" aria-pressed="${seen}">
@@ -2780,7 +2911,7 @@ function tickerDiagnostics(){
    profile, on every device, and live in version control rather
    than in one browser. Absent file, no problem.
    ============================================================ */
-let REPO_DATA=[], REPO_STATE='none', REPO_FEUDS=[];
+let REPO_DATA=[], REPO_STATE='none', REPO_FEUDS=[], REPO_ANCHORS=[];
 
 async function loadRepoData(){
   try{
@@ -2800,6 +2931,14 @@ async function loadRepoData(){
         .map((f,i)=>Object.assign({id:'r'+i, shows:['raw','smackdown','event']},f));
     }
   }catch(e){ REPO_FEUDS=[]; }
+  try{
+    const r=await fetch('./data/anchors.json',{cache:'no-cache'});
+    if(r.ok){
+      const j=await r.json();
+      const rows=Array.isArray(j)?j:(j.anchors||[]);
+      REPO_ANCHORS=rows.filter(a=>a&&a.show&&a.num>0&&/^\d{4}-\d{2}-\d{2}$/.test(a.date||''));
+    }
+  }catch(e){ REPO_ANCHORS=[]; }
 }
 
 /* provenance: where did this record's detail come from */
@@ -3884,6 +4023,35 @@ document.getElementById('feudFaces').onclick=async function(){
 };
 document.getElementById('btnExportCorr').onclick=exportCorrections;
 document.getElementById('btnBinge').onclick=openBinge;
+function renderAnchors(){
+  const el=document.getElementById('anchorList'); if(!el) return;
+  const built=(ANCHORS||[]).map(a=>Object.assign({},a,{src:'built in'}));
+  const repo=(typeof REPO_ANCHORS!=='undefined'?REPO_ANCHORS:[]).map(a=>Object.assign({},a,{src:'from repo'}));
+  const mine=(state.anchors||[]).map((a,i)=>Object.assign({},a,{src:'yours',idx:i}));
+  const all=built.concat(repo).concat(mine);
+  el.innerHTML=all.length?all.map(a=>{
+    const m=SHOW_META[a.show];
+    return `<div class="anchorrow"><span class="upname">${esc(m?m.short:a.show)} #${a.num}</span>
+      <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--dim)">${fmtDate(a.date)}</span>
+      <span style="font-size:9.5px;color:var(--dim2);text-transform:uppercase;letter-spacing:.11em">${a.src}</span>
+      ${a.src==='yours'?`<button class="btn sm" data-anchor="${a.idx}">Remove</button>`:'<span></span>'}</div>`;
+  }).join(''):'<p style="color:var(--dim);font-size:13px">No anchors yet.</p>';
+}
+document.getElementById('anchorList').addEventListener('click',ev=>{
+  const b=ev.target.closest('[data-anchor]'); if(!b) return;
+  state.anchors=(state.anchors||[]).filter((_,i)=>i!==Number(b.dataset.anchor));
+  save(); rebuildCatalogue(); renderAnchors(); renderAll(); toast('Anchor removed');
+});
+document.getElementById('btnAddAnchor').onclick=()=>{
+  const show=document.getElementById('anShow').value;
+  const num=Number(document.getElementById('anNum').value);
+  const date=document.getElementById('anDate').value;
+  if(!show||!num||!date){ toast('Needs a show, a number and a date'); return; }
+  state.anchors=(state.anchors||[]).concat([{show,num,date}]);
+  save(); rebuildCatalogue(); renderAnchors(); renderAll();
+  document.getElementById('anNum').value='';
+  toast('Anchor added \u2014 numbering rebuilt');
+};
 document.getElementById('btnFixDates').onclick=async function(){
   const log=document.getElementById('dateLog'), stop=document.getElementById('btnStopDates');
   this.disabled=true; stop.style.display='inline-block'; log.style.display='block';
@@ -3954,7 +4122,7 @@ document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   if(t.dataset.tab==='feuds') renderFeuds();
   if(t.dataset.tab==='stats'){ renderStats(); renderPace(); }
   if(t.dataset.tab==='shows') renderShows();
-  if(t.dataset.tab==='data'){ syncUI(); paintDevice(); renderHealth(); startDiag(); } else stopDiag();
+  if(t.dataset.tab==='data'){ syncUI(); paintDevice(); renderHealth(); renderAnchors(); startDiag(); } else stopDiag();
 });
 let toastTimer;
 function toast(m, action){
@@ -3985,6 +4153,7 @@ function fillSelects(){
   const shows=SHOWS.concat([SHOW_META['event']]);
   $('fShow').innerHTML='<option value="">Every show</option>'+shows.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
   $('addShow').innerHTML=shows.map(s=>`<option value="${s.id}"${s.id==='event'?' selected':''}>${esc(s.name)}</option>`).join('');
+  document.getElementById('anShow').innerHTML=SHOWS.map(s=>`<option value="${s.id}"${s.id==='raw'?' selected':''}>${esc(s.name)}</option>`).join('');
   const years=[...new Set(CAT.map(e=>e.date.slice(0,4)))].sort();
   $('fYear').innerHTML='<option value="">Every year</option>'+years.map(y=>`<option>${y}</option>`).join('');
 }
@@ -4024,187 +4193,321 @@ async function boot(data){
 
 
 /* ============================================================
-   12. LOCK SCREEN
-   ============================================================ */
-let gateMode='in', gateBusy=false;   // 'in' | 'new' | 'recover'
-const G = id => document.getElementById(id);
+   12. SIGN IN
+   Rewritten as a single render function. The previous version had
+   three separate places setting the password field's type, which
+   fought each other -- pressing Show could leave the field masked.
+   Now exactly one function decides what the panel looks like, and
+   the typed value lives in `draft` so re-rendering never loses it.
 
-function gateErr(m){ G('gErr').textContent=m||''; }
+   The password is VISIBLE by default. This is your own machine and
+   there is no account to steal; typing a long password blind into
+   a box that then rejects it is the worse problem.
+   ============================================================ */
+const G = id => document.getElementById(id);
+let view='pick';                 // pick | signin | new | recover
+let draft={id:'',pw:'',pw2:'',key:''};
+let pwShown=true;
+let gateBusy=false, gateErrMsg='', gateNote='', capsOn=false;
+let profileList=[], legacyFound=false;
+
+function gateErr(m){ gateErrMsg=m||''; renderGate(); }
 function randomId(){
   const L='ABCDEFGHJKLMNPQRSTUVWXYZ', N='23456789';
   const p=c=>c[Math.floor(Math.random()*c.length)];
   return p(L)+p(N)+p(N)+p(L)+p(N);
 }
-async function paintKnown(){
-  const ids=await Auth.list();
-  G('gKnown').style.display = ids.length ? 'block':'none';
-  G('gIds').innerHTML = ids.map(i=>`<button type="button" data-id="${i}">${i}</button>`).join('');
+
+function renderGate(){
+  const panel=G('gatePanel'); if(!panel) return;
+  const modeLabel={pick:'Choose a profile',signin:'Sign in',new:'New profile',recover:'Recovery'};
+  G('gateMode').textContent=modeLabel[view]||'Sign in';
+
+  const err=gateErrMsg?`<p class="err">${esc(gateErrMsg)}</p>`:'';
+  const note=gateNote?`<p class="gnote">${gateNote}</p>`:'';
+  const caps=capsOn?`<p class="gcaps">Caps Lock is on</p>`:'';
+  const eye=`<button class="btn peek" type="button" data-act="peek">${pwShown?'Hide':'Show'}</button>`;
+  const pwType=pwShown?'text':'password';
+  const keep=`<label class="keepme"><input type="checkbox" data-act="keep" ${prefsKeep()?'checked':''}> Keep me signed in on this device</label>`;
+
+  if(view==='pick'){
+    panel.innerHTML=`
+      <div class="gbody">
+        ${profileList.length?`
+          <div class="glabel">On this device</div>
+          <div class="gcards">
+            ${profileList.map(p=>`
+              <button class="gcard" type="button" data-pick="${esc(p.id)}">
+                <span class="gcid">${esc(p.id)}</span>
+                <span class="gcmeta">${p.made?'created '+esc(p.made):'ledger'}</span>
+                <span class="gcgo">Continue &rarr;</span>
+              </button>`).join('')}
+          </div>`:`
+          <p class="gempty">No profiles on this device yet. Create one and your ledger is encrypted under it.</p>`}
+        ${err}${note}
+        <div class="galt">
+          <button type="button" data-act="new">Create a new profile</button>
+          <button type="button" data-act="recover">Use a recovery key</button>
+        </div>
+      </div>`;
+  }
+
+  if(view==='signin'){
+    panel.innerHTML=`
+      <form class="gbody" id="gForm" autocomplete="on">
+        <div class="glabel">Signing in as</div>
+        <div class="gwho"><span class="gcid">${esc(draft.id)}</span>
+          <button class="btn sm" type="button" data-act="back">Change</button></div>
+        <input type="text" name="username" value="${esc(draft.id)}" autocomplete="username"
+               style="position:absolute;left:-9999px" tabindex="-1" aria-hidden="true">
+        <label class="glabel" for="gpw">Password</label>
+        <div class="row2">
+          <input class="pwbox" type="${pwType}" id="gpw" name="password" autocomplete="current-password"
+                 value="${esc(draft.pw)}" spellcheck="false" autocapitalize="off">
+          ${eye}
+        </div>
+        ${caps}${err}${note}
+        ${keep}
+        <button class="btn primary go" type="submit" ${gateBusy?'disabled':''}>${gateBusy?'Working\\u2026':'Sign in'}</button>
+        <div class="galt">
+          <button type="button" data-act="recover">Forgotten it? Use a recovery key</button>
+        </div>
+      </form>`;
+  }
+
+  if(view==='new'){
+    panel.innerHTML=`
+      <form class="gbody" id="gForm" autocomplete="on">
+        <label class="glabel" for="gid">Ledger ID</label>
+        <div class="row2">
+          <input class="idbox" type="text" id="gid" name="username" maxlength="6" placeholder="L22A1"
+                 value="${esc(draft.id)}" autocomplete="username" spellcheck="false" autocapitalize="characters">
+          <button class="btn sm" type="button" data-act="suggest">Suggest</button>
+        </div>
+        <p class="ghint">Four to six letters and numbers. This is what you sign in with.</p>
+        <label class="glabel" for="gpw">Password</label>
+        <div class="row2">
+          <input class="pwbox" type="${pwType}" id="gpw" name="password" autocomplete="new-password"
+                 value="${esc(draft.pw)}" spellcheck="false" autocapitalize="off">
+          ${eye}
+        </div>
+        <label class="glabel" for="gpw2">Confirm password</label>
+        <input class="pwbox" type="${pwType}" id="gpw2" name="password_confirm" autocomplete="new-password"
+               value="${esc(draft.pw2)}" spellcheck="false" autocapitalize="off">
+        <p class="ghint">${draft.pw.length?(draft.pw.length<6?'<span style="color:#FF5566">'+draft.pw.length+' of 6 characters minimum</span>':draft.pw2&&draft.pw!==draft.pw2?'<span style="color:#FF5566">The two do not match yet</span>':'<span style="color:var(--gold)">Looks good</span>'):'At least six characters.'}</p>
+        ${legacyFound?`<div class="warnbox">
+          There is already a ledger on this device from before profiles existed.
+          <label class="keepme" style="margin-top:8px"><input type="checkbox" data-act="legacy" checked> Move it into this profile</label>
+        </div>`:''}
+        ${caps}${err}${note}
+        ${keep}
+        <button class="btn primary go" type="submit" ${gateBusy?'disabled':''}>${gateBusy?'Working\\u2026':'Create profile'}</button>
+        <div class="galt"><button type="button" data-act="back">Back</button></div>
+      </form>`;
+  }
+
+  if(view==='recover'){
+    panel.innerHTML=`
+      <form class="gbody" id="gForm">
+        <label class="glabel" for="gid">Ledger ID</label>
+        <input class="idbox" type="text" id="gid" maxlength="6" placeholder="L22A1"
+               value="${esc(draft.id)}" spellcheck="false" autocapitalize="characters">
+        <label class="glabel" for="gkey">Recovery key</label>
+        <textarea id="gkey" class="pwbox" style="min-height:76px;font-family:'DM Mono',monospace;font-size:12px"
+                  placeholder="Paste the recoveryKey value from your recovery file">${esc(draft.key)}</textarea>
+        ${err}${note}
+        <button class="btn primary go" type="submit" ${gateBusy?'disabled':''}>${gateBusy?'Working\\u2026':'Unlock'}</button>
+        <div class="galt"><button type="button" data-act="back">Back</button></div>
+      </form>`;
+  }
+
+  G('gateFoot').innerHTML='Build '+BUILD_ID+' &middot; '+profileList.length+
+    ' profile'+(profileList.length===1?'':'s')+' found on this device';
+
+  const f=G('gpw')||G('gid');
+  if(f && !gateBusy){ try{ f.focus(); f.setSelectionRange(f.value.length,f.value.length); }catch(e){} }
 }
-G('gIds').addEventListener('click',ev=>{
-  const b=ev.target.closest('button[data-id]'); if(!b) return;
-  setMode('in'); G('gid').value=b.dataset.id; G('gpw').focus();
+
+function prefsKeep(){ return draft.keep!==false; }
+
+/* one delegated listener for the whole panel -- nothing else touches the fields */
+document.addEventListener('click',ev=>{
+  const b=ev.target.closest('#gatePanel [data-act], #gatePanel [data-pick]');
+  if(!b) return;
+  const pick=b.dataset.pick;
+  if(pick){ draft.id=pick; draft.pw=''; gateErrMsg=''; view='signin'; renderGate(); return; }
+  const a=b.dataset.act;
+  if(a==='peek'){ pwShown=!pwShown; renderGate(); }
+  if(a==='new'){ view='new'; draft={id:randomId(),pw:'',pw2:'',key:''}; gateErrMsg=''; renderGate(); }
+  if(a==='recover'){ view='recover'; draft.key=''; gateErrMsg=''; renderGate(); }
+  if(a==='back'){ view=profileList.length?'pick':'new'; gateErrMsg=''; renderGate(); }
+  if(a==='suggest'){ draft.id=randomId(); renderGate(); }
+  if(a==='keep'){ draft.keep=b.checked; }
+  if(a==='legacy'){ draft.legacy=b.checked; }
 });
 
-function setMode(m){
-  gateMode=m;
-  const isNew=m==='new', isRec=m==='recover';
-  G('gateMode').textContent = isNew?'New profile' : isRec?'Recovery' : 'Sign in';
-  G('gExtra').style.display = isNew?'block':'none';
-  G('gSuggest').style.display = isNew?'inline':'none';
-  G('gToggle').textContent = isNew||isRec ? 'Back to sign in' : 'Create a profile';
-  G('gGo').textContent = isNew?'Create profile' : isRec?'Unlock' : 'Sign in';
-  G('gRecover').style.display = isRec?'none':'inline';
-  G('gpw').placeholder = isRec?'Paste recovery key':'';
-  G('gpw').type = isRec?'text':(pwVisible?'text':'password');
-  G('gpw').setAttribute('autocomplete', isNew?'new-password':'current-password');
-  G('gKeepWrap').style.display = isRec?'none':'flex';
-  G('gShow').style.display = isRec?'none':'inline-block';
-  applyPwVisibility();
-  G('gidHint').textContent = isNew
-    ? 'Pick 4 to 6 letters and numbers. This is what you sign in with, so make it something you will not forget.'
-    : '4 to 6 letters and numbers.';
-  gateErr('');
-}
-G('gToggle').onclick=()=>setMode(gateMode==='in'?'new':'in');
-G('gRecover').onclick=()=>setMode('recover');
-G('gSuggest').onclick=()=>{ G('gid').value=randomId(); gateErr(''); };
-let pwVisible=false;
-function togglePw(){
-  pwVisible=!pwVisible;
-  applyPwVisibility();
-}
-function applyPwVisibility(){
-  if(gateMode!=='recover') G('gpw').type = pwVisible?'text':'password';
-  G('gpw2').type = pwVisible?'text':'password';
-  const t = pwVisible?'Hide':'Show';
-  G('gShow').textContent=t; G('gShow2').textContent=t;
-}
-G('gShow').onclick=togglePw;
-G('gShow2').onclick=togglePw;
-G('gid').addEventListener('input',e=>{
-  e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
+/* keep the draft in step without re-rendering on every keystroke */
+document.addEventListener('input',ev=>{
+  const t=ev.target;
+  if(!t.closest||!t.closest('#gatePanel')) return;
+  if(t.id==='gid'){ t.value=t.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6); draft.id=t.value; }
+  if(t.id==='gpw'){ draft.pw=t.value; if(view==='new') refreshHint(); }
+  if(t.id==='gpw2'){ draft.pw2=t.value; if(view==='new') refreshHint(); }
+  if(t.id==='gkey'){ draft.key=t.value; }
 });
-/* The <form> exists so password managers recognise the fields. It must never
-   submit natively -- that reloads the page and writes the password into the URL. */
-G('gForm').addEventListener('submit',function(e){ e.preventDefault(); e.stopPropagation(); doGate(); return false; });
-G('gGo').addEventListener('click',function(e){ e.preventDefault(); doGate(); });
+function refreshHint(){
+  const hints=document.querySelectorAll('#gatePanel .ghint');
+  const h=hints[hints.length-1]; if(!h) return;
+  h.innerHTML = draft.pw.length
+    ? (draft.pw.length<6 ? '<span style="color:#FF5566">'+draft.pw.length+' of 6 characters minimum</span>'
+      : (draft.pw2 && draft.pw!==draft.pw2 ? '<span style="color:#FF5566">The two do not match yet</span>'
+      : '<span style="color:var(--gold)">Looks good</span>'))
+    : 'At least six characters.';
+}
+document.addEventListener('keyup',ev=>{
+  if(!ev.target.closest||!ev.target.closest('#gatePanel')) return;
+  let on=false;
+  try{ on=ev.getModifierState&&ev.getModifierState('CapsLock'); }catch(e){}
+  if(on!==capsOn){
+    capsOn=on;
+    const el=document.querySelector('#gatePanel .gcaps');
+    if(on && !el){ renderGate(); }
+    else if(!on && el){ el.remove(); }
+  }
+});
+document.addEventListener('submit',ev=>{
+  if(!ev.target.closest||!ev.target.closest('#gate')) return;
+  ev.preventDefault(); ev.stopPropagation();
+  submitGate();
+  return false;
+});
 
-async function doGate(){
+async function submitGate(){
   if(gateBusy) return;
-  const id=G('gid').value.trim().toUpperCase(), pw=G('gpw').value;
-  gateErr('');
-  if(!ID_RE.test(id)) return gateErr('An ID is 4 to 6 letters and numbers, like L22A1.');
-  gateBusy=true; G('gGo').disabled=true; G('gGo').textContent='Working\u2026';
+  gateErrMsg=''; gateNote='';
+  const id=(draft.id||'').trim().toUpperCase();
+  if(view!=='pick' && !ID_RE.test(id)) return gateErr('An ID is four to six letters and numbers, like L22A1.');
+  gateBusy=true; renderGate();
   try{
     let data;
-    if(gateMode==='new'){
-      if(pw!==G('gpw2').value) throw new Error('Those passwords do not match.');
+    if(view==='new'){
+      if(draft.pw!==draft.pw2) throw new Error('The two passwords do not match.');
       let seed=blankState();
-      if(G('gImport').checked && G('gLegacy').style.display!=='none'){
+      if(legacyFound && draft.legacy!==false){
         const old=await RAW.get(LEGACY_KEY);
         if(old){ try{ seed=Object.assign(seed,JSON.parse(old)); }catch(e){} }
       }
-      data=await Auth.create(id,pw,seed);
-    } else if(gateMode==='recover'){
-      data=await Auth.unlockWithRecovery(id,pw.trim());
+      data=await Auth.create(id,draft.pw,seed);
+    } else if(view==='recover'){
+      data=await Auth.unlockWithRecovery(id,(draft.key||'').trim());
     } else {
-      data=await Auth.unlock(id,pw);
+      data=await Auth.unlock(id,draft.pw);
     }
     await Auth.rememberForTab();
-    if(G('gKeep').checked){
-      const ok=await Device.remember(Auth.id,Auth.key);
-      if(!ok) console.warn('this browser would not store a device key');
-    } else {
-      await Device.forget();
-    }
-    G('gpw').value=''; if(G('gpw2')) G('gpw2').value='';
+    if(prefsKeep()) await Device.remember(Auth.id,Auth.key); else await Device.forget();
+    const wasNew=(view==='new');
+    draft={id:'',pw:'',pw2:'',key:''};
     try{
       await boot(data);
       G('gate').classList.remove('on');
-      if(gateMode==='new' && prefs.autoFaces!==false){
-        setTimeout(()=>populatePortraits(),1200);   // after the ledger is up, never blocking it
-      }
     }catch(err){
       console.error(err);
       throw new Error('Signed in, but the ledger would not open: '+(err.message||err));
     }
+    if(wasNew && prefs.autoFaces!==false) setTimeout(()=>populatePortraits(),1200);
   }catch(e){
+    gateBusy=false;
     gateErr(e.message||'That did not work.');
-  }finally{
-    gateBusy=false; G('gGo').disabled=false; setMode(gateMode);
+    return;
   }
+  gateBusy=false;
+}
+
+async function refreshProfiles(){
+  try{ 
+    const ids=await Auth.list();
+    profileList=[];
+    for(const id of ids){
+      let made='';
+      try{ const raw=await RAW.get(PROFILE_PREFIX+id); if(raw) made=(JSON.parse(raw).made||''); }catch(e){}
+      profileList.push({id,made});
+    }
+  }catch(e){ profileList=[]; }
+  legacyFound=!!(await RAW.get(LEGACY_KEY));
 }
 
 async function lockUp(){
   await Device.forget();
   Auth.lock();
+  await refreshProfiles();
+  draft={id:'',pw:'',pw2:'',key:''};
+  view=profileList.length?'pick':'new';
+  if(view==='new') draft.id=randomId();
+  gateErrMsg=''; gateNote='';
   G('gate').classList.add('on');
-  G('gid').value=''; G('gpw').value='';
-  setMode('in'); paintKnown();
+  renderGate();
 }
 G('btnLock').onclick=lockUp;
 G('btnLock2').onclick=lockUp;
 
-G('btnForget').onclick=async()=>{
-  await Device.forget();
-  await paintDevice();
-  toast('This device will ask for your password next time');
-};
-async function paintDevice(){
-  const el=document.getElementById('devInfo'); if(!el) return;
-  if(!Device.supported()){
-    el.innerHTML='Staying signed in is unavailable in this browser, so you will be asked for your password each visit.';
-    return;
-  }
-  const on=await Device.isOn();
-  el.innerHTML = on
-    ? 'This device is remembered until <b>'+new Date(on.exp).toISOString().slice(0,10)+'</b>. The key that opens your ledger is wrapped by a device key held in IndexedDB and marked non-extractable, so scripts cannot read it out. Signing out erases it.'
-    : 'This device is not remembered &mdash; your password is required each visit.';
-}
 G('btnRecovery').onclick=async()=>{
   const k=await Auth.recoveryKey();
   const blob=new Blob([JSON.stringify({id:Auth.id,recoveryKey:k,
-    note:'Paste this key into the recovery box on the sign-in screen to open profile '+Auth.id+' without its password. Anyone holding this file can open that profile.'},null,2)],
+    note:'Paste this key into the recovery box on the sign-in screen to open profile '+Auth.id+
+         ' without its password. Anyone holding this file can open that profile.'},null,2)],
     {type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
   a.download='matchbook-recovery-'+Auth.id+'.json'; a.click(); URL.revokeObjectURL(a.href);
   toast('Recovery key downloaded');
 };
+G('btnForget').onclick=async()=>{
+  await Device.forget(); await paintDevice();
+  toast('This device will ask for your password next time');
+};
+async function paintDevice(){
+  const el=G('devInfo'); if(!el) return;
+  if(!Device.supported()){
+    el.innerHTML='Staying signed in is unavailable in this browser, so your password is needed each visit.';
+    return;
+  }
+  const on=await Device.isOn();
+  el.innerHTML = on
+    ? 'This device is remembered until <b>'+new Date(on.exp).toISOString().slice(0,10)+
+      '</b>. The key that opens your ledger is wrapped by a device key held in IndexedDB and marked '+
+      'non-extractable, so scripts cannot read it out. Signing out erases it.'
+    : 'This device is not remembered &mdash; your password is required each visit.';
+}
 G('btnChangePw').onclick=async()=>{
-  const pw=prompt('New password for '+Auth.id+' (6 characters or more):');
+  const pw=prompt('New password for '+Auth.id+' (six characters or more):');
   if(pw===null) return;
-  try{
-    await Auth.changePassword(pw);
-    await Auth.rememberForTab();
-    toast('Password changed');
-  }catch(e){ toast(e.message); }
+  try{ await Auth.changePassword(pw); await Auth.rememberForTab();
+       if(await Device.isOn()) await Device.remember(Auth.id,Auth.key);
+       toast('Password changed'); }
+  catch(e){ toast(e.message); }
 };
 
 /* ---------- start ---------- */
 (async function start(){
   applyTheme(await RAW.get(THEME_KEY) || 'tron');
   await loadPrefs();
-  await loadRepoData();          // must precede any rebuildCatalogue
-  await paintKnown();
-  const legacy=await RAW.get(LEGACY_KEY);
-  G('gLegacy').style.display = legacy ? 'block':'none';
-  const ids=await Auth.list();
-  if(!ids.length){ setMode('new'); G('gid').value=randomId(); }
-  else { setMode('in'); if(ids.length===1) G('gid').value=ids[0]; }
+  await loadRepoData();
+  await refreshProfiles();
+
   if(!hasCrypto()){
-    gateErr('This browser is blocking encryption on this page. Open the file over https or localhost rather than double-clicking it.');
-    G('gGo').disabled=true;
+    view='pick';
+    gateErrMsg='This browser is blocking encryption on this page. Open it over https or localhost rather than double-clicking the file.';
+    renderGate();
     return;
   }
-  // 1. remembered device  2. this tab's session  3. ask
+
+  // remembered device, then this tab's session, then ask
   const dev=await Device.recall();
   if(dev){
     try{
       const raw=await RAW.get(PROFILE_PREFIX+dev.id);
       if(raw){
-        const rec=JSON.parse(raw);
         Auth.id=dev.id; Auth.key=dev.key;
-        const data=await openWith(dev.key,rec);
+        const data=await openWith(dev.key,JSON.parse(raw));
         await Auth.rememberForTab();
         G('gate').classList.remove('on');
         return boot(data);
@@ -4212,12 +4515,11 @@ G('btnChangePw').onclick=async()=>{
     }catch(e){ await Device.forget(); }
   }
   const resumed=await Auth.resumeTab();
-  if(resumed){ G('gate').classList.remove('on'); await boot(resumed); }
-  else {
-    G('gKeep').checked = !!(await Device.isOn());
-    if(!Device.supported()) G('gKeepWrap').style.display='none';
-    G(G('gid').value?'gpw':'gid').focus();
-  }
+  if(resumed){ G('gate').classList.remove('on'); return boot(resumed); }
+
+  view = profileList.length ? 'pick' : 'new';
+  if(view==='new') draft.id=randomId();
+  renderGate();
 })();
 
 </script>

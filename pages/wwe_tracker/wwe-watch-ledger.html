@@ -227,6 +227,14 @@
   .row .name small{font-weight:400;color:var(--dim2);font-family:'DM Mono',monospace;font-size:11px}
   .row .card{color:var(--dim);font-weight:400;font-size:13px}
   .row mark{background:rgba(226,0,26,.28);color:#fff;padding:0 2px}
+  .row.spot{background:var(--panel2);border-left-color:var(--gold)}
+  .row.spot .name{color:var(--txt)}
+  .row.spot .tick{box-shadow:0 0 0 1px var(--gold)}
+  .row.queued .date:before{content:"\u25B8 ";color:var(--red);font-weight:700}
+  .spotbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid var(--gold);
+    border-left-width:3px;background:var(--panel);padding:11px 15px;margin-bottom:14px;font-size:13px}
+  .spotbar b{color:var(--gold);text-transform:uppercase;letter-spacing:.1em;font-size:10px;font-weight:800}
+  .spotbar .grow{flex:1}
   .badge{font-size:9px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
     border:1px solid currentColor;padding:1px 5px;flex:0 0 auto}
   .badge.ev{color:var(--gold)}
@@ -475,6 +483,14 @@
   .feudnote{font-size:12.5px;color:var(--dim);margin-top:7px;font-style:italic}
   .feudright .pct{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--dim);margin-top:5px}
   .feudacts{display:flex;gap:7px;flex-wrap:wrap;padding:0 16px 13px}
+  .feuddetail{border-top:1px solid var(--line);padding:14px 16px;background:var(--panel2)}
+  .dwho{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:13px}
+  .dperson{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+  .dperson .face{width:32px;height:32px;flex:0 0 32px;font-size:12px}
+  .dstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+  .dstats > div{background:var(--panel);padding:8px 10px}
+  .dstats b{display:block;font-family:'Anton',sans-serif;font-size:18px;line-height:1}
+  .dstats span{font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim2);font-weight:800}
   .feudeps{border-top:1px solid var(--line);max-height:440px;overflow:auto}
   .feudeps .row{grid-template-columns:22px 128px 1fr auto}
   .emptyfeud{border:1px dashed var(--line);padding:26px 22px;color:var(--dim)}
@@ -501,7 +517,10 @@
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.42) 0 1px,transparent 1px 2px)}
   .ticker:after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
     background:linear-gradient(90deg,var(--deep),transparent 7%,transparent 93%,var(--deep))}
-  .tickertrack{position:absolute;top:0;left:0;height:30px;display:flex;align-items:center;
+  /* width:max-content is load-bearing. Absolutely positioned elements shrink to
+     fit but are capped at the containing block, so without it the track is only
+     as wide as the bar and translateX(-50%) barely moves -- it looks frozen. */
+  .tickertrack{position:absolute;top:0;left:0;height:30px;width:max-content;display:flex;align-items:center;
     white-space:nowrap;will-change:transform;animation:slide 40s linear infinite;
     font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
   @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -509,7 +528,9 @@
   .ti{color:var(--chrome);text-shadow:0 0 7px currentColor;padding:0 4px}
   .ti.hot{color:var(--red);text-shadow:0 0 10px currentColor;font-weight:500}
   .tsep{color:var(--dim2);padding:0 16px;opacity:.6}
-  @media(prefers-reduced-motion:reduce){.tickertrack{animation:none;padding-left:14px}}
+  @media(prefers-reduced-motion:reduce){
+    .tickertrack{animation:none;padding-left:14px;width:auto;overflow:hidden;max-width:100%}
+  }
 
   /* ---------- wrestler screen ---------- */
   .wcard{border:1px solid var(--line);background:var(--panel);padding:18px 20px;margin-bottom:22px;
@@ -522,6 +543,9 @@
     background:var(--panel3);border:1px solid var(--line);
     clip-path:polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)}
   .wruns{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--dim);margin-top:7px}
+  .wbtns{display:flex;flex-direction:column;gap:5px;flex:0 0 auto}
+  .wsrc{font-size:11.5px;color:var(--dim2);margin:13px 0 0;line-height:1.5}
+  .face img{width:100%;height:100%;object-fit:cover;display:block}
   .wfigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;
     background:var(--line);border:1px solid var(--line);margin-bottom:15px}
   .wfigs > div{background:var(--panel2);padding:11px 13px}
@@ -641,6 +665,7 @@
         <button data-st="unseen" aria-pressed="false">To watch</button>
         <button data-st="seen" aria-pressed="false">Watched</button>
         <button data-st="fav" aria-pressed="false">&#9733; Starred</button>
+        <button data-st="queue" aria-pressed="false">&#9654; Watchlist</button>
       </div>
       <div class="seg" id="kindSeg">
         <button data-kd="" aria-pressed="true">Everything</button>
@@ -652,6 +677,7 @@
       <button class="btn sm" id="btnRandom">Surprise me</button>
       <div class="count" id="ledgerCount"></div>
     </div>
+    <div class="spotbar" id="spotbar" style="display:none"></div>
     <div id="ledger"></div>
     <div class="pager" id="pager"></div>
   </div>
@@ -694,7 +720,10 @@
       <div class="feudmain">
         <div class="feudtop">
           <p>Pick a wrestler for their run, their numbers and their rivalries. Open a rivalry for every episode inside it.</p>
+          <span style="display:flex;gap:7px;flex-wrap:wrap">
+          <button class="btn sm" id="feudFaces">Fetch portraits</button>
           <button class="btn sm" id="feudNew">Add a storyline</button>
+        </span>
         </div>
         <div id="feudList"></div>
       </div>
@@ -812,9 +841,12 @@
     </div>
 
     <div class="card2">
-      <h3>Restore skipped episodes</h3>
+      <h3>Watchlist and skipped episodes</h3>
       <p id="hiddenCount">Nothing has been removed.</p>
-      <div class="acts"><button class="btn" id="btnUnhide">Bring them all back</button></div>
+      <div class="acts">
+        <button class="btn" id="btnUnhide">Bring back everything skipped</button>
+        <button class="btn" id="btnClearQ">Clear the watchlist</button>
+      </div>
     </div>
 
     <div class="card2">
@@ -1507,7 +1539,8 @@ const Auth={
 };
 
 function blankState(){
-  return {seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},from:null,to:null};
+  return {seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},
+          queue:[],nope:{},fav:{},faces:{},faceSrc:{},feuds:[],from:null,to:null};
 }
 
 /* ============================================================
@@ -1683,7 +1716,8 @@ let POOL=[];
 let UPCOMING=[];
 function rebuildPool(){
   const today=iso(TODAY);
-  POOL = CAT.filter(e => state.tracked[e.show] && !state.hidden[e.id] && !e.future
+  const nope=state.nope||{};
+  POOL = CAT.filter(e => state.tracked[e.show] && !state.hidden[e.id] && !nope[e.id] && !e.future
     && (!state.from || e.date>=state.from) && (!state.to || e.date<=state.to));
   UPCOMING = CAT.filter(e => e.date>=today && state.tracked[e.show] && !state.hidden[e.id]);
 }
@@ -1865,11 +1899,33 @@ function matchesSearch(e,s,ignoreText){
    ============================================================ */
 const $ = id => document.getElementById(id);
 let filt={status:'all',kind:'',show:'',year:'',text:''};
+/* A rivalry opened in the ledger becomes a spotlight: its episodes are marked
+   and optionally isolated. It never touches state.from/state.to, because those
+   define your tracked window and therefore your completion percentage. */
+let SPOT=null;
 let SR = {active:false,groups:[],text:[],years:[],windows:[],impossible:false,relaxed:false};
 let page=0; const PER=250;
 
+let tronRoll=null;   // temporary override from the reroll button
+function tronPick(){
+  if(tronRoll){
+    const e=BY_ID[tronRoll];
+    if(e && !isSeen(e.id) && !state.hidden[e.id]) return e;
+    tronRoll=null;
+  }
+  // anything you queued from a rivalry jumps the line
+  const q=(state.queue||[]).find(id=>BY_ID[id] && !isSeen(id) && !state.hidden[id]);
+  if(q) return Object.assign({},BY_ID[q],{queued:true});
+  return nextUp();
+}
+function rerollTron(){
+  const pool=POOL.filter(e=>!isSeen(e.id) && e.id!==(tronRoll||''));
+  if(!pool.length){ toast('Nothing left to roll'); return; }
+  tronRoll=pool[Math.floor(Math.random()*pool.length)].id;
+  renderTron();
+}
 function renderTron(){
-  const e=nextUp(), body=$('tronBody');
+  const e=tronPick(), body=$('tronBody');
   if(!e){
     body.innerHTML = POOL.length
       ? `<div class="eyebrow">Nothing left</div><div class="marquee">Card<br>complete</div>
@@ -1883,20 +1939,31 @@ function renderTron(){
     const label = e.kind==='event' ? e.title : meta.short;
     const numPart = e.kind==='event' ? '' : ` <span class="num">#${e.num}</span>`;
     const left = POOL.reduce((n,x)=>n+(isSeen(x.id)?0:1),0);
+    const qn=(state.queue||[]).filter(id=>!isSeen(id)).length;
+    const lead = e.queued ? 'From your watchlist' : tronRoll ? 'Rerolled' : 'Up next';
     body.innerHTML=`
-      <div class="eyebrow">Up next <em>&nbsp;&mdash;&nbsp; ${left.toLocaleString()} to go</em></div>
+      <div class="eyebrow">${lead} <em>&nbsp;&mdash;&nbsp; ${left.toLocaleString()} to go${qn?' &nbsp;&middot;&nbsp; '+qn+' on the watchlist':''}</em></div>
       <div class="marquee">${esc(label)}${numPart}</div>
       <div class="brandbar" style="background:${meta.bc}"></div>
       <div class="when">${fmtDate(e.date)} &nbsp;/&nbsp; ${fmtHours(e.run)} &nbsp;/&nbsp; ${esc(meta.name)}${e.est?' &nbsp;/&nbsp; DATE ESTIMATED':''}</div>
       ${e.card?`<div class="when" style="color:var(--chrome);margin-top:6px">${esc(e.card)}</div>`:''}
       <div class="acts">
         <button class="btn primary" id="tWatch">Mark watched</button>
+        <button class="btn" id="tRoll">&#8635; Reroll</button>
         <button class="btn" id="tOpen">Rate, note, add card</button>
-        <button class="btn" id="tSkip">Skip it</button>
+        <button class="btn" id="tNope">Not interested</button>
+        ${tronRoll?'<button class="btn" id="tBack">Back to in order</button>':''}
       </div>`;
-    $('tWatch').onclick=()=>{stamp(); setSeen(e.id,true);};
+    $('tWatch').onclick=()=>{stamp(); tronRoll=null; setSeen(e.id,true);};
+    $('tRoll').onclick=rerollTron;
     $('tOpen').onclick=()=>openDetail(e.id);
-    $('tSkip').onclick=()=>{state.hidden[e.id]=true; save(); rebuildPool(); renderAll(); toast('Skipped');};
+    $('tNope').onclick=()=>{
+      state.nope=state.nope||{}; state.nope[e.id]=1;
+      state.queue=(state.queue||[]).filter(x=>x!==e.id);
+      tronRoll=null; save(); rebuildPool(); renderAll();
+      toast('Marked not interested');
+    };
+    const bk=document.getElementById('tBack'); if(bk) bk.onclick=()=>{ tronRoll=null; renderTron(); };
   }
   renderProgress();
 }
@@ -1911,6 +1978,8 @@ function renderProgress(){
 }
 
 function baseFilter(e){
+  if(SPOT && SPOT.only && !SPOT.ids.has(e.id)) return false;
+  if(filt.status==='queue' && !(state.queue||[]).includes(e.id)) return false;
   if(filt.show && e.show!==filt.show) return false;
   if(filt.kind && e.kind!==filt.kind) return false;
   if(filt.year && e.date.slice(0,4)!==filt.year) return false;
@@ -1977,6 +2046,7 @@ function renderLedger(){
   const slice=rows.slice(page*PER,page*PER+PER);
   $('ledgerCount').textContent=rows.length.toLocaleString()+' episodes';
 
+  renderSpotbar(rows);
   if(!rows.length){ $('ledger').innerHTML=noResults(); $('pager').innerHTML=''; return; }
 
   const out=[]; let lastYear=null;
@@ -1991,8 +2061,9 @@ function renderLedger(){
     const fav=!!(state.fav||{})[e.id];
     const faces=(prefs.faces!==false && e.card) ? cardFaces(e.card,2) : '';
     const badge = e.kind==='event' ? '<span class="badge ev">Event</span>'+(e.est?'<span class="badge est">Est. date</span>':'') : '';
+    const spot=SPOT&&SPOT.ids.has(e.id), queued=(state.queue||[]).includes(e.id);
     out.push(
-      `<div class="row${seen?' seen':''}" data-id="${e.id}" style="--bc:${meta.bc}" tabindex="0" role="button" aria-pressed="${seen}">
+      `<div class="row${seen?' seen':''}${spot?' spot':''}${queued?' queued':''}" data-id="${e.id}" style="--bc:${meta.bc}" tabindex="0" role="button" aria-pressed="${seen}">
         <span class="tick">&#10003;</span>
         <span class="date">${fmtDate(e.date)}</span>
         <span class="name"><i class="dot"></i>${faces}${hl(e.title,SR.text)}${e.kind!=='event'?` <small>${esc(meta.short)}</small>`:''}${badge}${e.card?` <span class="card">&mdash; ${hl(e.card,SR.text)}</span>`:''}</span>
@@ -2008,6 +2079,43 @@ function renderLedger(){
     ? `<button class="btn sm" data-pg="-1"${page===0?' disabled':''}>Newer</button>
        <span>Page ${page+1} of ${pages}</span>
        <button class="btn sm" data-pg="1"${page===pages-1?' disabled':''}>Older</button>` : '';
+}
+
+function renderSpotbar(rows){
+  const bar=$('spotbar');
+  if(!SPOT){ bar.style.display='none'; return; }
+  const shown=rows.filter(r=>SPOT.ids.has(r.id)).length;
+  const seen=[...SPOT.ids].filter(id=>isSeen(id)).length;
+  bar.style.display='flex';
+  bar.innerHTML=`<b>Spotlight</b>
+    <span>${esc(SPOT.label)} &mdash; ${SPOT.ids.size} episodes, ${seen} watched${SPOT.only?'':', '+shown+' visible here'}</span>
+    <span class="grow"></span>
+    <button class="btn sm" id="spotOnly">${SPOT.only?'\u2713 Only these':'Only these'}</button>
+    <button class="btn sm" id="spotAll">${SPOT.only?'In context':'\u2713 In context'}</button>
+    <button class="btn sm" id="spotClear">Clear</button>`;
+  $('spotOnly').onclick=()=>{ SPOT.only=true; page=0; renderLedger(); };
+  $('spotAll').onclick=()=>{ SPOT.only=false; renderLedger(); jumpToSpot(); };
+  $('spotClear').onclick=()=>{ SPOT=null; page=0; renderLedger(); };
+}
+function jumpToSpot(){
+  if(!SPOT) return;
+  const rows=filtered();
+  const i=rows.findIndex(r=>SPOT.ids.has(r.id));
+  if(i>=0 && Math.floor(i/PER)!==page){ page=Math.floor(i/PER); renderLedger(); }
+  setTimeout(()=>{
+    const el=document.querySelector('#ledger .row.spot');
+    if(el) el.scrollIntoView({block:'center',behavior:'smooth'});
+  },70);
+}
+function spotlight(label, ids, only){
+  SPOT={label, ids:new Set(ids), only:!!only};
+  filt.status='all'; filt.show=''; filt.year=''; filt.kind=''; filt.text='';
+  [...$('statusSeg').children].forEach(c=>c.setAttribute('aria-pressed',c.dataset.st==='all'));
+  [...$('kindSeg').children].forEach(c=>c.setAttribute('aria-pressed',c.dataset.kd===''));
+  $('fShow').value=''; $('fYear').value=''; $('fText').value=''; SR=runSearch('');
+  page=0;
+  document.querySelector('.tab[data-tab="ledger"]').click();
+  renderLedger(); jumpToSpot();
 }
 
 function noResults(){
@@ -2049,8 +2157,10 @@ $('pager').addEventListener('click',ev=>{
   page+=Number(b.dataset.pg); renderLedger(); window.scrollTo({top:0,behavior:'smooth'});
 });
 function setSeen(id,on){
-  if(on) state.seen[id]=Object.assign({d:iso(TODAY)},state.seen[id]||{});
-  else delete state.seen[id];
+  if(on){
+    state.seen[id]=Object.assign({d:iso(TODAY)},state.seen[id]||{});
+    if(state.queue&&state.queue.includes(id)) state.queue=state.queue.filter(x=>x!==id);
+  } else delete state.seen[id];
   save(); renderAll();
 }
 function bulkTo(id){
@@ -2574,6 +2684,47 @@ function exportCorrections(){
    is either a date range, a count of episodes in that range,
    or your own ticks against them.
    ============================================================ */
+/* ============================================================
+   PORTRAITS
+   WWE's own photos are all rights-reserved, so the only source
+   I can point at is Wikipedia: it allows cross-origin reads via
+   origin=*, and article lead images are freely licensed. It is
+   a name search, so it can land on the wrong person -- every
+   result is reviewable and overridable by hand.
+   ============================================================ */
+const WIKI='https://en.wikipedia.org/w/api.php';
+async function wikiFace(name){
+  const q=encodeURIComponent(name+' professional wrestler');
+  const url=WIKI+'?action=query&generator=search&gsrsearch='+q+
+    '&gsrlimit=1&prop=pageimages&piprop=thumbnail&pithumbsize=220&format=json&origin=*';
+  const r=await fetch(url,{headers:{'Accept':'application/json'}});
+  if(!r.ok) throw new Error('Wikipedia returned '+r.status);
+  const j=await r.json();
+  const pages=j&&j.query&&j.query.pages;
+  if(!pages) throw new Error('no article found');
+  const first=Object.values(pages)[0];
+  if(!first||!first.thumbnail||!first.thumbnail.source) throw new Error('article has no image');
+  return {url:first.thumbnail.source, title:first.title};
+}
+async function fetchFace(name){
+  const rec=await wikiFace(name);
+  state.faces=state.faces||{}; state.faceSrc=state.faceSrc||{};
+  state.faces[name]=rec.url; state.faceSrc[name]=rec.title;
+  save();
+  return rec;
+}
+async function fetchFacesFor(names, onEach){
+  let ok=0, fail=0;
+  for(const n of names){
+    if((state.faces||{})[n]){ continue; }
+    try{ await fetchFace(n); ok++; }
+    catch(e){ fail++; }
+    if(onEach) onEach(ok,fail,names.length);
+    await new Promise(r=>setTimeout(r,180));   // be polite to the API
+  }
+  return {ok,fail};
+}
+
 function avatarFor(name){
   const custom=(state.faces||{})[name];
   const parts=name.replace(/^The /,'').split(' ').filter(Boolean);
@@ -2648,7 +2799,10 @@ function renderWrestler(name){
         <div class="wtags">${tags}</div>
         <div class="wruns">${spans}</div>
       </div>
-      <button class="btn sm" data-face="${esc(name)}">Set image</button>
+      <span class="wbtns">
+        <button class="btn sm" data-getface="${esc(name)}">Find image</button>
+        <button class="btn sm" data-face="${esc(name)}">Set by URL</button>
+      </span>
     </div>
     <div class="wfigs">
       <div><b>${yrs<1?(months+'m'):yrs.toFixed(1)+'y'}</b><span>On the roster</span></div>
@@ -2660,6 +2814,7 @@ function renderWrestler(name){
       <div class="minibar"><i style="width:${pct.toFixed(1)}%"></i></div>
       <div class="pct">You have watched ${seen.toLocaleString()} of ${eps.length.toLocaleString()} episodes that aired while they were on the roster &middot; ${pct.toFixed(1)}%</div>
     </div>
+    ${(state.faceSrc||{})[name]?`<p class="wsrc">Portrait from the Wikipedia article &ldquo;${esc(state.faceSrc[name])}&rdquo;. If that is the wrong person, set one by URL.</p>`:''}
     ${st.p.died?`<p class="memorial">Died ${st.p.died}. Everything on file here is from their career.</p>`:''}
     <p class="wnote">Tenure dates, Hall of Fame status and dates of death are written from memory and approximate and cover the whole run, not just the weeks they appeared.
       Episode counts follow the shows you are tracking.</p>
@@ -2847,12 +3002,23 @@ function renderFeudList(){
       </div>
       <div class="feudacts">
         <button class="btn sm" data-fact="open">${open?'Hide episodes':'Show episodes'}</button>
+        <button class="btn primary sm" data-fact="queue">+ Watchlist</button>
+        <button class="btn sm" data-fact="ledger">Show in ledger</button>
         <button class="btn sm" data-fact="all">Mark all watched</button>
-        <button class="btn sm" data-fact="ledger">Open in ledger</button>
         <button class="btn sm" data-fact="edit">Edit dates</button>
         ${f.seeded?'':'<button class="btn sm" data-fact="del">Delete</button>'}
       </div>
-      ${open?`<div class="feudeps">${eps.map(e=>{
+      ${open?`<div class="feuddetail">
+        <div class="dwho">${f.who.map(n=>`<span class="dperson">${avatarFor(n)}<span>${esc(n)}</span></span>`).join('')}</div>
+        <div class="dstats">
+          <div><b>${eps.length}</b><span>Episodes</span></div>
+          <div><b>${seen}</b><span>Watched</span></div>
+          <div><b>${eps.filter(e=>e.kind==='event').length}</b><span>Events</span></div>
+          <div><b>${fmtHours(eps.reduce((n,e)=>n+e.run,0))}</b><span>Runtime</span></div>
+          <div><b>${eps.filter(e=>(state.queue||[]).includes(e.id)).length}</b><span>Queued</span></div>
+        </div>
+      </div>
+      <div class="feudeps">${eps.map(e=>{
         const m=SHOW_META[e.show];
         return `<div class="row${isSeen(e.id)?' seen':''}" data-id="${e.id}" style="--bc:${m.bc}" tabindex="0" role="button">
           <span class="tick">&#10003;</span>
@@ -2873,6 +3039,14 @@ $('feudPeople').addEventListener('click',ev=>{
 $('feudSearch').addEventListener('input',ev=>{ feudQuery=ev.target.value; renderFeudPeople(); });
 
 $('feudList').addEventListener('click',ev=>{
+  const gf=ev.target.closest('[data-getface]');
+  if(gf){
+    const n=gf.dataset.getface;
+    gf.disabled=true; gf.textContent='Looking\u2026';
+    fetchFace(n).then(r=>{ toast('Found: '+r.title); renderFeudList(); renderFeudPeople(); })
+      .catch(e=>{ gf.disabled=false; gf.textContent='Find image'; toast('No image found \u2014 '+e.message); });
+    return;
+  }
   const fc=ev.target.closest('[data-face]');
   if(fc){
     const cur=(state.faces||{})[fc.dataset.face]||'';
@@ -2902,9 +3076,16 @@ $('feudList').addEventListener('click',ev=>{
       save(); renderFeudList(); renderAll(); toast(n+' marked watched');
     }
     if(a==='ledger'){
-      state.from=f.from; state.to=f.to; save(); rebuildPool();
-      document.querySelector('.tab[data-tab="ledger"]').click();
-      renderAll(); toast('Ledger narrowed to this storyline');
+      spotlight(feudTitle(f), feudEpisodes(f).map(e=>e.id), false);
+      toast('Highlighted in the ledger');
+    }
+    if(a==='queue'){
+      const add=feudEpisodes(f).filter(e=>!isSeen(e.id)).map(e=>e.id);
+      state.queue=state.queue||[];
+      let n=0;
+      for(const id of add) if(!state.queue.includes(id)){ state.queue.push(id); n++; }
+      save(); renderFeudList(); renderAll();
+      toast(n?n+' added to your watchlist':'Already on your watchlist');
     }
     if(a==='edit') openFeudEditor(f);
     if(a==='del'){
@@ -3036,19 +3217,38 @@ $('btnAdd').onclick=()=>{
   save(); rebuildCatalogue(); renderAll(); $('addName').value=''; toast('Added');
 };
 $('btnUnhide').onclick=()=>{
-  const n=Object.keys(state.hidden).length;
-  state.hidden={}; save(); rebuildCatalogue(); renderAll(); syncUI();
-  toast(n?n+' restored':'Nothing was hidden');
+  const n=Object.keys(state.hidden||{}).length+Object.keys(state.nope||{}).length;
+  state.hidden={}; state.nope={};
+  save(); rebuildCatalogue(); renderAll(); syncUI();
+  toast(n?n+' restored':'Nothing was skipped');
+};
+$('btnClearQ').onclick=()=>{
+  const n=(state.queue||[]).length;
+  state.queue=[]; save(); renderAll(); syncUI();
+  toast(n?'Watchlist cleared':'Watchlist was already empty');
 };
 $('btnWipe').onclick=()=>{
   if(!confirm('Erase every tick, rating, note and card on this device? This cannot be undone.')) return;
-  state={seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},from:null,to:null};
+  state={seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},
+         queue:[],nope:{},fav:{},faces:{},faceSrc:{},from:null,to:null};
   save(); rebuildCatalogue(); syncUI(); renderAll(); toast('Ledger erased');
 };
 document.getElementById('prefWide').onchange=e=>{ prefs.wide=e.target.checked; savePrefs(); };
 document.getElementById('prefTicker').onchange=e=>{ prefs.ticker=e.target.checked; savePrefs(); renderTicker(); };
 document.getElementById('prefHome').onchange=e=>{ prefs.home=e.target.value; savePrefs(); };
 document.getElementById('prefFaces').onchange=e=>{ prefs.faces=e.target.checked; savePrefs(); renderLedger(); };
+document.getElementById('feudFaces').onclick=async function(){
+  const b=this;
+  const names=[...document.querySelectorAll('#feudPeople [data-person]')]
+    .map(x=>x.dataset.person).filter(n=>!(state.faces||{})[n]);
+  if(!names.length){ toast('Everyone shown already has a portrait'); return; }
+  if(!confirm('Look up '+names.length+' portraits on Wikipedia? It is one request each, so this takes a moment.')) return;
+  b.disabled=true;
+  const res=await fetchFacesFor(names,(ok,fail,total)=>{ b.textContent=(ok+fail)+'/'+total; });
+  b.disabled=false; b.textContent='Fetch portraits';
+  renderFeudPeople(); renderFeudList();
+  toast(res.ok+' found, '+res.fail+' with no image');
+};
 document.getElementById('btnExportCorr').onclick=exportCorrections;
 $('setFrom').onchange=()=>{state.from=$('setFrom').value||null; save(); rebuildPool(); renderAll();};
 $('setTo').onchange=()=>{state.to=$('setTo').value||null; save(); rebuildPool(); renderAll();};
@@ -3096,8 +3296,16 @@ function toast(m){
 }
 function syncUI(){
   $('setFrom').value=state.from||''; $('setTo').value=state.to||'';
-  const n=Object.keys(state.hidden).length;
-  $('hiddenCount').textContent = n ? n+' episode'+(n===1?'':'s')+' removed from the ledger.' : 'Nothing has been removed.';
+  const h=Object.keys(state.hidden||{}).length;
+  const no=Object.keys(state.nope||{}).length;
+  const q=(state.queue||[]).filter(id=>!isSeen(id)).length;
+  const bits=[];
+  if(q) bits.push('<b>'+q+'</b> waiting on your watchlist');
+  if(no) bits.push('<b>'+no+'</b> marked not interested');
+  if(h) bits.push('<b>'+h+'</b> removed');
+  $('hiddenCount').innerHTML = bits.length
+    ? bits.join(', ')+'. Not-interested episodes are left out of your completion percentage.'
+    : 'Nothing on the watchlist, nothing skipped.';
 }
 function fillSelects(){
   const shows=SHOWS.concat([SHOW_META['event']]);

@@ -447,24 +447,7 @@
   .person:hover{background:var(--panel2);color:var(--txt)}
   .person.on{background:var(--red);color:#fff}
   .person i{font-style:normal;font-family:'DM Mono',monospace;font-size:10px;color:var(--dim2);
-    background:var(--panel3);padding:1px 6px;min-width:20px;text-align:center;flex:0 0 auto}
-  .person > span{display:flex;align-items:center;gap:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .person em{font-style:normal;font-size:8px;font-weight:800;letter-spacing:.08em;
-    border:1px solid var(--gold);color:var(--gold);padding:0 3px;flex:0 0 auto}
-  .person em.g{border-color:var(--dim2);color:var(--dim2);font-size:11px;padding:0 2px}
-  .person.on em{border-color:#fff;color:#fff}
-  .rfilters{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
-  .rfilters button{background:var(--panel2);border:1px solid var(--line);color:var(--dim2);
-    font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:4px 7px}
-  .rfilters button:hover{color:var(--txt)}
-  .rfilters button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
-  .rcount{font-family:'DM Mono',monospace;font-size:10px;color:var(--dim2);margin-bottom:7px}
-  .wtags{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
-  .wtag{font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;padding:2px 7px;border:1px solid currentColor}
-  .wtag.hof{color:var(--gold)}
-  .wtag.live{color:var(--red)}
-  .wtag.gone{color:var(--dim2)}
-  .memorial{font-size:12.5px;color:var(--dim);border-left:2px solid var(--dim2);padding-left:11px;margin:14px 0 0}
+    background:var(--panel3);padding:1px 6px;min-width:20px;text-align:center}
   .person.on i{background:rgba(0,0,0,.28);color:#fff}
   .feudtop{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:15px;flex-wrap:wrap}
   .feudtop p{margin:0;font-size:13px;color:var(--dim);max-width:56ch}
@@ -676,19 +659,6 @@
     <div class="feudwrap">
       <div class="feudside">
         <input type="text" id="feudSearch" placeholder="Search a wrestler" autocomplete="off">
-        <div class="rfilters" id="feudFilters">
-          <button data-rf="all" aria-pressed="true">All</button>
-          <button data-rf="hof">Hall of Fame</button>
-          <button data-rf="active">Active</button>
-          <button data-rf="gone">Passed</button>
-          <button data-rf="golden">Golden</button>
-          <button data-rf="newgen">New Gen</button>
-          <button data-rf="attitude">Attitude</button>
-          <button data-rf="ruthless">Ruthless</button>
-          <button data-rf="pg">PG</button>
-          <button data-rf="modern">Modern</button>
-        </div>
-        <div class="rcount" id="feudCount"></div>
         <div class="feudpeople" id="feudPeople"></div>
       </div>
       <div class="feudmain">
@@ -943,359 +913,163 @@ const SERIES = [
 /* ============================================================
    2. ROSTER INDEX
    The catalogue has no match data, so "cm punk vs jeff hardy"
-   cannot match a title. Instead: approximate WWE/WWWF tenure
-   per name. Two names -> intersect their runs -> the window a
-   match between them was possible.
-
-   Every range is APPROXIMATE and generous at the edges. Third
-   element is optional flags: hof for Hall of Fame, d for year
-   of death. Both are shown on the wrestler screen and both are
-   editable, because this is written from memory, not a source.
+   can't match a title. Instead: approximate WWE tenure for each
+   name. Two names -> intersect their runs -> the window where
+   that match was even possible. Ranges are approximate and
+   deliberately generous at the edges.
    ============================================================ */
 const ROSTER = [
-/* --- WWWF and the territory years --- */
-['Bruno Sammartino',[['1963-05','1981-08'],['1985-01','1987-12']],{hof:1,d:2018}],
-['Bob Backlund',[['1977-01','1984-12'],['1992-09','1997-06'],['2000-01','2000-12']],{hof:1}],
-['Superstar Billy Graham',[['1975-01','1978-06'],['1982-01','1983-12'],['1986-01','1987-12']],{hof:1,d:2023}],
-['Ivan Putski',[['1975-01','1982-12']],{hof:1}],
-['Pedro Morales',[['1970-01','1974-12'],['1980-01','1987-06']],{hof:1,d:2019}],
-['Chief Jay Strongbow',[['1970-01','1985-12']],{hof:1,d:2012}],
-['Andre the Giant',[['1973-03','1991-12']],{hof:1,d:1993}],
-['Rocky Johnson',[['1983-01','1985-12']],{hof:1,d:2020}],
-['Tony Atlas',[['1980-01','1984-12'],['1990-06','1992-12']],{hof:1}],
-['Sgt. Slaughter',[['1980-01','1984-06'],['1990-08','1992-11']],{hof:1}],
-['Don Muraco',[['1981-01','1988-12']],{hof:1}],
-['Jimmy Snuka',[['1982-01','1985-06'],['1989-01','1992-06']],{hof:1,d:2017}],
-['Bob Orton',[['1982-01','1987-12'],['2005-01','2005-12']],{hof:1}],
-['Greg Valentine',[['1979-01','1980-12'],['1984-01','1992-12']],{hof:1}],
-['The Iron Sheik',[['1979-01','1980-12'],['1983-01','1988-12'],['1991-01','1992-12']],{hof:1,d:2023}],
-['Nikolai Volkoff',[['1968-01','1970-12'],['1984-01','1990-12'],['1994-01','1995-06']],{hof:1,d:2018}],
-
-/* --- Golden era --- */
-['Hulk Hogan',[['1983-12','1993-06'],['2002-02','2003-09'],['2005-04','2007-09'],['2014-02','2015-07']],{hof:1}],
-['Roddy Piper',[['1984-01','1987-11'],['1989-01','1992-11'],['1996-01','1997-11'],['2003-03','2003-09']],{hof:1,d:2015}],
-['Randy Savage',[['1985-06','1994-10']],{hof:1,d:2011}],
-['Ricky Steamboat',[['1985-01','1988-03'],['1991-06','1991-12']],{hof:1}],
-['Ted DiBiase',[['1987-06','1993-12']],{hof:1}],
-['Jake Roberts',[['1986-08','1992-11'],['1996-01','1997-09']],{hof:1}],
-['Mr. Perfect',[['1988-06','1996-08'],['2002-01','2002-05']],{hof:1,d:2003}],
-['Rick Rude',[['1987-08','1990-11'],['1997-11','1999-04']],{hof:1,d:1999}],
-['Ultimate Warrior',[['1987-06','1992-11'],['1996-03','1996-07']],{hof:1,d:2014}],
-['Tito Santana',[['1979-01','1993-12']],{hof:1}],
-['Junkyard Dog',[['1984-01','1988-12']],{hof:1,d:1998}],
-['King Kong Bundy',[['1981-01','1982-12'],['1985-01','1988-12'],['1994-01','1995-12']],{d:2019}],
-['Big John Studd',[['1982-01','1986-12'],['1988-09','1989-12']],{hof:1,d:1995}],
-['Paul Orndorff',[['1983-12','1988-06']],{hof:1,d:2021}],
-['Brutus Beefcake',[['1984-01','1993-12']],{hof:1}],
-['Hillbilly Jim',[['1984-06','1990-12']],{hof:1}],
-['Koko B. Ware',[['1986-01','1994-12']],{hof:1}],
-['The Honky Tonk Man',[['1986-01','1991-12'],['1997-01','1998-12']],{hof:1}],
-['Jim Neidhart',[['1985-08','1992-06'],['1994-09','1997-11']],{d:2018}],
-['Rick Martel',[['1980-01','1981-12'],['1985-01','1995-06']],{hof:1}],
-['Adrian Adonis',[['1981-01','1987-06']],{d:1988}],
-['Dino Bravo',[['1986-01','1992-12']],{d:1993}],
-['Hercules',[['1985-01','1992-06']],{d:2004}],
-['Earthquake',[['1989-06','1994-12']],{d:2006}],
-['Typhoon',[['1989-01','1993-06']]],
-['The Barbarian',[['1988-01','1992-12']]],
-['The Warlord',[['1988-01','1992-12']]],
-['Haku',[['1986-01','1992-12'],['2001-01','2001-12']]],
-['Virgil',[['1987-01','1994-12']],{d:2024}],
-['Kamala',[['1984-01','1984-12'],['1986-01','1987-12'],['1992-01','1993-12']],{d:2020}],
-['Bad News Brown',[['1988-01','1990-12']],{d:2007}],
-['Demolition Ax',[['1987-01','1990-12']]],
-['Demolition Smash',[['1987-01','1991-06']]],
-['Marty Jannetty',[['1988-06','1992-06'],['1994-01','1996-06']]],
-['The Bushwhackers',[['1988-10','1996-06']]],
-['Bam Bam Bigelow',[['1987-09','1988-11'],['1992-12','1995-08']],{d:2007}],
-['Kerry Von Erich',[['1990-06','1992-08']],{hof:1,d:1993}],
-['Dusty Rhodes',[['1989-06','1991-12']],{hof:1,d:2015}],
-['Terry Funk',[['1985-01','1986-12'],['1997-06','1998-12']],{hof:1,d:2023}],
-['Harley Race',[['1986-01','1989-12']],{hof:1,d:2019}],
-['Ric Flair',[['1991-09','1993-02'],['2001-11','2008-03']],{hof:1}],
-['Bobby Heenan',[['1984-01','1993-12']],{hof:1,d:2017}],
-['Jimmy Hart',[['1985-01','1993-12'],['1994-01','1995-12']],{hof:1}],
-['Mr. Fuji',[['1972-01','1996-12']],{hof:1,d:2016}],
-['Gorilla Monsoon',[['1963-01','1997-06']],{hof:1,d:1999}],
-['Captain Lou Albano',[['1972-01','1986-12'],['1994-01','1995-12']],{hof:1,d:2009}],
-['Freddie Blassie',[['1974-01','1986-12']],{hof:1,d:2003}],
-['Arnold Skaaland',[['1971-01','1984-12']],{hof:1,d:2007}],
-['Pat Patterson',[['1979-01','1984-12']],{hof:1,d:2020}],
-['Howard Finkel',[['1977-01','2019-12']],{d:2020}],
-['The Fabulous Moolah',[['1983-01','2007-11']],{hof:1,d:2007}],
-['Mae Young',[['1999-01','2013-12']],{hof:1,d:2014}],
-['Wendi Richter',[['1984-01','1985-11']],{hof:1}],
-['Sherri Martel',[['1987-01','1993-12']],{hof:1,d:2007}],
-['Alundra Blayze',[['1993-01','1995-12']],{hof:1}],
-['Luna Vachon',[['1993-01','2000-12']],{d:2010}],
-
-/* --- New Generation --- */
-['Bret Hart',[['1984-08','1997-11'],['2010-01','2010-11']],{hof:1}],
-['Shawn Michaels',[['1988-10','1998-03'],['2002-05','2010-03']],{hof:1}],
-['The Undertaker',[['1990-11','2020-11']],{hof:1}],
-['Owen Hart',[['1988-08','1999-05']],{d:1999}],
-['British Bulldog',[['1985-08','1988-11'],['1990-09','1992-09'],['1994-09','1997-11'],['1999-08','2000-04']],{hof:1,d:2002}],
-['Yokozuna',[['1992-10','1996-11']],{hof:1,d:2000}],
-['Kevin Nash',[['1993-06','1996-05'],['2002-02','2003-06'],['2011-01','2011-12']],{hof:1}],
-['Scott Hall',[['1992-08','1996-05']],{hof:1,d:2022}],
-['Lex Luger',[['1993-01','1995-08']],{hof:1}],
-['Tatanka',[['1991-10','1996-09'],['2006-01','2007-12']]],
-['Doink the Clown',[['1992-11','1996-06']],{d:2013}],
-['Sycho Sid',[['1991-08','1992-06'],['1995-05','1997-03']]],
-['Vader',[['1996-01','1998-10']],{hof:1,d:2018}],
-['Goldust',[['1995-09','1999-06'],['2002-10','2003-12'],['2008-01','2019-05']]],
-['Ron Simmons',[['1996-06','2004-12']],{hof:1}],
-['Ahmed Johnson',[['1995-06','1998-06']]],
-['Savio Vega',[['1994-01','1999-06']]],
-['Marc Mero',[['1996-05','1999-06']]],
-['Crush',[['1990-01','1993-12'],['1996-06','1997-12']],{d:2007}],
-['Paul Bearer',[['1991-04','2004-12'],['2010-01','2012-12']],{hof:1,d:2013}],
-['Jerry Lawler',[['1992-11','2020-01']],{hof:1}],
-['Jim Ross',[['1993-04','2013-09']],{hof:1}],
-['Brian Pillman',[['1996-06','1997-10']],{d:1997}],
-['Kane',[['1997-10','2018-12'],['2020-01','2021-04']],{hof:1}],
-['Mick Foley',[['1996-04','2000-04'],['2004-01','2004-06'],['2006-01','2006-07']],{hof:1}],
-['Steve Austin',[['1995-12','2003-04'],['2022-04','2022-04']],{hof:1}],
-['Triple H',[['1995-04','2019-06'],['2021-06','2022-03']],{hof:1}],
-['The Rock',[['1996-11','2004-03'],['2011-02','2013-04'],['2024-01','2024-04']],{hof:1}],
-['Chyna',[['1997-02','2001-11']],{hof:1,d:2016}],
-['X-Pac',[['1993-01','2002-06']],{hof:1}],
-['Road Dogg',[['1994-01','2001-06'],['2012-01','2014-06']],{hof:1}],
-['Billy Gunn',[['1993-01','2004-11'],['2012-01','2015-02']],{hof:1}],
-['Road Warrior Hawk',[['1990-08','1992-08'],['1997-02','1999-06'],['2003-01','2003-10']],{hof:1,d:2003}],
-['Road Warrior Animal',[['1990-08','1992-08'],['1997-02','1999-06'],['2005-01','2006-06']],{hof:1,d:2020}],
-
-/* --- Attitude era --- */
-['Vince McMahon',[['1984-01','2022-06'],['2023-01','2024-01']],{hof:1}],
-['Shane McMahon',[['1998-01','2001-11'],['2016-02','2022-01']]],
-['Stephanie McMahon',[['1999-01','2023-01']]],
-['Big Show',[['1999-02','2021-02']],{hof:1}],
-['Kurt Angle',[['1999-11','2006-08'],['2017-04','2019-04']],{hof:1}],
+['Hulk Hogan',[['1983-12','1993-06'],['2002-02','2003-09'],['2005-04','2007-09'],['2014-02','2015-07']]],
+['Andre the Giant',[['1973-03','1991-12']]],
+['Randy Savage',[['1985-06','1994-10']]],
+['Ultimate Warrior',[['1987-06','1992-11'],['1996-03','1996-07']]],
+['Bret Hart',[['1984-08','1997-11'],['2010-01','2010-11']]],
+['Shawn Michaels',[['1988-10','1998-03'],['2002-05','2010-03']]],
+['The Undertaker',[['1990-11','2020-11']]],
+['Kane',[['1997-10','2018-12'],['2020-01','2021-04']]],
+['Steve Austin',[['1995-12','2003-04'],['2022-04','2022-04']]],
+['The Rock',[['1996-11','2004-03'],['2011-02','2013-04'],['2024-01','2024-04']]],
+['Triple H',[['1995-04','2019-06'],['2021-06','2022-03']]],
+['Mick Foley',[['1996-04','2000-04'],['2004-01','2004-06'],['2006-01','2006-07']]],
+['Big Show',[['1999-02','2021-02']]],
+['Kurt Angle',[['1999-11','2006-08'],['2017-04','2019-04']]],
 ['Chris Jericho',[['1999-08','2005-08'],['2007-11','2010-09'],['2012-01','2013-08'],['2014-06','2015-02'],['2016-01','2018-02']]],
-['Edge',[['1998-06','2011-04'],['2020-01','2023-08']],{hof:1}],
-['Christian',[['1998-09','2005-11'],['2009-02','2014-11']],{hof:1}],
-['Jeff Hardy',[['1998-01','2003-04'],['2006-08','2009-08'],['2017-04','2021-12']],{hof:1}],
-['Matt Hardy',[['1998-01','2010-08'],['2017-04','2020-03']],{hof:1}],
-['Bubba Ray Dudley',[['1999-08','2005-07'],['2015-08','2016-12']],{hof:1}],
-['D-Von Dudley',[['1999-08','2005-07'],['2015-08','2016-12']],{hof:1}],
-['Spike Dudley',[['1999-08','2005-06']]],
-['Trish Stratus',[['2000-03','2006-09'],['2019-08','2023-08']],{hof:1}],
-['Lita',[['2000-06','2006-11'],['2018-01','2023-01']],{hof:1}],
-['Ivory',[['1999-01','2005-12']],{hof:1}],
-['Jacqueline',[['1998-01','2004-12']],{hof:1}],
-['Terri Runnels',[['1996-01','2004-06']]],
-['Debra',[['1998-01','2002-06']]],
-['Sable',[['1996-04','1999-05'],['2003-04','2004-08']]],
-['Molly Holly',[['2000-01','2005-06']],{hof:1}],
-['Victoria',[['2000-01','2009-02']]],
-['Al Snow',[['1995-01','1995-12'],['1998-01','2002-12']]],
-['Ken Shamrock',[['1997-02','1999-11']],{hof:1}],
-['Steve Blackman',[['1997-09','2002-12']]],
-["D'Lo Brown",[['1997-01','2003-06'],['2008-01','2009-06']]],
-['Big Boss Man',[['1988-06','1993-06'],['1998-08','2003-06']],{hof:1,d:2004}],
-['The Godfather',[['1992-11','2002-08']],{hof:1}],
-['Val Venis',[['1998-04','2009-06']]],
-['Mark Henry',[['1996-09','2017-04']],{hof:1}],
-['Test',[['1998-06','2004-06'],['2006-06','2007-06']],{d:2009}],
-['Albert',[['1999-01','2004-06'],['2012-01','2014-06']]],
-['Tazz',[['2000-01','2002-12']]],
-['Raven',[['2000-03','2003-06']]],
-['Perry Saturn',[['2000-01','2002-06']]],
-['Dean Malenko',[['2000-01','2001-12']]],
-['Eddie Guerrero',[['2000-01','2001-11'],['2002-04','2005-11']],{hof:1,d:2005}],
-['Chris Benoit',[['2000-01','2007-06']],{d:2007}],
-['William Regal',[['1998-03','2013-06']],{hof:1}],
-['Rikishi',[['1992-06','2004-07']],{hof:1}],
-['Scotty 2 Hotty',[['1997-01','2007-06']]],
-['Grand Master Sexay',[['1997-01','2001-06']],{d:2018}],
-['Crash Holly',[['1999-02','2003-06']],{d:2003}],
-['Hardcore Holly',[['1994-01','2009-06']]],
-['Rhyno',[['1999-01','2005-12'],['2015-08','2019-04']]],
-['Tajiri',[['2001-06','2005-06'],['2016-01','2017-06']]],
-['Lance Storm',[['2001-07','2003-06']]],
-['Justin Credible',[['2001-06','2002-12']]],
-['The Hurricane',[['2001-01','2005-12'],['2011-01','2012-12']]],
-['Chuck Palumbo',[['2001-01','2004-06'],['2007-01','2008-12']]],
-['Billy Kidman',[['2001-07','2005-06']]],
-['Booker T',[['2001-07','2007-05'],['2011-08','2013-06']],{hof:1}],
-['Rob Van Dam',[['2001-07','2007-06'],['2013-07','2014-06']],{hof:1}],
-['Goldberg',[['2003-03','2004-03'],['2016-10','2022-02']],{hof:1}],
-['JBL',[['1996-01','2009-04']],{hof:1}],
-['Brock Lesnar',[['2002-03','2004-03'],['2012-04','2023-08']]],
-['Batista',[['2002-05','2010-04'],['2014-01','2014-06'],['2018-10','2019-04']],{hof:1}],
-['Randy Orton',[['2002-04',null]]],
+['Edge',[['1998-06','2011-04'],['2020-01','2023-08']]],
+['Christian',[['1998-09','2005-11'],['2009-02','2014-11']]],
+['Eddie Guerrero',[['2000-01','2001-11'],['2002-04','2005-11']]],
+['Rey Mysterio',[['2002-07','2015-02'],['2018-01',null]]],
+['Batista',[['2002-05','2010-04'],['2014-01','2014-06'],['2018-10','2019-04']]],
 ['John Cena',[['2002-06',null]]],
-['Rey Mysterio',[['2002-07','2015-02'],['2018-01',null]],{hof:1}],
-['Torrie Wilson',[['2001-06','2008-05']],{hof:1}],
-['Stacy Keibler',[['2001-06','2006-07']]],
-
-/* --- Ruthless Aggression --- */
-['Shelton Benjamin',[['2002-01','2010-04'],['2016-08',null]]],
-['Charlie Haas',[['2002-01','2005-06'],['2006-01','2010-04']]],
-['John Morrison',[['2004-01','2011-11'],['2019-11','2021-11']]],
-['Carlito',[['2004-09','2010-05'],['2021-01',null]]],
-['Chavo Guerrero',[['2001-06','2011-06']]],
-['MVP',[['2005-09','2010-12'],['2020-01','2023-12']]],
-['Mr. Kennedy',[['2005-08','2009-05']]],
-['Umaga',[['2003-01','2009-06']],{d:2009}],
-['Finlay',[['2006-01','2010-08']],{hof:1}],
-['Chris Masters',[['2005-01','2011-08']]],
-['Snitsky',[['2004-08','2008-11']]],
-['Vladimir Kozlov',[['2008-06','2011-06']]],
-['Santino Marella',[['2007-04','2014-06']]],
-['Elijah Burke',[['2006-01','2008-06']]],
+['Randy Orton',[['2002-04',null]]],
 ['CM Punk',[['2006-06','2014-01'],['2023-11',null]]],
-['The Miz',[['2006-06',null]]],
-['Cody Rhodes',[['2006-06','2016-05'],['2022-04',null]]],
-['Bobby Lashley',[['2005-09','2008-02'],['2018-04','2024-06']]],
-['Kofi Kingston',[['2008-01',null]]],
-['Dolph Ziggler',[['2005-09','2023-09']]],
-['Jack Swagger',[['2008-09','2017-04']]],
+['Jeff Hardy',[['1998-01','2003-04'],['2006-08','2009-08'],['2017-04','2021-12']]],
+['Matt Hardy',[['1998-01','2010-08'],['2017-04','2020-03']]],
 ['Sheamus',[['2009-06',null]]],
-['Drew McIntyre',[['2007-09','2014-06'],['2017-04',null]]],
-['Mickie James',[['2005-08','2010-04'],['2016-08','2021-04']]],
-['Beth Phoenix',[['2006-05','2012-08']],{hof:1}],
-['Melina',[['2004-01','2011-08']]],
-['Maria',[['2004-01','2010-02']]],
-['Candice Michelle',[['2004-01','2009-06']]],
-['Michelle McCool',[['2004-09','2011-04']]],
-['Layla',[['2006-06','2015-06']]],
-['Jillian Hall',[['2005-01','2010-11']]],
-['Eve Torres',[['2007-08','2013-05']]],
-['Kelly Kelly',[['2006-06','2012-09']]],
-['Alberto Del Rio',[['2010-08','2014-08'],['2015-10','2016-09']]],
-['Nikki Bella',[['2007-06','2019-01']],{hof:1}],
-['Brie Bella',[['2007-06','2019-01']],{hof:1}],
-['Ted DiBiase Jr',[['2008-05','2013-08']]],
-['Zack Ryder',[['2007-06','2020-04']]],
-['Wade Barrett',[['2010-06','2016-05']]],
-['Justin Gabriel',[['2010-06','2015-01']]],
-['Heath Slater',[['2010-06','2020-04']]],
-['Curtis Axel',[['2010-06','2020-04']]],
-['Ryback',[['2010-01','2016-08']]],
-['Cesaro',[['2011-08','2022-02']]],
-['Damien Sandow',[['2010-01','2016-05']]],
-['Titus O\u2019Neil',[['2010-01',null]]],
-['Darren Young',[['2010-01','2017-11']]],
-['Big E',[['2012-05','2022-03']]],
-['Xavier Woods',[['2013-11',null]]],
+['Dolph Ziggler',[['2005-09','2023-09']]],
 ['Daniel Bryan',[['2010-02','2016-02'],['2018-03','2021-04']]],
-['AJ Lee',[['2011-05','2015-04']]],
-['Paige',[['2011-01','2018-04'],['2019-01','2022-07']]],
-['Emma',[['2013-01','2017-10']]],
-['Naomi',[['2009-06','2022-05'],['2024-09',null]]],
-['Cameron',[['2011-01','2016-05']]],
-['Bray Wyatt',[['2010-06','2021-07'],['2022-10','2023-08']],{d:2023}],
-['Luke Harper',[['2012-06','2019-12']],{d:2020}],
-['Erick Rowan',[['2012-06','2020-04']]],
-['Rusev',[['2013-09','2020-04']]],
-['Lana',[['2013-09','2021-06']]],
-['Neville',[['2012-08','2017-10']]],
-['Adam Rose',[['2013-01','2016-05']]],
-['Bo Dallas',[['2012-01','2021-06']]],
-['Fandango',[['2012-01','2021-06']]],
-['Tyler Breeze',[['2013-01','2021-06']]],
-['Konnor',[['2013-01','2019-04']]],
-['Viktor',[['2013-01','2019-04']]],
-['Shad Gaspard',[['2006-01','2010-04']],{d:2020}],
-['JTG',[['2006-01','2014-06']]],
-
-/* --- Reality era and modern --- */
-['Roman Reigns',[['2012-11',null]]],
 ['Seth Rollins',[['2012-11',null]]],
+['Roman Reigns',[['2012-11',null]]],
 ['Dean Ambrose',[['2012-11','2019-04']]],
+['Bray Wyatt',[['2010-06','2021-07'],['2022-10','2023-08']]],
+['AJ Styles',[['2016-01',null]]],
 ['Kevin Owens',[['2014-12',null]]],
 ['Sami Zayn',[['2013-05',null]]],
 ['Finn Balor',[['2014-09',null]]],
-['Samoa Joe',[['2015-05','2021-08']]],
-['Shinsuke Nakamura',[['2016-04',null]]],
-['AJ Styles',[['2016-01',null]]],
 ['Braun Strowman',[['2015-08','2021-06'],['2022-09',null]]],
-['Baron Corbin',[['2012-08',null]]],
-['Apollo Crews',[['2015-06','2023-09']]],
-['Elias',[['2014-08','2023-09']]],
-['Bobby Roode',[['2016-05','2022-06']]],
-['Andrade',[['2015-06','2021-03'],['2024-01',null]]],
-['Aleister Black',[['2016-11','2021-06']]],
-['Ricochet',[['2018-01','2024-09']]],
-['Cedric Alexander',[['2016-07','2024-06']]],
-['Buddy Murphy',[['2013-01','2021-06']]],
-['Mustafa Ali',[['2016-07','2023-12']]],
-['Jinder Mahal',[['2010-11','2014-06'],['2016-07','2024-09']]],
-['Sin Cara',[['2010-12','2019-12']]],
-['Kalisto',[['2013-06','2021-08']]],
-['Chad Gable',[['2015-07',null]]],
-['Otis',[['2016-01',null]]],
-['Jey Uso',[['2010-05',null]]],
-['Jimmy Uso',[['2010-05',null]]],
-['Solo Sikoa',[['2021-08',null]]],
-['Jacob Fatu',[['2024-05',null]]],
-['Bronson Reed',[['2019-01',null]]],
-['Ilja Dragunov',[['2019-01',null]]],
-['Gunther',[['2019-08',null]]],
-['Ludwig Kaiser',[['2019-08',null]]],
-['Giovanni Vinci',[['2019-08','2024-06']]],
-['LA Knight',[['2021-06',null]]],
-['Austin Theory',[['2019-08',null]]],
-['Grayson Waller',[['2021-01',null]]],
-['Bron Breakker',[['2021-02',null]]],
-['Carmelo Hayes',[['2021-01',null]]],
-['Trick Williams',[['2021-06',null]]],
-['Damian Priest',[['2018-11',null]]],
-['Dominik Mysterio',[['2020-08',null]]],
-['Dragon Lee',[['2023-01',null]]],
-['Karrion Kross',[['2019-08','2021-11'],['2022-08',null]]],
-['Logan Paul',[['2022-04',null]]],
-['Bad Bunny',[['2021-01','2023-09']]],
-['Sting',[['2014-08','2015-09']],{hof:1}],
-['Charlotte Flair',[['2012-05',null]]],
+['Drew McIntyre',[['2007-09','2014-06'],['2017-04',null]]],
 ['Becky Lynch',[['2013-05',null]]],
+['Charlotte Flair',[['2012-05',null]]],
 ['Sasha Banks',[['2012-08','2022-05']]],
 ['Bayley',[['2012-08',null]]],
+['Ronda Rousey',[['2018-01','2019-04'],['2022-01','2023-08']]],
 ['Asuka',[['2015-09',null]]],
 ['Alexa Bliss',[['2013-05','2024-01'],['2024-11',null]]],
+['Cody Rhodes',[['2006-06','2016-05'],['2022-04',null]]],
+['Gunther',[['2019-08',null]]],
+['LA Knight',[['2021-06',null]]],
+['Jey Uso',[['2010-05',null]]],
+['Jimmy Uso',[['2010-05',null]]],
+['Bianca Belair',[['2016-04',null]]],
+['Rhea Ripley',[['2017-08',null]]],
+['Damian Priest',[['2018-11',null]]],
+['Logan Paul',[['2022-04',null]]],
+['Brock Lesnar',[['2002-03','2004-03'],['2012-04','2023-08']]],
+['Goldberg',[['2003-03','2004-03'],['2016-10','2022-02']]],
+['Trish Stratus',[['2000-03','2006-09'],['2019-08','2023-08']]],
+['Lita',[['2000-06','2006-11'],['2018-01','2023-01']]],
+['Chyna',[['1997-02','2001-11']]],
+['Booker T',[['2001-07','2007-05'],['2011-08','2013-06']]],
+['Rob Van Dam',[['2001-07','2007-06'],['2013-07','2014-06']]],
+['Ric Flair',[['1991-09','1993-02'],['2001-11','2008-03']]],
+['Vince McMahon',[['1984-01','2022-06'],['2023-01','2024-01']]],
+['Shane McMahon',[['1998-01','2001-11'],['2016-02','2022-01']]],
+['Stephanie McMahon',[['1999-01','2023-01']]],
+['Kofi Kingston',[['2008-01',null]]],
+['Big E',[['2012-05','2022-03']]],
+['Xavier Woods',[['2013-11',null]]],
+['The Miz',[['2006-06',null]]],
+['Wade Barrett',[['2010-06','2016-05']]],
+['Jack Swagger',[['2008-09','2017-04']]],
+['Cesaro',[['2011-08','2022-02']]],
+['Bobby Lashley',[['2005-09','2008-02'],['2018-04','2024-06']]],
+['Ricochet',[['2018-01','2024-09']]],
+['Aleister Black',[['2016-11','2021-06']]],
+['Rusev',[['2013-09','2020-04']]],
+['Jinder Mahal',[['2010-11','2014-06'],['2016-07','2024-09']]],
+['Mark Henry',[['1996-09','2017-04']]],
+['Umaga',[['2003-01','2009-06']]],
+['JBL',[['1996-01','2009-04']]],
+['Jerry Lawler',[['1992-11','2020-01']]],
+['Yokozuna',[['1992-10','1996-11']]],
+['Kevin Nash',[['1993-06','1996-05'],['2002-02','2003-06'],['2011-01','2011-12']]],
+['Scott Hall',[['1992-08','1996-05']]],
+['British Bulldog',[['1985-08','1988-11'],['1990-09','1992-09'],['1994-09','1997-11'],['1999-08','2000-04']]],
+['Owen Hart',[['1988-08','1999-05']]],
+['Vader',[['1996-01','1998-10']]],
+['Sycho Sid',[['1991-08','1992-06'],['1995-05','1997-03']]],
+['Sable',[['1996-04','1999-05'],['2003-04','2004-08']]],
+['Road Dogg',[['1994-01','2001-06'],['2012-01','2014-06']]],
+['Billy Gunn',[['1993-01','2004-11'],['2012-01','2015-02']]],
+['X-Pac',[['1993-01','2002-06']]],
+['Test',[['1998-06','2004-06'],['2006-06','2007-06']]],
+['Val Venis',[['1998-04','2009-06']]],
+['The Godfather',[['1992-11','2002-08']]],
+['Ted DiBiase',[['1987-06','1993-12']]],
+['Jake Roberts',[['1986-08','1992-11'],['1996-01','1997-09']]],
+['Mr. Perfect',[['1988-06','1996-08'],['2002-01','2002-05']]],
+['Rick Rude',[['1987-08','1990-11'],['1997-11','1999-04']]],
+['Roddy Piper',[['1984-01','1987-11'],['1989-01','1992-11'],['1996-01','1997-11'],['2003-03','2003-09']]],
+['Jimmy Snuka',[['1982-01','1985-06'],['1989-01','1992-06']]],
+['Big Boss Man',[['1988-06','1993-06'],['1998-08','2003-06']]],
+['Chris Benoit',[['2000-01','2007-06']]],
+['William Regal',[['1998-03','2013-06']]],
+['Paul Heyman',[['1996-01',null]]],
+['Nikki Bella',[['2007-06','2019-01']]],
+['Brie Bella',[['2007-06','2019-01']]],
+['Paige',[['2011-01','2018-04'],['2019-01','2022-07']]],
+['Naomi',[['2009-06','2022-05'],['2024-09',null]]],
 ['Carmella',[['2013-06',null]]],
 ['Liv Morgan',[['2014-06',null]]],
 ['Nia Jax',[['2014-06','2021-11'],['2023-09',null]]],
-['Bianca Belair',[['2016-04',null]]],
-['Rhea Ripley',[['2017-08',null]]],
 ['Iyo Sky',[['2018-06',null]]],
 ['Kairi Sane',[['2017-01','2020-08'],['2023-09',null]]],
-['Dakota Kai',[['2017-01',null]]],
-['Shayna Baszler',[['2017-08','2025-04']]],
-['Ronda Rousey',[['2018-01','2019-04'],['2022-01','2023-08']]],
+['Bron Breakker',[['2021-02',null]]],
+['Solo Sikoa',[['2021-08',null]]],
+['Jade Cargill',[['2023-09',null]]],
+['Tiffany Stratton',[['2021-09',null]]],
+['Austin Theory',[['2019-08',null]]],
+['Karrion Kross',[['2019-08','2021-11'],['2022-08',null]]],
+['Chad Gable',[['2015-07',null]]],
+['Otis',[['2016-01',null]]],
+['Sgt. Slaughter',[['1980-01','1984-06'],['1990-08','1992-11']]],
+['Bam Bam Bigelow',[['1987-09','1988-11'],['1992-12','1995-08']]],
+['Lex Luger',[['1993-01','1995-08']]],
+['Tatanka',[['1991-10','1996-09']]],
+['Doink the Clown',[['1992-11','1996-06']]],
+['Rikishi',[['1992-06','2004-07']]],
+['Bubba Ray Dudley',[['1999-08','2005-07'],['2015-08','2016-12']]],
+['D-Von Dudley',[['1999-08','2005-07'],['2015-08','2016-12']]],
+['Sting',[['2014-08','2015-09']]],
+['Shinsuke Nakamura',[['2016-04',null]]],
+['Samoa Joe',[['2015-05','2021-08']]],
+['Ricky Steamboat',[['1985-01','1988-03'],['1991-06','1991-12']]],
+['Bad Bunny',[['2021-01','2023-09']]],
+['Ryback',[['2010-01','2016-08']]],
+['Zack Ryder',[['2007-06','2020-04']]],
+['Kalisto',[['2013-06','2021-08']]],
+['Apollo Crews',[['2015-06','2023-09']]],
+['Elias',[['2014-08','2023-09']]],
+['Baron Corbin',[['2012-08',null]]],
 ['Sonya Deville',[['2015-07','2024-06']]],
 ['Mandy Rose',[['2015-07','2022-12']]],
 ['Lacey Evans',[['2016-04','2023-08']]],
-['Raquel Rodriguez',[['2016-01',null]]],
-['Zoey Stark',[['2021-01',null]]],
-['Shotzi',[['2019-01',null]]],
-['Tiffany Stratton',[['2021-09',null]]],
-['Jade Cargill',[['2023-09',null]]],
-['Chelsea Green',[['2018-06','2021-04'],['2022-11',null]]],
-['Roxanne Perez',[['2022-01',null]]],
-['Lyra Valkyria',[['2022-01',null]]],
-['Michin',[['2018-01',null]]],
-['Adam Cole',[['2017-08','2021-08']]],
-['Johnny Gargano',[['2015-08','2021-12'],['2022-08',null]]],
-['Tommaso Ciampa',[['2015-08',null]]],
-['Ember Moon',[['2015-08','2021-11']]],
-['Keith Lee',[['2018-01','2021-11']]],
-['Matt Riddle',[['2018-01','2023-09']]],
-['Angelo Dawkins',[['2016-01',null]]],
-['Montez Ford',[['2016-01',null]]],
-['Erik',[['2018-06','2024-06']]],
-['Ivar',[['2018-06',null]]],
-['Pete Dunne',[['2016-01',null]]],
-['Tyler Bate',[['2016-01',null]]],
-['Nikki Cross',[['2016-08','2023-09']]],
-['Candice LeRae',[['2017-01','2021-11'],['2022-11',null]]],
-['Toni Storm',[['2017-06','2022-12']]],
-['Rezar',[['2016-01','2021-08']]],
-['Akam',[['2016-01','2021-08']]],
-['Paul Heyman',[['1996-01',null]],{hof:1}]
+['Shayna Baszler',[['2017-08','2025-04']]],
+['Bobby Roode',[['2016-05','2022-06']]],
+['Andrade',[['2015-06','2021-03'],['2024-01',null]]],
+['Sin Cara',[['2010-12','2019-12']]],
+['Dominik Mysterio',[['2020-08',null]]],
+['Chelsea Green',[['2018-06','2021-04'],['2022-11',null]]]
 ];
-
 
 /* Nicknames and former ring names, longest phrase first at match time. */
 const ALIASES = {
@@ -1339,24 +1113,9 @@ const ALIASES = {
   'mr perfect':'mr. perfect','curt hennig':'mr. perfect','ravishing':'rick rude',
   'davey boy smith':'british bulldog','bulldog':'british bulldog',
   'the king':'jerry lawler','sgt slaughter':'sgt. slaughter',
-  'io shirai':'iyo sky','mia yim':'michin',
+  'io shirai':'iyo sky','mia yim':'michin','ember moon':'athena',
   'ziggler':'dolph ziggler','nic nemeth':'dolph ziggler',
-  'the all mighty':'bobby lashley','panama city playboy':'adam cole',
-  'jyd':'junkyard dog','junkyard':'junkyard dog',
-  'sheik':'the iron sheik','iron sheik':'the iron sheik',
-  'warrior':'ultimate warrior','hogan':'hulk hogan','hulkster':'hulk hogan',
-  'andre':'andre the giant','the giant french':'andre the giant',
-  'bam bam':'bam bam bigelow','boss man':'big boss man','the eighth wonder':'andre the giant',
-  'dusty':'dusty rhodes','the american dream':'dusty rhodes','dustin rhodes':'goldust',
-  'funk':'terry funk','race':'harley race','bruno':'bruno sammartino',
-  'backlund':'bob backlund','sarge':'sgt. slaughter','monsoon':'gorilla monsoon',
-  'the brain':'bobby heenan','weasel':'bobby heenan','the fink':'howard finkel',
-  'yoko':'yokozuna','mouth of the south':'jimmy hart','honky tonk':'the honky tonk man',
-  'moolah':'the fabulous moolah','madusa':'alundra blayze','sensational sherri':'sherri martel',
-  'jr':'jim ross','good ol jr':'jim ross','apa':'jbl','acolytes':'jbl',
-  'the model':'rick martel','mr wonderful':'paul orndorff','the hammer':'greg valentine',
-  'the anvil':'jim neidhart','the birdman':'koko b. ware',
-  'quiet storm':'bruno sammartino','hitman hart':'bret hart',
+  'undisputed era':'adam cole','the all mighty':'bobby lashley',
   'wwe':'','wwf':'','wwe network':'','peacock':'','full match':'','ppv':'','premium live event':''
 };
 
@@ -1732,35 +1491,17 @@ function norm(s){
   return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
     .replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
 }
-/* Alias keys are normalised the same way queries are, so a nickname written
-   as "the brain" still matches after noise words are stripped. Substitution
-   is a SINGLE pass over one combined pattern -- replacing key by key lets an
-   earlier result be rewritten by a later key ("stone cold" -> "steve austin"
-   -> "steve steve austin"), which quietly broke two-name searches. */
-const ALIAS_MAP=(()=>{
-  const m={};
-  for(const k in ALIASES){
-    m[k]=ALIASES[k];
-    const stripped=k.split(' ').filter(t=>!NOISE.has(t)).join(' ');
-    if(stripped && !(stripped in m)) m[stripped]=ALIASES[k];
-  }
-  return m;
-})();
-const ALIAS_KEYS = Object.keys(ALIAS_MAP).filter(Boolean).sort((a,b)=>b.length-a.length);
-const ALIAS_RE = new RegExp('(?<=^|\\s)(?:'+
-  ALIAS_KEYS.map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+
-  ')(?=\\s|$)','g');
+const ALIAS_KEYS = Object.keys(ALIASES).sort((a,b)=>b.length-a.length);
 function applyAliases(str){
-  return str.replace(ALIAS_RE, m=>ALIAS_MAP[m] || '').replace(/\s+/g,' ').trim();
+  let s=' '+str+' ';
+  for(const k of ALIAS_KEYS){
+    const re=new RegExp('(?<=\\s)'+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?=\\s)','g');
+    s=s.replace(re, ALIASES[k] ? ' '+ALIASES[k]+' ' : ' ');
+  }
+  return s.replace(/\s+/g,' ').trim();
 }
 
-/* Fragments that appear in lots of ring names. On their own they are not a
-   surname, so "the man" should reach the alias for Becky Lynch rather than
-   collecting every wrestler with Man in their name. */
-const GENERIC_TOK=new Set(['man','kid','jr','sr','dog','king','boy','big','mr','the','of','de','la']);
-const ROSTER_INDEX = ROSTER.map(([name,runs,flags])=>({name,key:norm(name),toks:norm(name).split(' '),runs,
-  hof:!!(flags&&flags.hof), died:(flags&&flags.d)||0,
-  active:runs.some(r=>r[1]===null), debut:runs[0][0]}));
+const ROSTER_INDEX = ROSTER.map(([name,runs])=>({name,key:norm(name),toks:norm(name).split(' '),runs}));
 
 /* Greedy longest-first. Returns groups: an exact hit is one person;
    an ambiguous surname ("hardy") becomes a group of everyone it could be. */
@@ -1773,10 +1514,8 @@ function extractPeople(tokens){
       const phrase=tokens.slice(i,i+len).join(' ');
       const exact=ROSTER_INDEX.find(p=>p.key===phrase);
       if(exact){ hit=[exact]; span=len; break; }
-      if(phrase.length>=3 && !(len===1 && GENERIC_TOK.has(phrase))){
-        // short tokens must be an exact surname; longer ones may also prefix-match
-        const part=ROSTER_INDEX.filter(p=>p.toks.includes(phrase)||
-          (phrase.length>=4 && p.key.startsWith(phrase)));
+      if(phrase.length>=4){
+        const part=ROSTER_INDEX.filter(p=>p.toks.includes(phrase)||p.key.startsWith(phrase));
         if(part.length){ hit=part; span=len; break; }
       }
     }
@@ -2633,19 +2372,12 @@ function renderWrestler(name){
   const {runs,eps,seen,events,months}=st;
   const yrs=(months/12);
   const spans=runs.map(([a,b])=>fmtMonth(a)+' \u2013 '+(b>'9000'?'now':fmtMonth(b))).join(' &nbsp;/&nbsp; ');
-  const p=st.p;
-  const tags=[
-    p.hof?'<span class="wtag hof">Hall of Fame</span>':'',
-    p.active?'<span class="wtag live">On the roster</span>':'',
-    p.died?'<span class="wtag gone">Died '+p.died+'</span>':''
-  ].join('');
   const pct=eps.length?seen/eps.length*100:0;
   return `<div class="wcard">
     <div class="whead">
       ${avatarFor(name)}
       <div>
         <h2>${esc(name)}</h2>
-        <div class="wtags">${tags}</div>
         <div class="wruns">${spans}</div>
       </div>
       <button class="btn sm" data-face="${esc(name)}">Set image</button>
@@ -2660,8 +2392,7 @@ function renderWrestler(name){
       <div class="minibar"><i style="width:${pct.toFixed(1)}%"></i></div>
       <div class="pct">You have watched ${seen.toLocaleString()} of ${eps.length.toLocaleString()} episodes that aired while they were on the roster &middot; ${pct.toFixed(1)}%</div>
     </div>
-    ${st.p.died?`<p class="memorial">Died ${st.p.died}. Everything on file here is from their career.</p>`:''}
-    <p class="wnote">Tenure dates, Hall of Fame status and dates of death are written from memory and approximate and cover the whole run, not just the weeks they appeared.
+    <p class="wnote">Tenure dates are approximate and cover the whole run, not just the weeks they appeared.
       Episode counts follow the shows you are tracking.</p>
   </div>`;
 }
@@ -2775,40 +2506,22 @@ function feudEpisodes(f){
 /* ---------- rendering ---------- */
 let feudPick=null, feudOpen=null, feudQuery='';
 
-let rosterFilter='all';
-const ERAS=[['golden','Golden era','0000','1993-01'],['newgen','New Gen','1993-01','1997-09'],
-            ['attitude','Attitude','1997-09','2002-06'],['ruthless','Ruthless','2002-06','2008-07'],
-            ['pg','PG era','2008-07','2016-07'],['modern','Modern','2016-07','9999']];
-function eraOf(p){ const d=p.debut; for(const [id,,a,b] of ERAS) if(d>=a&&d<b) return id; return 'modern'; }
-
 function renderFeudPeople(){
   const q=norm(feudQuery);
+  let names=ROSTER_INDEX.map(p=>p.name);
   const withFeuds=new Set(); allFeuds().forEach(f=>f.who.forEach(n=>withFeuds.add(n)));
-  let list=ROSTER_INDEX.slice();
-  if(rosterFilter==='hof') list=list.filter(p=>p.hof);
-  else if(rosterFilter==='active') list=list.filter(p=>p.active);
-  else if(rosterFilter==='gone') list=list.filter(p=>p.died);
-  else if(rosterFilter!=='all') list=list.filter(p=>eraOf(p)===rosterFilter);
-  if(q) list=list.filter(p=>norm(p.name).includes(q));
-  list.sort((a,b)=>{
-    const A=withFeuds.has(a.name), B=withFeuds.has(b.name);
+  names.sort((a,b)=>{
+    const A=withFeuds.has(a), B=withFeuds.has(b);
     if(A!==B) return A?-1:1;
-    return a.name.localeCompare(b.name);
+    return a.localeCompare(b);
   });
-  $('feudCount').textContent=list.length+' of '+ROSTER_INDEX.length;
-  $('feudPeople').innerHTML = list.slice(0,400).map(p=>{
-    const c=feudsFor(p.name).length;
-    return `<button class="person${p.name===feudPick?' on':''}" data-person="${esc(p.name)}">
-      <span>${esc(p.name)}${p.hof?'<em title="Hall of Fame">HOF</em>':''}${p.died?'<em class="g" title="Died '+p.died+'">&#8224;</em>':''}</span>
-      <i>${c||''}</i></button>`;
-  }).join('') || '<p style="color:var(--dim);padding:10px;font-size:13px">Nobody matches that.</p>';
+  if(q) names=names.filter(n=>norm(n).includes(q));
+  $('feudPeople').innerHTML = names.slice(0,60).map(n=>{
+    const c=feudsFor(n).length;
+    return `<button class="person${n===feudPick?' on':''}" data-person="${esc(n)}">
+      <span>${esc(n)}</span><i>${c||''}</i></button>`;
+  }).join('') || '<p style="color:var(--dim);padding:8px">Nobody by that name in the roster index.</p>';
 }
-$('feudFilters').addEventListener('click',ev=>{
-  const b=ev.target.closest('[data-rf]'); if(!b) return;
-  rosterFilter=b.dataset.rf;
-  [...$('feudFilters').children].forEach(c=>c.setAttribute('aria-pressed',c===b));
-  renderFeudPeople();
-});
 
 function renderFeudList(){
   if(!feudPick){

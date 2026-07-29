@@ -384,6 +384,92 @@
     .airrow{grid-template-columns:1fr auto;row-gap:5px}
   }
 
+
+  /* ---------- storylines ---------- */
+  .feudwrap{display:grid;grid-template-columns:230px 1fr;gap:20px;align-items:start}
+  .feudside input{width:100%;margin-bottom:9px}
+  .feudpeople{max-height:560px;overflow:auto;border:1px solid var(--line);background:var(--panel)}
+  .person{display:flex;width:100%;justify-content:space-between;align-items:center;gap:8px;
+    background:none;border:0;border-bottom:1px solid var(--rowline);padding:8px 11px;
+    text-align:left;font-size:13px;color:var(--dim)}
+  .person:hover{background:var(--panel2);color:var(--txt)}
+  .person.on{background:var(--red);color:#fff}
+  .person i{font-style:normal;font-family:'DM Mono',monospace;font-size:10px;color:var(--dim2);
+    background:var(--panel3);padding:1px 6px;min-width:20px;text-align:center}
+  .person.on i{background:rgba(0,0,0,.28);color:#fff}
+  .feudtop{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:15px;flex-wrap:wrap}
+  .feudtop p{margin:0;font-size:13px;color:var(--dim);max-width:56ch}
+  .feud{border:1px solid var(--line);background:var(--panel);margin-bottom:11px;border-left:3px solid var(--red)}
+  .feudhd{display:grid;grid-template-columns:1fr 190px;gap:16px;padding:14px 16px 12px;align-items:start}
+  .feud h3{font-size:19px;line-height:1.05}
+  .feudmeta{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim2);margin-top:5px}
+  .feudnote{font-size:12.5px;color:var(--dim);margin-top:7px;font-style:italic}
+  .feudright .pct{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--dim);margin-top:5px}
+  .feudacts{display:flex;gap:7px;flex-wrap:wrap;padding:0 16px 13px}
+  .feudeps{border-top:1px solid var(--line);max-height:440px;overflow:auto}
+  .feudeps .row{grid-template-columns:22px 128px 1fr auto}
+  .emptyfeud{border:1px dashed var(--line);padding:26px 22px;color:var(--dim)}
+  .emptyfeud b{display:block;font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;
+    color:var(--txt);margin-bottom:8px}
+  .emptyfeud p{margin:0;font-size:13.5px;max-width:58ch}
+  @media(max-width:820px){
+    .feudwrap{grid-template-columns:1fr}
+    .feudpeople{max-height:240px}
+    .feudhd{grid-template-columns:1fr}
+  }
+
+
+  /* ---------- widescreen ---------- */
+  html.wide .wrap{max-width:1680px}
+  html.wide .feudwrap{grid-template-columns:270px 1fr}
+  html.wide .row{grid-template-columns:22px 150px 1fr auto}
+
+  /* ---------- ticker ---------- */
+  html.noticker .ticker{display:none}
+  .ticker{position:relative;margin-top:14px;border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);background:var(--deep);overflow:hidden;height:30px}
+  .ticker:before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.42) 0 1px,transparent 1px 2px)}
+  .ticker:after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
+    background:linear-gradient(90deg,var(--deep),transparent 7%,transparent 93%,var(--deep))}
+  .tickertrack{position:absolute;top:0;left:0;height:30px;display:flex;align-items:center;
+    white-space:nowrap;will-change:transform;animation:slide 40s linear infinite;
+    font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .ticker:hover .tickertrack{animation-play-state:paused}
+  .ti{color:var(--chrome);text-shadow:0 0 7px currentColor;padding:0 4px}
+  .ti.hot{color:var(--red);text-shadow:0 0 10px currentColor;font-weight:500}
+  .tsep{color:var(--dim2);padding:0 16px;opacity:.6}
+  @media(prefers-reduced-motion:reduce){.tickertrack{animation:none;padding-left:14px}}
+
+  /* ---------- wrestler screen ---------- */
+  .wcard{border:1px solid var(--line);background:var(--panel);padding:18px 20px;margin-bottom:22px;
+    border-left:3px solid var(--red)}
+  .whead{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+  .whead h2{font-size:29px;line-height:.95}
+  .whead > div{flex:1}
+  .face{width:60px;height:60px;flex:0 0 60px;display:grid;place-items:center;
+    font-family:'Anton',sans-serif;font-size:23px;color:var(--txt);
+    background:var(--panel3);border:1px solid var(--line);
+    clip-path:polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)}
+  .wruns{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--dim);margin-top:7px}
+  .wfigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;
+    background:var(--line);border:1px solid var(--line);margin-bottom:15px}
+  .wfigs > div{background:var(--panel2);padding:11px 13px}
+  .wfigs b{display:block;font-family:'Anton',sans-serif;font-size:24px;line-height:1;margin-bottom:3px}
+  .wfigs span{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);font-weight:800}
+  .wprog .pct{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);margin-top:6px}
+  .wnote{font-size:11.5px;color:var(--dim2);margin:13px 0 0;line-height:1.55}
+
+  /* ---------- data health ---------- */
+  .healthrow{display:grid;grid-template-columns:150px 1fr 130px 68px;gap:12px;align-items:center;
+    padding:7px 0 7px 10px;border-bottom:1px solid var(--rowline);border-left:2px solid var(--bc)}
+  .healthrow .hn{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--dim2);text-align:right}
+  .repostate{font-size:12.5px;color:var(--dim);margin:16px 0 0;line-height:1.6;
+    border-left:2px solid var(--gold);padding-left:12px}
+  .repostate b{color:var(--txt);font-family:'DM Mono',monospace;font-size:12px}
+  @media(max-width:680px){.healthrow{grid-template-columns:1fr auto}.healthrow .minibar{grid-column:1/3;order:3}}
+
 </style>
 
 <div class="gate on" id="gate">
@@ -408,7 +494,10 @@
 
       <div id="gExtra" style="display:none;margin-top:15px">
         <label for="gpw2">Confirm password</label>
-        <input class="pwbox" type="password" id="gpw2" name="password2" autocomplete="new-password">
+        <div class="row2">
+          <input class="pwbox" type="password" id="gpw2" name="password2" autocomplete="new-password">
+          <button class="btn" id="gShow2" type="button" title="Show or hide both passwords">Show</button>
+        </div>
         <div class="warnbox" id="gLegacy" style="display:none">
           There is already a ledger saved on this device from before profiles existed.
           <label style="display:flex;align-items:center;gap:8px;margin-top:9px;color:var(--txt);text-transform:none;letter-spacing:0;font-size:12.5px;font-weight:400">
@@ -450,6 +539,8 @@
     </div>
   </div>
 
+  <div class="ticker" id="ticker"><div class="tickertrack" id="tickerTrack"></div></div>
+
   <section class="tron" id="tron">
     <div class="stamp" id="stamp">Watched</div>
     <div id="tronBody"></div>
@@ -462,6 +553,7 @@
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" aria-selected="true" data-tab="ledger">Ledger</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="now">On Now</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="feuds">Roster</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="shows">Shows</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="stats">Stats</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="data">Data</button>
@@ -510,6 +602,22 @@
     </div>
   </div>
 
+  <div class="panel" id="p-feuds">
+    <div class="feudwrap">
+      <div class="feudside">
+        <input type="text" id="feudSearch" placeholder="Search a wrestler" autocomplete="off">
+        <div class="feudpeople" id="feudPeople"></div>
+      </div>
+      <div class="feudmain">
+        <div class="feudtop">
+          <p>Pick a wrestler for their run, their numbers and their rivalries. Open a rivalry for every episode inside it.</p>
+          <button class="btn sm" id="feudNew">Add a storyline</button>
+        </div>
+        <div id="feudList"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="panel" id="p-shows">
     <p style="font-size:13px;color:var(--dim);max-width:68ch;margin:0 0 15px">
       Switch a show off and it leaves your ledger and your completion percentage. Ticks are kept, so turning it back on restores everything.
@@ -532,6 +640,30 @@
   </div>
 
   <div class="panel" id="p-data">
+    <div class="card2">
+      <h3>Layout</h3>
+      <p>Kept per device, alongside the theme.</p>
+      <label class="keepme"><input type="checkbox" id="prefWide"> Widescreen &mdash; use the full window instead of a centred column</label>
+      <label class="keepme"><input type="checkbox" id="prefTicker"> Show the ticker under the title</label>
+      <div class="field" style="margin-top:15px;max-width:280px">
+        <label for="prefHome">Tab to open on</label>
+        <select id="prefHome">
+          <option value="ledger">Ledger</option>
+          <option value="now">On Now</option>
+          <option value="feuds">Roster</option>
+          <option value="stats">Stats</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card2">
+      <h3>What the database is missing</h3>
+      <div id="healthBox"></div>
+      <div class="acts" style="margin-top:14px">
+        <button class="btn primary" id="btnExportCorr">Export corrections</button>
+      </div>
+    </div>
+
     <div class="card2">
       <h3>Theme</h3>
       <p>Saved per device rather than per profile, so it applies before you sign in.</p>
@@ -1262,9 +1394,21 @@ function rebuildPool(){
 }
 function rebuildCatalogue(){
   CAT = buildCatalogue().concat(state.custom);
+  // repository corrections first, then anything you have changed yourself
+  if(typeof REPO_DATA!=='undefined' && REPO_DATA.length){
+    const idx={}; CAT.forEach(e=>{ idx[e.show+'|'+e.date]=e; });
+    for(const r of REPO_DATA){
+      const hit=idx[r.show+'|'+r.date];
+      if(hit){ if(r.title) hit.title=r.title; if(r.card) hit.card=r.card; hit.repo=true; }
+      else if(SHOW_META[r.show]) CAT.push({id:r.show+':'+r.date+':repo', show:r.show, date:r.date,
+        title:r.title||SHOW_META[r.show].short+' '+r.date, run:SHOW_META[r.show].run,
+        kind:r.show==='event'?'event':'weekly', card:r.card||'', repo:true, future:r.date>iso(TODAY)});
+    }
+  }
   CAT.forEach(e=>{
     if(state.titles[e.id]) e.title = state.titles[e.id];
-    e.card = state.cards[e.id] || '';
+    if(state.cards[e.id]) e.card = state.cards[e.id];
+    if(!e.card) e.card='';
   });
   CAT.sort((a,b)=> a.date<b.date?-1 : a.date>b.date?1 : a.show.localeCompare(b.show));
   BY_ID={}; CAT.forEach(e=>BY_ID[e.id]=e);
@@ -1910,6 +2054,532 @@ document.addEventListener('click',ev=>{
   RAW.set(THEME_KEY, curTheme);
 });
 
+/* ============================================================
+   15. DEVICE PREFERENCES
+   Width, default tab and ticker live outside the encrypted
+   profile so they apply before anything is decrypted.
+   ============================================================ */
+const PREFS_KEY='wwe-prefs';
+let prefs={wide:false, home:'ledger', ticker:true};
+
+async function loadPrefs(){
+  try{ const r=await RAW.get(PREFS_KEY); if(r) prefs=Object.assign(prefs,JSON.parse(r)); }catch(e){}
+  applyPrefs();
+}
+function savePrefs(){ RAW.set(PREFS_KEY,JSON.stringify(prefs)); applyPrefs(); }
+function applyPrefs(){
+  document.documentElement.classList.toggle('wide', !!prefs.wide);
+  document.documentElement.classList.toggle('noticker', !prefs.ticker);
+  const w=document.getElementById('prefWide'); if(w) w.checked=!!prefs.wide;
+  const t=document.getElementById('prefTicker'); if(t) t.checked=!!prefs.ticker;
+  const h=document.getElementById('prefHome'); if(h) h.value=prefs.home;
+}
+function goHome(){
+  const t=document.querySelector('.tab[data-tab="'+prefs.home+'"]');
+  if(t && !t.getAttribute('aria-selected')==='true') return;
+  if(t) t.click();
+}
+
+/* ============================================================
+   16. TICKER
+   A single line of phosphor under the masthead: what is on air,
+   what is next, and where you are. Rebuilt on a slow timer.
+   ============================================================ */
+function tickerItems(){
+  const out=[];
+  try{
+    const {live,soon}=scheduleNow();
+    live.forEach(({e,s})=>{
+      const m=SHOW_META[e.show];
+      out.push({hot:true, txt:'ON AIR NOW \u2014 '+(e.kind==='event'?e.title:m.short+' #'+e.num)+' \u2014 since '+localTime(s.start)});
+    });
+    if(soon.length){
+      const {e,s}=soon[0], m=SHOW_META[e.show];
+      out.push({hot:!live.length, txt:'NEXT UP \u2014 '+(e.kind==='event'?e.title:m.short+' #'+e.num)+' in '+countdown(s.start-Date.now())});
+    }
+    const nextEv=soon.find(x=>x.e.kind==='event');
+    if(nextEv) out.push({txt:'UPCOMING EVENT \u2014 '+nextEv.e.title+' \u2014 '+localDay(nextEv.s.start)+(nextEv.e.est?' (est.)':'')});
+  }catch(e){}
+  try{
+    const total=POOL.length, seen=POOL.reduce((n,e)=>n+(isSeen(e.id)?1:0),0);
+    if(total) out.push({txt:'YOUR LEDGER \u2014 '+seen.toLocaleString()+' of '+total.toLocaleString()+' watched \u2014 '+(seen/total*100).toFixed(1)+'% COMPLETE'});
+    const nx=nextUp();
+    if(nx) out.push({txt:'UP NEXT TO WATCH \u2014 '+nx.title+' \u2014 '+fmtDate(nx.date)});
+    const rest=POOL.filter(e=>!isSeen(e.id)).reduce((n,e)=>n+e.run,0);
+    if(rest) out.push({txt:'TIME REMAINING \u2014 '+fmtHours(rest)+' OF WRESTLING'});
+  }catch(e){}
+  if(!out.length) out.push({txt:'CARD SUBJECT TO CHANGE'});
+  return out;
+}
+let tickerTimer=null;
+function renderTicker(){
+  const el=document.getElementById('tickerTrack');
+  if(!el) return;
+  const items=tickerItems();
+  const run=items.map(i=>`<span class="ti${i.hot?' hot':''}">${esc(i.txt)}</span>`).join('<span class="tsep">\u25C6</span>');
+  el.innerHTML=run+'<span class="tsep">\u25C6</span>'+run+'<span class="tsep">\u25C6</span>';
+  const chars=items.reduce((n,i)=>n+i.txt.length,0)+items.length*3;
+  el.style.animationDuration=Math.max(24,Math.round(chars/4.2))+'s';
+  clearTimeout(tickerTimer);
+  tickerTimer=setTimeout(renderTicker, 20000);
+}
+
+/* ============================================================
+   17. CATALOGUE CORRECTIONS FROM THE REPOSITORY
+   Personal ticks are encrypted per profile, but corrections to
+   the catalogue itself -- real dates, real match cards -- are
+   not personal. Hosted alongside the app they load for every
+   profile, on every device, and live in version control rather
+   than in one browser. Absent file, no problem.
+   ============================================================ */
+let REPO_DATA=[], REPO_STATE='none';
+
+async function loadRepoData(){
+  try{
+    const r=await fetch('./data/catalogue.json',{cache:'no-cache'});
+    if(!r.ok){ REPO_STATE='none'; return; }
+    const j=await r.json();
+    const rows=Array.isArray(j)?j:(j.episodes||[]);
+    REPO_DATA=rows.filter(x=>x&&x.show&&/^\d{4}-\d{2}-\d{2}$/.test(x.date||''));
+    REPO_STATE=REPO_DATA.length?'ok':'empty';
+  }catch(e){ REPO_STATE='none'; }
+}
+
+/* provenance: where did this record's detail come from */
+function provenanceOf(e){
+  if(state.titles[e.id]||state.cards[e.id]) return 'you';
+  if(e.repo) return 'repo';
+  if(e.est) return 'est';
+  return 'gen';
+}
+
+function dataHealth(){
+  const rows=CAT.filter(e=>!e.future);
+  const byShow={};
+  for(const e of rows){
+    const s=byShow[e.show]=byShow[e.show]||{total:0,cards:0,fixed:0,est:0,repo:0};
+    s.total++;
+    if(e.card) s.cards++;
+    if(state.titles[e.id]) s.fixed++;
+    if(e.est) s.est++;
+    if(e.repo) s.repo++;
+  }
+  return byShow;
+}
+
+function renderHealth(){
+  const el=document.getElementById('healthBox'); if(!el) return;
+  const h=dataHealth();
+  const order=SHOWS.map(s=>s.id).concat(['event']).filter(id=>h[id]);
+  const tot=Object.values(h).reduce((a,s)=>({
+    total:a.total+s.total, cards:a.cards+s.cards, fixed:a.fixed+s.fixed,
+    est:a.est+s.est, repo:a.repo+s.repo}),{total:0,cards:0,fixed:0,est:0,repo:0});
+
+  el.innerHTML=`
+    <div class="figs" style="margin-bottom:16px">
+      <div class="fig"><b>${tot.total.toLocaleString()}</b><span>Episodes on file</span></div>
+      <div class="fig"><b>${tot.cards.toLocaleString()}</b><span>With a match card</span></div>
+      <div class="fig"><b>${tot.est.toLocaleString()}</b><span>Estimated dates</span></div>
+      <div class="fig"><b>${(tot.fixed+tot.repo).toLocaleString()}</b><span>Corrected</span></div>
+    </div>
+    <p style="font-size:13px;color:var(--dim);margin:0 0 13px">
+      Every row below is generated from broadcast history unless something has corrected it.
+      The bar shows how much of each show has a real match card attached.</p>
+    ${order.map(id=>{
+      const s=h[id], m=SHOW_META[id];
+      const pct=s.total?s.cards/s.total*100:0;
+      return `<div class="healthrow" style="--bc:${m.bc}">
+        <span class="upname">${esc(m.short||m.name)}</span>
+        <span class="minibar"><i style="width:${pct.toFixed(2)}%"></i></span>
+        <span class="hn">${s.cards.toLocaleString()} / ${s.total.toLocaleString()} carded</span>
+        <span class="hn">${s.est?s.est+' est.':''}</span>
+      </div>`;
+    }).join('')}
+    <p class="repostate">${repoLine()}</p>`;
+}
+function repoLine(){
+  if(REPO_STATE==='ok') return '<b>data/catalogue.json</b> loaded &mdash; '+REPO_DATA.length.toLocaleString()+
+    ' corrections applied for every profile on this site.';
+  if(REPO_STATE==='empty') return '<b>data/catalogue.json</b> found but empty.';
+  return 'No <b>data/catalogue.json</b> alongside the app. Add one to your repository and its corrections '+
+    'load for every profile on every device, version-controlled instead of trapped in one browser. '+
+    'Use <b>Export corrections</b> below to start the file from what you have already fixed.';
+}
+
+function exportCorrections(){
+  const out=[];
+  const seen={};
+  for(const e of CAT){
+    if(e.future) continue;
+    const t=state.titles[e.id], c=state.cards[e.id];
+    if(!t&&!c) continue;
+    const k=e.show+'|'+e.date;
+    if(seen[k]) continue; seen[k]=1;
+    const row={show:e.show,date:e.date,title:t||e.title};
+    if(c) row.card=c;
+    out.push(row);
+  }
+  const merged=REPO_DATA.slice();
+  for(const r of out){
+    const i=merged.findIndex(x=>x.show===r.show&&x.date===r.date);
+    if(i>=0) merged[i]=Object.assign({},merged[i],r); else merged.push(r);
+  }
+  merged.sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.show.localeCompare(b.show));
+  const blob=new Blob([JSON.stringify(merged,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='catalogue.json'; a.click(); URL.revokeObjectURL(a.href);
+  toast(merged.length+' corrections exported');
+}
+
+/* ============================================================
+   18. WRESTLER SCREEN
+   Built entirely from the roster tenure index plus the feud
+   list -- no biographical data is invented. Everything shown
+   is either a date range, a count of episodes in that range,
+   or your own ticks against them.
+   ============================================================ */
+function avatarFor(name){
+  const custom=(state.faces||{})[name];
+  const parts=name.replace(/^The /,'').split(' ').filter(Boolean);
+  const ini=(parts[0][0]+(parts[1]?parts[1][0]:'')).toUpperCase();
+  let h=0; for(let i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))>>>0;
+  const hue=h%360;
+  if(custom) return `<span class="face" style="background-image:url('${esc(custom)}');background-size:cover"></span>`;
+  return `<span class="face" style="background:linear-gradient(150deg,hsl(${hue} 42% 26%),hsl(${(hue+40)%360} 48% 15%))">${ini}</span>`;
+}
+
+function wrestlerStats(name){
+  const p=ROSTER_INDEX.find(x=>x.name===name);
+  if(!p) return null;
+  const runs=mergeRuns(p.runs);
+  const inRun=e=>{ const ym=e.date.slice(0,7); return runs.some(([a,b])=>ym>=a&&ym<=b); };
+  const eps=CAT.filter(e=>!e.future&&!state.hidden[e.id]&&state.tracked[e.show]&&inRun(e));
+  const seen=eps.reduce((n,e)=>n+(isSeen(e.id)?1:0),0);
+  const events=eps.filter(e=>e.kind==='event');
+  let months=0;
+  runs.forEach(([a,b])=>{
+    const end=b>'9000'?iso(TODAY).slice(0,7):b;
+    const [ay,am]=a.split('-').map(Number), [by,bm]=end.split('-').map(Number);
+    months+=(by-ay)*12+(bm-am)+1;
+  });
+  return {p,runs,eps,seen,events,months,feuds:feudsFor(name)};
+}
+
+function renderWrestler(name){
+  const st=wrestlerStats(name);
+  if(!st) return '';
+  const {runs,eps,seen,events,months}=st;
+  const yrs=(months/12);
+  const spans=runs.map(([a,b])=>fmtMonth(a)+' \u2013 '+(b>'9000'?'now':fmtMonth(b))).join(' &nbsp;/&nbsp; ');
+  const pct=eps.length?seen/eps.length*100:0;
+  return `<div class="wcard">
+    <div class="whead">
+      ${avatarFor(name)}
+      <div>
+        <h2>${esc(name)}</h2>
+        <div class="wruns">${spans}</div>
+      </div>
+      <button class="btn sm" data-face="${esc(name)}">Set image</button>
+    </div>
+    <div class="wfigs">
+      <div><b>${yrs<1?(months+'m'):yrs.toFixed(1)+'y'}</b><span>On the roster</span></div>
+      <div><b>${eps.length.toLocaleString()}</b><span>Episodes in their run</span></div>
+      <div><b>${events.length.toLocaleString()}</b><span>Events in their run</span></div>
+      <div><b>${st.feuds.length}</b><span>Storylines on file</span></div>
+    </div>
+    <div class="wprog">
+      <div class="minibar"><i style="width:${pct.toFixed(1)}%"></i></div>
+      <div class="pct">You have watched ${seen.toLocaleString()} of ${eps.length.toLocaleString()} episodes that aired while they were on the roster &middot; ${pct.toFixed(1)}%</div>
+    </div>
+    <p class="wnote">Tenure dates are approximate and cover the whole run, not just the weeks they appeared.
+      Episode counts follow the shows you are tracking.</p>
+  </div>`;
+}
+
+/* ============================================================
+   14. STORYLINES
+   There is no match-by-match data in the catalogue, so a feud
+   is stored as what it actually is: a set of wrestlers and a
+   date range. Everything the tracked shows aired inside that
+   range is the feud's episode list. Seeded ranges are from
+   memory and approximate -- all of them are editable, and you
+   can add your own.
+   ============================================================ */
+const FEUDS=[
+ {id:'f-savage-steamboat', who:['Randy Savage','Ricky Steamboat'], from:'1986-11-01', to:'1987-03-29',
+  shows:['superstars','challenge','primetime','event'], note:'Ends at WrestleMania III.'},
+ {id:'f-hogan-andre', who:['Hulk Hogan','Andre the Giant'], from:'1987-01-01', to:'1987-03-29',
+  shows:['superstars','challenge','primetime','event'], note:'The bodyslam.'},
+ {id:'f-hogan-warrior', who:['Hulk Hogan','Ultimate Warrior'], from:'1990-01-01', to:'1990-04-01',
+  shows:['superstars','challenge','primetime','event'], note:'Title vs title at WrestleMania VI.'},
+ {id:'f-taker-mankind', who:['The Undertaker','Mick Foley'], from:'1996-06-01', to:'1998-06-30',
+  shows:['raw','superstars','event'], note:'Boiler Room, Buried Alive, then the Cell.'},
+ {id:'f-hart-hbk', who:['Bret Hart','Shawn Michaels'], from:'1996-11-01', to:'1997-11-09',
+  shows:['raw','shotgun','event'], note:'Runs to Montreal.'},
+ {id:'f-austin-hart', who:['Steve Austin','Bret Hart'], from:'1996-11-01', to:'1997-08-31',
+  shows:['raw','shotgun','event'], note:'The double turn at WrestleMania 13.'},
+ {id:'f-austin-vince', who:['Steve Austin','Vince McMahon'], from:'1997-09-22', to:'1999-03-28',
+  shows:['raw','heat','event'], note:'The one that built the era.'},
+ {id:'f-rock-mankind', who:['The Rock','Mick Foley'], from:'1998-11-01', to:'1999-02-28',
+  shows:['raw','heat','event'], note:'The I Quit match.'},
+ {id:'f-austin-rock', who:['Steve Austin','The Rock'], from:'1999-01-24', to:'1999-03-28',
+  shows:['raw','heat','event'], note:'WrestleMania XV.'},
+ {id:'f-austin-rock-01', who:['Steve Austin','The Rock'], from:'2001-02-25', to:'2001-04-01',
+  shows:['raw','smackdown','heat','event'], note:'WrestleMania X-Seven, Austin turns.'},
+ {id:'f-tlc', who:['Jeff Hardy','Matt Hardy','Edge','Christian','Bubba Ray Dudley','D-Von Dudley'],
+  from:'2000-01-01', to:'2001-04-01', shows:['raw','smackdown','heat','event'], note:'Ladders, tables, chairs.'},
+ {id:'f-jericho-rock', who:['Chris Jericho','The Rock'], from:'2001-10-01', to:'2001-12-09',
+  shows:['raw','smackdown','event'], note:'Jericho becomes undisputed champion.'},
+ {id:'f-angle-lesnar', who:['Kurt Angle','Brock Lesnar'], from:'2003-01-01', to:'2003-09-30',
+  shows:['smackdown','velocity','event'], note:'Sixty minute Iron Man.'},
+ {id:'f-hhh-benoit-hbk', who:['Triple H','Chris Benoit','Shawn Michaels'], from:'2004-01-25', to:'2004-03-14',
+  shows:['raw','heat','event'], note:'Triple threat at WrestleMania XX.'},
+ {id:'f-trish-lita', who:['Trish Stratus','Lita'], from:'2004-08-01', to:'2006-11-30',
+  shows:['raw','heat','event'], note:'Main evented Raw in 2004.'},
+ {id:'f-hhh-batista', who:['Triple H','Batista'], from:'2005-01-30', to:'2005-06-30',
+  shows:['raw','heat','event'], note:'Evolution splits.'},
+ {id:'f-eddie-rey', who:['Eddie Guerrero','Rey Mysterio'], from:'2005-04-01', to:'2005-09-18',
+  shows:['smackdown','velocity','event'], note:'Custody of Dominik.'},
+ {id:'f-cena-edge', who:['John Cena','Edge'], from:'2006-01-08', to:'2006-07-31',
+  shows:['raw','heat','event'], note:'Edge cashes in and the era turns.'},
+ {id:'f-taker-hbk', who:['The Undertaker','Shawn Michaels'], from:'2009-01-25', to:'2010-03-28',
+  shows:['raw','smackdown','event'], note:'Streak versus career, over two WrestleManias.'},
+ {id:'f-orton-hhh', who:['Randy Orton','Triple H'], from:'2009-01-01', to:'2009-06-30',
+  shows:['raw','event'], note:'The Legacy home invasion.'},
+ {id:'f-punk-hardy', who:['CM Punk','Jeff Hardy'], from:'2009-06-01', to:'2009-08-31',
+  shows:['smackdown','superstars09','event'], note:'Straight edge versus the Charismatic Enigma. Ends in a cage.'},
+ {id:'f-cena-punk', who:['John Cena','CM Punk'], from:'2011-06-27', to:'2011-09-30',
+  shows:['raw','smackdown','event'], note:'The pipe bomb and Money in the Bank.'},
+ {id:'f-bryan-authority', who:['Daniel Bryan','Triple H','Randy Orton'], from:'2013-08-18', to:'2014-04-06',
+  shows:['raw','smackdown','main','event'], note:'Yes movement to WrestleMania XXX.'},
+ {id:'f-wyatt-cena', who:['Bray Wyatt','John Cena'], from:'2014-02-01', to:'2014-04-30',
+  shows:['raw','smackdown','event'], note:''},
+ {id:'f-shield-evolution', who:['Seth Rollins','Roman Reigns','Dean Ambrose','Triple H','Randy Orton','Batista'],
+  from:'2014-04-01', to:'2014-06-30', shows:['raw','smackdown','event'], note:'Two clean sweeps.'},
+ {id:'f-rollins-ambrose', who:['Seth Rollins','Dean Ambrose'], from:'2014-06-01', to:'2014-12-31',
+  shows:['raw','smackdown','event'], note:'After the curb stomp heard round the world.'},
+ {id:'f-reigns-lesnar-15', who:['Roman Reigns','Brock Lesnar'], from:'2015-01-25', to:'2015-03-29',
+  shows:['raw','smackdown','event'], note:'Rollins cashes in.'},
+ {id:'f-charlotte-sasha', who:['Charlotte Flair','Sasha Banks'], from:'2016-07-01', to:'2016-11-30',
+  shows:['raw','event'], note:'First women\u2019s Hell in a Cell.'},
+ {id:'f-styles-cena', who:['AJ Styles','John Cena'], from:'2016-06-01', to:'2016-09-30',
+  shows:['smackdown','raw','event'], note:''},
+ {id:'f-goldberg-lesnar', who:['Goldberg','Brock Lesnar'], from:'2016-10-01', to:'2017-04-02',
+  shows:['raw','smackdown','event'], note:''},
+ {id:'f-becky-charlotte-ronda', who:['Becky Lynch','Charlotte Flair','Ronda Rousey'], from:'2018-11-01', to:'2019-04-07',
+  shows:['raw','smackdown','event'], note:'First women\u2019s WrestleMania main event.'},
+ {id:'f-zayn-bloodline', who:['Sami Zayn','Roman Reigns','Jey Uso','Jimmy Uso','Kevin Owens'],
+  from:'2022-09-01', to:'2023-04-30', shows:['raw','smackdown','event'], note:'Honorary Uce.'},
+ {id:'f-cody-roman', who:['Cody Rhodes','Roman Reigns'], from:'2023-01-28', to:'2024-04-07',
+  shows:['raw','smackdown','event'], note:'Finish the story.'}
+];
+
+function feudTitle(f){
+  const w=f.who;
+  if(w.length===2) return w[0]+' vs '+w[1];
+  if(w.length===3) return w[0]+' vs '+w[1]+' vs '+w[2];
+  return w.slice(0,2).join(' vs ')+' and '+(w.length-2)+' more';
+}
+function allFeuds(){
+  const user=(state.feuds||[]).map(f=>Object.assign({},f,{mine:true}));
+  const killed=state.feudsOff||{};
+  const seeded=FEUDS.filter(f=>!killed[f.id]).map(f=>{
+    const ov=(state.feudEdits||{})[f.id]||{};
+    return Object.assign({},f,ov,{seeded:true});
+  });
+  return seeded.concat(user);
+}
+function feudsFor(name){ return allFeuds().filter(f=>f.who.includes(name)); }
+
+function feudEpisodes(f){
+  const drop=(state.feudDrop||{})[f.id]||{};
+  const shows=(f.shows&&f.shows.length)?f.shows:null;
+  return CAT.filter(e=>
+    !e.future && !state.hidden[e.id] &&
+    e.date>=f.from && e.date<=f.to &&
+    (shows?shows.includes(e.show):state.tracked[e.show]) &&
+    !drop[e.id]
+  );
+}
+
+/* ---------- rendering ---------- */
+let feudPick=null, feudOpen=null, feudQuery='';
+
+function renderFeudPeople(){
+  const q=norm(feudQuery);
+  let names=ROSTER_INDEX.map(p=>p.name);
+  const withFeuds=new Set(); allFeuds().forEach(f=>f.who.forEach(n=>withFeuds.add(n)));
+  names.sort((a,b)=>{
+    const A=withFeuds.has(a), B=withFeuds.has(b);
+    if(A!==B) return A?-1:1;
+    return a.localeCompare(b);
+  });
+  if(q) names=names.filter(n=>norm(n).includes(q));
+  $('feudPeople').innerHTML = names.slice(0,60).map(n=>{
+    const c=feudsFor(n).length;
+    return `<button class="person${n===feudPick?' on':''}" data-person="${esc(n)}">
+      <span>${esc(n)}</span><i>${c||''}</i></button>`;
+  }).join('') || '<p style="color:var(--dim);padding:8px">Nobody by that name in the roster index.</p>';
+}
+
+function renderFeudList(){
+  if(!feudPick){
+    $('feudList').innerHTML=`<div class="emptyfeud">
+      <b>Pick a wrestler</b>
+      <p>The number beside a name is how many storylines are on file for them. Search above, or scroll &mdash; names with storylines are listed first.</p></div>`;
+    return;
+  }
+  const fs=feudsFor(feudPick).sort((a,b)=>a.from<b.from?-1:1);
+  const head=renderWrestler(feudPick);
+  if(!fs.length){
+    $('feudList').innerHTML=head+`<div class="emptyfeud">
+      <b>Nothing on file for ${esc(feudPick)}</b>
+      <p>Only a few dozen storylines are seeded. Add one and it will show here from now on.</p>
+      <button class="btn primary sm" id="feudNew2" style="margin-top:12px">Add a storyline</button></div>`;
+    const nb=document.getElementById('feudNew2'); if(nb) nb.onclick=()=>openFeudEditor(null);
+    return;
+  }
+  $('feudList').innerHTML=head+'<h2 class="sechd">Notable rivalries</h2>'+fs.map(f=>{
+    const eps=feudEpisodes(f);
+    const seen=eps.reduce((n,e)=>n+(isSeen(e.id)?1:0),0);
+    const pct=eps.length?seen/eps.length*100:0;
+    const open=feudOpen===f.id;
+    return `<div class="feud${open?' open':''}" data-feud="${f.id}">
+      <div class="feudhd">
+        <div>
+          <h3>${esc(feudTitle(f))}</h3>
+          <div class="feudmeta">${fmtMonth(f.from.slice(0,7))} &ndash; ${fmtMonth(f.to.slice(0,7))}
+            &middot; ${eps.length} episodes${f.seeded?' &middot; <span class="badge est">Approx. dates</span>':''}</div>
+          ${f.note?`<div class="feudnote">${esc(f.note)}</div>`:''}
+        </div>
+        <div class="feudright">
+          <div class="minibar"><i style="width:${pct.toFixed(1)}%"></i></div>
+          <div class="pct">${seen} of ${eps.length} watched &middot; ${pct.toFixed(0)}%</div>
+        </div>
+      </div>
+      <div class="feudacts">
+        <button class="btn sm" data-fact="open">${open?'Hide episodes':'Show episodes'}</button>
+        <button class="btn sm" data-fact="all">Mark all watched</button>
+        <button class="btn sm" data-fact="ledger">Open in ledger</button>
+        <button class="btn sm" data-fact="edit">Edit dates</button>
+        ${f.seeded?'':'<button class="btn sm" data-fact="del">Delete</button>'}
+      </div>
+      ${open?`<div class="feudeps">${eps.map(e=>{
+        const m=SHOW_META[e.show];
+        return `<div class="row${isSeen(e.id)?' seen':''}" data-id="${e.id}" style="--bc:${m.bc}" tabindex="0" role="button">
+          <span class="tick">&#10003;</span>
+          <span class="date">${fmtDate(e.date)}</span>
+          <span class="name"><i class="dot"></i>${esc(e.title)}${e.kind!=='event'?` <small>${esc(m.short)}</small>`:''}${e.kind==='event'?'<span class="badge ev">Event</span>':''}</span>
+          <span class="tools"><button data-fdrop="${e.id}" title="Not part of this storyline">Remove</button></span>
+        </div>`;
+      }).join('')}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+$('feudPeople').addEventListener('click',ev=>{
+  const b=ev.target.closest('[data-person]'); if(!b) return;
+  feudPick=b.dataset.person; feudOpen=null;
+  renderFeudPeople(); renderFeudList();
+});
+$('feudSearch').addEventListener('input',ev=>{ feudQuery=ev.target.value; renderFeudPeople(); });
+
+$('feudList').addEventListener('click',ev=>{
+  const fc=ev.target.closest('[data-face]');
+  if(fc){
+    const cur=(state.faces||{})[fc.dataset.face]||'';
+    const url=prompt('Image URL for '+fc.dataset.face+'\n\nLeave blank to go back to initials. The image is not stored, only the link.',cur);
+    if(url===null) return;
+    state.faces=state.faces||{};
+    if(url.trim()) state.faces[fc.dataset.face]=url.trim(); else delete state.faces[fc.dataset.face];
+    save(); renderFeudList(); return;
+  }
+  const drop=ev.target.closest('[data-fdrop]');
+  const card=ev.target.closest('[data-feud]');
+  if(!card) return;
+  const f=allFeuds().find(x=>x.id===card.dataset.feud); if(!f) return;
+
+  if(drop){
+    ev.stopPropagation();
+    state.feudDrop=state.feudDrop||{}; state.feudDrop[f.id]=state.feudDrop[f.id]||{};
+    state.feudDrop[f.id][drop.dataset.fdrop]=true;
+    save(); renderFeudList(); return;
+  }
+  const act=ev.target.closest('[data-fact]');
+  if(act){
+    const a=act.dataset.fact;
+    if(a==='open'){ feudOpen = feudOpen===f.id?null:f.id; renderFeudList(); }
+    if(a==='all'){
+      let n=0; feudEpisodes(f).forEach(e=>{ if(!isSeen(e.id)){ state.seen[e.id]={d:iso(TODAY)}; n++; } });
+      save(); renderFeudList(); renderAll(); toast(n+' marked watched');
+    }
+    if(a==='ledger'){
+      state.from=f.from; state.to=f.to; save(); rebuildPool();
+      document.querySelector('.tab[data-tab="ledger"]').click();
+      renderAll(); toast('Ledger narrowed to this storyline');
+    }
+    if(a==='edit') openFeudEditor(f);
+    if(a==='del'){
+      if(confirm('Delete this storyline?')){
+        state.feuds=(state.feuds||[]).filter(x=>x.id!==f.id);
+        save(); renderFeudPeople(); renderFeudList();
+      }
+    }
+    return;
+  }
+  const row=ev.target.closest('.row');
+  if(row){ setSeen(row.dataset.id,!isSeen(row.dataset.id)); renderFeudList(); }
+});
+
+function openFeudEditor(f){
+  const isNew=!f;
+  const names=ROSTER_INDEX.map(p=>p.name);
+  $('modal').innerHTML=`
+    <h3>${isNew?'New storyline':'Edit storyline'}</h3>
+    <div class="when">${isNew?'Everything the chosen shows aired between these dates becomes the episode list.':esc(feudTitle(f))}</div>
+    <div class="field"><label for="fWho">Wrestlers &mdash; one per line</label>
+      <textarea id="fWho" style="min-height:76px" placeholder="CM Punk&#10;Jeff Hardy">${esc((f?f.who:(feudPick?[feudPick]:[])).join('\n'))}</textarea></div>
+    <div class="grid2">
+      <div class="field"><label for="fFrom">Started</label><input type="date" id="fFrom" value="${f?f.from:''}"></div>
+      <div class="field"><label for="fTo">Ended</label><input type="date" id="fTo" value="${f?f.to:''}"></div>
+    </div>
+    <div class="field"><label for="fShows">Shows it ran on</label>
+      <select id="fShows" multiple size="6">${SHOWS.concat([SHOW_META['event']]).map(s=>
+        `<option value="${s.id}"${(f&&f.shows||['raw','smackdown','event']).includes(s.id)?' selected':''}>${esc(s.name)}</option>`).join('')}</select></div>
+    <div class="field"><label for="fNote">Note</label><input type="text" id="fNote" value="${esc(f&&f.note||'')}"></div>
+    <div class="acts">
+      <button class="btn primary" id="fSave">Save</button>
+      ${f&&f.seeded?'<button class="btn" id="fReset">Reset to default</button>':''}
+      <button class="btn" id="fCancel">Cancel</button>
+    </div>`;
+  $('scrim').classList.add('on');
+  $('fCancel').onclick=closeModal;
+  const rs=document.getElementById('fReset');
+  if(rs) rs.onclick=()=>{ if(state.feudEdits) delete state.feudEdits[f.id]; save(); closeModal(); renderFeudList(); };
+  $('fSave').onclick=()=>{
+    const who=$('fWho').value.split('\n').map(s=>s.trim()).filter(Boolean);
+    const from=$('fFrom').value, to=$('fTo').value;
+    if(who.length<1||!from||!to){ toast('Needs at least one name and both dates'); return; }
+    if(to<from){ toast('The end date is before the start'); return; }
+    const shows=[...$('fShows').selectedOptions].map(o=>o.value);
+    const body={who,from,to,shows,note:$('fNote').value.trim()};
+    if(isNew){
+      state.feuds=state.feuds||[];
+      state.feuds.push(Object.assign({id:'u'+Date.now()},body));
+    } else if(f.seeded){
+      state.feudEdits=state.feudEdits||{}; state.feudEdits[f.id]=body;
+    } else {
+      state.feuds=(state.feuds||[]).map(x=>x.id===f.id?Object.assign(x,body):x);
+    }
+    save(); closeModal();
+    if(who.length&&!who.includes(feudPick)) feudPick=who[0];
+    renderFeudPeople(); renderFeudList(); toast('Saved');
+  };
+}
+$('feudNew').onclick=()=>openFeudEditor(null);
+
+function renderFeuds(){ renderFeudPeople(); renderFeudList(); }
+
 /* ---------- data panel ---------- */
 $('btnExport').onclick=()=>{
   const b=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
@@ -1987,6 +2657,10 @@ $('btnWipe').onclick=()=>{
   state={seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},from:null,to:null};
   save(); rebuildCatalogue(); syncUI(); renderAll(); toast('Ledger erased');
 };
+document.getElementById('prefWide').onchange=e=>{ prefs.wide=e.target.checked; savePrefs(); };
+document.getElementById('prefTicker').onchange=e=>{ prefs.ticker=e.target.checked; savePrefs(); renderTicker(); };
+document.getElementById('prefHome').onchange=e=>{ prefs.home=e.target.value; savePrefs(); };
+document.getElementById('btnExportCorr').onclick=exportCorrections;
 $('setFrom').onchange=()=>{state.from=$('setFrom').value||null; save(); rebuildPool(); renderAll();};
 $('setTo').onchange=()=>{state.to=$('setTo').value||null; save(); rebuildPool(); renderAll();};
 
@@ -2021,9 +2695,10 @@ document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t));
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+t.dataset.tab));
   if(t.dataset.tab==='now') renderSchedule(); else clearTimeout(tickTimer);
+  if(t.dataset.tab==='feuds') renderFeuds();
   if(t.dataset.tab==='stats') renderStats();
   if(t.dataset.tab==='shows') renderShows();
-  if(t.dataset.tab==='data'){ syncUI(); paintDevice(); }
+  if(t.dataset.tab==='data'){ syncUI(); paintDevice(); renderHealth(); }
 });
 let toastTimer;
 function toast(m){
@@ -2043,7 +2718,7 @@ function fillSelects(){
   $('fYear').innerHTML='<option value="">Every year</option>'+years.map(y=>`<option>${y}</option>`).join('');
 }
 function renderAll(){
-  renderTron(); renderLedger();
+  renderTron(); renderLedger(); renderTicker();
   if(document.getElementById('p-now').classList.contains('on')) renderSchedule();
   if($('p-shows').classList.contains('on')) renderShows();
   if($('p-stats').classList.contains('on')) renderStats();
@@ -2056,9 +2731,13 @@ async function boot(data){
   if(!state.tracked) state.tracked=defaultTracked();
   SHOWS.forEach(s=>{ if(!(s.id in state.tracked)) state.tracked[s.id]=false; });
   if(!('event' in state.tracked)) state.tracked.event=true;
-  rebuildCatalogue(); fillSelects(); syncUI(); renderAll(); paintThemeUI();
+  rebuildCatalogue(); fillSelects(); syncUI(); renderAll(); paintThemeUI(); renderTicker(); applyPrefs();
   document.getElementById('whoBadge').textContent=Auth.id||'';
   paintDevice();
+  if(prefs.home && prefs.home!=='ledger'){
+    const t=document.querySelector('.tab[data-tab="'+prefs.home+'"]');
+    if(t) t.click();
+  }
   const raw=await RAW.get(PROFILE_PREFIX+Auth.id);
   const made=raw?(JSON.parse(raw).made||''):'';
   document.getElementById('profInfo').innerHTML=
@@ -2070,10 +2749,11 @@ async function boot(data){
     'Event dates other than WrestleMania are estimated and marked. Roster tenures are approximate. Correct anything under Data.';
 }
 
+
 /* ============================================================
    12. LOCK SCREEN
    ============================================================ */
-let gateMode='in';   // 'in' | 'new' | 'recover'
+let gateMode='in', gateBusy=false;   // 'in' | 'new' | 'recover'
 const G = id => document.getElementById(id);
 
 function gateErr(m){ G('gErr').textContent=m||''; }
@@ -2102,8 +2782,11 @@ function setMode(m){
   G('gGo').textContent = isNew?'Create profile' : isRec?'Unlock' : 'Sign in';
   G('gRecover').style.display = isRec?'none':'inline';
   G('gpw').placeholder = isRec?'Paste recovery key':'';
-  G('gpw').type = isRec?'text':'password';
+  G('gpw').type = isRec?'text':(pwVisible?'text':'password');
+  G('gpw').setAttribute('autocomplete', isNew?'new-password':'current-password');
+  G('gKeepWrap').style.display = isRec?'none':'flex';
   G('gShow').style.display = isRec?'none':'inline-block';
+  applyPwVisibility();
   G('gidHint').textContent = isNew
     ? 'Pick 4 to 6 letters and numbers. This is what you sign in with, so make it something you will not forget.'
     : '4 to 6 letters and numbers.';
@@ -2112,20 +2795,33 @@ function setMode(m){
 G('gToggle').onclick=()=>setMode(gateMode==='in'?'new':'in');
 G('gRecover').onclick=()=>setMode('recover');
 G('gSuggest').onclick=()=>{ G('gid').value=randomId(); gateErr(''); };
-G('gShow').onclick=()=>{
-  const f=G('gpw'); f.type = f.type==='password'?'text':'password';
-  G('gShow').textContent = f.type==='password'?'Show':'Hide';
-};
+let pwVisible=false;
+function togglePw(){
+  pwVisible=!pwVisible;
+  applyPwVisibility();
+}
+function applyPwVisibility(){
+  if(gateMode!=='recover') G('gpw').type = pwVisible?'text':'password';
+  G('gpw2').type = pwVisible?'text':'password';
+  const t = pwVisible?'Hide':'Show';
+  G('gShow').textContent=t; G('gShow2').textContent=t;
+}
+G('gShow').onclick=togglePw;
+G('gShow2').onclick=togglePw;
 G('gid').addEventListener('input',e=>{
   e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
 });
-['gid','gpw','gpw2'].forEach(k=>G(k).addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault(); G('gGo').click();} }));
+/* The <form> exists so password managers recognise the fields. It must never
+   submit natively -- that reloads the page and writes the password into the URL. */
+G('gForm').addEventListener('submit',function(e){ e.preventDefault(); e.stopPropagation(); doGate(); return false; });
+G('gGo').addEventListener('click',function(e){ e.preventDefault(); doGate(); });
 
-G('gGo').onclick=async()=>{
+async function doGate(){
+  if(gateBusy) return;
   const id=G('gid').value.trim().toUpperCase(), pw=G('gpw').value;
   gateErr('');
   if(!ID_RE.test(id)) return gateErr('An ID is 4 to 6 letters and numbers, like L22A1.');
-  G('gGo').disabled=true; G('gGo').textContent='Working\u2026';
+  gateBusy=true; G('gGo').disabled=true; G('gGo').textContent='Working\u2026';
   try{
     let data;
     if(gateMode==='new'){
@@ -2142,17 +2838,29 @@ G('gGo').onclick=async()=>{
       data=await Auth.unlock(id,pw);
     }
     await Auth.rememberForTab();
+    if(G('gKeep').checked){
+      const ok=await Device.remember(Auth.id,Auth.key);
+      if(!ok) console.warn('this browser would not store a device key');
+    } else {
+      await Device.forget();
+    }
     G('gpw').value=''; if(G('gpw2')) G('gpw2').value='';
-    G('gate').classList.remove('on');
-    await boot(data);
+    try{
+      await boot(data);
+      G('gate').classList.remove('on');
+    }catch(err){
+      console.error(err);
+      throw new Error('Signed in, but the ledger would not open: '+(err.message||err));
+    }
   }catch(e){
     gateErr(e.message||'That did not work.');
   }finally{
-    G('gGo').disabled=false; setMode(gateMode);
+    gateBusy=false; G('gGo').disabled=false; setMode(gateMode);
   }
-};
+}
 
-function lockUp(){
+async function lockUp(){
+  await Device.forget();
   Auth.lock();
   G('gate').classList.add('on');
   G('gid').value=''; G('gpw').value='';
@@ -2161,6 +2869,22 @@ function lockUp(){
 G('btnLock').onclick=lockUp;
 G('btnLock2').onclick=lockUp;
 
+G('btnForget').onclick=async()=>{
+  await Device.forget();
+  await paintDevice();
+  toast('This device will ask for your password next time');
+};
+async function paintDevice(){
+  const el=document.getElementById('devInfo'); if(!el) return;
+  if(!Device.supported()){
+    el.innerHTML='Staying signed in is unavailable in this browser, so you will be asked for your password each visit.';
+    return;
+  }
+  const on=await Device.isOn();
+  el.innerHTML = on
+    ? 'This device is remembered until <b>'+new Date(on.exp).toISOString().slice(0,10)+'</b>. The key that opens your ledger is wrapped by a device key held in IndexedDB and marked non-extractable, so scripts cannot read it out. Signing out erases it.'
+    : 'This device is not remembered &mdash; your password is required each visit.';
+}
 G('btnRecovery').onclick=async()=>{
   const k=await Auth.recoveryKey();
   const blob=new Blob([JSON.stringify({id:Auth.id,recoveryKey:k,
@@ -2183,6 +2907,8 @@ G('btnChangePw').onclick=async()=>{
 /* ---------- start ---------- */
 (async function start(){
   applyTheme(await RAW.get(THEME_KEY) || 'tron');
+  await loadPrefs();
+  await loadRepoData();          // must precede any rebuildCatalogue
   await paintKnown();
   const legacy=await RAW.get(LEGACY_KEY);
   G('gLegacy').style.display = legacy ? 'block':'none';
@@ -2194,9 +2920,28 @@ G('btnChangePw').onclick=async()=>{
     G('gGo').disabled=true;
     return;
   }
+  // 1. remembered device  2. this tab's session  3. ask
+  const dev=await Device.recall();
+  if(dev){
+    try{
+      const raw=await RAW.get(PROFILE_PREFIX+dev.id);
+      if(raw){
+        const rec=JSON.parse(raw);
+        Auth.id=dev.id; Auth.key=dev.key;
+        const data=await openWith(dev.key,rec);
+        await Auth.rememberForTab();
+        G('gate').classList.remove('on');
+        return boot(data);
+      }
+    }catch(e){ await Device.forget(); }
+  }
   const resumed=await Auth.resumeTab();
   if(resumed){ G('gate').classList.remove('on'); await boot(resumed); }
-  else { G('gid').focus(); }
+  else {
+    G('gKeep').checked = !!(await Device.isOn());
+    if(!Device.supported()) G('gKeepWrap').style.display='none';
+    G(G('gid').value?'gpw':'gid').focus();
+  }
 })();
 
 </script>

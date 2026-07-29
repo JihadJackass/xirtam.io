@@ -1,0 +1,32 @@
+[
+  {
+    "show": "event",
+    "date": "2009-06-07",
+    "title": "Extreme Rules 2009",
+    "card": "Jeff Hardy vs Edge, ladder match, World Heavyweight Title; CM Punk cashes in Money in the Bank on Jeff Hardy"
+  },
+  {
+    "show": "event",
+    "date": "2009-06-28",
+    "title": "The Bash 2009",
+    "card": "CM Punk vs Jeff Hardy, World Heavyweight Title"
+  },
+  {
+    "show": "event",
+    "date": "2009-07-26",
+    "title": "Night of Champions 2009",
+    "card": "CM Punk vs Jeff Hardy, World Heavyweight Title"
+  },
+  {
+    "show": "event",
+    "date": "2009-08-23",
+    "title": "SummerSlam 2009",
+    "card": "CM Punk vs Jeff Hardy, TLC match, World Heavyweight Title"
+  },
+  {
+    "show": "smackdown",
+    "date": "2009-08-28",
+    "title": "SmackDown",
+    "card": "CM Punk vs Jeff Hardy, steel cage, loser leaves WWE"
+  }
+]

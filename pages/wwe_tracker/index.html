@@ -45,6 +45,50 @@
     --chrome:#FFDE87;--gold:#FFC20E;--blue:#E0341C;
     --deep:#0C0603;--rowline:#2A170B;--linehi:#5E3418;--panelhi:#46270F;
   }
+  /* Polished gold plate, black leather strap, nickel rim -- the belt CM Punk
+     carried. Warmer and brighter than "Big Gold", which is brass on brown. */
+  [data-theme="whc"]{
+    --bg:#0A0A0A;--panel:#141210;--panel2:#1C1A16;--panel3:#26231C;--line:#3B352A;
+    --txt:#F6F1E4;--dim:#A69C86;--dim2:#736B59;--red:#E8C24A;--red-lo:#9A7B18;
+    --chrome:#C6CBD1;--gold:#F5DC8A;--blue:#8E8778;
+    --deep:#050505;--rowline:#1E1B16;--linehi:#4E4636;--panelhi:#312C22;
+    --glow1:rgba(232,194,74,.20);--glow2:rgba(198,203,209,.06);
+  }
+  [data-theme="ruthless"]{
+    --bg:#0D0F11;--panel:#161A1E;--panel2:#1E242A;--panel3:#283038;--line:#38424C;
+    --txt:#E9EEF3;--dim:#94A2AE;--dim2:#67747F;--red:#9AA6B2;--red-lo:#5E6B76;
+    --chrome:#D9E2EC;--gold:#B8C4D0;--blue:#5A7A96;
+    --deep:#08090B;--rowline:#1C2126;--linehi:#47535E;--panelhi:#2E373F;
+    --glow1:rgba(154,166,178,.16);--glow2:rgba(90,122,150,.07);
+  }
+  [data-theme="ratedr"]{
+    --bg:#0B0708;--panel:#150E10;--panel2:#1E1417;--panel3:#2A1B1F;--line:#3D262C;
+    --txt:#F2E6E9;--dim:#A88A92;--dim2:#7A5C64;--red:#B01030;--red-lo:#75091F;
+    --chrome:#D8BCC2;--gold:#E8536F;--blue:#7A3A4A;
+    --deep:#070405;--rowline:#1C1216;--linehi:#4E323A;--panelhi:#332126;
+    --glow1:rgba(176,16,48,.24);--glow2:rgba(176,16,48,.07);
+  }
+  [data-theme="terminal"]{
+    --bg:#03110A;--panel:#061A10;--panel2:#092416;--panel3:#0D311D;--line:#134A2C;
+    --txt:#C6FFDF;--dim:#5FBF8A;--dim2:#3D8560;--red:#33FF88;--red-lo:#12A855;
+    --chrome:#8FFFC2;--gold:#B9FFD8;--blue:#2FBF7A;
+    --deep:#020C07;--rowline:#0A2214;--linehi:#1E5738;--panelhi:#103a23;
+    --glow1:rgba(51,255,136,.16);--glow2:rgba(51,255,136,.05);
+  }
+  [data-theme="mania"]{
+    --bg:#14082A;--panel:#1E0F3C;--panel2:#28154E;--panel3:#341D63;--line:#472A80;
+    --txt:#F2E9FF;--dim:#A98BD4;--dim2:#7C5FA6;--red:#7B3FE4;--red-lo:#4E1FA0;
+    --chrome:#D5C2F5;--gold:#F2C230;--blue:#5A9BE4;
+    --deep:#0D0520;--rowline:#231145;--linehi:#5A369A;--panelhi:#3D2372;
+    --glow1:rgba(123,63,228,.26);--glow2:rgba(242,194,48,.08);
+  }
+  [data-theme="hardcore"]{
+    --bg:#120E09;--panel:#1C160F;--panel2:#251E15;--panel3:#31281C;--line:#453727;
+    --txt:#EFE6D8;--dim:#A2917A;--dim2:#756753;--red:#D2621C;--red-lo:#8E3E0C;
+    --chrome:#C9A227;--gold:#C9A227;--blue:#7A6A4A;
+    --deep:#0C0906;--rowline:#221B13;--linehi:#584833;--panelhi:#3A2F21;
+    --glow1:rgba(210,98,28,.20);--glow2:rgba(201,162,39,.07);
+  }
   [data-theme="bluebar"]{
     --bg:#050B18;--panel:#0C1526;--panel2:#111D33;--panel3:#182741;--line:#25395C;
     --txt:#E4EDFB;--dim:#8199BC;--dim2:#5A6E8E;--red:#2E77E6;--red-lo:#164C9E;
@@ -167,6 +211,28 @@
   .prog .fig{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.05em;white-space:nowrap;color:var(--dim)}
   .prog .fig b{color:var(--txt);font-size:16px;font-family:'Anton',sans-serif;letter-spacing:.02em}
 
+  /* ---------- binge mode ---------- */
+  .binge{position:fixed;inset:0;z-index:90;background:var(--bg);display:none;place-items:center;padding:24px;
+    background-image:radial-gradient(ellipse 70% 55% at 50% 0%,var(--glow1,rgba(226,0,26,.20)),transparent 70%)}
+  .binge.on{display:grid}
+  .bingeinner{max-width:760px;width:100%;text-align:center;transition:background .18s}
+  .bingeinner.flash{background:rgba(255,255,255,.06)}
+  .bmeta{font-size:10px;letter-spacing:.28em;text-transform:uppercase;font-weight:800;color:var(--red)}
+  .bttl{font-family:'Anton',Impact,sans-serif;text-transform:uppercase;
+    font-size:clamp(40px,10vw,96px);line-height:.88;margin:12px 0 0}
+  .bttl span{color:var(--red)}
+  .bdate{font-family:'DM Mono',monospace;font-size:13px;color:var(--dim);margin-top:12px;letter-spacing:.06em}
+  .bcard{font-size:14px;color:var(--chrome);margin:12px auto 0;max-width:52ch}
+  .bbar{height:10px;background:var(--deep);border:1px solid var(--line);margin:26px auto 0;
+    max-width:420px;position:relative;overflow:hidden}
+  .bbar i{position:absolute;inset:0 auto 0 0;background:var(--red)}
+  .bcount{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim2);margin-top:8px}
+  .backs{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+  .backs kbd{font-family:'DM Mono',monospace;font-size:9px;border:1px solid currentColor;
+    padding:1px 4px;opacity:.6;margin-left:3px}
+  .bdone h2{font-family:'Anton',sans-serif;font-size:48px;text-transform:uppercase}
+  .bdone p{color:var(--dim)}
+
   /* ---------- tabs ---------- */
   .tabs{display:flex;margin:26px 0 0;border-bottom:1px solid var(--line)}
   .tab{background:none;border:0;padding:11px 17px;font-weight:800;text-transform:uppercase;
@@ -203,7 +269,9 @@
   .insight p{margin:0 0 8px;color:var(--dim)}
   .insight p:last-child{margin-bottom:0}
   .who{display:inline-flex;align-items:center;gap:6px;background:var(--panel3);border:1px solid var(--line);
-    padding:3px 10px;font-size:12px;font-weight:600;margin:0 5px 5px 0}
+    padding:4px 11px;font-size:12px;font-weight:600;margin:0 5px 5px 0;color:var(--txt);cursor:pointer}
+  .who:hover{border-color:var(--red);background:var(--panelhi)}
+  .who:hover i{background:var(--red)}
   .who i{width:6px;height:6px;background:var(--gold);font-style:normal}
   .insight .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
 
@@ -227,6 +295,14 @@
   .row .name small{font-weight:400;color:var(--dim2);font-family:'DM Mono',monospace;font-size:11px}
   .row .card{color:var(--dim);font-weight:400;font-size:13px}
   .row mark{background:rgba(226,0,26,.28);color:#fff;padding:0 2px}
+  .row.spot{background:var(--panel2);border-left-color:var(--gold)}
+  .row.spot .name{color:var(--txt)}
+  .row.spot .tick{box-shadow:0 0 0 1px var(--gold)}
+  .row.queued .date:before{content:"\u25B8 ";color:var(--red);font-weight:700}
+  .spotbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid var(--gold);
+    border-left-width:3px;background:var(--panel);padding:11px 15px;margin-bottom:14px;font-size:13px}
+  .spotbar b{color:var(--gold);text-transform:uppercase;letter-spacing:.1em;font-size:10px;font-weight:800}
+  .spotbar .grow{flex:1}
   .badge{font-size:9px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
     border:1px solid currentColor;padding:1px 5px;flex:0 0 auto}
   .badge.ev{color:var(--gold)}
@@ -270,6 +346,9 @@
   @media(max-width:680px){.showrow{grid-template-columns:1fr auto}.showrow .barcell{grid-column:1/3;order:3}}
 
   /* ---------- stats ---------- */
+  .storagewarn{border:1px solid var(--red);border-left-width:3px;background:rgba(226,0,26,.08);
+    padding:13px 16px;margin:16px 0 0;font-size:13px;color:var(--txt);line-height:1.55}
+  .storagewarn b{color:var(--red)}
   .figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:1px;
     background:var(--line);border:1px solid var(--line);margin-bottom:28px}
   .fig{background:var(--panel);padding:15px 17px}
@@ -305,6 +384,10 @@
   .rate button[aria-pressed="true"]{background:var(--gold);color:#111;border-color:var(--gold)}
   .modal .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
 
+  .toast button{background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.45);color:inherit;
+    font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
+    padding:3px 9px;margin-left:11px;cursor:pointer}
+  .toast button:hover{background:rgba(0,0,0,.45)}
   .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(18px);
     background:var(--red);color:#fff;padding:12px 22px;font-size:11px;font-weight:800;
     letter-spacing:.11em;text-transform:uppercase;opacity:0;transition:.22s;pointer-events:none;z-index:60}
@@ -378,7 +461,13 @@
   [data-theme="handbill"] .pass{background:linear-gradient(165deg,#F2E9D6,#E2D3B6)}
   [data-theme="handbill"] .stamp{color:#fff}
   [data-theme="handbill"] .btn.primary{color:#fff}
-  [data-theme="hulk"] .btn.primary,[data-theme="gold"] .btn.primary{color:#1A1206}
+  [data-theme="hulk"] .btn.primary,[data-theme="gold"] .btn.primary,
+  [data-theme="whc"] .btn.primary{color:#1A1206}
+  [data-theme="whc"] .row.seen .tick{color:#141210}
+  [data-theme="whc"] .toast{color:#141210}
+  [data-theme="whc"] .pass .strip span{color:#141210}
+  [data-theme="whc"] .stamp{color:#141210}
+  [data-theme="whc"] .marquee{text-shadow:0 0 32px rgba(232,194,74,.35)}
   [data-theme="hulk"] .row.seen .tick,[data-theme="gold"] .row.seen .tick{color:#1A1206}
   [data-theme="hulk"] .toast,[data-theme="gold"] .toast{color:#1A1206}
   [data-theme="hulk"] .pass .strip span,[data-theme="gold"] .pass .strip span{color:#1A1206}
@@ -447,7 +536,24 @@
   .person:hover{background:var(--panel2);color:var(--txt)}
   .person.on{background:var(--red);color:#fff}
   .person i{font-style:normal;font-family:'DM Mono',monospace;font-size:10px;color:var(--dim2);
-    background:var(--panel3);padding:1px 6px;min-width:20px;text-align:center}
+    background:var(--panel3);padding:1px 6px;min-width:20px;text-align:center;flex:0 0 auto}
+  .person > span{display:flex;align-items:center;gap:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .person em{font-style:normal;font-size:8px;font-weight:800;letter-spacing:.08em;
+    border:1px solid var(--gold);color:var(--gold);padding:0 3px;flex:0 0 auto}
+  .person em.g{border-color:var(--dim2);color:var(--dim2);font-size:11px;padding:0 2px}
+  .person.on em{border-color:#fff;color:#fff}
+  .rfilters{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+  .rfilters button{background:var(--panel2);border:1px solid var(--line);color:var(--dim2);
+    font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:4px 7px}
+  .rfilters button:hover{color:var(--txt)}
+  .rfilters button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+  .rcount{font-family:'DM Mono',monospace;font-size:10px;color:var(--dim2);margin-bottom:7px}
+  .wtags{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+  .wtag{font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;padding:2px 7px;border:1px solid currentColor}
+  .wtag.hof{color:var(--gold)}
+  .wtag.live{color:var(--red)}
+  .wtag.gone{color:var(--dim2)}
+  .memorial{font-size:12.5px;color:var(--dim);border-left:2px solid var(--dim2);padding-left:11px;margin:14px 0 0}
   .person.on i{background:rgba(0,0,0,.28);color:#fff}
   .feudtop{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:15px;flex-wrap:wrap}
   .feudtop p{margin:0;font-size:13px;color:var(--dim);max-width:56ch}
@@ -458,6 +564,14 @@
   .feudnote{font-size:12.5px;color:var(--dim);margin-top:7px;font-style:italic}
   .feudright .pct{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--dim);margin-top:5px}
   .feudacts{display:flex;gap:7px;flex-wrap:wrap;padding:0 16px 13px}
+  .feuddetail{border-top:1px solid var(--line);padding:14px 16px;background:var(--panel2)}
+  .dwho{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:13px}
+  .dperson{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+  .dperson .face{width:32px;height:32px;flex:0 0 32px;font-size:12px}
+  .dstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+  .dstats > div{background:var(--panel);padding:8px 10px}
+  .dstats b{display:block;font-family:'Anton',sans-serif;font-size:18px;line-height:1}
+  .dstats span{font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim2);font-weight:800}
   .feudeps{border-top:1px solid var(--line);max-height:440px;overflow:auto}
   .feudeps .row{grid-template-columns:22px 128px 1fr auto}
   .emptyfeud{border:1px dashed var(--line);padding:26px 22px;color:var(--dim)}
@@ -476,23 +590,30 @@
   html.wide .feudwrap{grid-template-columns:270px 1fr}
   html.wide .row{grid-template-columns:22px 150px 1fr auto}
 
-  /* ---------- ticker ---------- */
+  /* ---------- ticker ----------
+     Two fixed slots that swap their text on a timer. Nothing moves, so there
+     is nothing to break: no animation, no transform, no scroll, no marquee.
+     Four attempts at a scrolling version each failed on hardware I cannot
+     reproduce; a held headline is also simply easier to read. */
   html.noticker .ticker{display:none}
   .ticker{position:relative;margin-top:14px;border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);background:var(--deep);overflow:hidden;height:30px}
+    border-bottom:1px solid var(--line);background:var(--deep);
+    display:flex;flex-direction:column;align-items:stretch;overflow:hidden}
   .ticker:before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
-    background:repeating-linear-gradient(0deg,rgba(0,0,0,.42) 0 1px,transparent 1px 2px)}
-  .ticker:after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
-    background:linear-gradient(90deg,var(--deep),transparent 7%,transparent 93%,var(--deep))}
-  .tickertrack{position:absolute;top:0;left:0;height:30px;display:flex;align-items:center;
-    white-space:nowrap;will-change:transform;animation:slide 40s linear infinite;
-    font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
-  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  .ticker:hover .tickertrack{animation-play-state:paused}
-  .ti{color:var(--chrome);text-shadow:0 0 7px currentColor;padding:0 4px}
-  .ti.hot{color:var(--red);text-shadow:0 0 10px currentColor;font-weight:500}
-  .tsep{color:var(--dim2);padding:0 16px;opacity:.6}
-  @media(prefers-reduced-motion:reduce){.tickertrack{animation:none;padding-left:14px}}
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.40) 0 1px,transparent 1px 2px)}
+  .tslot{min-width:0;display:flex;align-items:center;padding:7px 15px;
+    position:relative;overflow:hidden;height:29px}
+  .tslot.right{border-top:1px solid var(--line)}
+  .tdiv{display:none}
+  .ti{font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--chrome);white-space:nowrap;overflow:hidden;
+    text-overflow:ellipsis;max-width:100%;opacity:1;transition:opacity .25s ease}
+  .ti.fade{opacity:0}
+  .ti.hot{color:var(--red);text-shadow:0 0 9px currentColor;font-weight:500}
+  .ti b{color:var(--txt);font-weight:500}
+  .tdot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red);
+    margin-right:8px;vertical-align:1px}
+  @media(max-width:680px){ .tslot{padding:6px 13px;height:auto;min-height:26px} }
 
   /* ---------- wrestler screen ---------- */
   .wcard{border:1px solid var(--line);background:var(--panel);padding:18px 20px;margin-bottom:22px;
@@ -505,6 +626,26 @@
     background:var(--panel3);border:1px solid var(--line);
     clip-path:polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)}
   .wruns{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--dim);margin-top:7px}
+  .wbtns{display:flex;flex-direction:column;gap:5px;flex:0 0 auto}
+  .wsrc{font-size:11.5px;color:var(--dim2);margin:13px 0 0;line-height:1.5}
+  .fetchchip{position:fixed;right:18px;bottom:18px;z-index:70;background:var(--panel);
+    border:1px solid var(--line);border-left:3px solid var(--red);padding:10px 14px;
+    font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);
+    display:flex;align-items:center;gap:10px}
+  .fetchchip b{color:var(--txt)}
+  .fetchchip button{background:none;border:1px solid var(--line);color:var(--dim2);
+    font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px}
+  .fetchchip button:hover{color:var(--txt)}
+  .wbio{font-size:13.5px;color:var(--dim);line-height:1.6;margin:14px 0 0;
+    border-left:2px solid var(--line);padding-left:13px}
+  .wbio b{color:var(--txt);font-weight:600}
+  .wchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
+  .wchip{background:var(--panel3);border:1px solid var(--line);padding:4px 10px;font-size:12px;
+    color:var(--dim);cursor:pointer}
+  .wchip:hover{color:var(--txt);border-color:var(--red)}
+  .wsec{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;
+    color:var(--dim2);margin:16px 0 7px}
+  .face img{width:100%;height:100%;object-fit:cover;display:block}
   .wfigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;
     background:var(--line);border:1px solid var(--line);margin-bottom:15px}
   .wfigs > div{background:var(--panel2);padding:11px 13px}
@@ -591,7 +732,13 @@
     </div>
   </div>
 
-  <div class="ticker" id="ticker"><div class="tickertrack" id="tickerTrack"></div></div>
+  <div class="ticker" id="ticker">
+    <div class="tslot" id="tickerA"></div>
+    <div class="tdiv"></div>
+    <div class="tslot right" id="tickerB"></div>
+  </div>
+
+  <div class="binge" id="binge"><div class="bingeinner" id="bingeBody"></div></div>
 
   <section class="tron" id="tron">
     <div class="stamp" id="stamp">Watched</div>
@@ -624,6 +771,7 @@
         <button data-st="unseen" aria-pressed="false">To watch</button>
         <button data-st="seen" aria-pressed="false">Watched</button>
         <button data-st="fav" aria-pressed="false">&#9733; Starred</button>
+        <button data-st="queue" aria-pressed="false">&#9654; Watchlist</button>
       </div>
       <div class="seg" id="kindSeg">
         <button data-kd="" aria-pressed="true">Everything</button>
@@ -632,9 +780,11 @@
       </div>
       <select id="fShow"><option value="">Every show</option></select>
       <select id="fYear"><option value="">Every year</option></select>
+      <button class="btn sm" id="btnBinge">&#9654; Binge</button>
       <button class="btn sm" id="btnRandom">Surprise me</button>
       <div class="count" id="ledgerCount"></div>
     </div>
+    <div class="spotbar" id="spotbar" style="display:none"></div>
     <div id="ledger"></div>
     <div class="pager" id="pager"></div>
   </div>
@@ -659,12 +809,28 @@
     <div class="feudwrap">
       <div class="feudside">
         <input type="text" id="feudSearch" placeholder="Search a wrestler" autocomplete="off">
+        <div class="rfilters" id="feudFilters">
+          <button data-rf="all" aria-pressed="true">All</button>
+          <button data-rf="hof">Hall of Fame</button>
+          <button data-rf="active">Active</button>
+          <button data-rf="gone">Passed</button>
+          <button data-rf="golden">Golden</button>
+          <button data-rf="newgen">New Gen</button>
+          <button data-rf="attitude">Attitude</button>
+          <button data-rf="ruthless">Ruthless</button>
+          <button data-rf="pg">PG</button>
+          <button data-rf="modern">Modern</button>
+        </div>
+        <div class="rcount" id="feudCount"></div>
         <div class="feudpeople" id="feudPeople"></div>
       </div>
       <div class="feudmain">
         <div class="feudtop">
           <p>Pick a wrestler for their run, their numbers and their rivalries. Open a rivalry for every episode inside it.</p>
+          <span style="display:flex;gap:7px;flex-wrap:wrap">
+          <button class="btn sm" id="feudFaces">Fetch portraits</button>
           <button class="btn sm" id="feudNew">Add a storyline</button>
+        </span>
         </div>
         <div id="feudList"></div>
       </div>
@@ -685,6 +851,8 @@
 
   <div class="panel" id="p-stats">
     <div class="figs" id="figs"></div>
+    <h2 style="font-size:20px;margin-bottom:9px">Your pace</h2>
+    <div id="paceBox" style="margin-bottom:26px"></div>
     <h2 style="font-size:20px;margin-bottom:9px">By decade</h2>
     <div id="decades"></div>
     <h2 style="font-size:20px;margin:28px 0 9px">Longest runs left</h2>
@@ -698,7 +866,14 @@
       <p>Kept per device, alongside the theme.</p>
       <label class="keepme"><input type="checkbox" id="prefWide"> Widescreen &mdash; use the full window instead of a centred column</label>
       <label class="keepme"><input type="checkbox" id="prefTicker"> Show the ticker under the title</label>
+      <details style="margin-top:12px">
+        <summary style="cursor:pointer;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--dim2)">Ticker diagnostics</summary>
+        <pre id="tickerDiag" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);
+          background:var(--deep);border:1px solid var(--line);padding:11px 13px;margin:9px 0 0;
+          white-space:pre-wrap;line-height:1.6"></pre>
+      </details>
       <label class="keepme"><input type="checkbox" id="prefFaces"> Show wrestler icons on episodes that have a match card</label>
+      <label class="keepme"><input type="checkbox" id="prefAutoFaces"> Fetch portraits and bios from Wikipedia automatically</label>
       <div class="field" style="margin-top:15px;max-width:280px">
         <label for="prefHome">Tab to open on</label>
         <select id="prefHome">
@@ -782,9 +957,12 @@
     </div>
 
     <div class="card2">
-      <h3>Restore skipped episodes</h3>
+      <h3>Watchlist and skipped episodes</h3>
       <p id="hiddenCount">Nothing has been removed.</p>
-      <div class="acts"><button class="btn" id="btnUnhide">Bring them all back</button></div>
+      <div class="acts">
+        <button class="btn" id="btnUnhide">Bring back everything skipped</button>
+        <button class="btn" id="btnClearQ">Clear the watchlist</button>
+      </div>
     </div>
 
     <div class="card2">
@@ -806,6 +984,7 @@
    rows: "SmackDown aired Thursdays 1999-2005, Fridays to 2016,
    Tuesdays to 2019, Fridays since." Episodes generate from that.
    ============================================================ */
+const BUILD_ID='2026-07-29 15:34 UTC';
 const D = {SUN:0,MON:1,TUE:2,WED:3,THU:4,FRI:5,SAT:6};
 
 const SHOWS = [
@@ -913,163 +1092,359 @@ const SERIES = [
 /* ============================================================
    2. ROSTER INDEX
    The catalogue has no match data, so "cm punk vs jeff hardy"
-   can't match a title. Instead: approximate WWE tenure for each
-   name. Two names -> intersect their runs -> the window where
-   that match was even possible. Ranges are approximate and
-   deliberately generous at the edges.
+   cannot match a title. Instead: approximate WWE/WWWF tenure
+   per name. Two names -> intersect their runs -> the window a
+   match between them was possible.
+
+   Every range is APPROXIMATE and generous at the edges. Third
+   element is optional flags: hof for Hall of Fame, d for year
+   of death. Both are shown on the wrestler screen and both are
+   editable, because this is written from memory, not a source.
    ============================================================ */
 const ROSTER = [
-['Hulk Hogan',[['1983-12','1993-06'],['2002-02','2003-09'],['2005-04','2007-09'],['2014-02','2015-07']]],
-['Andre the Giant',[['1973-03','1991-12']]],
-['Randy Savage',[['1985-06','1994-10']]],
-['Ultimate Warrior',[['1987-06','1992-11'],['1996-03','1996-07']]],
-['Bret Hart',[['1984-08','1997-11'],['2010-01','2010-11']]],
-['Shawn Michaels',[['1988-10','1998-03'],['2002-05','2010-03']]],
-['The Undertaker',[['1990-11','2020-11']]],
-['Kane',[['1997-10','2018-12'],['2020-01','2021-04']]],
-['Steve Austin',[['1995-12','2003-04'],['2022-04','2022-04']]],
-['The Rock',[['1996-11','2004-03'],['2011-02','2013-04'],['2024-01','2024-04']]],
-['Triple H',[['1995-04','2019-06'],['2021-06','2022-03']]],
-['Mick Foley',[['1996-04','2000-04'],['2004-01','2004-06'],['2006-01','2006-07']]],
-['Big Show',[['1999-02','2021-02']]],
-['Kurt Angle',[['1999-11','2006-08'],['2017-04','2019-04']]],
+/* --- WWWF and the territory years --- */
+['Bruno Sammartino',[['1963-05','1981-08'],['1985-01','1987-12']],{hof:1,d:2018}],
+['Bob Backlund',[['1977-01','1984-12'],['1992-09','1997-06'],['2000-01','2000-12']],{hof:1}],
+['Superstar Billy Graham',[['1975-01','1978-06'],['1982-01','1983-12'],['1986-01','1987-12']],{hof:1,d:2023}],
+['Ivan Putski',[['1975-01','1982-12']],{hof:1}],
+['Pedro Morales',[['1970-01','1974-12'],['1980-01','1987-06']],{hof:1,d:2019}],
+['Chief Jay Strongbow',[['1970-01','1985-12']],{hof:1,d:2012}],
+['Andre the Giant',[['1973-03','1991-12']],{hof:1,d:1993}],
+['Rocky Johnson',[['1983-01','1985-12']],{hof:1,d:2020}],
+['Tony Atlas',[['1980-01','1984-12'],['1990-06','1992-12']],{hof:1}],
+['Sgt. Slaughter',[['1980-01','1984-06'],['1990-08','1992-11']],{hof:1}],
+['Don Muraco',[['1981-01','1988-12']],{hof:1}],
+['Jimmy Snuka',[['1982-01','1985-06'],['1989-01','1992-06']],{hof:1,d:2017}],
+['Bob Orton',[['1982-01','1987-12'],['2005-01','2005-12']],{hof:1}],
+['Greg Valentine',[['1979-01','1980-12'],['1984-01','1992-12']],{hof:1}],
+['The Iron Sheik',[['1979-01','1980-12'],['1983-01','1988-12'],['1991-01','1992-12']],{hof:1,d:2023}],
+['Nikolai Volkoff',[['1968-01','1970-12'],['1984-01','1990-12'],['1994-01','1995-06']],{hof:1,d:2018}],
+
+/* --- Golden era --- */
+['Hulk Hogan',[['1983-12','1993-06'],['2002-02','2003-09'],['2005-04','2007-09'],['2014-02','2015-07']],{hof:1}],
+['Roddy Piper',[['1984-01','1987-11'],['1989-01','1992-11'],['1996-01','1997-11'],['2003-03','2003-09']],{hof:1,d:2015}],
+['Randy Savage',[['1985-06','1994-10']],{hof:1,d:2011}],
+['Ricky Steamboat',[['1985-01','1988-03'],['1991-06','1991-12']],{hof:1}],
+['Ted DiBiase',[['1987-06','1993-12']],{hof:1}],
+['Jake Roberts',[['1986-08','1992-11'],['1996-01','1997-09']],{hof:1}],
+['Mr. Perfect',[['1988-06','1996-08'],['2002-01','2002-05']],{hof:1,d:2003}],
+['Rick Rude',[['1987-08','1990-11'],['1997-11','1999-04']],{hof:1,d:1999}],
+['Ultimate Warrior',[['1987-06','1992-11'],['1996-03','1996-07']],{hof:1,d:2014}],
+['Tito Santana',[['1979-01','1993-12']],{hof:1}],
+['Junkyard Dog',[['1984-01','1988-12']],{hof:1,d:1998}],
+['King Kong Bundy',[['1981-01','1982-12'],['1985-01','1988-12'],['1994-01','1995-12']],{d:2019}],
+['Big John Studd',[['1982-01','1986-12'],['1988-09','1989-12']],{hof:1,d:1995}],
+['Paul Orndorff',[['1983-12','1988-06']],{hof:1,d:2021}],
+['Brutus Beefcake',[['1984-01','1993-12']],{hof:1}],
+['Hillbilly Jim',[['1984-06','1990-12']],{hof:1}],
+['Koko B. Ware',[['1986-01','1994-12']],{hof:1}],
+['The Honky Tonk Man',[['1986-01','1991-12'],['1997-01','1998-12']],{hof:1}],
+['Jim Neidhart',[['1985-08','1992-06'],['1994-09','1997-11']],{d:2018}],
+['Rick Martel',[['1980-01','1981-12'],['1985-01','1995-06']],{hof:1}],
+['Adrian Adonis',[['1981-01','1987-06']],{d:1988}],
+['Dino Bravo',[['1986-01','1992-12']],{d:1993}],
+['Hercules',[['1985-01','1992-06']],{d:2004}],
+['Earthquake',[['1989-06','1994-12']],{d:2006}],
+['Typhoon',[['1989-01','1993-06']]],
+['The Barbarian',[['1988-01','1992-12']]],
+['The Warlord',[['1988-01','1992-12']]],
+['Haku',[['1986-01','1992-12'],['2001-01','2001-12']]],
+['Virgil',[['1987-01','1994-12']],{d:2024}],
+['Kamala',[['1984-01','1984-12'],['1986-01','1987-12'],['1992-01','1993-12']],{d:2020}],
+['Bad News Brown',[['1988-01','1990-12']],{d:2007}],
+['Demolition Ax',[['1987-01','1990-12']]],
+['Demolition Smash',[['1987-01','1991-06']]],
+['Marty Jannetty',[['1988-06','1992-06'],['1994-01','1996-06']]],
+['The Bushwhackers',[['1988-10','1996-06']]],
+['Bam Bam Bigelow',[['1987-09','1988-11'],['1992-12','1995-08']],{d:2007}],
+['Kerry Von Erich',[['1990-06','1992-08']],{hof:1,d:1993}],
+['Dusty Rhodes',[['1989-06','1991-12']],{hof:1,d:2015}],
+['Terry Funk',[['1985-01','1986-12'],['1997-06','1998-12']],{hof:1,d:2023}],
+['Harley Race',[['1986-01','1989-12']],{hof:1,d:2019}],
+['Ric Flair',[['1991-09','1993-02'],['2001-11','2008-03']],{hof:1}],
+['Bobby Heenan',[['1984-01','1993-12']],{hof:1,d:2017}],
+['Jimmy Hart',[['1985-01','1993-12'],['1994-01','1995-12']],{hof:1}],
+['Mr. Fuji',[['1972-01','1996-12']],{hof:1,d:2016}],
+['Gorilla Monsoon',[['1963-01','1997-06']],{hof:1,d:1999}],
+['Captain Lou Albano',[['1972-01','1986-12'],['1994-01','1995-12']],{hof:1,d:2009}],
+['Freddie Blassie',[['1974-01','1986-12']],{hof:1,d:2003}],
+['Arnold Skaaland',[['1971-01','1984-12']],{hof:1,d:2007}],
+['Pat Patterson',[['1979-01','1984-12']],{hof:1,d:2020}],
+['Howard Finkel',[['1977-01','2019-12']],{d:2020}],
+['The Fabulous Moolah',[['1983-01','2007-11']],{hof:1,d:2007}],
+['Mae Young',[['1999-01','2013-12']],{hof:1,d:2014}],
+['Wendi Richter',[['1984-01','1985-11']],{hof:1}],
+['Sherri Martel',[['1987-01','1993-12']],{hof:1,d:2007}],
+['Alundra Blayze',[['1993-01','1995-12']],{hof:1}],
+['Luna Vachon',[['1993-01','2000-12']],{d:2010}],
+
+/* --- New Generation --- */
+['Bret Hart',[['1984-08','1997-11'],['2010-01','2010-11']],{hof:1}],
+['Shawn Michaels',[['1988-10','1998-03'],['2002-05','2010-03']],{hof:1}],
+['The Undertaker',[['1990-11','2020-11']],{hof:1}],
+['Owen Hart',[['1988-08','1999-05']],{d:1999}],
+['British Bulldog',[['1985-08','1988-11'],['1990-09','1992-09'],['1994-09','1997-11'],['1999-08','2000-04']],{hof:1,d:2002}],
+['Yokozuna',[['1992-10','1996-11']],{hof:1,d:2000}],
+['Kevin Nash',[['1993-06','1996-05'],['2002-02','2003-06'],['2011-01','2011-12']],{hof:1}],
+['Scott Hall',[['1992-08','1996-05']],{hof:1,d:2022}],
+['Lex Luger',[['1993-01','1995-08']],{hof:1}],
+['Tatanka',[['1991-10','1996-09'],['2006-01','2007-12']]],
+['Doink the Clown',[['1992-11','1996-06']],{d:2013}],
+['Sycho Sid',[['1991-08','1992-06'],['1995-05','1997-03']]],
+['Vader',[['1996-01','1998-10']],{hof:1,d:2018}],
+['Goldust',[['1995-09','1999-06'],['2002-10','2003-12'],['2008-01','2019-05']]],
+['Ron Simmons',[['1996-06','2004-12']],{hof:1}],
+['Ahmed Johnson',[['1995-06','1998-06']]],
+['Savio Vega',[['1994-01','1999-06']]],
+['Marc Mero',[['1996-05','1999-06']]],
+['Crush',[['1990-01','1993-12'],['1996-06','1997-12']],{d:2007}],
+['Paul Bearer',[['1991-04','2004-12'],['2010-01','2012-12']],{hof:1,d:2013}],
+['Jerry Lawler',[['1992-11','2020-01']],{hof:1}],
+['Jim Ross',[['1993-04','2013-09']],{hof:1}],
+['Brian Pillman',[['1996-06','1997-10']],{d:1997}],
+['Kane',[['1997-10','2018-12'],['2020-01','2021-04']],{hof:1}],
+['Mick Foley',[['1996-04','2000-04'],['2004-01','2004-06'],['2006-01','2006-07']],{hof:1}],
+['Steve Austin',[['1995-12','2003-04'],['2022-04','2022-04']],{hof:1}],
+['Triple H',[['1995-04','2019-06'],['2021-06','2022-03']],{hof:1}],
+['The Rock',[['1996-11','2004-03'],['2011-02','2013-04'],['2024-01','2024-04']],{hof:1}],
+['Chyna',[['1997-02','2001-11']],{hof:1,d:2016}],
+['X-Pac',[['1993-01','2002-06']],{hof:1}],
+['Road Dogg',[['1994-01','2001-06'],['2012-01','2014-06']],{hof:1}],
+['Billy Gunn',[['1993-01','2004-11'],['2012-01','2015-02']],{hof:1}],
+['Road Warrior Hawk',[['1990-08','1992-08'],['1997-02','1999-06'],['2003-01','2003-10']],{hof:1,d:2003}],
+['Road Warrior Animal',[['1990-08','1992-08'],['1997-02','1999-06'],['2005-01','2006-06']],{hof:1,d:2020}],
+
+/* --- Attitude era --- */
+['Vince McMahon',[['1984-01','2022-06'],['2023-01','2024-01']],{hof:1}],
+['Shane McMahon',[['1998-01','2001-11'],['2016-02','2022-01']]],
+['Stephanie McMahon',[['1999-01','2023-01']]],
+['Big Show',[['1999-02','2021-02']],{hof:1}],
+['Kurt Angle',[['1999-11','2006-08'],['2017-04','2019-04']],{hof:1}],
 ['Chris Jericho',[['1999-08','2005-08'],['2007-11','2010-09'],['2012-01','2013-08'],['2014-06','2015-02'],['2016-01','2018-02']]],
-['Edge',[['1998-06','2011-04'],['2020-01','2023-08']]],
-['Christian',[['1998-09','2005-11'],['2009-02','2014-11']]],
-['Eddie Guerrero',[['2000-01','2001-11'],['2002-04','2005-11']]],
-['Rey Mysterio',[['2002-07','2015-02'],['2018-01',null]]],
-['Batista',[['2002-05','2010-04'],['2014-01','2014-06'],['2018-10','2019-04']]],
-['John Cena',[['2002-06',null]]],
+['Edge',[['1998-06','2011-04'],['2020-01','2023-08']],{hof:1}],
+['Christian',[['1998-09','2005-11'],['2009-02','2014-11']],{hof:1}],
+['Jeff Hardy',[['1998-01','2003-04'],['2006-08','2009-08'],['2017-04','2021-12']],{hof:1}],
+['Matt Hardy',[['1998-01','2010-08'],['2017-04','2020-03']],{hof:1}],
+['Bubba Ray Dudley',[['1999-08','2005-07'],['2015-08','2016-12']],{hof:1}],
+['D-Von Dudley',[['1999-08','2005-07'],['2015-08','2016-12']],{hof:1}],
+['Spike Dudley',[['1999-08','2005-06']]],
+['Trish Stratus',[['2000-03','2006-09'],['2019-08','2023-08']],{hof:1}],
+['Lita',[['2000-06','2006-11'],['2018-01','2023-01']],{hof:1}],
+['Ivory',[['1999-01','2005-12']],{hof:1}],
+['Jacqueline',[['1998-01','2004-12']],{hof:1}],
+['Terri Runnels',[['1996-01','2004-06']]],
+['Debra',[['1998-01','2002-06']]],
+['Sable',[['1996-04','1999-05'],['2003-04','2004-08']]],
+['Molly Holly',[['2000-01','2005-06']],{hof:1}],
+['Victoria',[['2000-01','2009-02']]],
+['Al Snow',[['1995-01','1995-12'],['1998-01','2002-12']]],
+['Ken Shamrock',[['1997-02','1999-11']],{hof:1}],
+['Steve Blackman',[['1997-09','2002-12']]],
+["D'Lo Brown",[['1997-01','2003-06'],['2008-01','2009-06']]],
+['Big Boss Man',[['1988-06','1993-06'],['1998-08','2003-06']],{hof:1,d:2004}],
+['The Godfather',[['1992-11','2002-08']],{hof:1}],
+['Val Venis',[['1998-04','2009-06']]],
+['Mark Henry',[['1996-09','2017-04']],{hof:1}],
+['Test',[['1998-06','2004-06'],['2006-06','2007-06']],{d:2009}],
+['Albert',[['1999-01','2004-06'],['2012-01','2014-06']]],
+['Tazz',[['2000-01','2002-12']]],
+['Raven',[['2000-03','2003-06']]],
+['Perry Saturn',[['2000-01','2002-06']]],
+['Dean Malenko',[['2000-01','2001-12']]],
+['Eddie Guerrero',[['2000-01','2001-11'],['2002-04','2005-11']],{hof:1,d:2005}],
+['Chris Benoit',[['2000-01','2007-06']],{d:2007}],
+['William Regal',[['1998-03','2013-06']],{hof:1}],
+['Rikishi',[['1992-06','2004-07']],{hof:1}],
+['Scotty 2 Hotty',[['1997-01','2007-06']]],
+['Grand Master Sexay',[['1997-01','2001-06']],{d:2018}],
+['Crash Holly',[['1999-02','2003-06']],{d:2003}],
+['Hardcore Holly',[['1994-01','2009-06']]],
+['Rhyno',[['1999-01','2005-12'],['2015-08','2019-04']]],
+['Tajiri',[['2001-06','2005-06'],['2016-01','2017-06']]],
+['Lance Storm',[['2001-07','2003-06']]],
+['Justin Credible',[['2001-06','2002-12']]],
+['The Hurricane',[['2001-01','2005-12'],['2011-01','2012-12']]],
+['Chuck Palumbo',[['2001-01','2004-06'],['2007-01','2008-12']]],
+['Billy Kidman',[['2001-07','2005-06']]],
+['Booker T',[['2001-07','2007-05'],['2011-08','2013-06']],{hof:1}],
+['Rob Van Dam',[['2001-07','2007-06'],['2013-07','2014-06']],{hof:1}],
+['Goldberg',[['2003-03','2004-03'],['2016-10','2022-02']],{hof:1}],
+['JBL',[['1996-01','2009-04']],{hof:1}],
+['Brock Lesnar',[['2002-03','2004-03'],['2012-04','2023-08']]],
+['Batista',[['2002-05','2010-04'],['2014-01','2014-06'],['2018-10','2019-04']],{hof:1}],
 ['Randy Orton',[['2002-04',null]]],
+['John Cena',[['2002-06',null]]],
+['Rey Mysterio',[['2002-07','2015-02'],['2018-01',null]],{hof:1}],
+['Torrie Wilson',[['2001-06','2008-05']],{hof:1}],
+['Stacy Keibler',[['2001-06','2006-07']]],
+
+/* --- Ruthless Aggression --- */
+['Shelton Benjamin',[['2002-01','2010-04'],['2016-08',null]]],
+['Charlie Haas',[['2002-01','2005-06'],['2006-01','2010-04']]],
+['John Morrison',[['2004-01','2011-11'],['2019-11','2021-11']]],
+['Carlito',[['2004-09','2010-05'],['2021-01',null]]],
+['Chavo Guerrero',[['2001-06','2011-06']]],
+['MVP',[['2005-09','2010-12'],['2020-01','2023-12']]],
+['Mr. Kennedy',[['2005-08','2009-05']]],
+['Umaga',[['2003-01','2009-06']],{d:2009}],
+['Finlay',[['2006-01','2010-08']],{hof:1}],
+['Chris Masters',[['2005-01','2011-08']]],
+['Snitsky',[['2004-08','2008-11']]],
+['Vladimir Kozlov',[['2008-06','2011-06']]],
+['Santino Marella',[['2007-04','2014-06']]],
+['Elijah Burke',[['2006-01','2008-06']]],
 ['CM Punk',[['2006-06','2014-01'],['2023-11',null]]],
-['Jeff Hardy',[['1998-01','2003-04'],['2006-08','2009-08'],['2017-04','2021-12']]],
-['Matt Hardy',[['1998-01','2010-08'],['2017-04','2020-03']]],
-['Sheamus',[['2009-06',null]]],
+['The Miz',[['2006-06',null]]],
+['Cody Rhodes',[['2006-06','2016-05'],['2022-04',null]]],
+['Bobby Lashley',[['2005-09','2008-02'],['2018-04','2024-06']]],
+['Kofi Kingston',[['2008-01',null]]],
 ['Dolph Ziggler',[['2005-09','2023-09']]],
+['Jack Swagger',[['2008-09','2017-04']]],
+['Sheamus',[['2009-06',null]]],
+['Drew McIntyre',[['2007-09','2014-06'],['2017-04',null]]],
+['Mickie James',[['2005-08','2010-04'],['2016-08','2021-04']]],
+['Beth Phoenix',[['2006-05','2012-08']],{hof:1}],
+['Melina',[['2004-01','2011-08']]],
+['Maria',[['2004-01','2010-02']]],
+['Candice Michelle',[['2004-01','2009-06']]],
+['Michelle McCool',[['2004-09','2011-04']]],
+['Layla',[['2006-06','2015-06']]],
+['Jillian Hall',[['2005-01','2010-11']]],
+['Eve Torres',[['2007-08','2013-05']]],
+['Kelly Kelly',[['2006-06','2012-09']]],
+['Alberto Del Rio',[['2010-08','2014-08'],['2015-10','2016-09']]],
+['Nikki Bella',[['2007-06','2019-01']],{hof:1}],
+['Brie Bella',[['2007-06','2019-01']],{hof:1}],
+['Ted DiBiase Jr',[['2008-05','2013-08']]],
+['Zack Ryder',[['2007-06','2020-04']]],
+['Wade Barrett',[['2010-06','2016-05']]],
+['Justin Gabriel',[['2010-06','2015-01']]],
+['Heath Slater',[['2010-06','2020-04']]],
+['Curtis Axel',[['2010-06','2020-04']]],
+['Ryback',[['2010-01','2016-08']]],
+['Cesaro',[['2011-08','2022-02']]],
+['Damien Sandow',[['2010-01','2016-05']]],
+['Titus O\u2019Neil',[['2010-01',null]]],
+['Darren Young',[['2010-01','2017-11']]],
+['Big E',[['2012-05','2022-03']]],
+['Xavier Woods',[['2013-11',null]]],
 ['Daniel Bryan',[['2010-02','2016-02'],['2018-03','2021-04']]],
-['Seth Rollins',[['2012-11',null]]],
+['AJ Lee',[['2011-05','2015-04']]],
+['Paige',[['2011-01','2018-04'],['2019-01','2022-07']]],
+['Emma',[['2013-01','2017-10']]],
+['Naomi',[['2009-06','2022-05'],['2024-09',null]]],
+['Cameron',[['2011-01','2016-05']]],
+['Bray Wyatt',[['2010-06','2021-07'],['2022-10','2023-08']],{d:2023}],
+['Luke Harper',[['2012-06','2019-12']],{d:2020}],
+['Erick Rowan',[['2012-06','2020-04']]],
+['Rusev',[['2013-09','2020-04']]],
+['Lana',[['2013-09','2021-06']]],
+['Neville',[['2012-08','2017-10']]],
+['Adam Rose',[['2013-01','2016-05']]],
+['Bo Dallas',[['2012-01','2021-06']]],
+['Fandango',[['2012-01','2021-06']]],
+['Tyler Breeze',[['2013-01','2021-06']]],
+['Konnor',[['2013-01','2019-04']]],
+['Viktor',[['2013-01','2019-04']]],
+['Shad Gaspard',[['2006-01','2010-04']],{d:2020}],
+['JTG',[['2006-01','2014-06']]],
+
+/* --- Reality era and modern --- */
 ['Roman Reigns',[['2012-11',null]]],
+['Seth Rollins',[['2012-11',null]]],
 ['Dean Ambrose',[['2012-11','2019-04']]],
-['Bray Wyatt',[['2010-06','2021-07'],['2022-10','2023-08']]],
-['AJ Styles',[['2016-01',null]]],
 ['Kevin Owens',[['2014-12',null]]],
 ['Sami Zayn',[['2013-05',null]]],
 ['Finn Balor',[['2014-09',null]]],
+['Samoa Joe',[['2015-05','2021-08']]],
+['Shinsuke Nakamura',[['2016-04',null]]],
+['AJ Styles',[['2016-01',null]]],
 ['Braun Strowman',[['2015-08','2021-06'],['2022-09',null]]],
-['Drew McIntyre',[['2007-09','2014-06'],['2017-04',null]]],
-['Becky Lynch',[['2013-05',null]]],
-['Charlotte Flair',[['2012-05',null]]],
-['Sasha Banks',[['2012-08','2022-05']]],
-['Bayley',[['2012-08',null]]],
-['Ronda Rousey',[['2018-01','2019-04'],['2022-01','2023-08']]],
-['Asuka',[['2015-09',null]]],
-['Alexa Bliss',[['2013-05','2024-01'],['2024-11',null]]],
-['Cody Rhodes',[['2006-06','2016-05'],['2022-04',null]]],
-['Gunther',[['2019-08',null]]],
-['LA Knight',[['2021-06',null]]],
+['Baron Corbin',[['2012-08',null]]],
+['Apollo Crews',[['2015-06','2023-09']]],
+['Elias',[['2014-08','2023-09']]],
+['Bobby Roode',[['2016-05','2022-06']]],
+['Andrade',[['2015-06','2021-03'],['2024-01',null]]],
+['Aleister Black',[['2016-11','2021-06']]],
+['Ricochet',[['2018-01','2024-09']]],
+['Cedric Alexander',[['2016-07','2024-06']]],
+['Buddy Murphy',[['2013-01','2021-06']]],
+['Mustafa Ali',[['2016-07','2023-12']]],
+['Jinder Mahal',[['2010-11','2014-06'],['2016-07','2024-09']]],
+['Sin Cara',[['2010-12','2019-12']]],
+['Kalisto',[['2013-06','2021-08']]],
+['Chad Gable',[['2015-07',null]]],
+['Otis',[['2016-01',null]]],
 ['Jey Uso',[['2010-05',null]]],
 ['Jimmy Uso',[['2010-05',null]]],
-['Bianca Belair',[['2016-04',null]]],
-['Rhea Ripley',[['2017-08',null]]],
+['Solo Sikoa',[['2021-08',null]]],
+['Jacob Fatu',[['2024-05',null]]],
+['Bronson Reed',[['2019-01',null]]],
+['Ilja Dragunov',[['2019-01',null]]],
+['Gunther',[['2019-08',null]]],
+['Ludwig Kaiser',[['2019-08',null]]],
+['Giovanni Vinci',[['2019-08','2024-06']]],
+['LA Knight',[['2021-06',null]]],
+['Austin Theory',[['2019-08',null]]],
+['Grayson Waller',[['2021-01',null]]],
+['Bron Breakker',[['2021-02',null]]],
+['Carmelo Hayes',[['2021-01',null]]],
+['Trick Williams',[['2021-06',null]]],
 ['Damian Priest',[['2018-11',null]]],
+['Dominik Mysterio',[['2020-08',null]]],
+['Dragon Lee',[['2023-01',null]]],
+['Karrion Kross',[['2019-08','2021-11'],['2022-08',null]]],
 ['Logan Paul',[['2022-04',null]]],
-['Brock Lesnar',[['2002-03','2004-03'],['2012-04','2023-08']]],
-['Goldberg',[['2003-03','2004-03'],['2016-10','2022-02']]],
-['Trish Stratus',[['2000-03','2006-09'],['2019-08','2023-08']]],
-['Lita',[['2000-06','2006-11'],['2018-01','2023-01']]],
-['Chyna',[['1997-02','2001-11']]],
-['Booker T',[['2001-07','2007-05'],['2011-08','2013-06']]],
-['Rob Van Dam',[['2001-07','2007-06'],['2013-07','2014-06']]],
-['Ric Flair',[['1991-09','1993-02'],['2001-11','2008-03']]],
-['Vince McMahon',[['1984-01','2022-06'],['2023-01','2024-01']]],
-['Shane McMahon',[['1998-01','2001-11'],['2016-02','2022-01']]],
-['Stephanie McMahon',[['1999-01','2023-01']]],
-['Kofi Kingston',[['2008-01',null]]],
-['Big E',[['2012-05','2022-03']]],
-['Xavier Woods',[['2013-11',null]]],
-['The Miz',[['2006-06',null]]],
-['Wade Barrett',[['2010-06','2016-05']]],
-['Jack Swagger',[['2008-09','2017-04']]],
-['Cesaro',[['2011-08','2022-02']]],
-['Bobby Lashley',[['2005-09','2008-02'],['2018-04','2024-06']]],
-['Ricochet',[['2018-01','2024-09']]],
-['Aleister Black',[['2016-11','2021-06']]],
-['Rusev',[['2013-09','2020-04']]],
-['Jinder Mahal',[['2010-11','2014-06'],['2016-07','2024-09']]],
-['Mark Henry',[['1996-09','2017-04']]],
-['Umaga',[['2003-01','2009-06']]],
-['JBL',[['1996-01','2009-04']]],
-['Jerry Lawler',[['1992-11','2020-01']]],
-['Yokozuna',[['1992-10','1996-11']]],
-['Kevin Nash',[['1993-06','1996-05'],['2002-02','2003-06'],['2011-01','2011-12']]],
-['Scott Hall',[['1992-08','1996-05']]],
-['British Bulldog',[['1985-08','1988-11'],['1990-09','1992-09'],['1994-09','1997-11'],['1999-08','2000-04']]],
-['Owen Hart',[['1988-08','1999-05']]],
-['Vader',[['1996-01','1998-10']]],
-['Sycho Sid',[['1991-08','1992-06'],['1995-05','1997-03']]],
-['Sable',[['1996-04','1999-05'],['2003-04','2004-08']]],
-['Road Dogg',[['1994-01','2001-06'],['2012-01','2014-06']]],
-['Billy Gunn',[['1993-01','2004-11'],['2012-01','2015-02']]],
-['X-Pac',[['1993-01','2002-06']]],
-['Test',[['1998-06','2004-06'],['2006-06','2007-06']]],
-['Val Venis',[['1998-04','2009-06']]],
-['The Godfather',[['1992-11','2002-08']]],
-['Ted DiBiase',[['1987-06','1993-12']]],
-['Jake Roberts',[['1986-08','1992-11'],['1996-01','1997-09']]],
-['Mr. Perfect',[['1988-06','1996-08'],['2002-01','2002-05']]],
-['Rick Rude',[['1987-08','1990-11'],['1997-11','1999-04']]],
-['Roddy Piper',[['1984-01','1987-11'],['1989-01','1992-11'],['1996-01','1997-11'],['2003-03','2003-09']]],
-['Jimmy Snuka',[['1982-01','1985-06'],['1989-01','1992-06']]],
-['Big Boss Man',[['1988-06','1993-06'],['1998-08','2003-06']]],
-['Chris Benoit',[['2000-01','2007-06']]],
-['William Regal',[['1998-03','2013-06']]],
-['Paul Heyman',[['1996-01',null]]],
-['Nikki Bella',[['2007-06','2019-01']]],
-['Brie Bella',[['2007-06','2019-01']]],
-['Paige',[['2011-01','2018-04'],['2019-01','2022-07']]],
-['Naomi',[['2009-06','2022-05'],['2024-09',null]]],
+['Bad Bunny',[['2021-01','2023-09']]],
+['Sting',[['2014-08','2015-09']],{hof:1}],
+['Charlotte Flair',[['2012-05',null]]],
+['Becky Lynch',[['2013-05',null]]],
+['Sasha Banks',[['2012-08','2022-05']]],
+['Bayley',[['2012-08',null]]],
+['Asuka',[['2015-09',null]]],
+['Alexa Bliss',[['2013-05','2024-01'],['2024-11',null]]],
 ['Carmella',[['2013-06',null]]],
 ['Liv Morgan',[['2014-06',null]]],
 ['Nia Jax',[['2014-06','2021-11'],['2023-09',null]]],
+['Bianca Belair',[['2016-04',null]]],
+['Rhea Ripley',[['2017-08',null]]],
 ['Iyo Sky',[['2018-06',null]]],
 ['Kairi Sane',[['2017-01','2020-08'],['2023-09',null]]],
-['Bron Breakker',[['2021-02',null]]],
-['Solo Sikoa',[['2021-08',null]]],
-['Jade Cargill',[['2023-09',null]]],
-['Tiffany Stratton',[['2021-09',null]]],
-['Austin Theory',[['2019-08',null]]],
-['Karrion Kross',[['2019-08','2021-11'],['2022-08',null]]],
-['Chad Gable',[['2015-07',null]]],
-['Otis',[['2016-01',null]]],
-['Sgt. Slaughter',[['1980-01','1984-06'],['1990-08','1992-11']]],
-['Bam Bam Bigelow',[['1987-09','1988-11'],['1992-12','1995-08']]],
-['Lex Luger',[['1993-01','1995-08']]],
-['Tatanka',[['1991-10','1996-09']]],
-['Doink the Clown',[['1992-11','1996-06']]],
-['Rikishi',[['1992-06','2004-07']]],
-['Bubba Ray Dudley',[['1999-08','2005-07'],['2015-08','2016-12']]],
-['D-Von Dudley',[['1999-08','2005-07'],['2015-08','2016-12']]],
-['Sting',[['2014-08','2015-09']]],
-['Shinsuke Nakamura',[['2016-04',null]]],
-['Samoa Joe',[['2015-05','2021-08']]],
-['Ricky Steamboat',[['1985-01','1988-03'],['1991-06','1991-12']]],
-['Bad Bunny',[['2021-01','2023-09']]],
-['Ryback',[['2010-01','2016-08']]],
-['Zack Ryder',[['2007-06','2020-04']]],
-['Kalisto',[['2013-06','2021-08']]],
-['Apollo Crews',[['2015-06','2023-09']]],
-['Elias',[['2014-08','2023-09']]],
-['Baron Corbin',[['2012-08',null]]],
+['Dakota Kai',[['2017-01',null]]],
+['Shayna Baszler',[['2017-08','2025-04']]],
+['Ronda Rousey',[['2018-01','2019-04'],['2022-01','2023-08']]],
 ['Sonya Deville',[['2015-07','2024-06']]],
 ['Mandy Rose',[['2015-07','2022-12']]],
 ['Lacey Evans',[['2016-04','2023-08']]],
-['Shayna Baszler',[['2017-08','2025-04']]],
-['Bobby Roode',[['2016-05','2022-06']]],
-['Andrade',[['2015-06','2021-03'],['2024-01',null]]],
-['Sin Cara',[['2010-12','2019-12']]],
-['Dominik Mysterio',[['2020-08',null]]],
-['Chelsea Green',[['2018-06','2021-04'],['2022-11',null]]]
+['Raquel Rodriguez',[['2016-01',null]]],
+['Zoey Stark',[['2021-01',null]]],
+['Shotzi',[['2019-01',null]]],
+['Tiffany Stratton',[['2021-09',null]]],
+['Jade Cargill',[['2023-09',null]]],
+['Chelsea Green',[['2018-06','2021-04'],['2022-11',null]]],
+['Roxanne Perez',[['2022-01',null]]],
+['Lyra Valkyria',[['2022-01',null]]],
+['Michin',[['2018-01',null]]],
+['Adam Cole',[['2017-08','2021-08']]],
+['Johnny Gargano',[['2015-08','2021-12'],['2022-08',null]]],
+['Tommaso Ciampa',[['2015-08',null]]],
+['Ember Moon',[['2015-08','2021-11']]],
+['Keith Lee',[['2018-01','2021-11']]],
+['Matt Riddle',[['2018-01','2023-09']]],
+['Angelo Dawkins',[['2016-01',null]]],
+['Montez Ford',[['2016-01',null]]],
+['Erik',[['2018-06','2024-06']]],
+['Ivar',[['2018-06',null]]],
+['Pete Dunne',[['2016-01',null]]],
+['Tyler Bate',[['2016-01',null]]],
+['Nikki Cross',[['2016-08','2023-09']]],
+['Candice LeRae',[['2017-01','2021-11'],['2022-11',null]]],
+['Toni Storm',[['2017-06','2022-12']]],
+['Rezar',[['2016-01','2021-08']]],
+['Akam',[['2016-01','2021-08']]],
+['Paul Heyman',[['1996-01',null]],{hof:1}]
 ];
+
 
 /* Nicknames and former ring names, longest phrase first at match time. */
 const ALIASES = {
@@ -1113,9 +1488,24 @@ const ALIASES = {
   'mr perfect':'mr. perfect','curt hennig':'mr. perfect','ravishing':'rick rude',
   'davey boy smith':'british bulldog','bulldog':'british bulldog',
   'the king':'jerry lawler','sgt slaughter':'sgt. slaughter',
-  'io shirai':'iyo sky','mia yim':'michin','ember moon':'athena',
+  'io shirai':'iyo sky','mia yim':'michin',
   'ziggler':'dolph ziggler','nic nemeth':'dolph ziggler',
-  'undisputed era':'adam cole','the all mighty':'bobby lashley',
+  'the all mighty':'bobby lashley','panama city playboy':'adam cole',
+  'jyd':'junkyard dog','junkyard':'junkyard dog',
+  'sheik':'the iron sheik','iron sheik':'the iron sheik',
+  'warrior':'ultimate warrior','hogan':'hulk hogan','hulkster':'hulk hogan',
+  'andre':'andre the giant','the giant french':'andre the giant',
+  'bam bam':'bam bam bigelow','boss man':'big boss man','the eighth wonder':'andre the giant',
+  'dusty':'dusty rhodes','the american dream':'dusty rhodes','dustin rhodes':'goldust',
+  'funk':'terry funk','race':'harley race','bruno':'bruno sammartino',
+  'backlund':'bob backlund','sarge':'sgt. slaughter','monsoon':'gorilla monsoon',
+  'the brain':'bobby heenan','weasel':'bobby heenan','the fink':'howard finkel',
+  'yoko':'yokozuna','mouth of the south':'jimmy hart','honky tonk':'the honky tonk man',
+  'moolah':'the fabulous moolah','madusa':'alundra blayze','sensational sherri':'sherri martel',
+  'jr':'jim ross','good ol jr':'jim ross','apa':'jbl','acolytes':'jbl',
+  'the model':'rick martel','mr wonderful':'paul orndorff','the hammer':'greg valentine',
+  'the anvil':'jim neidhart','the birdman':'koko b. ware',
+  'quiet storm':'bruno sammartino','hitman hart':'bret hart',
   'wwe':'','wwf':'','wwe network':'','peacock':'','full match':'','ppv':'','premium live event':''
 };
 
@@ -1266,7 +1656,8 @@ const Auth={
 };
 
 function blankState(){
-  return {seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},from:null,to:null};
+  return {seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},
+          queue:[],nope:{},fav:{},faces:{},faceSrc:{},feuds:[],from:null,to:null};
 }
 
 /* ============================================================
@@ -1442,7 +1833,8 @@ let POOL=[];
 let UPCOMING=[];
 function rebuildPool(){
   const today=iso(TODAY);
-  POOL = CAT.filter(e => state.tracked[e.show] && !state.hidden[e.id] && !e.future
+  const nope=state.nope||{};
+  POOL = CAT.filter(e => state.tracked[e.show] && !state.hidden[e.id] && !nope[e.id] && !e.future
     && (!state.from || e.date>=state.from) && (!state.to || e.date<=state.to));
   UPCOMING = CAT.filter(e => e.date>=today && state.tracked[e.show] && !state.hidden[e.id]);
 }
@@ -1457,6 +1849,12 @@ function rebuildCatalogue(){
       else if(SHOW_META[r.show]) CAT.push({id:r.show+':'+r.date+':repo', show:r.show, date:r.date,
         title:r.title||SHOW_META[r.show].short+' '+r.date, run:SHOW_META[r.show].run,
         kind:r.show==='event'?'event':'weekly', card:r.card||'', repo:true, future:r.date>iso(TODAY)});
+    }
+  }
+  if(state.dates){
+    for(const e of CAT){
+      const d=state.dates[e.id];
+      if(d && d!==e.date){ e.date=d; e.est=false; e.fixed=true; e.future=d>iso(TODAY); }
     }
   }
   CAT.forEach(e=>{
@@ -1491,17 +1889,35 @@ function norm(s){
   return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
     .replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
 }
-const ALIAS_KEYS = Object.keys(ALIASES).sort((a,b)=>b.length-a.length);
-function applyAliases(str){
-  let s=' '+str+' ';
-  for(const k of ALIAS_KEYS){
-    const re=new RegExp('(?<=\\s)'+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?=\\s)','g');
-    s=s.replace(re, ALIASES[k] ? ' '+ALIASES[k]+' ' : ' ');
+/* Alias keys are normalised the same way queries are, so a nickname written
+   as "the brain" still matches after noise words are stripped. Substitution
+   is a SINGLE pass over one combined pattern -- replacing key by key lets an
+   earlier result be rewritten by a later key ("stone cold" -> "steve austin"
+   -> "steve steve austin"), which quietly broke two-name searches. */
+const ALIAS_MAP=(()=>{
+  const m={};
+  for(const k in ALIASES){
+    m[k]=ALIASES[k];
+    const stripped=k.split(' ').filter(t=>!NOISE.has(t)).join(' ');
+    if(stripped && !(stripped in m)) m[stripped]=ALIASES[k];
   }
-  return s.replace(/\s+/g,' ').trim();
+  return m;
+})();
+const ALIAS_KEYS = Object.keys(ALIAS_MAP).filter(Boolean).sort((a,b)=>b.length-a.length);
+const ALIAS_RE = new RegExp('(?<=^|\\s)(?:'+
+  ALIAS_KEYS.map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+
+  ')(?=\\s|$)','g');
+function applyAliases(str){
+  return str.replace(ALIAS_RE, m=>ALIAS_MAP[m] || '').replace(/\s+/g,' ').trim();
 }
 
-const ROSTER_INDEX = ROSTER.map(([name,runs])=>({name,key:norm(name),toks:norm(name).split(' '),runs}));
+/* Fragments that appear in lots of ring names. On their own they are not a
+   surname, so "the man" should reach the alias for Becky Lynch rather than
+   collecting every wrestler with Man in their name. */
+const GENERIC_TOK=new Set(['man','kid','jr','sr','dog','king','boy','big','mr','the','of','de','la']);
+const ROSTER_INDEX = ROSTER.map(([name,runs,flags])=>({name,key:norm(name),toks:norm(name).split(' '),runs,
+  hof:!!(flags&&flags.hof), died:(flags&&flags.d)||0,
+  active:runs.some(r=>r[1]===null), debut:runs[0][0]}));
 
 /* Greedy longest-first. Returns groups: an exact hit is one person;
    an ambiguous surname ("hardy") becomes a group of everyone it could be. */
@@ -1514,8 +1930,10 @@ function extractPeople(tokens){
       const phrase=tokens.slice(i,i+len).join(' ');
       const exact=ROSTER_INDEX.find(p=>p.key===phrase);
       if(exact){ hit=[exact]; span=len; break; }
-      if(phrase.length>=4){
-        const part=ROSTER_INDEX.filter(p=>p.toks.includes(phrase)||p.key.startsWith(phrase));
+      if(phrase.length>=3 && !(len===1 && GENERIC_TOK.has(phrase))){
+        // short tokens must be an exact surname; longer ones may also prefix-match
+        const part=ROSTER_INDEX.filter(p=>p.toks.includes(phrase)||
+          (phrase.length>=4 && p.key.startsWith(phrase)));
         if(part.length){ hit=part; span=len; break; }
       }
     }
@@ -1523,7 +1941,8 @@ function extractPeople(tokens){
       const label = hit.length===1 ? hit[0].name
         : hit.slice(0,3).map(p=>p.name).join(' / ')+(hit.length>3?' \u2026':'');
       const runs=[]; hit.forEach(p=>p.runs.forEach(r=>runs.push(r)));
-      if(!groups.some(g=>g.label===label)) groups.push({label,runs,ambiguous:hit.length>1});
+      if(!groups.some(g=>g.label===label))
+        groups.push({label, names:hit.map(p=>p.name), runs, ambiguous:hit.length>1});
       i+=span;
     } else { left.push(tokens[i]); i++; }
   }
@@ -1604,11 +2023,33 @@ function matchesSearch(e,s,ignoreText){
    ============================================================ */
 const $ = id => document.getElementById(id);
 let filt={status:'all',kind:'',show:'',year:'',text:''};
+/* A rivalry opened in the ledger becomes a spotlight: its episodes are marked
+   and optionally isolated. It never touches state.from/state.to, because those
+   define your tracked window and therefore your completion percentage. */
+let SPOT=null;
 let SR = {active:false,groups:[],text:[],years:[],windows:[],impossible:false,relaxed:false};
 let page=0; const PER=250;
 
+let tronRoll=null;   // temporary override from the reroll button
+function tronPick(){
+  if(tronRoll){
+    const e=BY_ID[tronRoll];
+    if(e && !isSeen(e.id) && !state.hidden[e.id]) return e;
+    tronRoll=null;
+  }
+  // anything you queued from a rivalry jumps the line
+  const q=(state.queue||[]).find(id=>BY_ID[id] && !isSeen(id) && !state.hidden[id]);
+  if(q) return Object.assign({},BY_ID[q],{queued:true});
+  return nextUp();
+}
+function rerollTron(){
+  const pool=POOL.filter(e=>!isSeen(e.id) && e.id!==(tronRoll||''));
+  if(!pool.length){ toast('Nothing left to roll'); return; }
+  tronRoll=pool[Math.floor(Math.random()*pool.length)].id;
+  renderTron();
+}
 function renderTron(){
-  const e=nextUp(), body=$('tronBody');
+  const e=tronPick(), body=$('tronBody');
   if(!e){
     body.innerHTML = POOL.length
       ? `<div class="eyebrow">Nothing left</div><div class="marquee">Card<br>complete</div>
@@ -1622,20 +2063,31 @@ function renderTron(){
     const label = e.kind==='event' ? e.title : meta.short;
     const numPart = e.kind==='event' ? '' : ` <span class="num">#${e.num}</span>`;
     const left = POOL.reduce((n,x)=>n+(isSeen(x.id)?0:1),0);
+    const qn=(state.queue||[]).filter(id=>!isSeen(id)).length;
+    const lead = e.queued ? 'From your watchlist' : tronRoll ? 'Rerolled' : 'Up next';
     body.innerHTML=`
-      <div class="eyebrow">Up next <em>&nbsp;&mdash;&nbsp; ${left.toLocaleString()} to go</em></div>
+      <div class="eyebrow">${lead} <em>&nbsp;&mdash;&nbsp; ${left.toLocaleString()} to go${qn?' &nbsp;&middot;&nbsp; '+qn+' on the watchlist':''}</em></div>
       <div class="marquee">${esc(label)}${numPart}</div>
       <div class="brandbar" style="background:${meta.bc}"></div>
       <div class="when">${fmtDate(e.date)} &nbsp;/&nbsp; ${fmtHours(e.run)} &nbsp;/&nbsp; ${esc(meta.name)}${e.est?' &nbsp;/&nbsp; DATE ESTIMATED':''}</div>
       ${e.card?`<div class="when" style="color:var(--chrome);margin-top:6px">${esc(e.card)}</div>`:''}
       <div class="acts">
         <button class="btn primary" id="tWatch">Mark watched</button>
+        <button class="btn" id="tRoll">&#8635; Reroll</button>
         <button class="btn" id="tOpen">Rate, note, add card</button>
-        <button class="btn" id="tSkip">Skip it</button>
+        <button class="btn" id="tNope">Not interested</button>
+        ${tronRoll?'<button class="btn" id="tBack">Back to in order</button>':''}
       </div>`;
-    $('tWatch').onclick=()=>{stamp(); setSeen(e.id,true);};
+    $('tWatch').onclick=()=>{stamp(); tronRoll=null; setSeen(e.id,true);};
+    $('tRoll').onclick=rerollTron;
     $('tOpen').onclick=()=>openDetail(e.id);
-    $('tSkip').onclick=()=>{state.hidden[e.id]=true; save(); rebuildPool(); renderAll(); toast('Skipped');};
+    $('tNope').onclick=()=>{
+      state.nope=state.nope||{}; state.nope[e.id]=1;
+      state.queue=(state.queue||[]).filter(x=>x!==e.id);
+      tronRoll=null; save(); rebuildPool(); renderAll();
+      toast('Marked not interested');
+    };
+    const bk=document.getElementById('tBack'); if(bk) bk.onclick=()=>{ tronRoll=null; renderTron(); };
   }
   renderProgress();
 }
@@ -1650,6 +2102,8 @@ function renderProgress(){
 }
 
 function baseFilter(e){
+  if(SPOT && SPOT.only && !SPOT.ids.has(e.id)) return false;
+  if(filt.status==='queue' && !(state.queue||[]).includes(e.id)) return false;
   if(filt.show && e.show!==filt.show) return false;
   if(filt.kind && e.kind!==filt.kind) return false;
   if(filt.year && e.date.slice(0,4)!==filt.year) return false;
@@ -1672,7 +2126,9 @@ function filtered(){
 function renderInsight(rows){
   const box=$('insight');
   if(!SR.active || (!SR.groups.length && !SR.years.length)){ box.classList.remove('on'); return; }
-  const chips=SR.groups.map(g=>`<span class="who"><i></i>${esc(g.label)}${g.ambiguous?' <span style="color:var(--dim2)">(either)</span>':''}</span>`).join('');
+  const chips=SR.groups.map(g=>(g.names||[g.label]).map(n=>
+    `<button type="button" class="who" data-person="${esc(n)}" title="Open ${esc(n)}">
+      <i></i>${esc(n)}</button>`).join('')).join('');
   const fmtW=w=>w.map(([a,b])=>fmtMonth(a)+' &ndash; '+(b>'9000'?'now':fmtMonth(b))).join(', ');
   let msg='';
   if(SR.impossible){
@@ -1693,6 +2149,8 @@ function renderInsight(rows){
   box.classList.add('on');
 }
 $('insight').addEventListener('click',ev=>{
+  const who=ev.target.closest('.who[data-person]');
+  if(who){ openWrestler(who.dataset.person); return; }
   const b=ev.target.closest('button[data-ins]'); if(!b) return;
   if(b.dataset.ins==='clear'){ $('fText').value=''; SR=runSearch(''); page=0; renderLedger(); }
   else { setKind('event'); }
@@ -1716,6 +2174,7 @@ function renderLedger(){
   const slice=rows.slice(page*PER,page*PER+PER);
   $('ledgerCount').textContent=rows.length.toLocaleString()+' episodes';
 
+  renderSpotbar(rows);
   if(!rows.length){ $('ledger').innerHTML=noResults(); $('pager').innerHTML=''; return; }
 
   const out=[]; let lastYear=null;
@@ -1730,8 +2189,9 @@ function renderLedger(){
     const fav=!!(state.fav||{})[e.id];
     const faces=(prefs.faces!==false && e.card) ? cardFaces(e.card,2) : '';
     const badge = e.kind==='event' ? '<span class="badge ev">Event</span>'+(e.est?'<span class="badge est">Est. date</span>':'') : '';
+    const spot=SPOT&&SPOT.ids.has(e.id), queued=(state.queue||[]).includes(e.id);
     out.push(
-      `<div class="row${seen?' seen':''}" data-id="${e.id}" style="--bc:${meta.bc}" tabindex="0" role="button" aria-pressed="${seen}">
+      `<div class="row${seen?' seen':''}${spot?' spot':''}${queued?' queued':''}" data-id="${e.id}" style="--bc:${meta.bc}" tabindex="0" role="button" aria-pressed="${seen}">
         <span class="tick">&#10003;</span>
         <span class="date">${fmtDate(e.date)}</span>
         <span class="name"><i class="dot"></i>${faces}${hl(e.title,SR.text)}${e.kind!=='event'?` <small>${esc(meta.short)}</small>`:''}${badge}${e.card?` <span class="card">&mdash; ${hl(e.card,SR.text)}</span>`:''}</span>
@@ -1747,6 +2207,43 @@ function renderLedger(){
     ? `<button class="btn sm" data-pg="-1"${page===0?' disabled':''}>Newer</button>
        <span>Page ${page+1} of ${pages}</span>
        <button class="btn sm" data-pg="1"${page===pages-1?' disabled':''}>Older</button>` : '';
+}
+
+function renderSpotbar(rows){
+  const bar=$('spotbar');
+  if(!SPOT){ bar.style.display='none'; return; }
+  const shown=rows.filter(r=>SPOT.ids.has(r.id)).length;
+  const seen=[...SPOT.ids].filter(id=>isSeen(id)).length;
+  bar.style.display='flex';
+  bar.innerHTML=`<b>Spotlight</b>
+    <span>${esc(SPOT.label)} &mdash; ${SPOT.ids.size} episodes, ${seen} watched${SPOT.only?'':', '+shown+' visible here'}</span>
+    <span class="grow"></span>
+    <button class="btn sm" id="spotOnly">${SPOT.only?'\u2713 Only these':'Only these'}</button>
+    <button class="btn sm" id="spotAll">${SPOT.only?'In context':'\u2713 In context'}</button>
+    <button class="btn sm" id="spotClear">Clear</button>`;
+  $('spotOnly').onclick=()=>{ SPOT.only=true; page=0; renderLedger(); };
+  $('spotAll').onclick=()=>{ SPOT.only=false; renderLedger(); jumpToSpot(); };
+  $('spotClear').onclick=()=>{ SPOT=null; page=0; renderLedger(); };
+}
+function jumpToSpot(){
+  if(!SPOT) return;
+  const rows=filtered();
+  const i=rows.findIndex(r=>SPOT.ids.has(r.id));
+  if(i>=0 && Math.floor(i/PER)!==page){ page=Math.floor(i/PER); renderLedger(); }
+  setTimeout(()=>{
+    const el=document.querySelector('#ledger .row.spot');
+    if(el) el.scrollIntoView({block:'center',behavior:'smooth'});
+  },70);
+}
+function spotlight(label, ids, only){
+  SPOT={label, ids:new Set(ids), only:!!only};
+  filt.status='all'; filt.show=''; filt.year=''; filt.kind=''; filt.text='';
+  [...$('statusSeg').children].forEach(c=>c.setAttribute('aria-pressed',c.dataset.st==='all'));
+  [...$('kindSeg').children].forEach(c=>c.setAttribute('aria-pressed',c.dataset.kd===''));
+  $('fShow').value=''; $('fYear').value=''; $('fText').value=''; SR=runSearch('');
+  page=0;
+  document.querySelector('.tab[data-tab="ledger"]').click();
+  renderLedger(); jumpToSpot();
 }
 
 function noResults(){
@@ -1788,15 +2285,20 @@ $('pager').addEventListener('click',ev=>{
   page+=Number(b.dataset.pg); renderLedger(); window.scrollTo({top:0,behavior:'smooth'});
 });
 function setSeen(id,on){
-  if(on) state.seen[id]=Object.assign({d:iso(TODAY)},state.seen[id]||{});
-  else delete state.seen[id];
+  if(on){
+    state.seen[id]=Object.assign({d:iso(TODAY)},state.seen[id]||{});
+    if(state.queue&&state.queue.includes(id)) state.queue=state.queue.filter(x=>x!==id);
+  } else delete state.seen[id];
   save(); renderAll();
 }
 function bulkTo(id){
   const idx=POOL.findIndex(e=>e.id===id); if(idx<0) return;
+  snapshot('all prior');
   let n=0;
   for(let i=0;i<=idx;i++) if(!isSeen(POOL[i].id)){ state.seen[POOL[i].id]={d:iso(TODAY)}; n++; }
-  save(); renderAll(); toast(n.toLocaleString()+' marked watched');
+  if(state.queue&&state.queue.length) state.queue=state.queue.filter(q=>!isSeen(q));
+  save(); renderAll();
+  toastUndo(n.toLocaleString()+' marked watched');
 }
 
 /* ---------- shows ---------- */
@@ -2098,7 +2600,13 @@ const THEMES=[
   {id:'extreme',  name:'Extreme',    note:'Barbed wire green on black.',         chips:['#070A06','#6FA83C','#B7E08A']},
   {id:'newgen',   name:'New Gen',    note:'That 1995 Raw set. Loud on purpose.', chips:['#150A24','#C63FD4','#37D6C4']},
   {id:'coliseum', name:'Coliseum',   note:'Worn VHS, tracking lines and all.',   chips:['#171310','#C08A3E','#9FA08C']},
-  {id:'newsprint',name:'Newsprint',  note:'Cold paper. The other light one.',    chips:['#E6E6E2','#1A1A1A','#8A2222']}
+  {id:'newsprint',name:'Newsprint',  note:'Cold paper. The other light one.',    chips:['#E6E6E2','#1A1A1A','#8A2222']},
+  {id:'ruthless', name:'Ruthless',   note:'Brushed chrome, 2002 through 2008.',  chips:['#0D0F11','#9AA6B2','#D9E2EC']},
+  {id:'ratedr',   name:'Rated R',    note:'Crimson on charcoal.',               chips:['#0B0708','#B01030','#E8536F']},
+  {id:'terminal', name:'Terminal',   note:'Green phosphor. Matches the ticker.', chips:['#03110A','#33FF88','#8FFFC2']},
+  {id:'mania',    name:'Mania',      note:'Purple and gold, the big one.',      chips:['#14082A','#7B3FE4','#F2C230']},
+  {id:'hardcore', name:'Hardcore',   note:'Rust, tape and bad lighting.',       chips:['#120E09','#D2621C','#C9A227']},
+  {id:'whc',      name:'World Heavyweight', note:'The big gold plate on black leather.', chips:['#0A0A0A','#E8C24A','#C6CBD1']}
 ];
 const THEME_KEY='wwe-theme';
 let curTheme='tron';
@@ -2134,7 +2642,7 @@ document.addEventListener('click',ev=>{
    profile so they apply before anything is decrypted.
    ============================================================ */
 const PREFS_KEY='wwe-prefs';
-let prefs={wide:false, home:'ledger', ticker:true, faces:true};
+let prefs={wide:false, home:'ledger', ticker:true, faces:true, autoFaces:true};
 
 async function loadPrefs(){
   try{ const r=await RAW.get(PREFS_KEY); if(r) prefs=Object.assign(prefs,JSON.parse(r)); }catch(e){}
@@ -2147,6 +2655,7 @@ function applyPrefs(){
   const w=document.getElementById('prefWide'); if(w) w.checked=!!prefs.wide;
   const t=document.getElementById('prefTicker'); if(t) t.checked=!!prefs.ticker;
   const f=document.getElementById('prefFaces'); if(f) f.checked=prefs.faces!==false;
+  const af=document.getElementById('prefAutoFaces'); if(af) af.checked=prefs.autoFaces!==false;
   const h=document.getElementById('prefHome'); if(h) h.value=prefs.home;
 }
 function goHome(){
@@ -2160,44 +2669,108 @@ function goHome(){
    A single line of phosphor under the masthead: what is on air,
    what is next, and where you are. Rebuilt on a slow timer.
    ============================================================ */
-function tickerItems(){
+/* Left slot: what is on or coming. Right slot: where you are. Each holds a
+   line for a few seconds then swaps. Items are recomputed at every swap so
+   countdowns stay current without anything having to animate. */
+function scheduleTickerItems(){
   const out=[];
   try{
     const {live,soon}=scheduleNow();
     live.forEach(({e,s})=>{
       const m=SHOW_META[e.show];
-      out.push({hot:true, txt:'ON AIR NOW \u2014 '+(e.kind==='event'?e.title:m.short+' #'+e.num)+' \u2014 since '+localTime(s.start)});
+      out.push({hot:true, html:'<span class="tdot"></span>On air now &mdash; <b>'+
+        esc(e.kind==='event'?e.title:m.short+' #'+e.num)+'</b> since '+localTime(s.start)});
     });
     if(soon.length){
       const {e,s}=soon[0], m=SHOW_META[e.show];
-      out.push({hot:!live.length, txt:'NEXT UP \u2014 '+(e.kind==='event'?e.title:m.short+' #'+e.num)+' in '+countdown(s.start-Date.now())});
+      out.push({hot:!live.length, html:'Next up &mdash; <b>'+
+        esc(e.kind==='event'?e.title:m.short+' #'+e.num)+'</b> in '+countdown(s.start-Date.now())});
     }
-    const nextEv=soon.find(x=>x.e.kind==='event');
-    if(nextEv) out.push({txt:'UPCOMING EVENT \u2014 '+nextEv.e.title+' \u2014 '+localDay(nextEv.s.start)+(nextEv.e.est?' (est.)':'')});
+    const ev=soon.find(x=>x.e.kind==='event');
+    if(ev) out.push({html:'Upcoming event &mdash; <b>'+esc(ev.e.title)+'</b> '+
+      localDay(ev.s.start)+(ev.e.est?' (est.)':'')});
+    if(soon[1]){
+      const {e,s}=soon[1], m=SHOW_META[e.show];
+      out.push({html:'Then &mdash; <b>'+esc(e.kind==='event'?e.title:m.short+' #'+e.num)+'</b> '+localDay(s.start)});
+    }
   }catch(e){}
-  try{
-    const total=POOL.length, seen=POOL.reduce((n,e)=>n+(isSeen(e.id)?1:0),0);
-    if(total) out.push({txt:'YOUR LEDGER \u2014 '+seen.toLocaleString()+' of '+total.toLocaleString()+' watched \u2014 '+(seen/total*100).toFixed(1)+'% COMPLETE'});
-    const nx=nextUp();
-    if(nx) out.push({txt:'UP NEXT TO WATCH \u2014 '+nx.title+' \u2014 '+fmtDate(nx.date)});
-    const rest=POOL.filter(e=>!isSeen(e.id)).reduce((n,e)=>n+e.run,0);
-    if(rest) out.push({txt:'TIME REMAINING \u2014 '+fmtHours(rest)+' OF WRESTLING'});
-  }catch(e){}
-  if(!out.length) out.push({txt:'MATCHBOOK \u2014 CARD SUBJECT TO CHANGE'});
+  if(!out.length) out.push({html:'Nothing scheduled'});
   return out;
 }
-let tickerTimer=null;
-function renderTicker(){
-  const el=document.getElementById('tickerTrack');
-  if(!el) return;
-  const items=tickerItems();
-  const run=items.map(i=>`<span class="ti${i.hot?' hot':''}">${esc(i.txt)}</span>`).join('<span class="tsep">\u25C6</span>');
-  el.innerHTML=run+'<span class="tsep">\u25C6</span>'+run+'<span class="tsep">\u25C6</span>';
-  const chars=items.reduce((n,i)=>n+i.txt.length,0)+items.length*3;
-  el.style.animationDuration=Math.max(24,Math.round(chars/4.2))+'s';
-  clearTimeout(tickerTimer);
-  tickerTimer=setTimeout(renderTicker, 20000);
+function ledgerTickerItems(){
+  const out=[];
+  try{
+    const total=POOL.length, seen=POOL.reduce((n,e)=>n+(isSeen(e.id)?1:0),0);
+    if(total) out.push({html:'<b>'+(seen/total*100).toFixed(1)+'%</b> complete &mdash; '+
+      seen.toLocaleString()+' of '+total.toLocaleString()});
+    const nx=nextUp();
+    if(nx) out.push({html:'Up next &mdash; <b>'+esc(nx.title)+'</b> '+fmtDate(nx.date)});
+    const rest=POOL.filter(e=>!isSeen(e.id)).reduce((n,e)=>n+e.run,0);
+    if(rest) out.push({html:'<b>'+fmtHours(rest)+'</b> of wrestling left'});
+    const q=(state.queue||[]).filter(id=>!isSeen(id)).length;
+    if(q) out.push({html:'<b>'+q+'</b> waiting on your watchlist'});
+  }catch(e){}
+  if(!out.length) out.push({html:'Matchbook'});
+  return out;
 }
+
+let tickerBar=null, tickerA=null, tickerB=null;
+let tickerTimer=null, slotState=[];
+function tickerNodes(){
+  if(!tickerBar) tickerBar=document.getElementById('ticker');
+  if(!tickerA) tickerA=document.getElementById('tickerA');
+  if(!tickerB) tickerB=document.getElementById('tickerB');
+  return !!(tickerBar&&tickerA&&tickerB);
+}
+
+function paintSlot(i){
+  const st=slotState[i]; if(!st) return;
+  const items=st.source();
+  const it=items[st.idx % items.length];
+  let sp=st.host.firstElementChild;
+  if(!sp){ sp=document.createElement('span'); sp.className='ti'; st.host.appendChild(sp); }
+  const write=()=>{
+    sp.innerHTML=it.html;
+    sp.className='ti'+(it.hot?' hot':'');
+  };
+  if(st.first){ st.first=false; write(); return; }
+  sp.classList.add('fade');
+  setTimeout(()=>{ write(); sp.classList.remove('fade'); },230);
+}
+
+function renderTicker(){
+  if(!tickerNodes()) return;
+  slotState.forEach(s=>clearInterval(s.timer));
+  slotState=[
+    {host:tickerA, source:scheduleTickerItems, idx:0, first:true, timer:null},
+    {host:tickerB, source:ledgerTickerItems,   idx:0, first:true, timer:null}
+  ];
+  slotState.forEach((st,i)=>{
+    paintSlot(i);
+    // staggered so the two halves never change at the same moment
+    st.timer=setInterval(()=>{ st.idx++; paintSlot(i); }, 5000+i*1300);
+  });
+  clearTimeout(tickerTimer);
+  tickerTimer=setTimeout(renderTicker, 60000);
+}
+let tickerSoonTimer=null;
+function tickerSoon(){
+  clearTimeout(tickerSoonTimer);
+  tickerSoonTimer=setTimeout(()=>{ slotState.forEach((s,i)=>paintSlot(i)); },400);
+}
+
+function tickerDiagnostics(){
+  if(!tickerNodes()) return 'ticker markup not found';
+  return [
+    'build          : '+BUILD_ID,
+    'mode           : two held slots, no motion',
+    'left items     : '+scheduleTickerItems().length,
+    'right items    : '+ledgerTickerItems().length,
+    'swap timers    : '+slotState.filter(s=>s.timer).length+' running',
+    'ticker enabled : '+(prefs.ticker!==false)
+  ].join('\n');
+}
+
 
 /* ============================================================
    17. CATALOGUE CORRECTIONS FROM THE REPOSITORY
@@ -2207,7 +2780,7 @@ function renderTicker(){
    profile, on every device, and live in version control rather
    than in one browser. Absent file, no problem.
    ============================================================ */
-let REPO_DATA=[], REPO_STATE='none';
+let REPO_DATA=[], REPO_STATE='none', REPO_FEUDS=[];
 
 async function loadRepoData(){
   try{
@@ -2218,6 +2791,15 @@ async function loadRepoData(){
     REPO_DATA=rows.filter(x=>x&&x.show&&/^\d{4}-\d{2}-\d{2}$/.test(x.date||''));
     REPO_STATE=REPO_DATA.length?'ok':'empty';
   }catch(e){ REPO_STATE='none'; }
+  try{
+    const r=await fetch('./data/feuds.json',{cache:'no-cache'});
+    if(r.ok){
+      const j=await r.json();
+      const rows=Array.isArray(j)?j:(j.feuds||[]);
+      REPO_FEUDS=rows.filter(f=>f&&Array.isArray(f.who)&&f.from&&f.to)
+        .map((f,i)=>Object.assign({id:'r'+i, shows:['raw','smackdown','event']},f));
+    }
+  }catch(e){ REPO_FEUDS=[]; }
 }
 
 /* provenance: where did this record's detail come from */
@@ -2307,12 +2889,349 @@ function exportCorrections(){
 }
 
 /* ============================================================
+   19. UNDO
+   "All prior" can tick four thousand episodes in one click, and
+   marking a rivalry watched is nearly as broad. Both were
+   irreversible. One level of undo is enough: the snapshot is
+   taken immediately before the change and offered in the toast.
+   ============================================================ */
+let undoSnap=null;
+function snapshot(label){
+  undoSnap={
+    label,
+    seen:JSON.parse(JSON.stringify(state.seen||{})),
+    queue:(state.queue||[]).slice(),
+    nope:JSON.parse(JSON.stringify(state.nope||{})),
+    hidden:JSON.parse(JSON.stringify(state.hidden||{}))
+  };
+}
+function undoLast(){
+  if(!undoSnap) return;
+  state.seen=undoSnap.seen;
+  state.queue=undoSnap.queue;
+  state.nope=undoSnap.nope;
+  state.hidden=undoSnap.hidden;
+  undoSnap=null;
+  save(); rebuildPool(); renderAll();
+  try{ renderFeudList(); }catch(e){}
+  toast('Reverted');
+}
+function toastUndo(msg){ toast(msg, {label:'Undo', run:undoLast}); }
+
+/* ============================================================
+   20. STORAGE HEALTH
+   A failed write is otherwise silent: you keep ticking and lose
+   the lot on reload. Probe once at boot and say so plainly.
+   ============================================================ */
+async function storageHealth(){
+  const probe='wwe-probe';
+  try{
+    await RAW.set(probe,'1');
+    const back=await RAW.get(probe);
+    await RAW.del(probe);
+    if(back!=='1') return {ok:false, why:'the browser accepted a write but returned nothing back'};
+  }catch(e){
+    return {ok:false, why:(e&&e.message)||'the browser refused to store data'};
+  }
+  let used=0;
+  try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); used+=(k+localStorage.getItem(k)).length; } }catch(e){}
+  return {ok:true, used};
+}
+function warnStorage(why){
+  let el=document.getElementById('storageWarn');
+  if(!el){
+    el=document.createElement('div'); el.id='storageWarn'; el.className='storagewarn';
+    document.querySelector('.wrap').prepend(el);
+  }
+  el.innerHTML='<b>Nothing you tick is being saved.</b> '+esc(why)+
+    '. Private browsing and blocked site data both cause this. Use Data \u2192 Download backup before you close the tab.';
+}
+
+/* ============================================================
+   21. PACE
+   Watched dates were already stored and never used. From them:
+   how fast you are going and when that finishes.
+   ============================================================ */
+function paceStats(){
+  const days={};
+  let earliest=null;
+  for(const id in state.seen){
+    const d=state.seen[id] && state.seen[id].d;
+    if(!d) continue;
+    days[d]=(days[d]||0)+1;
+    if(!earliest||d<earliest) earliest=d;
+  }
+  const keys=Object.keys(days).sort();
+  if(!keys.length) return null;
+  const today=iso(TODAY);
+  const since=n=>{ const d=addDays(TODAY,-n); return iso(d); };
+  const inWindow=n=>keys.filter(k=>k>=since(n)).reduce((a,k)=>a+days[k],0);
+  const last30=inWindow(30), last90=inWindow(90);
+  const perWeek30=last30/30*7, perWeek90=last90/90*7;
+  const rate=perWeek30>0?perWeek30:perWeek90;
+  const left=POOL.filter(e=>!isSeen(e.id)).length;
+  let finish=null;
+  if(rate>0.05 && left){
+    const weeks=left/rate;
+    const d=addDays(TODAY, Math.round(weeks*7));
+    finish=d;
+  }
+  // longest streak of consecutive days with at least one episode
+  let best=0, run=0, prev=null;
+  for(const k of keys){
+    if(prev && (parse(k)-parse(prev))===86400000) run++; else run=1;
+    if(run>best) best=run;
+    prev=k;
+  }
+  const busiest=keys.reduce((a,k)=>days[k]>days[a]?k:a,keys[0]);
+  return {days:keys.length, first:keys[0], last:keys[keys.length-1],
+          last30, last90, perWeek30, perWeek90, finish, streak:best,
+          busiest, busiestN:days[busiest], left};
+}
+function renderPace(){
+  const el=document.getElementById('paceBox'); if(!el) return;
+  const p=paceStats();
+  if(!p){ el.innerHTML='<p style="color:var(--dim)">Nothing watched yet. Tick a few episodes and your pace shows up here.</p>'; return; }
+  const fin=p.finish
+    ? '<div class="fig"><b>'+MONTHNAME[p.finish.getMonth()]+' '+p.finish.getFullYear()+'</b><span>On pace to finish</span></div>'
+    : '<div class="fig"><b>&mdash;</b><span>Not enough recent activity</span></div>';
+  el.innerHTML=`
+    <div class="figs" style="margin-bottom:14px">
+      <div class="fig"><b>${p.perWeek30.toFixed(1)}</b><span>Episodes per week, last 30 days</span></div>
+      <div class="fig"><b>${p.perWeek90.toFixed(1)}</b><span>Per week, last 90 days</span></div>
+      ${fin}
+      <div class="fig"><b>${p.streak}</b><span>Longest daily streak</span></div>
+      <div class="fig"><b>${p.days}</b><span>Days with something watched</span></div>
+      <div class="fig"><b>${p.busiestN}</b><span>Most in a single day</span></div>
+    </div>
+    <p style="font-size:12.5px;color:var(--dim2);margin:0">
+      Started ${fmtDate(p.first)}, last watched ${fmtDate(p.last)}. Busiest day was ${fmtDate(p.busiest)}.
+      ${p.finish?'The finish date assumes your last thirty days continue &mdash; it moves every time you watch something.':''}
+    </p>`;
+}
+
+/* ============================================================
+   22. BINGE MODE
+   The core loop is watch, tick, next, thousands of times. A
+   ledger is the wrong surface for that. Space to tick, that is
+   the whole interface.
+   ============================================================ */
+let bingeOn=false;
+function openBinge(){
+  const e=tronPick();
+  if(!e){ toast('Nothing left to watch'); return; }
+  bingeOn=true;
+  document.getElementById('binge').classList.add('on');
+  paintBinge();
+}
+function closeBinge(){
+  bingeOn=false;
+  document.getElementById('binge').classList.remove('on');
+  renderAll();
+}
+function paintBinge(){
+  const el=document.getElementById('bingeBody');
+  const e=tronPick();
+  if(!e){ el.innerHTML='<div class="bdone"><h2>Card complete</h2><p>Nothing left in your window.</p></div>'; return; }
+  const m=SHOW_META[e.show];
+  const left=POOL.reduce((n,x)=>n+(isSeen(x.id)?0:1),0);
+  const total=POOL.length, seen=total-left;
+  el.innerHTML=`
+    <div class="bmeta">${esc(m.name)}${e.queued?' &middot; from your watchlist':''}</div>
+    <h2 class="bttl">${esc(e.kind==='event'?e.title:m.short)}${e.kind!=='event'?' <span>#'+e.num+'</span>':''}</h2>
+    <div class="bdate">${fmtDate(e.date)} &middot; ${fmtHours(e.run)}${e.est?' &middot; date estimated':''}</div>
+    ${e.card?`<div class="bcard">${esc(e.card)}</div>`:''}
+    <div class="bbar"><i style="width:${total?(seen/total*100).toFixed(2):0}%"></i></div>
+    <div class="bcount">${seen.toLocaleString()} of ${total.toLocaleString()} &middot; ${left.toLocaleString()} to go</div>
+    <div class="backs">
+      <button class="btn primary" id="bWatch">Watched &nbsp;<kbd>space</kbd></button>
+      <button class="btn" id="bRoll">Reroll &nbsp;<kbd>R</kbd></button>
+      <button class="btn" id="bNope">Not interested &nbsp;<kbd>N</kbd></button>
+      <button class="btn" id="bClose">Close &nbsp;<kbd>esc</kbd></button>
+    </div>`;
+  document.getElementById('bWatch').onclick=bingeWatch;
+  document.getElementById('bRoll').onclick=()=>{ rerollTron(); paintBinge(); };
+  document.getElementById('bNope').onclick=bingeNope;
+  document.getElementById('bClose').onclick=closeBinge;
+}
+function bingeWatch(){
+  const e=tronPick(); if(!e) return;
+  tronRoll=null;
+  state.seen[e.id]=Object.assign({d:iso(TODAY)},state.seen[e.id]||{});
+  if(state.queue) state.queue=state.queue.filter(x=>x!==e.id);
+  save();
+  const el=document.getElementById('bingeBody');
+  el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'),180);
+  paintBinge();
+}
+function bingeNope(){
+  const e=tronPick(); if(!e) return;
+  state.nope=state.nope||{}; state.nope[e.id]=1;
+  state.queue=(state.queue||[]).filter(x=>x!==e.id);
+  tronRoll=null; save(); rebuildPool(); paintBinge();
+}
+document.addEventListener('keydown',ev=>{
+  if(!bingeOn) return;
+  const t=ev.target.tagName;
+  if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT') return;
+  if(ev.key===' '){ ev.preventDefault(); bingeWatch(); }
+  else if(ev.key==='r'||ev.key==='R'){ ev.preventDefault(); rerollTron(); paintBinge(); }
+  else if(ev.key==='n'||ev.key==='N'){ ev.preventDefault(); bingeNope(); }
+  else if(ev.key==='Escape'){ ev.preventDefault(); closeBinge(); }
+});
+
+/* ============================================================
+   23. EVENT DATES FROM WIKIPEDIA
+   377 pay-per-view dates are month estimates. Wikipedia's intro
+   for each event states the real one in prose, so pull it and
+   regex the date out. Only accepted within 120 days of the
+   estimate, so a wrong article cannot silently move an event.
+   ============================================================ */
+const MONTHS_RE='January|February|March|April|May|June|July|August|September|October|November|December';
+function dateFromProse(txt){
+  if(!txt) return null;
+  const m=txt.match(new RegExp('(?:took place on|held on|on)\\s+(\\d{1,2})?\\s*('+MONTHS_RE+')\\s+(\\d{1,2})?(?:\\s*(?:and|&|\\u2013|-)\\s*\\d{1,2})?,?\\s*(\\d{4})','i'));
+  if(!m) return null;
+  const day=Number(m[1]||m[3]); const mon=MONTHNAME.findIndex(x=>x.toLowerCase()===m[2].slice(0,3).toLowerCase());
+  const yr=Number(m[4]);
+  if(!day||mon<0||!yr||day>31) return null;
+  return yr+'-'+String(mon+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+}
+async function wikiEventDate(title){
+  const q=encodeURIComponent(title+' professional wrestling event');
+  const url=WIKI+'?action=query&generator=search&gsrsearch='+q+
+    '&gsrlimit=1&prop=extracts&exintro=1&explaintext=1&exsentences=2&format=json&origin=*';
+  const r=await fetch(url); if(!r.ok) throw new Error('HTTP '+r.status);
+  const j=await r.json();
+  const pages=j&&j.query&&j.query.pages; if(!pages) return null;
+  const p=Object.values(pages)[0];
+  return p ? {date:dateFromProse(p.extract), title:p.title} : null;
+}
+let dateFixRun={stop:false};
+async function fixEventDates(onEach){
+  const todo=CAT.filter(e=>e.kind==='event' && e.est && !e.future && !state.dates?.[e.id]);
+  let fixed=0, kept=0, missed=0, moved=[];
+  state.dates=state.dates||{};
+  dateFixRun={stop:false};
+  for(let i=0;i<todo.length;i++){
+    if(dateFixRun.stop) break;
+    const e=todo[i];
+    try{
+      const r=await wikiEventDate(e.title);
+      if(r&&r.date){
+        const gap=Math.abs(parse(r.date)-parse(e.date))/864e5;
+        if(gap<=120){
+          if(r.date!==e.date){ state.dates[e.id]=r.date; moved.push([e.title,e.date,r.date]); fixed++; }
+          else kept++;
+        } else missed++;
+      } else missed++;
+    }catch(err){ missed++; }
+    if(onEach) onEach(i+1,todo.length,fixed);
+    await new Promise(r=>setTimeout(r,170));
+  }
+  save(); rebuildCatalogue(); renderAll();
+  return {fixed,kept,missed,total:todo.length,moved};
+}
+
+/* ============================================================
    18. WRESTLER SCREEN
    Built entirely from the roster tenure index plus the feud
    list -- no biographical data is invented. Everything shown
    is either a date range, a count of episodes in that range,
    or your own ticks against them.
    ============================================================ */
+/* ============================================================
+   PORTRAITS
+   WWE's own photos are all rights-reserved, so the only source
+   I can point at is Wikipedia: it allows cross-origin reads via
+   origin=*, and article lead images are freely licensed. It is
+   a name search, so it can land on the wrong person -- every
+   result is reviewable and overridable by hand.
+   ============================================================ */
+const WIKI='https://en.wikipedia.org/w/api.php';
+/* One request returns the lead image and the intro text together, so a
+   portrait lookup also fills the biography. Text is Wikipedia's, credited
+   on the wrestler screen; nothing here is written by me. */
+async function wikiLookup(name){
+  const q=encodeURIComponent(name+' professional wrestler');
+  const url=WIKI+'?action=query&generator=search&gsrsearch='+q+
+    '&gsrlimit=1&prop=pageimages|extracts&piprop=thumbnail&pithumbsize=240'+
+    '&exintro=1&explaintext=1&exsentences=3&format=json&origin=*';
+  const r=await fetch(url,{headers:{'Accept':'application/json'}});
+  if(!r.ok) throw new Error('Wikipedia returned '+r.status);
+  const j=await r.json();
+  const pages=j&&j.query&&j.query.pages;
+  if(!pages) throw new Error('no article found');
+  const p=Object.values(pages)[0];
+  if(!p) throw new Error('no article found');
+  return {
+    url:(p.thumbnail&&p.thumbnail.source)||'',
+    title:p.title||'',
+    extract:(p.extract||'').trim()
+  };
+}
+async function fetchFace(name){
+  const rec=await wikiLookup(name);
+  state.faces=state.faces||{}; state.faceSrc=state.faceSrc||{}; state.bios=state.bios||{};
+  if(rec.url) state.faces[name]=rec.url;
+  if(rec.title) state.faceSrc[name]=rec.title;
+  if(rec.extract) state.bios[name]=rec.extract;
+  save();
+  if(!rec.url && !rec.extract) throw new Error('article has no image or summary');
+  return rec;
+}
+async function fetchFacesFor(names, onEach, signal){
+  let ok=0, fail=0, done=0;
+  for(const n of names){
+    if(signal && signal.stop) break;
+    if((state.faces||{})[n] && (state.bios||{})[n]){ continue; }
+    try{ await fetchFace(n); ok++; }
+    catch(e){ fail++; }
+    done++;
+    if(onEach) onEach(ok,fail,names.length,done);
+    await new Promise(r=>setTimeout(r,170));   // be polite to the API
+  }
+  return {ok,fail};
+}
+
+/* ---------- first-run and lazy population ---------- */
+let bgFetch={running:false, stop:false};
+function namesByPriority(){
+  const inFeuds=new Set(); allFeuds().forEach(f=>f.who.forEach(n=>inFeuds.add(n)));
+  const all=ROSTER_INDEX.map(p=>p.name);
+  const rank=n=>{
+    const p=ROSTER_INDEX.find(x=>x.name===n)||{};
+    return (inFeuds.has(n)?0:1)*4 + (p.hof?0:1)*2 + (p.active?0:1);
+  };
+  return all.sort((a,b)=>rank(a)-rank(b));
+}
+async function populatePortraits(){
+  if(bgFetch.running) return;
+  const todo=namesByPriority().filter(n=>!(state.faces||{})[n]);
+  if(!todo.length) return;
+  bgFetch={running:true, stop:false};
+  showFetchChip(0,todo.length);
+  await fetchFacesFor(todo,(ok,fail,total,done)=>showFetchChip(done,total),bgFetch);
+  bgFetch.running=false;
+  hideFetchChip();
+  try{ renderFeudPeople(); renderFeudList(); }catch(e){}
+}
+function showFetchChip(done,total){
+  let c=document.getElementById('fetchChip');
+  if(!c){
+    c=document.createElement('div'); c.id='fetchChip'; c.className='fetchchip';
+    document.body.appendChild(c);
+  }
+  c.innerHTML='Fetching portraits and bios &mdash; <b>'+done+'</b> of '+total+
+    ' <button type="button" id="fetchStop">Stop</button>';
+  const b=document.getElementById('fetchStop');
+  if(b) b.onclick=()=>{ bgFetch.stop=true; hideFetchChip(); toast('Stopped \u2014 resume any time from the Roster tab'); };
+}
+function hideFetchChip(){
+  const c=document.getElementById('fetchChip');
+  if(c) c.remove();
+}
+
 function avatarFor(name){
   const custom=(state.faces||{})[name];
   const parts=name.replace(/^The /,'').split(' ').filter(Boolean);
@@ -2349,6 +3268,20 @@ function cardFaces(card,limit){
     `<span class="facewrap" title="${esc(x.name)}">${avatarFor(x.name)}</span>`).join('<i>vs</i>')}</span>`;
 }
 
+/* Ring names and nicknames that resolve to this wrestler, read back out of
+   the alias table so the two can never drift apart. */
+function akaFor(name){
+  const key=norm(name);
+  return Object.keys(ALIASES).filter(k=>ALIASES[k] && norm(ALIASES[k])===key)
+    .map(k=>k.replace(/\b\w/g,c=>c.toUpperCase()))
+    .sort((a,b)=>a.length-b.length).slice(0,10);
+}
+function rivalsFor(name){
+  const out={};
+  feudsFor(name).forEach(f=>f.who.forEach(n=>{ if(n!==name) out[n]=(out[n]||0)+1; }));
+  return Object.keys(out).sort((a,b)=>out[b]-out[a]);
+}
+
 function wrestlerStats(name){
   const p=ROSTER_INDEX.find(x=>x.name===name);
   if(!p) return null;
@@ -2363,7 +3296,9 @@ function wrestlerStats(name){
     const [ay,am]=a.split('-').map(Number), [by,bm]=end.split('-').map(Number);
     months+=(by-ay)*12+(bm-am)+1;
   });
-  return {p,runs,eps,seen,events,months,feuds:feudsFor(name)};
+  const sorted=eps;
+  return {p,runs,eps,seen,events,months,feuds:feudsFor(name),
+          first:sorted[0]||null, last:sorted[sorted.length-1]||null};
 }
 
 function renderWrestler(name){
@@ -2372,15 +3307,26 @@ function renderWrestler(name){
   const {runs,eps,seen,events,months}=st;
   const yrs=(months/12);
   const spans=runs.map(([a,b])=>fmtMonth(a)+' \u2013 '+(b>'9000'?'now':fmtMonth(b))).join(' &nbsp;/&nbsp; ');
+  const aka=akaFor(name), rivals=rivalsFor(name);
+  const p=st.p;
+  const tags=[
+    p.hof?'<span class="wtag hof">Hall of Fame</span>':'',
+    p.active?'<span class="wtag live">On the roster</span>':'',
+    p.died?'<span class="wtag gone">Died '+p.died+'</span>':''
+  ].join('');
   const pct=eps.length?seen/eps.length*100:0;
   return `<div class="wcard">
     <div class="whead">
       ${avatarFor(name)}
       <div>
         <h2>${esc(name)}</h2>
+        <div class="wtags">${tags}</div>
         <div class="wruns">${spans}</div>
       </div>
-      <button class="btn sm" data-face="${esc(name)}">Set image</button>
+      <span class="wbtns">
+        <button class="btn sm" data-getface="${esc(name)}">Find image</button>
+        <button class="btn sm" data-face="${esc(name)}">Set by URL</button>
+      </span>
     </div>
     <div class="wfigs">
       <div><b>${yrs<1?(months+'m'):yrs.toFixed(1)+'y'}</b><span>On the roster</span></div>
@@ -2392,7 +3338,17 @@ function renderWrestler(name){
       <div class="minibar"><i style="width:${pct.toFixed(1)}%"></i></div>
       <div class="pct">You have watched ${seen.toLocaleString()} of ${eps.length.toLocaleString()} episodes that aired while they were on the roster &middot; ${pct.toFixed(1)}%</div>
     </div>
-    <p class="wnote">Tenure dates are approximate and cover the whole run, not just the weeks they appeared.
+    ${(state.bios||{})[name]?`<p class="wbio">${esc(state.bios[name])}</p>`:''}
+    ${st.first?`<div class="wsec">In your catalogue</div>
+      <div class="wruns">First ${fmtDate(st.first.date)} &nbsp;/&nbsp; last ${fmtDate(st.last.date)}
+      &nbsp;/&nbsp; ${st.events.length} events across the run</div>`:''}
+    ${aka.length?`<div class="wsec">Also known as</div>
+      <div class="wchips">${aka.map(a=>`<span class="wchip" style="cursor:default">${esc(a)}</span>`).join('')}</div>`:''}
+    ${rivals.length?`<div class="wsec">Feuded with</div>
+      <div class="wchips">${rivals.map(r=>`<span class="wchip" data-person="${esc(r)}">${esc(r)}</span>`).join('')}</div>`:''}
+    ${(state.faceSrc||{})[name]?`<p class="wsrc">Portrait and summary from the Wikipedia article &ldquo;${esc(state.faceSrc[name])}&rdquo;, CC BY-SA. If that is the wrong person, set an image by URL.</p>`:''}
+    ${st.p.died?`<p class="memorial">Died ${st.p.died}. Everything on file here is from their career.</p>`:''}
+    <p class="wnote">Tenure dates, Hall of Fame status and dates of death are written from memory and approximate and cover the whole run, not just the weeks they appeared.
       Episode counts follow the shows you are tracking.</p>
   </div>`;
 }
@@ -2472,7 +3428,70 @@ const FEUDS=[
  {id:'f-zayn-bloodline', who:['Sami Zayn','Roman Reigns','Jey Uso','Jimmy Uso','Kevin Owens'],
   from:'2022-09-01', to:'2023-04-30', shows:['raw','smackdown','event'], note:'Honorary Uce.'},
  {id:'f-cody-roman', who:['Cody Rhodes','Roman Reigns'], from:'2023-01-28', to:'2024-04-07',
-  shows:['raw','smackdown','event'], note:'Finish the story.'}
+  shows:['raw','smackdown','event'], note:'Finish the story.'},
+
+ {id:'f-mega-powers', who:['Hulk Hogan','Randy Savage'], from:'1988-11-01', to:'1989-04-02',
+  shows:['superstars','challenge','primetime','event'], note:'The Mega Powers explode.'},
+ {id:'f-savage-warrior', who:['Randy Savage','Ultimate Warrior'], from:'1990-11-01', to:'1991-03-24',
+  shows:['superstars','challenge','primetime','event'], note:'Career ending match at WrestleMania VII.'},
+ {id:'f-hogan-slaughter', who:['Hulk Hogan','Sgt. Slaughter'], from:'1990-12-01', to:'1991-04-30',
+  shows:['superstars','challenge','primetime','event'], note:''},
+ {id:'f-hart-owen', who:['Bret Hart','Owen Hart'], from:'1994-01-22', to:'1994-08-29',
+  shows:['raw','superstars','challenge','event'], note:'Brother against brother, all year.'},
+ {id:'f-hbk-razor', who:['Shawn Michaels','Scott Hall'], from:'1993-08-01', to:'1994-03-20',
+  shows:['raw','superstars','event'], note:'The ladder match at WrestleMania X.'},
+ {id:'f-taker-yoko', who:['The Undertaker','Yokozuna'], from:'1994-01-01', to:'1994-11-23',
+  shows:['raw','superstars','event'], note:'Casket match, then the return.'},
+ {id:'f-diesel-hbk', who:['Kevin Nash','Shawn Michaels'], from:'1995-08-01', to:'1996-04-30',
+  shows:['raw','event'], note:''},
+ {id:'f-hhh-foley-00', who:['Triple H','Mick Foley'], from:'2000-01-01', to:'2000-04-02',
+  shows:['raw','smackdown','heat','event'], note:'Hell in a Cell, then Foley retires.'},
+ {id:'f-rock-hhh', who:['The Rock','Triple H'], from:'2000-01-01', to:'2000-09-30',
+  shows:['raw','smackdown','heat','event'], note:'The defining main event of 2000.'},
+ {id:'f-angle-benoit', who:['Kurt Angle','Chris Benoit'], from:'2001-01-01', to:'2003-06-30',
+  shows:['raw','smackdown','event'], note:'Technically the best series of its era.'},
+ {id:'f-taker-lesnar-02', who:['The Undertaker','Brock Lesnar'], from:'2002-08-01', to:'2003-03-30',
+  shows:['smackdown','velocity','event'], note:'Hell in a Cell and a biker chain.'},
+ {id:'f-eddie-lesnar', who:['Eddie Guerrero','Brock Lesnar'], from:'2004-01-01', to:'2004-04-30',
+  shows:['smackdown','velocity','event'], note:'Eddie takes the title at No Way Out.'},
+ {id:'f-hogan-rock', who:['Hulk Hogan','The Rock'], from:'2002-02-01', to:'2002-04-30',
+  shows:['raw','smackdown','heat','event'], note:'Icon versus icon at WrestleMania X8.'},
+ {id:'f-flair-hbk', who:['Ric Flair','Shawn Michaels'], from:'2008-01-01', to:'2008-03-30',
+  shows:['raw','event'], note:'I am sorry. I love you.'},
+ {id:'f-hbk-jericho', who:['Shawn Michaels','Chris Jericho'], from:'2008-03-01', to:'2008-11-30',
+  shows:['raw','event'], note:'The best feud of 2008 by some distance.'},
+ {id:'f-edge-taker', who:['Edge','The Undertaker'], from:'2008-04-01', to:'2008-09-30',
+  shows:['smackdown','event'], note:'Hell in a Cell, TLC, and a trip to hell.'},
+ {id:'f-cena-orton-07', who:['John Cena','Randy Orton'], from:'2007-08-01', to:'2007-12-31',
+  shows:['raw','event'], note:''},
+ {id:'f-cena-orton-09', who:['John Cena','Randy Orton'], from:'2009-06-01', to:'2009-12-31',
+  shows:['raw','event'], note:'Iron Man, Hell in a Cell, and the Legacy beatdowns.'},
+ {id:'f-punk-taker', who:['CM Punk','The Undertaker'], from:'2009-08-01', to:'2009-10-31',
+  shows:['smackdown','event'], note:'Hell in a Cell.'},
+ {id:'f-nexus', who:['Wade Barrett','John Cena','Randy Orton'], from:'2010-06-07', to:'2010-10-31',
+  shows:['raw','nxt','event'], note:'The invasion.'},
+ {id:'f-rock-cena', who:['The Rock','John Cena'], from:'2011-04-01', to:'2013-04-07',
+  shows:['raw','smackdown','event'], note:'Once in a lifetime, twice.'},
+ {id:'f-cena-lesnar', who:['John Cena','Brock Lesnar'], from:'2012-04-01', to:'2012-08-31',
+  shows:['raw','event'], note:'Extreme Rules 2012.'},
+ {id:'f-taker-lesnar-14', who:['The Undertaker','Brock Lesnar'], from:'2014-01-01', to:'2015-10-31',
+  shows:['raw','smackdown','event'], note:'The streak ends at 21-1.'},
+ {id:'f-hellno', who:['Kane','Daniel Bryan'], from:'2012-06-01', to:'2013-09-30',
+  shows:['raw','smackdown','main','event'], note:'Team Hell No.'},
+ {id:'f-sasha-bayley-nxt', who:['Sasha Banks','Bayley'], from:'2015-05-01', to:'2015-10-31',
+  shows:['nxt','event'], note:'Two matches that changed what NXT was for.'},
+ {id:'f-styles-nakamura', who:['AJ Styles','Shinsuke Nakamura'], from:'2018-01-28', to:'2018-09-30',
+  shows:['smackdown','event'], note:''},
+ {id:'f-rollins-lesnar', who:['Seth Rollins','Brock Lesnar'], from:'2019-01-01', to:'2019-08-31',
+  shows:['raw','event'], note:''},
+ {id:'f-reigns-jey', who:['Roman Reigns','Jey Uso'], from:'2020-08-01', to:'2020-12-31',
+  shows:['smackdown','event'], note:'I quit. Acknowledge me.'},
+ {id:'f-gunther-sheamus', who:['Gunther','Sheamus'], from:'2022-06-01', to:'2023-08-31',
+  shows:['smackdown','raw','event'], note:'Two of the hardest hitting matches of the decade.'},
+ {id:'f-bianca-sasha', who:['Bianca Belair','Sasha Banks'], from:'2021-04-01', to:'2021-10-31',
+  shows:['smackdown','event'], note:'WrestleMania 37 main event.'},
+ {id:'f-trish-becky', who:['Trish Stratus','Becky Lynch'], from:'2023-04-01', to:'2023-08-31',
+  shows:['raw','event'], note:''}
 ];
 
 function feudTitle(f){
@@ -2483,12 +3502,13 @@ function feudTitle(f){
 }
 function allFeuds(){
   const user=(state.feuds||[]).map(f=>Object.assign({},f,{mine:true}));
+  const repo=(typeof REPO_FEUDS!=='undefined'?REPO_FEUDS:[]).map(f=>Object.assign({},f,{seeded:true}));
   const killed=state.feudsOff||{};
   const seeded=FEUDS.filter(f=>!killed[f.id]).map(f=>{
     const ov=(state.feudEdits||{})[f.id]||{};
     return Object.assign({},f,ov,{seeded:true});
   });
-  return seeded.concat(user);
+  return seeded.concat(repo).concat(user);
 }
 function feudsFor(name){ return allFeuds().filter(f=>f.who.includes(name)); }
 
@@ -2506,22 +3526,40 @@ function feudEpisodes(f){
 /* ---------- rendering ---------- */
 let feudPick=null, feudOpen=null, feudQuery='';
 
+let rosterFilter='all';
+const ERAS=[['golden','Golden era','0000','1993-01'],['newgen','New Gen','1993-01','1997-09'],
+            ['attitude','Attitude','1997-09','2002-06'],['ruthless','Ruthless','2002-06','2008-07'],
+            ['pg','PG era','2008-07','2016-07'],['modern','Modern','2016-07','9999']];
+function eraOf(p){ const d=p.debut; for(const [id,,a,b] of ERAS) if(d>=a&&d<b) return id; return 'modern'; }
+
 function renderFeudPeople(){
   const q=norm(feudQuery);
-  let names=ROSTER_INDEX.map(p=>p.name);
   const withFeuds=new Set(); allFeuds().forEach(f=>f.who.forEach(n=>withFeuds.add(n)));
-  names.sort((a,b)=>{
-    const A=withFeuds.has(a), B=withFeuds.has(b);
+  let list=ROSTER_INDEX.slice();
+  if(rosterFilter==='hof') list=list.filter(p=>p.hof);
+  else if(rosterFilter==='active') list=list.filter(p=>p.active);
+  else if(rosterFilter==='gone') list=list.filter(p=>p.died);
+  else if(rosterFilter!=='all') list=list.filter(p=>eraOf(p)===rosterFilter);
+  if(q) list=list.filter(p=>norm(p.name).includes(q));
+  list.sort((a,b)=>{
+    const A=withFeuds.has(a.name), B=withFeuds.has(b.name);
     if(A!==B) return A?-1:1;
-    return a.localeCompare(b);
+    return a.name.localeCompare(b.name);
   });
-  if(q) names=names.filter(n=>norm(n).includes(q));
-  $('feudPeople').innerHTML = names.slice(0,60).map(n=>{
-    const c=feudsFor(n).length;
-    return `<button class="person${n===feudPick?' on':''}" data-person="${esc(n)}">
-      <span>${esc(n)}</span><i>${c||''}</i></button>`;
-  }).join('') || '<p style="color:var(--dim);padding:8px">Nobody by that name in the roster index.</p>';
+  $('feudCount').textContent=list.length+' of '+ROSTER_INDEX.length;
+  $('feudPeople').innerHTML = list.slice(0,400).map(p=>{
+    const c=feudsFor(p.name).length;
+    return `<button class="person${p.name===feudPick?' on':''}" data-person="${esc(p.name)}">
+      <span>${esc(p.name)}${p.hof?'<em title="Hall of Fame">HOF</em>':''}${p.died?'<em class="g" title="Died '+p.died+'">&#8224;</em>':''}</span>
+      <i>${c||''}</i></button>`;
+  }).join('') || '<p style="color:var(--dim);padding:10px;font-size:13px">Nobody matches that.</p>';
 }
+$('feudFilters').addEventListener('click',ev=>{
+  const b=ev.target.closest('[data-rf]'); if(!b) return;
+  rosterFilter=b.dataset.rf;
+  [...$('feudFilters').children].forEach(c=>c.setAttribute('aria-pressed',c===b));
+  renderFeudPeople();
+});
 
 function renderFeudList(){
   if(!feudPick){
@@ -2560,12 +3598,23 @@ function renderFeudList(){
       </div>
       <div class="feudacts">
         <button class="btn sm" data-fact="open">${open?'Hide episodes':'Show episodes'}</button>
+        <button class="btn primary sm" data-fact="queue">+ Watchlist</button>
+        <button class="btn sm" data-fact="ledger">Show in ledger</button>
         <button class="btn sm" data-fact="all">Mark all watched</button>
-        <button class="btn sm" data-fact="ledger">Open in ledger</button>
         <button class="btn sm" data-fact="edit">Edit dates</button>
         ${f.seeded?'':'<button class="btn sm" data-fact="del">Delete</button>'}
       </div>
-      ${open?`<div class="feudeps">${eps.map(e=>{
+      ${open?`<div class="feuddetail">
+        <div class="dwho">${f.who.map(n=>`<span class="dperson">${avatarFor(n)}<span>${esc(n)}</span></span>`).join('')}</div>
+        <div class="dstats">
+          <div><b>${eps.length}</b><span>Episodes</span></div>
+          <div><b>${seen}</b><span>Watched</span></div>
+          <div><b>${eps.filter(e=>e.kind==='event').length}</b><span>Events</span></div>
+          <div><b>${fmtHours(eps.reduce((n,e)=>n+e.run,0))}</b><span>Runtime</span></div>
+          <div><b>${eps.filter(e=>(state.queue||[]).includes(e.id)).length}</b><span>Queued</span></div>
+        </div>
+      </div>
+      <div class="feudeps">${eps.map(e=>{
         const m=SHOW_META[e.show];
         return `<div class="row${isSeen(e.id)?' seen':''}" data-id="${e.id}" style="--bc:${m.bc}" tabindex="0" role="button">
           <span class="tick">&#10003;</span>
@@ -2582,10 +3631,29 @@ $('feudPeople').addEventListener('click',ev=>{
   const b=ev.target.closest('[data-person]'); if(!b) return;
   feudPick=b.dataset.person; feudOpen=null;
   renderFeudPeople(); renderFeudList();
+  lazyFace(feudPick);
 });
+/* Opening someone with no portrait quietly fetches one, so browsing fills
+   the gaps without anybody pressing a button. */
+function lazyFace(name){
+  if(!name || prefs.autoFaces===false) return;
+  if((state.faces||{})[name] && (state.bios||{})[name]) return;
+  if(bgFetch.running) return;
+  fetchFace(name).then(()=>{ if(feudPick===name){ renderFeudList(); renderFeudPeople(); } }).catch(()=>{});
+}
 $('feudSearch').addEventListener('input',ev=>{ feudQuery=ev.target.value; renderFeudPeople(); });
 
 $('feudList').addEventListener('click',ev=>{
+  const chip=ev.target.closest('.wchip[data-person]');
+  if(chip){ feudPick=chip.dataset.person; feudOpen=null; renderFeudPeople(); renderFeudList(); window.scrollTo({top:0,behavior:'smooth'}); return; }
+  const gf=ev.target.closest('[data-getface]');
+  if(gf){
+    const n=gf.dataset.getface;
+    gf.disabled=true; gf.textContent='Looking\u2026';
+    fetchFace(n).then(r=>{ toast('Found: '+r.title); renderFeudList(); renderFeudPeople(); })
+      .catch(e=>{ gf.disabled=false; gf.textContent='Find image'; toast('No image found \u2014 '+e.message); });
+    return;
+  }
   const fc=ev.target.closest('[data-face]');
   if(fc){
     const cur=(state.faces||{})[fc.dataset.face]||'';
@@ -2611,13 +3679,22 @@ $('feudList').addEventListener('click',ev=>{
     const a=act.dataset.fact;
     if(a==='open'){ feudOpen = feudOpen===f.id?null:f.id; renderFeudList(); }
     if(a==='all'){
+      snapshot('rivalry');
       let n=0; feudEpisodes(f).forEach(e=>{ if(!isSeen(e.id)){ state.seen[e.id]={d:iso(TODAY)}; n++; } });
-      save(); renderFeudList(); renderAll(); toast(n+' marked watched');
+      if(state.queue) state.queue=state.queue.filter(q=>!isSeen(q));
+      save(); renderFeudList(); renderAll(); toastUndo(n+' marked watched');
     }
     if(a==='ledger'){
-      state.from=f.from; state.to=f.to; save(); rebuildPool();
-      document.querySelector('.tab[data-tab="ledger"]').click();
-      renderAll(); toast('Ledger narrowed to this storyline');
+      spotlight(feudTitle(f), feudEpisodes(f).map(e=>e.id), false);
+      toast('Highlighted in the ledger');
+    }
+    if(a==='queue'){
+      const add=feudEpisodes(f).filter(e=>!isSeen(e.id)).map(e=>e.id);
+      state.queue=state.queue||[];
+      let n=0;
+      for(const id of add) if(!state.queue.includes(id)){ state.queue.push(id); n++; }
+      save(); renderFeudList(); renderAll();
+      toast(n?n+' added to your watchlist':'Already on your watchlist');
     }
     if(a==='edit') openFeudEditor(f);
     if(a==='del'){
@@ -2680,6 +3757,18 @@ function openFeudEditor(f){
 $('feudNew').onclick=()=>openFeudEditor(null);
 
 function renderFeuds(){ renderFeudPeople(); renderFeudList(); }
+
+/* Jump to a wrestler from anywhere -- search chips, rival chips, card icons. */
+function openWrestler(name){
+  if(!ROSTER_INDEX.some(p=>p.name===name)) return;
+  feudPick=name; feudOpen=null; rosterFilter='all'; feudQuery='';
+  const sb=document.getElementById('feudSearch'); if(sb) sb.value='';
+  [...document.getElementById('feudFilters').children]
+    .forEach(c=>c.setAttribute('aria-pressed',c.dataset.rf==='all'));
+  document.querySelector('.tab[data-tab="feuds"]').click();
+  renderFeudPeople(); renderFeudList(); lazyFace(name);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
 /* ---------- data panel ---------- */
 $('btnExport').onclick=()=>{
@@ -2749,20 +3838,85 @@ $('btnAdd').onclick=()=>{
   save(); rebuildCatalogue(); renderAll(); $('addName').value=''; toast('Added');
 };
 $('btnUnhide').onclick=()=>{
-  const n=Object.keys(state.hidden).length;
-  state.hidden={}; save(); rebuildCatalogue(); renderAll(); syncUI();
-  toast(n?n+' restored':'Nothing was hidden');
+  snapshot('restore');
+  const n=Object.keys(state.hidden||{}).length+Object.keys(state.nope||{}).length;
+  state.hidden={}; state.nope={};
+  save(); rebuildCatalogue(); renderAll(); syncUI();
+  if(n) toastUndo(n+' restored'); else toast('Nothing was skipped');
+};
+$('btnClearQ').onclick=()=>{
+  snapshot('clear watchlist');
+  const n=(state.queue||[]).length;
+  state.queue=[]; save(); renderAll(); syncUI();
+  if(n) toastUndo('Watchlist cleared'); else toast('Watchlist was already empty');
 };
 $('btnWipe').onclick=()=>{
   if(!confirm('Erase every tick, rating, note and card on this device? This cannot be undone.')) return;
-  state={seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},from:null,to:null};
+  state={seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},
+         queue:[],nope:{},fav:{},faces:{},faceSrc:{},from:null,to:null};
   save(); rebuildCatalogue(); syncUI(); renderAll(); toast('Ledger erased');
 };
 document.getElementById('prefWide').onchange=e=>{ prefs.wide=e.target.checked; savePrefs(); };
 document.getElementById('prefTicker').onchange=e=>{ prefs.ticker=e.target.checked; savePrefs(); renderTicker(); };
 document.getElementById('prefHome').onchange=e=>{ prefs.home=e.target.value; savePrefs(); };
 document.getElementById('prefFaces').onchange=e=>{ prefs.faces=e.target.checked; savePrefs(); renderLedger(); };
+let diagTimer=null;
+function startDiag(){
+  stopDiag();
+  const el=document.getElementById('tickerDiag');
+  if(!el) return;
+  const tick=()=>{ el.textContent=tickerDiagnostics(); };
+  tick(); diagTimer=setInterval(tick,500);
+}
+function stopDiag(){ clearInterval(diagTimer); diagTimer=null; }
+document.getElementById('prefAutoFaces').onchange=e=>{ prefs.autoFaces=e.target.checked; savePrefs(); };
+document.getElementById('feudFaces').onclick=async function(){
+  const b=this;
+  const names=[...document.querySelectorAll('#feudPeople [data-person]')]
+    .map(x=>x.dataset.person).filter(n=>!(state.faces||{})[n]);
+  if(!names.length){ toast('Everyone shown already has a portrait'); return; }
+  if(!confirm('Look up '+names.length+' portraits on Wikipedia? It is one request each, so this takes a moment.')) return;
+  b.disabled=true;
+  const res=await fetchFacesFor(names,(ok,fail,total)=>{ b.textContent=(ok+fail)+'/'+total; });
+  b.disabled=false; b.textContent='Fetch portraits';
+  renderFeudPeople(); renderFeudList();
+  toast(res.ok+' found, '+res.fail+' with no image');
+};
 document.getElementById('btnExportCorr').onclick=exportCorrections;
+document.getElementById('btnBinge').onclick=openBinge;
+document.getElementById('btnFixDates').onclick=async function(){
+  const log=document.getElementById('dateLog'), stop=document.getElementById('btnStopDates');
+  this.disabled=true; stop.style.display='inline-block'; log.style.display='block';
+  log.textContent='Checking\u2026';
+  const res=await fixEventDates((done,total,fixed)=>{
+    log.textContent='Checked '+done+' of '+total+' \u2014 '+fixed+' corrected';
+  });
+  this.disabled=false; stop.style.display='none';
+  log.textContent=['Checked '+res.total+' estimated events.',
+    res.fixed+' corrected, '+res.kept+' already right, '+res.missed+' not confirmed.','',
+    ...res.moved.slice(0,60).map(([t,a,b])=>'  '+t+'\n     '+a+'  ->  '+b)].join('\n');
+  toast(res.fixed+' event dates corrected');
+};
+document.getElementById('btnStopDates').onclick=()=>{ dateFixRun.stop=true; toast('Stopping\u2026'); };
+document.getElementById('btnCopyTransfer').onclick=async()=>{
+  const blob=btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+  try{ await navigator.clipboard.writeText(blob); toast('Transfer code copied'); }
+  catch(e){ document.getElementById('transferBox').value=blob; toast('Clipboard blocked \u2014 copy it from the box'); }
+};
+document.getElementById('btnApplyTransfer').onclick=()=>{
+  const v=document.getElementById('transferBox').value.trim();
+  if(!v){ toast('Paste a code first'); return; }
+  try{
+    const obj=JSON.parse(decodeURIComponent(escape(atob(v))));
+    if(!obj||typeof obj!=='object'||!obj.seen) throw 0;
+    if(!confirm('Replace everything on this device with the pasted ledger?')) return;
+    snapshot('transfer');
+    state=Object.assign(blankState(),obj);
+    save(); rebuildCatalogue(); syncUI(); renderAll();
+    document.getElementById('transferBox').value='';
+    toastUndo('Ledger transferred');
+  }catch(e){ toast('That does not look like a transfer code'); }
+};
 $('setFrom').onchange=()=>{state.from=$('setFrom').value||null; save(); rebuildPool(); renderAll();};
 $('setTo').onchange=()=>{state.to=$('setTo').value||null; save(); rebuildPool(); renderAll();};
 
@@ -2798,19 +3952,34 @@ document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+t.dataset.tab));
   if(t.dataset.tab==='now') renderSchedule(); else clearTimeout(tickTimer);
   if(t.dataset.tab==='feuds') renderFeuds();
-  if(t.dataset.tab==='stats') renderStats();
+  if(t.dataset.tab==='stats'){ renderStats(); renderPace(); }
   if(t.dataset.tab==='shows') renderShows();
-  if(t.dataset.tab==='data'){ syncUI(); paintDevice(); renderHealth(); }
+  if(t.dataset.tab==='data'){ syncUI(); paintDevice(); renderHealth(); startDiag(); } else stopDiag();
 });
 let toastTimer;
-function toast(m){
-  const t=$('toast'); t.textContent=m; t.classList.add('on');
-  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('on'),1900);
+function toast(m, action){
+  const t=$('toast');
+  t.innerHTML=esc(m)+(action?' <button type="button" id="toastAct">'+esc(action.label)+'</button>':'');
+  t.classList.add('on');
+  if(action){
+    const b=document.getElementById('toastAct');
+    if(b) b.onclick=()=>{ t.classList.remove('on'); action.run(); };
+  }
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('on'), action?9000:1900);
 }
 function syncUI(){
   $('setFrom').value=state.from||''; $('setTo').value=state.to||'';
-  const n=Object.keys(state.hidden).length;
-  $('hiddenCount').textContent = n ? n+' episode'+(n===1?'':'s')+' removed from the ledger.' : 'Nothing has been removed.';
+  const h=Object.keys(state.hidden||{}).length;
+  const no=Object.keys(state.nope||{}).length;
+  const q=(state.queue||[]).filter(id=>!isSeen(id)).length;
+  const bits=[];
+  if(q) bits.push('<b>'+q+'</b> waiting on your watchlist');
+  if(no) bits.push('<b>'+no+'</b> marked not interested');
+  if(h) bits.push('<b>'+h+'</b> removed');
+  $('hiddenCount').innerHTML = bits.length
+    ? bits.join(', ')+'. Not-interested episodes are left out of your completion percentage.'
+    : 'Nothing on the watchlist, nothing skipped.';
 }
 function fillSelects(){
   const shows=SHOWS.concat([SHOW_META['event']]);
@@ -2820,7 +3989,7 @@ function fillSelects(){
   $('fYear').innerHTML='<option value="">Every year</option>'+years.map(y=>`<option>${y}</option>`).join('');
 }
 function renderAll(){
-  renderTron(); renderLedger(); renderTicker();
+  renderTron(); renderLedger(); tickerSoon();
   if(document.getElementById('p-now').classList.contains('on')) renderSchedule();
   if($('p-shows').classList.contains('on')) renderShows();
   if($('p-stats').classList.contains('on')) renderStats();
@@ -2836,6 +4005,7 @@ async function boot(data){
   rebuildCatalogue(); fillSelects(); syncUI(); renderAll(); paintThemeUI(); renderTicker(); applyPrefs();
   document.getElementById('whoBadge').textContent=Auth.id||'';
   paintDevice();
+  storageHealth().then(h=>{ if(!h.ok) warnStorage(h.why); });
   if(prefs.home && prefs.home!=='ledger'){
     const t=document.querySelector('.tab[data-tab="'+prefs.home+'"]');
     if(t) t.click();
@@ -2847,6 +4017,7 @@ async function boot(data){
     '. Encrypted with AES-256-GCM, key stretched from your password with PBKDF2 ('+PBKDF2_ROUNDS.toLocaleString()+' rounds).';
   $('foot').innerHTML =
     CAT.length.toLocaleString()+' EPISODES / '+(SHOWS.length+1)+' SHOWS / '+ROSTER.length+' NAMES IN THE ROSTER INDEX<br>'+
+    'BUILD '+BUILD_ID+'<br>'+
     'Weekly dates come from each show&rsquo;s broadcast history, so pre-emptions and holiday shifts can be off by a week. '+
     'Event dates other than WrestleMania are estimated and marked. Roster tenures are approximate. Correct anything under Data.';
 }
@@ -2950,6 +4121,9 @@ async function doGate(){
     try{
       await boot(data);
       G('gate').classList.remove('on');
+      if(gateMode==='new' && prefs.autoFaces!==false){
+        setTimeout(()=>populatePortraits(),1200);   // after the ledger is up, never blocking it
+      }
     }catch(err){
       console.error(err);
       throw new Error('Signed in, but the ledger would not open: '+(err.message||err));

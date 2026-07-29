@@ -45,6 +45,15 @@
     --chrome:#FFDE87;--gold:#FFC20E;--blue:#E0341C;
     --deep:#0C0603;--rowline:#2A170B;--linehi:#5E3418;--panelhi:#46270F;
   }
+  /* Polished gold plate, black leather strap, nickel rim -- the belt CM Punk
+     carried. Warmer and brighter than "Big Gold", which is brass on brown. */
+  [data-theme="whc"]{
+    --bg:#0A0A0A;--panel:#141210;--panel2:#1C1A16;--panel3:#26231C;--line:#3B352A;
+    --txt:#F6F1E4;--dim:#A69C86;--dim2:#736B59;--red:#E8C24A;--red-lo:#9A7B18;
+    --chrome:#C6CBD1;--gold:#F5DC8A;--blue:#8E8778;
+    --deep:#050505;--rowline:#1E1B16;--linehi:#4E4636;--panelhi:#312C22;
+    --glow1:rgba(232,194,74,.20);--glow2:rgba(198,203,209,.06);
+  }
   [data-theme="ruthless"]{
     --bg:#0D0F11;--panel:#161A1E;--panel2:#1E242A;--panel3:#283038;--line:#38424C;
     --txt:#E9EEF3;--dim:#94A2AE;--dim2:#67747F;--red:#9AA6B2;--red-lo:#5E6B76;
@@ -202,6 +211,28 @@
   .prog .fig{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.05em;white-space:nowrap;color:var(--dim)}
   .prog .fig b{color:var(--txt);font-size:16px;font-family:'Anton',sans-serif;letter-spacing:.02em}
 
+  /* ---------- binge mode ---------- */
+  .binge{position:fixed;inset:0;z-index:90;background:var(--bg);display:none;place-items:center;padding:24px;
+    background-image:radial-gradient(ellipse 70% 55% at 50% 0%,var(--glow1,rgba(226,0,26,.20)),transparent 70%)}
+  .binge.on{display:grid}
+  .bingeinner{max-width:760px;width:100%;text-align:center;transition:background .18s}
+  .bingeinner.flash{background:rgba(255,255,255,.06)}
+  .bmeta{font-size:10px;letter-spacing:.28em;text-transform:uppercase;font-weight:800;color:var(--red)}
+  .bttl{font-family:'Anton',Impact,sans-serif;text-transform:uppercase;
+    font-size:clamp(40px,10vw,96px);line-height:.88;margin:12px 0 0}
+  .bttl span{color:var(--red)}
+  .bdate{font-family:'DM Mono',monospace;font-size:13px;color:var(--dim);margin-top:12px;letter-spacing:.06em}
+  .bcard{font-size:14px;color:var(--chrome);margin:12px auto 0;max-width:52ch}
+  .bbar{height:10px;background:var(--deep);border:1px solid var(--line);margin:26px auto 0;
+    max-width:420px;position:relative;overflow:hidden}
+  .bbar i{position:absolute;inset:0 auto 0 0;background:var(--red)}
+  .bcount{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim2);margin-top:8px}
+  .backs{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+  .backs kbd{font-family:'DM Mono',monospace;font-size:9px;border:1px solid currentColor;
+    padding:1px 4px;opacity:.6;margin-left:3px}
+  .bdone h2{font-family:'Anton',sans-serif;font-size:48px;text-transform:uppercase}
+  .bdone p{color:var(--dim)}
+
   /* ---------- tabs ---------- */
   .tabs{display:flex;margin:26px 0 0;border-bottom:1px solid var(--line)}
   .tab{background:none;border:0;padding:11px 17px;font-weight:800;text-transform:uppercase;
@@ -315,6 +346,9 @@
   @media(max-width:680px){.showrow{grid-template-columns:1fr auto}.showrow .barcell{grid-column:1/3;order:3}}
 
   /* ---------- stats ---------- */
+  .storagewarn{border:1px solid var(--red);border-left-width:3px;background:rgba(226,0,26,.08);
+    padding:13px 16px;margin:16px 0 0;font-size:13px;color:var(--txt);line-height:1.55}
+  .storagewarn b{color:var(--red)}
   .figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:1px;
     background:var(--line);border:1px solid var(--line);margin-bottom:28px}
   .fig{background:var(--panel);padding:15px 17px}
@@ -350,6 +384,10 @@
   .rate button[aria-pressed="true"]{background:var(--gold);color:#111;border-color:var(--gold)}
   .modal .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
 
+  .toast button{background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.45);color:inherit;
+    font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
+    padding:3px 9px;margin-left:11px;cursor:pointer}
+  .toast button:hover{background:rgba(0,0,0,.45)}
   .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(18px);
     background:var(--red);color:#fff;padding:12px 22px;font-size:11px;font-weight:800;
     letter-spacing:.11em;text-transform:uppercase;opacity:0;transition:.22s;pointer-events:none;z-index:60}
@@ -423,7 +461,13 @@
   [data-theme="handbill"] .pass{background:linear-gradient(165deg,#F2E9D6,#E2D3B6)}
   [data-theme="handbill"] .stamp{color:#fff}
   [data-theme="handbill"] .btn.primary{color:#fff}
-  [data-theme="hulk"] .btn.primary,[data-theme="gold"] .btn.primary{color:#1A1206}
+  [data-theme="hulk"] .btn.primary,[data-theme="gold"] .btn.primary,
+  [data-theme="whc"] .btn.primary{color:#1A1206}
+  [data-theme="whc"] .row.seen .tick{color:#141210}
+  [data-theme="whc"] .toast{color:#141210}
+  [data-theme="whc"] .pass .strip span{color:#141210}
+  [data-theme="whc"] .stamp{color:#141210}
+  [data-theme="whc"] .marquee{text-shadow:0 0 32px rgba(232,194,74,.35)}
   [data-theme="hulk"] .row.seen .tick,[data-theme="gold"] .row.seen .tick{color:#1A1206}
   [data-theme="hulk"] .toast,[data-theme="gold"] .toast{color:#1A1206}
   [data-theme="hulk"] .pass .strip span,[data-theme="gold"] .pass .strip span{color:#1A1206}
@@ -547,28 +591,29 @@
   html.wide .row{grid-template-columns:22px 150px 1fr auto}
 
   /* ---------- ticker ----------
-     Scrolled with scrollLeft rather than a transform. Every previous attempt
-     leaned on something that can silently fail -- a CSS animation killed by a
-     prefers-reduced-motion rule, then position:absolute plus width:max-content
-     plus transform plus contain. scrollLeft needs none of that: an element
-     with overflow:hidden is still programmatically scrollable. */
+     Two fixed slots that swap their text on a timer. Nothing moves, so there
+     is nothing to break: no animation, no transform, no scroll, no marquee.
+     Four attempts at a scrolling version each failed on hardware I cannot
+     reproduce; a held headline is also simply easier to read. */
   html.noticker .ticker{display:none}
   .ticker{position:relative;margin-top:14px;border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);background:var(--deep);height:30px;overflow:hidden}
+    border-bottom:1px solid var(--line);background:var(--deep);
+    display:flex;flex-direction:column;align-items:stretch;overflow:hidden}
   .ticker:before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
-    background:repeating-linear-gradient(0deg,rgba(0,0,0,.42) 0 1px,transparent 1px 2px)}
-  .ticker:after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
-    background:linear-gradient(90deg,var(--deep),transparent 7%,transparent 93%,var(--deep))}
-  .tickerscroll{position:absolute;inset:0;z-index:1;overflow:hidden;white-space:nowrap}
-  .tickertrack{display:inline-block;white-space:nowrap;height:30px;line-height:30px;
-    font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
-  .ticker.still .tickertrack{padding-left:15px}
-  .ticker.still .tsep{display:none}
-  .ticker.still .ti{display:none}
-  .ticker.still .ti.show{display:inline}
-  .ti{color:var(--chrome);padding:0 4px}
-  .ti.hot{color:var(--red);text-shadow:0 0 10px currentColor;font-weight:500}
-  .tsep{color:var(--dim2);padding:0 16px;opacity:.6}
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.40) 0 1px,transparent 1px 2px)}
+  .tslot{min-width:0;display:flex;align-items:center;padding:7px 15px;
+    position:relative;overflow:hidden;height:29px}
+  .tslot.right{border-top:1px solid var(--line)}
+  .tdiv{display:none}
+  .ti{font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--chrome);white-space:nowrap;overflow:hidden;
+    text-overflow:ellipsis;max-width:100%;opacity:1;transition:opacity .25s ease}
+  .ti.fade{opacity:0}
+  .ti.hot{color:var(--red);text-shadow:0 0 9px currentColor;font-weight:500}
+  .ti b{color:var(--txt);font-weight:500}
+  .tdot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red);
+    margin-right:8px;vertical-align:1px}
+  @media(max-width:680px){ .tslot{padding:6px 13px;height:auto;min-height:26px} }
 
   /* ---------- wrestler screen ---------- */
   .wcard{border:1px solid var(--line);background:var(--panel);padding:18px 20px;margin-bottom:22px;
@@ -688,8 +733,12 @@
   </div>
 
   <div class="ticker" id="ticker">
-    <div class="tickerscroll" id="tickerScroll"><div class="tickertrack" id="tickerTrack"></div></div>
+    <div class="tslot" id="tickerA"></div>
+    <div class="tdiv"></div>
+    <div class="tslot right" id="tickerB"></div>
   </div>
+
+  <div class="binge" id="binge"><div class="bingeinner" id="bingeBody"></div></div>
 
   <section class="tron" id="tron">
     <div class="stamp" id="stamp">Watched</div>
@@ -731,6 +780,7 @@
       </div>
       <select id="fShow"><option value="">Every show</option></select>
       <select id="fYear"><option value="">Every year</option></select>
+      <button class="btn sm" id="btnBinge">&#9654; Binge</button>
       <button class="btn sm" id="btnRandom">Surprise me</button>
       <div class="count" id="ledgerCount"></div>
     </div>
@@ -801,6 +851,8 @@
 
   <div class="panel" id="p-stats">
     <div class="figs" id="figs"></div>
+    <h2 style="font-size:20px;margin-bottom:9px">Your pace</h2>
+    <div id="paceBox" style="margin-bottom:26px"></div>
     <h2 style="font-size:20px;margin-bottom:9px">By decade</h2>
     <div id="decades"></div>
     <h2 style="font-size:20px;margin:28px 0 9px">Longest runs left</h2>
@@ -932,6 +984,7 @@
    rows: "SmackDown aired Thursdays 1999-2005, Fridays to 2016,
    Tuesdays to 2019, Fridays since." Episodes generate from that.
    ============================================================ */
+const BUILD_ID='2026-07-29 15:34 UTC';
 const D = {SUN:0,MON:1,TUE:2,WED:3,THU:4,FRI:5,SAT:6};
 
 const SHOWS = [
@@ -1798,6 +1851,12 @@ function rebuildCatalogue(){
         kind:r.show==='event'?'event':'weekly', card:r.card||'', repo:true, future:r.date>iso(TODAY)});
     }
   }
+  if(state.dates){
+    for(const e of CAT){
+      const d=state.dates[e.id];
+      if(d && d!==e.date){ e.date=d; e.est=false; e.fixed=true; e.future=d>iso(TODAY); }
+    }
+  }
   CAT.forEach(e=>{
     if(state.titles[e.id]) e.title = state.titles[e.id];
     if(state.cards[e.id]) e.card = state.cards[e.id];
@@ -2234,9 +2293,12 @@ function setSeen(id,on){
 }
 function bulkTo(id){
   const idx=POOL.findIndex(e=>e.id===id); if(idx<0) return;
+  snapshot('all prior');
   let n=0;
   for(let i=0;i<=idx;i++) if(!isSeen(POOL[i].id)){ state.seen[POOL[i].id]={d:iso(TODAY)}; n++; }
-  save(); renderAll(); toast(n.toLocaleString()+' marked watched');
+  if(state.queue&&state.queue.length) state.queue=state.queue.filter(q=>!isSeen(q));
+  save(); renderAll();
+  toastUndo(n.toLocaleString()+' marked watched');
 }
 
 /* ---------- shows ---------- */
@@ -2543,7 +2605,8 @@ const THEMES=[
   {id:'ratedr',   name:'Rated R',    note:'Crimson on charcoal.',               chips:['#0B0708','#B01030','#E8536F']},
   {id:'terminal', name:'Terminal',   note:'Green phosphor. Matches the ticker.', chips:['#03110A','#33FF88','#8FFFC2']},
   {id:'mania',    name:'Mania',      note:'Purple and gold, the big one.',      chips:['#14082A','#7B3FE4','#F2C230']},
-  {id:'hardcore', name:'Hardcore',   note:'Rust, tape and bad lighting.',       chips:['#120E09','#D2621C','#C9A227']}
+  {id:'hardcore', name:'Hardcore',   note:'Rust, tape and bad lighting.',       chips:['#120E09','#D2621C','#C9A227']},
+  {id:'whc',      name:'World Heavyweight', note:'The big gold plate on black leather.', chips:['#0A0A0A','#E8C24A','#C6CBD1']}
 ];
 const THEME_KEY='wwe-theme';
 let curTheme='tron';
@@ -2606,145 +2669,108 @@ function goHome(){
    A single line of phosphor under the masthead: what is on air,
    what is next, and where you are. Rebuilt on a slow timer.
    ============================================================ */
-function tickerItems(){
+/* Left slot: what is on or coming. Right slot: where you are. Each holds a
+   line for a few seconds then swaps. Items are recomputed at every swap so
+   countdowns stay current without anything having to animate. */
+function scheduleTickerItems(){
   const out=[];
   try{
     const {live,soon}=scheduleNow();
     live.forEach(({e,s})=>{
       const m=SHOW_META[e.show];
-      out.push({hot:true, txt:'ON AIR NOW \u2014 '+(e.kind==='event'?e.title:m.short+' #'+e.num)+' \u2014 since '+localTime(s.start)});
+      out.push({hot:true, html:'<span class="tdot"></span>On air now &mdash; <b>'+
+        esc(e.kind==='event'?e.title:m.short+' #'+e.num)+'</b> since '+localTime(s.start)});
     });
     if(soon.length){
       const {e,s}=soon[0], m=SHOW_META[e.show];
-      out.push({hot:!live.length, txt:'NEXT UP \u2014 '+(e.kind==='event'?e.title:m.short+' #'+e.num)+' in '+countdown(s.start-Date.now())});
+      out.push({hot:!live.length, html:'Next up &mdash; <b>'+
+        esc(e.kind==='event'?e.title:m.short+' #'+e.num)+'</b> in '+countdown(s.start-Date.now())});
     }
-    const nextEv=soon.find(x=>x.e.kind==='event');
-    if(nextEv) out.push({txt:'UPCOMING EVENT \u2014 '+nextEv.e.title+' \u2014 '+localDay(nextEv.s.start)+(nextEv.e.est?' (est.)':'')});
+    const ev=soon.find(x=>x.e.kind==='event');
+    if(ev) out.push({html:'Upcoming event &mdash; <b>'+esc(ev.e.title)+'</b> '+
+      localDay(ev.s.start)+(ev.e.est?' (est.)':'')});
+    if(soon[1]){
+      const {e,s}=soon[1], m=SHOW_META[e.show];
+      out.push({html:'Then &mdash; <b>'+esc(e.kind==='event'?e.title:m.short+' #'+e.num)+'</b> '+localDay(s.start)});
+    }
   }catch(e){}
-  try{
-    const total=POOL.length, seen=POOL.reduce((n,e)=>n+(isSeen(e.id)?1:0),0);
-    if(total) out.push({txt:'YOUR LEDGER \u2014 '+seen.toLocaleString()+' of '+total.toLocaleString()+' watched \u2014 '+(seen/total*100).toFixed(1)+'% COMPLETE'});
-    const nx=nextUp();
-    if(nx) out.push({txt:'UP NEXT TO WATCH \u2014 '+nx.title+' \u2014 '+fmtDate(nx.date)});
-    const rest=POOL.filter(e=>!isSeen(e.id)).reduce((n,e)=>n+e.run,0);
-    if(rest) out.push({txt:'TIME REMAINING \u2014 '+fmtHours(rest)+' OF WRESTLING'});
-  }catch(e){}
-  if(!out.length) out.push({txt:'MATCHBOOK \u2014 CARD SUBJECT TO CHANGE'});
+  if(!out.length) out.push({html:'Nothing scheduled'});
   return out;
 }
-let tickerSoonTimer=null;
-function tickerSoon(){          // coalesce bursts of renderAll into one rebuild
-  clearTimeout(tickerSoonTimer);
-  tickerSoonTimer=setTimeout(renderTicker,400);
+function ledgerTickerItems(){
+  const out=[];
+  try{
+    const total=POOL.length, seen=POOL.reduce((n,e)=>n+(isSeen(e.id)?1:0),0);
+    if(total) out.push({html:'<b>'+(seen/total*100).toFixed(1)+'%</b> complete &mdash; '+
+      seen.toLocaleString()+' of '+total.toLocaleString()});
+    const nx=nextUp();
+    if(nx) out.push({html:'Up next &mdash; <b>'+esc(nx.title)+'</b> '+fmtDate(nx.date)});
+    const rest=POOL.filter(e=>!isSeen(e.id)).reduce((n,e)=>n+e.run,0);
+    if(rest) out.push({html:'<b>'+fmtHours(rest)+'</b> of wrestling left'});
+    const q=(state.queue||[]).filter(id=>!isSeen(id)).length;
+    if(q) out.push({html:'<b>'+q+'</b> waiting on your watchlist'});
+  }catch(e){}
+  if(!out.length) out.push({html:'Matchbook'});
+  return out;
 }
 
-/* Reduced-motion is read once and kept current by a listener. Calling
-   matchMedia inside the frame loop cost a style recalculation every frame. */
-let RM_ON=false;
-try{
-  const mq=matchMedia('(prefers-reduced-motion: reduce)');
-  RM_ON=mq.matches;
-  const onRM=e=>{ RM_ON=e.matches; lastTickerHTML=''; renderTicker(); };
-  if(mq.addEventListener) mq.addEventListener('change',onRM);
-  else if(mq.addListener) mq.addListener(onRM);
-}catch(e){}
-function reduceMotion(){ return RM_ON; }
-
-let tickerEl=null, tickerBar=null, tickerScroll=null;
-let lastTickerHTML='', tickerHalf=0, tickerX=0, tickerHold=false;
-let tickerTimer=null, tickerRAF=null, tickerRotate=null, tickerIdx=0;
-let tickerFrames=0, tickerLastErr='';
-const TICKER_SPEED=44;   // pixels per second
-
+let tickerBar=null, tickerA=null, tickerB=null;
+let tickerTimer=null, slotState=[];
 function tickerNodes(){
-  if(!tickerEl) tickerEl=document.getElementById('tickerTrack');
   if(!tickerBar) tickerBar=document.getElementById('ticker');
-  if(!tickerScroll) tickerScroll=document.getElementById('tickerScroll');
-  return !!(tickerEl&&tickerBar&&tickerScroll);
+  if(!tickerA) tickerA=document.getElementById('tickerA');
+  if(!tickerB) tickerB=document.getElementById('tickerB');
+  return !!(tickerBar&&tickerA&&tickerB);
+}
+
+function paintSlot(i){
+  const st=slotState[i]; if(!st) return;
+  const items=st.source();
+  const it=items[st.idx % items.length];
+  let sp=st.host.firstElementChild;
+  if(!sp){ sp=document.createElement('span'); sp.className='ti'; st.host.appendChild(sp); }
+  const write=()=>{
+    sp.innerHTML=it.html;
+    sp.className='ti'+(it.hot?' hot':'');
+  };
+  if(st.first){ st.first=false; write(); return; }
+  sp.classList.add('fade');
+  setTimeout(()=>{ write(); sp.classList.remove('fade'); },230);
 }
 
 function renderTicker(){
-  if(!tickerNodes()){ tickerLastErr='markup missing'; return; }
-  const items=tickerItems();
-  const still=reduceMotion();
-  tickerBar.classList.toggle('still', still);
-
-  const run=items.map(i=>`<span class="ti${i.hot?' hot':''}">${esc(i.txt)}</span>`)
-    .join('<span class="tsep">\u25C6</span>');
-  const html=still
-    ? items.map((i,n)=>`<span class="ti${i.hot?' hot':''}${n===0?' show':''}">${esc(i.txt)}</span>`).join('')
-    : run+'<span class="tsep">\u25C6</span>'+run+'<span class="tsep">\u25C6</span>';
-
-  if(html!==lastTickerHTML){
-    lastTickerHTML=html;
-    tickerEl.innerHTML=html;
-    tickerHalf=0;                       // remeasure on the next frame
-  }
-
-  clearInterval(tickerRotate); tickerRotate=null;
-  if(still){
-    cancelAnimationFrame(tickerRAF); tickerRAF=null;
-    tickerIdx=0;
-    if(items.length>1) tickerRotate=setInterval(()=>{
-      const kids=tickerEl.querySelectorAll('.ti');
-      if(!kids.length) return;
-      kids[tickerIdx%kids.length].classList.remove('show');
-      tickerIdx=(tickerIdx+1)%kids.length;
-      kids[tickerIdx].classList.add('show');
-    },5000);
-  } else {
-    startTicker();
-  }
+  if(!tickerNodes()) return;
+  slotState.forEach(s=>clearInterval(s.timer));
+  slotState=[
+    {host:tickerA, source:scheduleTickerItems, idx:0, first:true, timer:null},
+    {host:tickerB, source:ledgerTickerItems,   idx:0, first:true, timer:null}
+  ];
+  slotState.forEach((st,i)=>{
+    paintSlot(i);
+    // staggered so the two halves never change at the same moment
+    st.timer=setInterval(()=>{ st.idx++; paintSlot(i); }, 5000+i*1300);
+  });
   clearTimeout(tickerTimer);
-  tickerTimer=setTimeout(renderTicker, 20000);
+  tickerTimer=setTimeout(renderTicker, 60000);
 }
-
-function startTicker(){
-  if(tickerRAF||!tickerNodes()) return;
-  let last=performance.now();
-  const step=now=>{
-    if(!tickerEl||RM_ON){ tickerRAF=null; return; }
-    if(!tickerHalf){
-      const w=tickerEl.scrollWidth||tickerEl.offsetWidth||0;
-      if(w>2) tickerHalf=w/2;
-    }
-    const dt=Math.min(0.05,(now-last)/1000); last=now;
-    if(!tickerHold && document.visibilityState!=='hidden' && tickerHalf>1){
-      tickerX+=TICKER_SPEED*dt;
-      if(tickerX>=tickerHalf) tickerX-=tickerHalf;   // seamless: copy 2 takes over
-      tickerScroll.scrollLeft=tickerX;
-      tickerFrames++;
-    }
-    tickerRAF=requestAnimationFrame(step);
-  };
-  tickerRAF=requestAnimationFrame(step);
+let tickerSoonTimer=null;
+function tickerSoon(){
+  clearTimeout(tickerSoonTimer);
+  tickerSoonTimer=setTimeout(()=>{ slotState.forEach((s,i)=>paintSlot(i)); },400);
 }
 
 function tickerDiagnostics(){
   if(!tickerNodes()) return 'ticker markup not found';
   return [
-    'reduce motion   : '+(RM_ON?'ON  (scrolling disabled by your OS setting)':'off'),
-    'track width     : '+(tickerEl.scrollWidth||0)+'px',
-    'visible width   : '+Math.round(tickerScroll.clientWidth||0)+'px',
-    'one loop        : '+Math.round(tickerHalf)+'px',
-    'scroll position : '+Math.round(tickerX)+'px',
-    'actual scrollLeft: '+Math.round(tickerScroll.scrollLeft)+'px',
-    'frames drawn    : '+tickerFrames,
-    'loop running    : '+(tickerRAF?'yes':'no'),
-    'items           : '+tickerItems().length,
-    tickerLastErr?('last error      : '+tickerLastErr):''
-  ].filter(Boolean).join('\n');
+    'build          : '+BUILD_ID,
+    'mode           : two held slots, no motion',
+    'left items     : '+scheduleTickerItems().length,
+    'right items    : '+ledgerTickerItems().length,
+    'swap timers    : '+slotState.filter(s=>s.timer).length+' running',
+    'ticker enabled : '+(prefs.ticker!==false)
+  ].join('\n');
 }
 
-(function tickerHover(){
-  const bar=document.getElementById('ticker');
-  if(!bar) return;
-  bar.addEventListener('mouseenter',()=>tickerHold=true);
-  bar.addEventListener('mouseleave',()=>tickerHold=false);
-  document.addEventListener('visibilitychange',()=>{
-    if(document.visibilityState==='visible') startTicker();
-  });
-})();
 
 /* ============================================================
    17. CATALOGUE CORRECTIONS FROM THE REPOSITORY
@@ -2754,7 +2780,7 @@ function tickerDiagnostics(){
    profile, on every device, and live in version control rather
    than in one browser. Absent file, no problem.
    ============================================================ */
-let REPO_DATA=[], REPO_STATE='none';
+let REPO_DATA=[], REPO_STATE='none', REPO_FEUDS=[];
 
 async function loadRepoData(){
   try{
@@ -2765,6 +2791,15 @@ async function loadRepoData(){
     REPO_DATA=rows.filter(x=>x&&x.show&&/^\d{4}-\d{2}-\d{2}$/.test(x.date||''));
     REPO_STATE=REPO_DATA.length?'ok':'empty';
   }catch(e){ REPO_STATE='none'; }
+  try{
+    const r=await fetch('./data/feuds.json',{cache:'no-cache'});
+    if(r.ok){
+      const j=await r.json();
+      const rows=Array.isArray(j)?j:(j.feuds||[]);
+      REPO_FEUDS=rows.filter(f=>f&&Array.isArray(f.who)&&f.from&&f.to)
+        .map((f,i)=>Object.assign({id:'r'+i, shows:['raw','smackdown','event']},f));
+    }
+  }catch(e){ REPO_FEUDS=[]; }
 }
 
 /* provenance: where did this record's detail come from */
@@ -2851,6 +2886,251 @@ function exportCorrections(){
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
   a.download='catalogue.json'; a.click(); URL.revokeObjectURL(a.href);
   toast(merged.length+' corrections exported');
+}
+
+/* ============================================================
+   19. UNDO
+   "All prior" can tick four thousand episodes in one click, and
+   marking a rivalry watched is nearly as broad. Both were
+   irreversible. One level of undo is enough: the snapshot is
+   taken immediately before the change and offered in the toast.
+   ============================================================ */
+let undoSnap=null;
+function snapshot(label){
+  undoSnap={
+    label,
+    seen:JSON.parse(JSON.stringify(state.seen||{})),
+    queue:(state.queue||[]).slice(),
+    nope:JSON.parse(JSON.stringify(state.nope||{})),
+    hidden:JSON.parse(JSON.stringify(state.hidden||{}))
+  };
+}
+function undoLast(){
+  if(!undoSnap) return;
+  state.seen=undoSnap.seen;
+  state.queue=undoSnap.queue;
+  state.nope=undoSnap.nope;
+  state.hidden=undoSnap.hidden;
+  undoSnap=null;
+  save(); rebuildPool(); renderAll();
+  try{ renderFeudList(); }catch(e){}
+  toast('Reverted');
+}
+function toastUndo(msg){ toast(msg, {label:'Undo', run:undoLast}); }
+
+/* ============================================================
+   20. STORAGE HEALTH
+   A failed write is otherwise silent: you keep ticking and lose
+   the lot on reload. Probe once at boot and say so plainly.
+   ============================================================ */
+async function storageHealth(){
+  const probe='wwe-probe';
+  try{
+    await RAW.set(probe,'1');
+    const back=await RAW.get(probe);
+    await RAW.del(probe);
+    if(back!=='1') return {ok:false, why:'the browser accepted a write but returned nothing back'};
+  }catch(e){
+    return {ok:false, why:(e&&e.message)||'the browser refused to store data'};
+  }
+  let used=0;
+  try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); used+=(k+localStorage.getItem(k)).length; } }catch(e){}
+  return {ok:true, used};
+}
+function warnStorage(why){
+  let el=document.getElementById('storageWarn');
+  if(!el){
+    el=document.createElement('div'); el.id='storageWarn'; el.className='storagewarn';
+    document.querySelector('.wrap').prepend(el);
+  }
+  el.innerHTML='<b>Nothing you tick is being saved.</b> '+esc(why)+
+    '. Private browsing and blocked site data both cause this. Use Data \u2192 Download backup before you close the tab.';
+}
+
+/* ============================================================
+   21. PACE
+   Watched dates were already stored and never used. From them:
+   how fast you are going and when that finishes.
+   ============================================================ */
+function paceStats(){
+  const days={};
+  let earliest=null;
+  for(const id in state.seen){
+    const d=state.seen[id] && state.seen[id].d;
+    if(!d) continue;
+    days[d]=(days[d]||0)+1;
+    if(!earliest||d<earliest) earliest=d;
+  }
+  const keys=Object.keys(days).sort();
+  if(!keys.length) return null;
+  const today=iso(TODAY);
+  const since=n=>{ const d=addDays(TODAY,-n); return iso(d); };
+  const inWindow=n=>keys.filter(k=>k>=since(n)).reduce((a,k)=>a+days[k],0);
+  const last30=inWindow(30), last90=inWindow(90);
+  const perWeek30=last30/30*7, perWeek90=last90/90*7;
+  const rate=perWeek30>0?perWeek30:perWeek90;
+  const left=POOL.filter(e=>!isSeen(e.id)).length;
+  let finish=null;
+  if(rate>0.05 && left){
+    const weeks=left/rate;
+    const d=addDays(TODAY, Math.round(weeks*7));
+    finish=d;
+  }
+  // longest streak of consecutive days with at least one episode
+  let best=0, run=0, prev=null;
+  for(const k of keys){
+    if(prev && (parse(k)-parse(prev))===86400000) run++; else run=1;
+    if(run>best) best=run;
+    prev=k;
+  }
+  const busiest=keys.reduce((a,k)=>days[k]>days[a]?k:a,keys[0]);
+  return {days:keys.length, first:keys[0], last:keys[keys.length-1],
+          last30, last90, perWeek30, perWeek90, finish, streak:best,
+          busiest, busiestN:days[busiest], left};
+}
+function renderPace(){
+  const el=document.getElementById('paceBox'); if(!el) return;
+  const p=paceStats();
+  if(!p){ el.innerHTML='<p style="color:var(--dim)">Nothing watched yet. Tick a few episodes and your pace shows up here.</p>'; return; }
+  const fin=p.finish
+    ? '<div class="fig"><b>'+MONTHNAME[p.finish.getMonth()]+' '+p.finish.getFullYear()+'</b><span>On pace to finish</span></div>'
+    : '<div class="fig"><b>&mdash;</b><span>Not enough recent activity</span></div>';
+  el.innerHTML=`
+    <div class="figs" style="margin-bottom:14px">
+      <div class="fig"><b>${p.perWeek30.toFixed(1)}</b><span>Episodes per week, last 30 days</span></div>
+      <div class="fig"><b>${p.perWeek90.toFixed(1)}</b><span>Per week, last 90 days</span></div>
+      ${fin}
+      <div class="fig"><b>${p.streak}</b><span>Longest daily streak</span></div>
+      <div class="fig"><b>${p.days}</b><span>Days with something watched</span></div>
+      <div class="fig"><b>${p.busiestN}</b><span>Most in a single day</span></div>
+    </div>
+    <p style="font-size:12.5px;color:var(--dim2);margin:0">
+      Started ${fmtDate(p.first)}, last watched ${fmtDate(p.last)}. Busiest day was ${fmtDate(p.busiest)}.
+      ${p.finish?'The finish date assumes your last thirty days continue &mdash; it moves every time you watch something.':''}
+    </p>`;
+}
+
+/* ============================================================
+   22. BINGE MODE
+   The core loop is watch, tick, next, thousands of times. A
+   ledger is the wrong surface for that. Space to tick, that is
+   the whole interface.
+   ============================================================ */
+let bingeOn=false;
+function openBinge(){
+  const e=tronPick();
+  if(!e){ toast('Nothing left to watch'); return; }
+  bingeOn=true;
+  document.getElementById('binge').classList.add('on');
+  paintBinge();
+}
+function closeBinge(){
+  bingeOn=false;
+  document.getElementById('binge').classList.remove('on');
+  renderAll();
+}
+function paintBinge(){
+  const el=document.getElementById('bingeBody');
+  const e=tronPick();
+  if(!e){ el.innerHTML='<div class="bdone"><h2>Card complete</h2><p>Nothing left in your window.</p></div>'; return; }
+  const m=SHOW_META[e.show];
+  const left=POOL.reduce((n,x)=>n+(isSeen(x.id)?0:1),0);
+  const total=POOL.length, seen=total-left;
+  el.innerHTML=`
+    <div class="bmeta">${esc(m.name)}${e.queued?' &middot; from your watchlist':''}</div>
+    <h2 class="bttl">${esc(e.kind==='event'?e.title:m.short)}${e.kind!=='event'?' <span>#'+e.num+'</span>':''}</h2>
+    <div class="bdate">${fmtDate(e.date)} &middot; ${fmtHours(e.run)}${e.est?' &middot; date estimated':''}</div>
+    ${e.card?`<div class="bcard">${esc(e.card)}</div>`:''}
+    <div class="bbar"><i style="width:${total?(seen/total*100).toFixed(2):0}%"></i></div>
+    <div class="bcount">${seen.toLocaleString()} of ${total.toLocaleString()} &middot; ${left.toLocaleString()} to go</div>
+    <div class="backs">
+      <button class="btn primary" id="bWatch">Watched &nbsp;<kbd>space</kbd></button>
+      <button class="btn" id="bRoll">Reroll &nbsp;<kbd>R</kbd></button>
+      <button class="btn" id="bNope">Not interested &nbsp;<kbd>N</kbd></button>
+      <button class="btn" id="bClose">Close &nbsp;<kbd>esc</kbd></button>
+    </div>`;
+  document.getElementById('bWatch').onclick=bingeWatch;
+  document.getElementById('bRoll').onclick=()=>{ rerollTron(); paintBinge(); };
+  document.getElementById('bNope').onclick=bingeNope;
+  document.getElementById('bClose').onclick=closeBinge;
+}
+function bingeWatch(){
+  const e=tronPick(); if(!e) return;
+  tronRoll=null;
+  state.seen[e.id]=Object.assign({d:iso(TODAY)},state.seen[e.id]||{});
+  if(state.queue) state.queue=state.queue.filter(x=>x!==e.id);
+  save();
+  const el=document.getElementById('bingeBody');
+  el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'),180);
+  paintBinge();
+}
+function bingeNope(){
+  const e=tronPick(); if(!e) return;
+  state.nope=state.nope||{}; state.nope[e.id]=1;
+  state.queue=(state.queue||[]).filter(x=>x!==e.id);
+  tronRoll=null; save(); rebuildPool(); paintBinge();
+}
+document.addEventListener('keydown',ev=>{
+  if(!bingeOn) return;
+  const t=ev.target.tagName;
+  if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT') return;
+  if(ev.key===' '){ ev.preventDefault(); bingeWatch(); }
+  else if(ev.key==='r'||ev.key==='R'){ ev.preventDefault(); rerollTron(); paintBinge(); }
+  else if(ev.key==='n'||ev.key==='N'){ ev.preventDefault(); bingeNope(); }
+  else if(ev.key==='Escape'){ ev.preventDefault(); closeBinge(); }
+});
+
+/* ============================================================
+   23. EVENT DATES FROM WIKIPEDIA
+   377 pay-per-view dates are month estimates. Wikipedia's intro
+   for each event states the real one in prose, so pull it and
+   regex the date out. Only accepted within 120 days of the
+   estimate, so a wrong article cannot silently move an event.
+   ============================================================ */
+const MONTHS_RE='January|February|March|April|May|June|July|August|September|October|November|December';
+function dateFromProse(txt){
+  if(!txt) return null;
+  const m=txt.match(new RegExp('(?:took place on|held on|on)\\s+(\\d{1,2})?\\s*('+MONTHS_RE+')\\s+(\\d{1,2})?(?:\\s*(?:and|&|\\u2013|-)\\s*\\d{1,2})?,?\\s*(\\d{4})','i'));
+  if(!m) return null;
+  const day=Number(m[1]||m[3]); const mon=MONTHNAME.findIndex(x=>x.toLowerCase()===m[2].slice(0,3).toLowerCase());
+  const yr=Number(m[4]);
+  if(!day||mon<0||!yr||day>31) return null;
+  return yr+'-'+String(mon+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+}
+async function wikiEventDate(title){
+  const q=encodeURIComponent(title+' professional wrestling event');
+  const url=WIKI+'?action=query&generator=search&gsrsearch='+q+
+    '&gsrlimit=1&prop=extracts&exintro=1&explaintext=1&exsentences=2&format=json&origin=*';
+  const r=await fetch(url); if(!r.ok) throw new Error('HTTP '+r.status);
+  const j=await r.json();
+  const pages=j&&j.query&&j.query.pages; if(!pages) return null;
+  const p=Object.values(pages)[0];
+  return p ? {date:dateFromProse(p.extract), title:p.title} : null;
+}
+let dateFixRun={stop:false};
+async function fixEventDates(onEach){
+  const todo=CAT.filter(e=>e.kind==='event' && e.est && !e.future && !state.dates?.[e.id]);
+  let fixed=0, kept=0, missed=0, moved=[];
+  state.dates=state.dates||{};
+  dateFixRun={stop:false};
+  for(let i=0;i<todo.length;i++){
+    if(dateFixRun.stop) break;
+    const e=todo[i];
+    try{
+      const r=await wikiEventDate(e.title);
+      if(r&&r.date){
+        const gap=Math.abs(parse(r.date)-parse(e.date))/864e5;
+        if(gap<=120){
+          if(r.date!==e.date){ state.dates[e.id]=r.date; moved.push([e.title,e.date,r.date]); fixed++; }
+          else kept++;
+        } else missed++;
+      } else missed++;
+    }catch(err){ missed++; }
+    if(onEach) onEach(i+1,todo.length,fixed);
+    await new Promise(r=>setTimeout(r,170));
+  }
+  save(); rebuildCatalogue(); renderAll();
+  return {fixed,kept,missed,total:todo.length,moved};
 }
 
 /* ============================================================
@@ -3222,12 +3502,13 @@ function feudTitle(f){
 }
 function allFeuds(){
   const user=(state.feuds||[]).map(f=>Object.assign({},f,{mine:true}));
+  const repo=(typeof REPO_FEUDS!=='undefined'?REPO_FEUDS:[]).map(f=>Object.assign({},f,{seeded:true}));
   const killed=state.feudsOff||{};
   const seeded=FEUDS.filter(f=>!killed[f.id]).map(f=>{
     const ov=(state.feudEdits||{})[f.id]||{};
     return Object.assign({},f,ov,{seeded:true});
   });
-  return seeded.concat(user);
+  return seeded.concat(repo).concat(user);
 }
 function feudsFor(name){ return allFeuds().filter(f=>f.who.includes(name)); }
 
@@ -3398,8 +3679,10 @@ $('feudList').addEventListener('click',ev=>{
     const a=act.dataset.fact;
     if(a==='open'){ feudOpen = feudOpen===f.id?null:f.id; renderFeudList(); }
     if(a==='all'){
+      snapshot('rivalry');
       let n=0; feudEpisodes(f).forEach(e=>{ if(!isSeen(e.id)){ state.seen[e.id]={d:iso(TODAY)}; n++; } });
-      save(); renderFeudList(); renderAll(); toast(n+' marked watched');
+      if(state.queue) state.queue=state.queue.filter(q=>!isSeen(q));
+      save(); renderFeudList(); renderAll(); toastUndo(n+' marked watched');
     }
     if(a==='ledger'){
       spotlight(feudTitle(f), feudEpisodes(f).map(e=>e.id), false);
@@ -3555,15 +3838,17 @@ $('btnAdd').onclick=()=>{
   save(); rebuildCatalogue(); renderAll(); $('addName').value=''; toast('Added');
 };
 $('btnUnhide').onclick=()=>{
+  snapshot('restore');
   const n=Object.keys(state.hidden||{}).length+Object.keys(state.nope||{}).length;
   state.hidden={}; state.nope={};
   save(); rebuildCatalogue(); renderAll(); syncUI();
-  toast(n?n+' restored':'Nothing was skipped');
+  if(n) toastUndo(n+' restored'); else toast('Nothing was skipped');
 };
 $('btnClearQ').onclick=()=>{
+  snapshot('clear watchlist');
   const n=(state.queue||[]).length;
   state.queue=[]; save(); renderAll(); syncUI();
-  toast(n?'Watchlist cleared':'Watchlist was already empty');
+  if(n) toastUndo('Watchlist cleared'); else toast('Watchlist was already empty');
 };
 $('btnWipe').onclick=()=>{
   if(!confirm('Erase every tick, rating, note and card on this device? This cannot be undone.')) return;
@@ -3598,6 +3883,40 @@ document.getElementById('feudFaces').onclick=async function(){
   toast(res.ok+' found, '+res.fail+' with no image');
 };
 document.getElementById('btnExportCorr').onclick=exportCorrections;
+document.getElementById('btnBinge').onclick=openBinge;
+document.getElementById('btnFixDates').onclick=async function(){
+  const log=document.getElementById('dateLog'), stop=document.getElementById('btnStopDates');
+  this.disabled=true; stop.style.display='inline-block'; log.style.display='block';
+  log.textContent='Checking\u2026';
+  const res=await fixEventDates((done,total,fixed)=>{
+    log.textContent='Checked '+done+' of '+total+' \u2014 '+fixed+' corrected';
+  });
+  this.disabled=false; stop.style.display='none';
+  log.textContent=['Checked '+res.total+' estimated events.',
+    res.fixed+' corrected, '+res.kept+' already right, '+res.missed+' not confirmed.','',
+    ...res.moved.slice(0,60).map(([t,a,b])=>'  '+t+'\n     '+a+'  ->  '+b)].join('\n');
+  toast(res.fixed+' event dates corrected');
+};
+document.getElementById('btnStopDates').onclick=()=>{ dateFixRun.stop=true; toast('Stopping\u2026'); };
+document.getElementById('btnCopyTransfer').onclick=async()=>{
+  const blob=btoa(unescape(encodeURIComponent(JSON.stringify(state))));
+  try{ await navigator.clipboard.writeText(blob); toast('Transfer code copied'); }
+  catch(e){ document.getElementById('transferBox').value=blob; toast('Clipboard blocked \u2014 copy it from the box'); }
+};
+document.getElementById('btnApplyTransfer').onclick=()=>{
+  const v=document.getElementById('transferBox').value.trim();
+  if(!v){ toast('Paste a code first'); return; }
+  try{
+    const obj=JSON.parse(decodeURIComponent(escape(atob(v))));
+    if(!obj||typeof obj!=='object'||!obj.seen) throw 0;
+    if(!confirm('Replace everything on this device with the pasted ledger?')) return;
+    snapshot('transfer');
+    state=Object.assign(blankState(),obj);
+    save(); rebuildCatalogue(); syncUI(); renderAll();
+    document.getElementById('transferBox').value='';
+    toastUndo('Ledger transferred');
+  }catch(e){ toast('That does not look like a transfer code'); }
+};
 $('setFrom').onchange=()=>{state.from=$('setFrom').value||null; save(); rebuildPool(); renderAll();};
 $('setTo').onchange=()=>{state.to=$('setTo').value||null; save(); rebuildPool(); renderAll();};
 
@@ -3633,14 +3952,21 @@ document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+t.dataset.tab));
   if(t.dataset.tab==='now') renderSchedule(); else clearTimeout(tickTimer);
   if(t.dataset.tab==='feuds') renderFeuds();
-  if(t.dataset.tab==='stats') renderStats();
+  if(t.dataset.tab==='stats'){ renderStats(); renderPace(); }
   if(t.dataset.tab==='shows') renderShows();
   if(t.dataset.tab==='data'){ syncUI(); paintDevice(); renderHealth(); startDiag(); } else stopDiag();
 });
 let toastTimer;
-function toast(m){
-  const t=$('toast'); t.textContent=m; t.classList.add('on');
-  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('on'),1900);
+function toast(m, action){
+  const t=$('toast');
+  t.innerHTML=esc(m)+(action?' <button type="button" id="toastAct">'+esc(action.label)+'</button>':'');
+  t.classList.add('on');
+  if(action){
+    const b=document.getElementById('toastAct');
+    if(b) b.onclick=()=>{ t.classList.remove('on'); action.run(); };
+  }
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('on'), action?9000:1900);
 }
 function syncUI(){
   $('setFrom').value=state.from||''; $('setTo').value=state.to||'';
@@ -3679,6 +4005,7 @@ async function boot(data){
   rebuildCatalogue(); fillSelects(); syncUI(); renderAll(); paintThemeUI(); renderTicker(); applyPrefs();
   document.getElementById('whoBadge').textContent=Auth.id||'';
   paintDevice();
+  storageHealth().then(h=>{ if(!h.ok) warnStorage(h.why); });
   if(prefs.home && prefs.home!=='ledger'){
     const t=document.querySelector('.tab[data-tab="'+prefs.home+'"]');
     if(t) t.click();
@@ -3690,6 +4017,7 @@ async function boot(data){
     '. Encrypted with AES-256-GCM, key stretched from your password with PBKDF2 ('+PBKDF2_ROUNDS.toLocaleString()+' rounds).';
   $('foot').innerHTML =
     CAT.length.toLocaleString()+' EPISODES / '+(SHOWS.length+1)+' SHOWS / '+ROSTER.length+' NAMES IN THE ROSTER INDEX<br>'+
+    'BUILD '+BUILD_ID+'<br>'+
     'Weekly dates come from each show&rsquo;s broadcast history, so pre-emptions and holiday shifts can be off by a week. '+
     'Event dates other than WrestleMania are estimated and marked. Roster tenures are approximate. Correct anything under Data.';
 }

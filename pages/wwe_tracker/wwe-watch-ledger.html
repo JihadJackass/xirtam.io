@@ -19,15 +19,45 @@
     --chrome:#C7CCD4;
     --gold:#E3B23C;
     --blue:#2E77E6;
+    --deep:#07070A;
+    --rowline:#1E1E26;
+    --linehi:#3A3A48;
+    --panelhi:#2C2C37;
     --cut:10px;
+  }
+
+  /* ---------- themes ---------- */
+  [data-theme="gold"]{
+    --bg:#0A0906;--panel:#16130C;--panel2:#1E1A11;--panel3:#272115;--line:#3A3120;
+    --txt:#F2ECDD;--dim:#9C9078;--dim2:#6E6450;--red:#D4A32E;--red-lo:#8A6712;
+    --chrome:#D8CCAE;--gold:#F0D06A;--blue:#C08A2E;
+    --deep:#070603;--rowline:#221C12;--linehi:#4A3F28;--panelhi:#332B1B;
+  }
+  [data-theme="attitude"]{
+    --bg:#0C0D0F;--panel:#16181C;--panel2:#1E2126;--panel3:#282C33;--line:#343941;
+    --txt:#E6E9ED;--dim:#8D959F;--dim2:#636B76;--red:#B4121C;--red-lo:#7A0A11;
+    --chrome:#AEB6C0;--gold:#B9C2CC;--blue:#4A5560;
+    --deep:#08090B;--rowline:#1E2126;--linehi:#434A54;--panelhi:#2F343B;
+  }
+  [data-theme="hulk"]{
+    --bg:#120A06;--panel:#1F1109;--panel2:#2A170B;--panel3:#3A1F0D;--line:#4E2A12;
+    --txt:#FFF3DC;--dim:#C79A66;--dim2:#8E6B44;--red:#FFC20E;--red-lo:#C08800;
+    --chrome:#FFDE87;--gold:#FFC20E;--blue:#E0341C;
+    --deep:#0C0603;--rowline:#2A170B;--linehi:#5E3418;--panelhi:#46270F;
+  }
+  [data-theme="handbill"]{
+    --bg:#E9DCC3;--panel:#E2D3B6;--panel2:#DCCAA8;--panel3:#D3BF97;--line:#BFAB82;
+    --txt:#171310;--dim:#5A4E3E;--dim2:#7B6C55;--red:#C4181A;--red-lo:#8E0F11;
+    --chrome:#4A3F33;--gold:#8A6716;--blue:#2A5CA8;
+    --deep:#F3EADA;--rowline:#CFBC94;--linehi:#A08E6A;--panelhi:#D8C6A0;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{
     background:var(--bg);
     background-image:
-      radial-gradient(ellipse 80% 55% at 50% -5%, rgba(226,0,26,.16), transparent 70%),
-      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(46,119,230,.06), transparent 70%);
+      radial-gradient(ellipse 80% 55% at 50% -5%, var(--glow1,rgba(226,0,26,.16)), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, var(--glow2,rgba(46,119,230,.06)), transparent 70%);
     background-attachment:fixed;
     color:var(--txt);
     font-family:'Archivo',system-ui,-apple-system,sans-serif;
@@ -73,7 +103,7 @@
   .btn{background:var(--panel3);color:var(--txt);border:1px solid var(--line);padding:9px 16px;
     font-weight:700;text-transform:uppercase;letter-spacing:.09em;font-size:11px;
     transition:transform .07s,background .13s,border-color .13s}
-  .btn:hover{background:#2C2C37;border-color:#3D3D4B}
+  .btn:hover{background:var(--panelhi);border-color:var(--linehi)}
   .btn:active{transform:translateY(1px)}
   .btn.primary{background:var(--red);border-color:var(--red);color:#fff;
     clip-path:polygon(0 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%)}
@@ -96,7 +126,7 @@
   }
 
   .prog{display:flex;align-items:center;gap:15px;margin-top:19px;padding-top:16px;border-top:1px solid var(--line)}
-  .bar{flex:1;height:13px;background:#000;border:1px solid var(--line);position:relative;overflow:hidden}
+  .bar{flex:1;height:13px;background:var(--deep);border:1px solid var(--line);position:relative;overflow:hidden}
   .bar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(180deg,#FF2A40,var(--red) 45%,var(--red-lo));transition:width .5s ease}
   .bar:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 13px,rgba(0,0,0,.5) 13px 14px)}
   .prog .fig{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.05em;white-space:nowrap;color:var(--dim)}
@@ -150,10 +180,10 @@
   .year .yc{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim2)}
 
   .row{display:grid;grid-template-columns:22px 128px 1fr auto;gap:12px;align-items:center;
-    padding:8px 11px;border-bottom:1px solid #1E1E26;cursor:pointer;border-left:2px solid transparent}
+    padding:8px 11px;border-bottom:1px solid var(--rowline);cursor:pointer;border-left:2px solid transparent}
   .row:hover{background:var(--panel);border-left-color:var(--bc,var(--dim2))}
-  .row .tick{width:18px;height:18px;border:1px solid #3A3A48;display:grid;place-items:center;
-    font-size:11px;line-height:1;color:transparent;background:#0C0C10}
+  .row .tick{width:18px;height:18px;border:1px solid var(--linehi);display:grid;place-items:center;
+    font-size:11px;line-height:1;color:transparent;background:var(--deep)}
   .row.seen .tick{background:var(--red);border-color:var(--red);color:#fff}
   .row.seen .name,.row.seen .date{opacity:.42}
   .row .date{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--dim);white-space:nowrap}
@@ -170,7 +200,7 @@
   .row:hover .tools,.row:focus-within .tools{opacity:1}
   .row .tools button{background:var(--panel2);border:1px solid var(--line);padding:3px 8px;
     font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--dim)}
-  .row .tools button:hover{color:var(--txt);border-color:#3D3D4B}
+  .row .tools button:hover{color:var(--txt);border-color:var(--linehi)}
   .row .stars{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);white-space:nowrap}
   @media(max-width:680px){
     .row{grid-template-columns:20px 1fr auto;gap:9px}
@@ -187,10 +217,10 @@
 
   /* ---------- shows ---------- */
   .showrow{display:grid;grid-template-columns:1fr 180px auto;gap:15px;align-items:center;
-    padding:12px 13px;border-bottom:1px solid #1E1E26;border-left:3px solid var(--bc,var(--dim2))}
+    padding:12px 13px;border-bottom:1px solid var(--rowline);border-left:3px solid var(--bc,var(--dim2))}
   .showrow h3{font-size:17px}
   .showrow .meta{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--dim2);margin-top:3px}
-  .minibar{height:8px;background:#0C0C10;border:1px solid var(--line);position:relative}
+  .minibar{height:8px;background:var(--deep);border:1px solid var(--line);position:relative}
   .minibar i{position:absolute;inset:0 auto 0 0;background:var(--bc,var(--red))}
   .showrow .pct{font-family:'DM Mono',monospace;font-size:10.5px;margin-top:5px;color:var(--dim)}
   .showrow.off{opacity:.42}
@@ -203,7 +233,7 @@
   .fig b{display:block;font-family:'Anton',Impact,sans-serif;font-size:31px;line-height:1;margin-bottom:4px}
   .fig span{font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--dim2);font-weight:800}
   .decade{display:grid;grid-template-columns:62px 1fr 118px;gap:13px;align-items:center;
-    padding:7px 0;border-bottom:1px solid #1E1E26}
+    padding:7px 0;border-bottom:1px solid var(--rowline)}
   .decade .lbl{font-family:'DM Mono',monospace;font-size:13px}
   .decade .n{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--dim2);text-align:right}
 
@@ -258,9 +288,9 @@
   .pass label{display:block;font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;font-weight:800;color:var(--dim2);margin-bottom:6px}
   .idbox{width:100%;font-family:'DM Mono',monospace!important;font-size:27px!important;
     letter-spacing:.26em;text-align:center;text-transform:uppercase;padding:12px 8px!important;
-    background:#07070A!important;border:1px solid var(--line)!important;color:var(--red)!important}
+    background:var(--deep)!important;border:1px solid var(--line)!important;color:var(--red)!important}
   .idbox::placeholder{color:#33333E;letter-spacing:.26em}
-  .pwbox{width:100%;font-size:15px!important;padding:11px 12px!important;background:#07070A!important}
+  .pwbox{width:100%;font-size:15px!important;padding:11px 12px!important;background:var(--deep)!important}
   .pass .hint{font-size:11px;color:var(--dim2);margin:7px 0 0;line-height:1.5}
   .pass .err{font-size:12.5px;color:#FF5566;margin:13px 0 0;min-height:1px;font-weight:600}
   .pass .go{width:100%;margin-top:17px;padding:13px;font-size:12px}
@@ -284,6 +314,75 @@
   .keepme{display:flex;align-items:center;gap:9px;margin-top:16px;font-size:12.5px;color:var(--dim);cursor:pointer;font-weight:400}
   .keepme input{width:16px;height:16px;accent-color:var(--red);cursor:pointer;flex:0 0 16px}
   .keepme:hover{color:var(--txt)}
+
+
+  /* light theme needs the broadcast glow toned down and the tron inverted */
+  [data-theme="handbill"]{--glow1:rgba(196,24,26,.10);--glow2:rgba(42,92,168,.05)}
+  [data-theme="handbill"] .tron{background:linear-gradient(160deg,#F2E9D6,#E2D3B6 60%,#E8D8BC)}
+  [data-theme="handbill"] .tron:before{background:radial-gradient(ellipse at 50% 0%,rgba(196,24,26,.14),transparent 62%)}
+  [data-theme="handbill"] .tron:after{background:repeating-linear-gradient(0deg,rgba(0,0,0,.022) 0 1px,transparent 1px 3px)}
+  [data-theme="handbill"] .marquee{text-shadow:none}
+  [data-theme="handbill"] .gate{background-image:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(196,24,26,.12),transparent 70%)}
+  [data-theme="handbill"] .pass{background:linear-gradient(165deg,#F2E9D6,#E2D3B6)}
+  [data-theme="handbill"] .stamp{color:#fff}
+  [data-theme="handbill"] .btn.primary{color:#fff}
+  [data-theme="hulk"] .btn.primary,[data-theme="gold"] .btn.primary{color:#1A1206}
+  [data-theme="hulk"] .row.seen .tick,[data-theme="gold"] .row.seen .tick{color:#1A1206}
+  [data-theme="hulk"] .toast,[data-theme="gold"] .toast{color:#1A1206}
+  [data-theme="hulk"] .pass .strip span,[data-theme="gold"] .pass .strip span{color:#1A1206}
+  [data-theme="hulk"] .stamp,[data-theme="gold"] .stamp{color:#1A1206}
+
+  /* ---------- theme swatches ---------- */
+  .swatches{display:flex;gap:5px;align-items:center}
+  .swatches button{width:15px;height:26px;border:1px solid var(--line);padding:0;
+    transform:skewX(-14deg);transition:transform .1s}
+  .swatches button:hover{transform:skewX(-14deg) scaleY(1.14)}
+  .swatches button[aria-pressed="true"]{border-color:var(--txt);box-shadow:0 0 0 1px var(--txt)}
+  .themegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:9px}
+  .themecard{border:1px solid var(--line);padding:11px 13px;cursor:pointer;text-align:left;background:var(--panel2)}
+  .themecard[aria-pressed="true"]{border-color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
+  .themecard b{display:block;font-family:'Anton',sans-serif;font-size:15px;text-transform:uppercase;margin-bottom:3px}
+  .themecard span{font-size:11px;color:var(--dim2);display:block;line-height:1.4}
+  .themecard .chips{display:flex;gap:3px;margin-top:8px}
+  .themecard .chips i{width:16px;height:9px;transform:skewX(-14deg);display:block}
+
+  /* ---------- on now ---------- */
+  .sechd{font-size:19px;margin:26px 0 9px}
+  .onair{border:1px solid var(--line);border-left:3px solid var(--bc,var(--red));
+    background:var(--panel);padding:17px 19px}
+  .onair h3{font-size:26px;margin:9px 0 0}
+  .onair .when{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--dim);margin-top:6px}
+  .onair .pct{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--dim2);margin-top:5px}
+  .offair{border:1px dashed var(--line);padding:19px;color:var(--dim);font-size:14px}
+  .offair p{margin:9px 0 0}
+  .offair b{color:var(--txt)}
+  .pulse{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:800;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--red)}
+  .pulse i{width:9px;height:9px;border-radius:50%;background:var(--red);animation:beat 1.6s infinite}
+  .pulse.off{color:var(--dim2)}
+  .pulse.off i{background:var(--dim2);animation:none}
+  @keyframes beat{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.78)}}
+  .cd{font-family:'DM Mono',monospace;color:var(--red);font-weight:500}
+  .uprow{display:grid;grid-template-columns:9px 118px 74px 1fr auto;gap:11px;align-items:center;
+    padding:9px 11px;border-bottom:1px solid var(--rowline);border-left:2px solid transparent}
+  .uprow:hover{background:var(--panel);border-left-color:var(--bc,var(--dim2))}
+  .uprow .dot{width:7px;height:7px;background:var(--bc,var(--dim2));transform:skewX(-16deg)}
+  .upday{font-family:'DM Mono',monospace;font-size:12px;color:var(--txt)}
+  .uptime{font-family:'DM Mono',monospace;font-size:12px;color:var(--dim)}
+  .upname{font-weight:600;display:flex;align-items:center;gap:7px;overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap}
+  .upcd{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim2)}
+  .tznote{font-size:12px;color:var(--dim2);margin:16px 0 0;line-height:1.6}
+  .tznote b{color:var(--dim)}
+  .airrow{display:grid;grid-template-columns:1fr auto auto auto auto;gap:9px;align-items:center;
+    padding:8px 0;border-bottom:1px solid var(--rowline);border-left:2px solid var(--bc);padding-left:10px}
+  .airrow input[type="time"]{width:112px}
+  .airrow input[type="number"]{width:78px}
+  @media(max-width:680px){
+    .uprow{grid-template-columns:9px 1fr auto;gap:8px}
+    .upname{grid-column:2/4;grid-row:2}
+    .airrow{grid-template-columns:1fr auto;row-gap:5px}
+  }
 
 </style>
 
@@ -343,6 +442,7 @@
       <h1>Card Subject to Change<em>WWE watch ledger</em></h1>
     </div>
     <div class="grow"></div>
+    <div class="swatches" id="swatches" title="Theme"></div>
     <div class="whoami">
       <div class="stat" id="mastStat">Loading</div>
       <span class="badge2" id="whoBadge"></span>
@@ -361,6 +461,7 @@
 
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" aria-selected="true" data-tab="ledger">Ledger</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="now">On Now</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="shows">Shows</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="stats">Stats</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="data">Data</button>
@@ -393,6 +494,22 @@
     <div class="pager" id="pager"></div>
   </div>
 
+  <div class="panel" id="p-now">
+    <div id="nowPanelBody">
+      <div id="liveBox"></div>
+      <h2 class="sechd">Next seven days</h2>
+      <div id="weekBox"></div>
+      <h2 class="sechd">Further out</h2>
+      <div id="laterBox"></div>
+    </div>
+    <p class="tznote" id="tzNote"></p>
+    <div class="card2" style="margin-top:18px">
+      <h3>Air times</h3>
+      <p>Quoted in US Eastern and converted to your zone, daylight saving included. Change any of them if your region airs it elsewhere.</p>
+      <div id="airEdit"></div>
+    </div>
+  </div>
+
   <div class="panel" id="p-shows">
     <p style="font-size:13px;color:var(--dim);max-width:68ch;margin:0 0 15px">
       Switch a show off and it leaves your ledger and your completion percentage. Ticks are kept, so turning it back on restores everything.
@@ -415,6 +532,12 @@
   </div>
 
   <div class="panel" id="p-data">
+    <div class="card2">
+      <h3>Theme</h3>
+      <p>Saved per device rather than per profile, so it applies before you sign in.</p>
+      <div class="themegrid" id="themeGrid"></div>
+    </div>
+
     <div class="card2">
       <h3>Your profile</h3>
       <p id="profInfo">&mdash;</p>
@@ -1053,6 +1176,7 @@ const Device={
    3. CATALOGUE GENERATION
    ============================================================ */
 const TODAY = new Date(); TODAY.setHours(12,0,0,0);
+const HORIZON = new Date(TODAY); HORIZON.setDate(HORIZON.getDate()+200);
 const iso = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const parse = s => {const [y,m,d]=s.split('-').map(Number); const x=new Date(y,m-1,d); x.setHours(12,0,0,0); return x;};
 const addDays = (d,n) => {const x=new Date(d); x.setDate(x.getDate()+n); return x;};
@@ -1075,10 +1199,12 @@ function buildCatalogue(){
     for(const leg of show.legs){
       let d = parse(leg.from);
       d = addDays(d,(leg.day - d.getDay() + 7) % 7);
-      const end = leg.to ? parse(leg.to) : TODAY;
+      const end = leg.to ? parse(leg.to) : HORIZON;
+      const todayS = iso(TODAY);
       while(d<=end){
         const s = iso(d);
-        out.push({id:show.id+':'+s, show:show.id, date:s, num:n, title:show.short+' #'+n, run:show.run, kind:'weekly'});
+        out.push({id:show.id+':'+s, show:show.id, date:s, num:n, title:show.short+' #'+n,
+                  run:show.run, kind:'weekly', future: s>todayS});
         n++; d = addDays(d,7);
       }
     }
@@ -1091,12 +1217,13 @@ function buildCatalogue(){
     for(const [y0,y1] of s.years){
       for(let y=y0;y<=y1;y++){
         const d = nthSunday(y, s.month, s.nth);
-        if(d>TODAY) continue;
+        if(d>HORIZON) continue;
         const date = iso(d);
         const base = (s.as && s.as[y]) ? s.as[y] : s.name;
         const title = base + (s.tag ? ' \u2014 '+s.tag+' ' : ' ') + y;
         out.push({id:'event:'+date+':'+s.name.slice(0,7)+(s.tag||''), show:'event', date, title,
-                  run:180, kind:'event', est:true, sk:base+' '+s.name+' ppv'});
+                  run:180, kind:'event', est:true, future: date>iso(TODAY),
+                  sk:base+' '+s.name+' ppv'});
       }
     }
   }
@@ -1126,9 +1253,12 @@ function defaultTracked(){
 }
 
 let POOL=[];
+let UPCOMING=[];
 function rebuildPool(){
-  POOL = CAT.filter(e => state.tracked[e.show] && !state.hidden[e.id]
+  const today=iso(TODAY);
+  POOL = CAT.filter(e => state.tracked[e.show] && !state.hidden[e.id] && !e.future
     && (!state.from || e.date>=state.from) && (!state.to || e.date<=state.to));
+  UPCOMING = CAT.filter(e => e.date>=today && state.tracked[e.show] && !state.hidden[e.id]);
 }
 function rebuildCatalogue(){
   CAT = buildCatalogue().concat(state.custom);
@@ -1584,6 +1714,202 @@ document.addEventListener('keydown',ev=>{
   if(ev.key==='/' && document.activeElement!==$('fText')){ ev.preventDefault(); $('fText').focus(); }
 });
 
+/* ============================================================
+   11. SCHEDULE
+   No network calls happen here. Upcoming shows are projected
+   from the same broadcast histories that build the catalogue:
+   Raw is on Mondays, so there is a Raw next Monday. Air times
+   are editable defaults quoted in US Eastern and converted to
+   whatever zone this browser is in, DST included.
+   ============================================================ */
+const LOCAL_TZ = (()=>{ try{ return Intl.DateTimeFormat().resolvedOptions().timeZone; }catch(e){ return 'local'; } })();
+
+const AIRTIME = {
+  raw:       {time:'20:00', mins:180, where:'Netflix / USA'},
+  smackdown: {time:'20:00', mins:120, where:'USA Network'},
+  nxt:       {time:'20:00', mins:120, where:'The CW'},
+  mainevent: {time:'22:00', mins:60,  where:'Hulu'},
+  event:     {time:'19:00', mins:240, where:'Peacock / Netflix'}
+};
+const ET='America/New_York';
+
+function airOf(showId){
+  const base=AIRTIME[showId] || {time:'20:00', mins:120, where:''};
+  const over=(state.airtimes||{})[showId] || {};
+  return Object.assign({}, base, over);
+}
+function zonedToUTC(dateStr, hhmm, tz){
+  const [h,m]=hhmm.split(':').map(Number);
+  const [Y,M,D]=dateStr.split('-').map(Number);
+  let guess=new Date(Date.UTC(Y,M-1,D,h,m));
+  for(let i=0;i<3;i++){
+    let p;
+    try{
+      p=new Intl.DateTimeFormat('en-US',{timeZone:tz,hourCycle:'h23',
+        year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).formatToParts(guess);
+    }catch(e){ return guess; }
+    const g=t=>Number(p.find(x=>x.type===t).value);
+    const seen=Date.UTC(g('year'),g('month')-1,g('day'),g('hour'),g('minute'));
+    const want=Date.UTC(Y,M-1,D,h,m);
+    if(seen===want) break;
+    guess=new Date(guess.getTime()+(want-seen));
+  }
+  return guess;
+}
+function slotOf(e){
+  const a=airOf(e.show);
+  const start=zonedToUTC(e.date,a.time,ET);
+  return {start, end:new Date(start.getTime()+a.mins*60000), mins:a.mins, where:a.where};
+}
+function localTime(d){
+  try{ return d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}); }
+  catch(e){ return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0'); }
+}
+function localDay(d){
+  try{ return d.toLocaleDateString([], {weekday:'short',day:'numeric',month:'short'}); }
+  catch(e){ return d.toDateString(); }
+}
+function countdown(ms){
+  if(ms<0) ms=0;
+  const s=Math.floor(ms/1000), d=Math.floor(s/86400), h=Math.floor(s%86400/3600),
+        m=Math.floor(s%3600/60), sec=s%60;
+  if(d>0) return d+'d '+h+'h '+m+'m';
+  if(h>0) return h+'h '+m+'m '+String(sec).padStart(2,'0')+'s';
+  return m+'m '+String(sec).padStart(2,'0')+'s';
+}
+
+function scheduleNow(){
+  const now=Date.now();
+  const live=[], soon=[];
+  for(const e of UPCOMING){
+    const s=slotOf(e);
+    if(now>=s.start.getTime() && now<s.end.getTime()) live.push({e,s});
+    else if(s.start.getTime()>now) soon.push({e,s});
+  }
+  soon.sort((a,b)=>a.s.start-b.s.start);
+  return {live, soon};
+}
+
+let tickTimer=null;
+function renderSchedule(){
+  const {live, soon}=scheduleNow();
+  const now=Date.now();
+
+  /* on air */
+  $('liveBox').innerHTML = live.length ? live.map(({e,s})=>{
+    const meta=SHOW_META[e.show];
+    const pct=Math.min(100,(now-s.start)/(s.end-s.start)*100);
+    const label=e.kind==='event'?e.title:meta.short+' #'+e.num;
+    return `<div class="onair" style="--bc:${meta.bc}">
+      <div class="pulse"><i></i>On air now</div>
+      <h3>${esc(label)}</h3>
+      <div class="when">Started ${localTime(s.start)} &middot; ends about ${localTime(s.end)}${s.where?' &middot; '+esc(s.where):''}</div>
+      <div class="minibar" style="margin-top:11px"><i style="width:${pct.toFixed(1)}%"></i></div>
+      <div class="pct">${Math.round(pct)}% through</div>
+      <div class="acts" style="margin-top:13px">
+        <button class="btn primary sm" data-watch="${e.id}">Mark watched</button>
+        <button class="btn sm" data-open="${e.id}">Add a card</button>
+      </div></div>`;
+  }).join('') : `<div class="offair">
+      <div class="pulse off"><i></i>Nothing on air</div>
+      ${soon.length?`<p>Next is <b>${esc(soon[0].e.kind==='event'?soon[0].e.title:SHOW_META[soon[0].e.show].short)}</b> in <span class="cd" id="cdNext">${countdown(soon[0].s.start-now)}</span></p>`:'<p>Nothing scheduled. Switch on a show, or extend the horizon.</p>'}
+    </div>`;
+
+  /* next seven days, then the rest */
+  const weekEnd=now+7*864e5;
+  const wk=soon.filter(x=>x.s.start.getTime()<=weekEnd);
+  const later=soon.filter(x=>x.s.start.getTime()>weekEnd);
+
+  const rowFor=({e,s},withCd)=>{
+    const meta=SHOW_META[e.show];
+    const label=e.kind==='event'?e.title:meta.short+' #'+e.num;
+    return `<div class="uprow" style="--bc:${meta.bc}">
+      <span class="dot"></span>
+      <span class="upday">${localDay(s.start)}</span>
+      <span class="uptime">${localTime(s.start)}</span>
+      <span class="upname">${esc(label)}${e.est?'<span class="badge est">Est. date</span>':''}${e.kind==='event'?'<span class="badge ev">Event</span>':''}</span>
+      <span class="upcd"${withCd?' data-at="'+s.start.getTime()+'"':''}>${withCd?countdown(s.start-now):''}</span>
+    </div>`;
+  };
+  $('weekBox').innerHTML = wk.length ? wk.map(x=>rowFor(x,true)).join('')
+    : '<p style="color:var(--dim)">Nothing in the next seven days.</p>';
+  $('laterBox').innerHTML = later.length ? later.slice(0,40).map(x=>rowFor(x,false)).join('')
+    : '<p style="color:var(--dim)">Nothing further out. The projection runs about six months ahead.</p>';
+
+  $('tzNote').innerHTML='Times shown for <b>'+esc(LOCAL_TZ)+'</b>, converted from US Eastern. '+
+    'These are the usual slots, not a broadcaster feed &mdash; specials and pre-emptions will not show. Adjust any of them below.';
+
+  $('airEdit').innerHTML=Object.keys(AIRTIME).map(k=>{
+    const a=airOf(k), m=SHOW_META[k];
+    if(!m) return '';
+    return `<div class="airrow" style="--bc:${m.bc}">
+      <span class="upname">${esc(m.short||m.name)}</span>
+      <input type="time" data-air="${k}" value="${a.time}">
+      <span style="font-size:11px;color:var(--dim2)">ET start</span>
+      <input type="number" data-len="${k}" value="${a.mins}" min="15" max="600" step="15">
+      <span style="font-size:11px;color:var(--dim2)">minutes</span>
+    </div>`;
+  }).join('');
+
+  clearTimeout(tickTimer);
+  if($('p-now').classList.contains('on')) tickTimer=setTimeout(renderSchedule, live.length?30000:1000);
+}
+
+$('nowPanelBody').addEventListener('click',ev=>{
+  const w=ev.target.closest('[data-watch]'), o=ev.target.closest('[data-open]');
+  if(w){ state.seen[w.dataset.watch]={d:iso(TODAY)}; save(); renderSchedule(); renderAll(); toast('Marked watched'); }
+  if(o){ openDetail(o.dataset.open); }
+});
+$('airEdit').addEventListener('change',ev=>{
+  const t=ev.target;
+  const id=t.dataset.air||t.dataset.len; if(!id) return;
+  state.airtimes=state.airtimes||{};
+  state.airtimes[id]=state.airtimes[id]||{};
+  if(t.dataset.air) state.airtimes[id].time=t.value;
+  if(t.dataset.len) state.airtimes[id].mins=Math.max(15,Number(t.value)||120);
+  save(); renderSchedule();
+});
+
+/* ============================================================
+   13. THEMES
+   Stored per device, not per profile, so the lock screen is
+   already themed before anything is decrypted.
+   ============================================================ */
+const THEMES=[
+  {id:'tron',     name:'Titantron', note:'Broadcast black and WWE red.',        chips:['#08080B','#E2001A','#C7CCD4']},
+  {id:'gold',     name:'Big Gold',  note:'Championship brass on black.',        chips:['#0A0906','#D4A32E','#F0D06A']},
+  {id:'attitude', name:'Attitude',  note:'Cold steel, blood red, late nineties.',chips:['#0C0D0F','#B4121C','#AEB6C0']},
+  {id:'hulk',     name:'Hulkamania',note:'Red and yellow, running wild.',       chips:['#120A06','#FFC20E','#E0341C']},
+  {id:'handbill', name:'Handbill',  note:'Aged arena poster. The light one.',   chips:['#E9DCC3','#C4181A','#8A6716']}
+];
+const THEME_KEY='wwe-theme';
+let curTheme='tron';
+
+function applyTheme(id){
+  if(!THEMES.some(t=>t.id===id)) id='tron';
+  curTheme=id;
+  document.documentElement.setAttribute('data-theme', id);
+  paintThemeUI();
+}
+function paintThemeUI(){
+  const sw=document.getElementById('swatches');
+  if(sw) sw.innerHTML=THEMES.map(t=>
+    `<button type="button" data-theme-id="${t.id}" title="${esc(t.name)}"
+      aria-pressed="${t.id===curTheme}"
+      style="background:linear-gradient(135deg,${t.chips[0]} 0 50%,${t.chips[1]} 50% 100%)"></button>`).join('');
+  const grid=document.getElementById('themeGrid');
+  if(grid) grid.innerHTML=THEMES.map(t=>
+    `<button type="button" class="themecard" data-theme-id="${t.id}" aria-pressed="${t.id===curTheme}">
+      <b>${esc(t.name)}</b><span>${esc(t.note)}</span>
+      <span class="chips">${t.chips.map(c=>`<i style="background:${c}"></i>`).join('')}</span>
+    </button>`).join('');
+}
+document.addEventListener('click',ev=>{
+  const b=ev.target.closest('[data-theme-id]'); if(!b) return;
+  applyTheme(b.dataset.themeId);
+  RAW.set(THEME_KEY, curTheme);
+});
+
 /* ---------- data panel ---------- */
 $('btnExport').onclick=()=>{
   const b=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
@@ -1694,6 +2020,7 @@ $('btnRandom').onclick=()=>{
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t));
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+t.dataset.tab));
+  if(t.dataset.tab==='now') renderSchedule(); else clearTimeout(tickTimer);
   if(t.dataset.tab==='stats') renderStats();
   if(t.dataset.tab==='shows') renderShows();
   if(t.dataset.tab==='data'){ syncUI(); paintDevice(); }
@@ -1717,6 +2044,7 @@ function fillSelects(){
 }
 function renderAll(){
   renderTron(); renderLedger();
+  if(document.getElementById('p-now').classList.contains('on')) renderSchedule();
   if($('p-shows').classList.contains('on')) renderShows();
   if($('p-stats').classList.contains('on')) renderStats();
 }
@@ -1728,7 +2056,7 @@ async function boot(data){
   if(!state.tracked) state.tracked=defaultTracked();
   SHOWS.forEach(s=>{ if(!(s.id in state.tracked)) state.tracked[s.id]=false; });
   if(!('event' in state.tracked)) state.tracked.event=true;
-  rebuildCatalogue(); fillSelects(); syncUI(); renderAll();
+  rebuildCatalogue(); fillSelects(); syncUI(); renderAll(); paintThemeUI();
   document.getElementById('whoBadge').textContent=Auth.id||'';
   paintDevice();
   const raw=await RAW.get(PROFILE_PREFIX+Auth.id);
@@ -1854,6 +2182,7 @@ G('btnChangePw').onclick=async()=>{
 
 /* ---------- start ---------- */
 (async function start(){
+  applyTheme(await RAW.get(THEME_KEY) || 'tron');
   await paintKnown();
   const legacy=await RAW.get(LEGACY_KEY);
   G('gLegacy').style.display = legacy ? 'block':'none';

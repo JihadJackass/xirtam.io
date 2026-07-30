@@ -327,6 +327,33 @@
     .row .name{grid-column:2;grid-row:2;font-size:14px}
     .row .tools{opacity:1;grid-row:1/3}
   }
+  /* ---------- inline episode detail ---------- */
+  .rowdetail{border-bottom:1px solid var(--rowline);background:var(--panel);
+    border-left:3px solid var(--red);animation:rdopen .16s ease}
+  @keyframes rdopen{from{opacity:0}to{opacity:1}}
+  .rdmain{padding:16px 18px}
+  .rdhead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .rdhead h4{margin:0;font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;font-weight:400}
+  .rdmeta{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim2);margin-top:5px}
+  .rdfaces{display:flex;gap:13px;flex-wrap:wrap;margin-top:13px}
+  .rdfaces .dperson{cursor:pointer}
+  .rdfaces .dperson:hover span:last-child{color:var(--red)}
+  .rdstill{width:100%;max-width:340px;display:block;margin:14px 0 0;border:1px solid var(--line)}
+  .rddesc{font-size:13.5px;color:var(--dim);line-height:1.6;margin:13px 0 0}
+  .rdsrc{font-size:11px;color:var(--dim2);margin:7px 0 0}
+  .rdfield{margin-top:14px}
+  .rdfield label{display:block;font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;
+    font-weight:800;color:var(--dim2);margin-bottom:6px}
+  .rdfield textarea{width:100%;min-height:58px;font-family:inherit;font-size:13px;
+    background:var(--deep);border:1px solid var(--line);color:var(--txt);padding:9px 11px}
+  .rdrow{display:flex;align-items:center;gap:13px;margin-top:14px}
+  .rdlabel{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--dim2)}
+  .rdstars button{background:none;border:0;color:var(--linehi);font-size:19px;padding:0 2px;cursor:pointer}
+  .rdstars button.on{color:var(--gold)}
+  .rdacts{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}
+  .rdstatus{font-size:12px;color:var(--gold);margin-top:10px;min-height:1px}
+  .row .chev{font-size:8px;color:var(--dim2);padding:0 4px}
+  @media(max-width:700px){ .rdmain{padding:14px 13px} .rdhead h4{font-size:17px} }
   .pager{display:flex;justify-content:center;gap:9px;margin-top:22px;align-items:center}
   .pager span{font-family:'DM Mono',monospace;font-size:11px;color:var(--dim2)}
   .nores{padding:26px 4px;color:var(--dim)}
@@ -956,7 +983,52 @@
     </div>
 
     <div class="card2">
-      <h3>Fix event dates automatically</h3>
+      <h3>Import weekly episodes from TMDB</h3>
+      <p>Wikipedia covers pay-per-views well and weekly television barely at all. TMDB is the other way
+      round &mdash; it carries Raw and SmackDown episode by episode with air dates, titles, recap text and
+      stills, one season per year, which is how this catalogue is already built.</p>
+      <p>You need your own free key from <b>themoviedb.org &rarr; Settings &rarr; API</b>. Mine would be
+      visible in this file and revoked within a day. It is kept in plain storage on this device, since a
+      read-only key is not worth encrypting.</p>
+      <div class="field" style="max-width:400px">
+        <label for="tmdbKey">TMDB API key</label>
+        <input type="text" id="tmdbKey" placeholder="paste your v3 API key" spellcheck="false">
+      </div>
+      <div class="acts">
+        <button class="btn primary" id="btnTmdbRaw">Import Raw</button>
+        <button class="btn primary" id="btnTmdbSD">Import SmackDown</button>
+        <button class="btn" id="btnTmdbStop" style="display:none">Stop</button>
+      </div>
+      <pre id="tmdbLog" style="display:none;font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);
+        background:var(--deep);border:1px solid var(--line);padding:11px 13px;margin:12px 0 0;
+        white-space:pre-wrap;line-height:1.6;max-height:260px;overflow:auto"></pre>
+      <div class="acts" id="tmdbFixWrap" style="display:none;margin-top:11px">
+        <button class="btn" id="btnTmdbFix">Apply the reconciliation</button>
+      </div>
+      <p style="font-size:11px;color:var(--dim2);margin:13px 0 0">This product uses the TMDB API but is not
+      endorsed or certified by TMDB.</p>
+    </div>
+
+    <div class="card2">
+      <h3>Fill in episode data</h3>
+      <p>WWE event articles on Wikipedia carry the full results table in their source, so one request per
+      event returns the description, the real date and every match on the card together. This is the way to
+      populate the database &mdash; typing it in was never realistic.</p>
+      <p style="color:var(--dim2)">Events first: there are a few hundred and almost all of them have articles.
+      Weekly episodes are thinner &mdash; Wikipedia covers notable Raws and little else &mdash; so expect most
+      of those to come back empty. Nothing is written unless the article's year matches the episode.</p>
+      <div class="acts">
+        <button class="btn primary" id="btnFillEvents">Fill in all events</button>
+        <button class="btn" id="btnFillWeekly">Try weekly episodes</button>
+        <button class="btn" id="btnStopFill" style="display:none">Stop</button>
+      </div>
+      <pre id="fillLog" style="display:none;font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);
+        background:var(--deep);border:1px solid var(--line);padding:11px 13px;margin:12px 0 0;
+        white-space:pre-wrap;line-height:1.6;max-height:200px;overflow:auto"></pre>
+    </div>
+
+    <div class="card2">
+      <h3>Fix event dates only</h3>
       <p>Every pay-per-view date except WrestleMania is a guess at which Sunday it fell on. Wikipedia states
       the real date in the opening line of each event's article, so this reads it and corrects the ledger.
       A date is only accepted within 120 days of the estimate, so a mismatched article cannot quietly move
@@ -1045,7 +1117,7 @@
    rows: "SmackDown aired Thursdays 1999-2005, Fridays to 2016,
    Tuesdays to 2019, Fridays since." Episodes generate from that.
    ============================================================ */
-const BUILD_ID='2026-07-29 22:12 UTC';
+const BUILD_ID='2026-07-30 15:58 UTC';
 
 /* Known (episode number, date) pairs. The generator assumes a weekly show
    never missed its slot, which is false -- Raw was pre-empted often enough to
@@ -1730,8 +1802,9 @@ const Auth={
 
 /* legacy key kept for the pre-profiles migration path */
 function blankState(){
-  return {seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},
-          queue:[],nope:{},fav:{},faces:{},faceSrc:{},feuds:[],from:null,to:null};
+  return {seen:{},tracked:defaultTracked(),custom:[],hidden:{},cards:{},titles:{},desc:{},
+          dates:{},anchors:[],wikiSrc:{},bios:{},stills:{},queue:[],nope:{},fav:{},faces:{},faceSrc:{},
+          feuds:[],from:null,to:null};
 }
 
 /* ============================================================
@@ -1989,6 +2062,7 @@ function rebuildCatalogue(){
   CAT.forEach(e=>{
     if(state.titles[e.id]) e.title = state.titles[e.id];
     if(state.cards[e.id]) e.card = state.cards[e.id];
+    if(state.desc && state.desc[e.id]) e.desc = state.desc[e.id];
     if(!e.card) e.card='';
   });
   CAT.sort((a,b)=> a.date<b.date?-1 : a.date>b.date?1 : a.show.localeCompare(b.show));
@@ -2156,6 +2230,7 @@ let filt={status:'all',kind:'',show:'',year:'',text:''};
    and optionally isolated. It never touches state.from/state.to, because those
    define your tracked window and therefore your completion percentage. */
 let SPOT=null;
+let openRow=null;      // id of the row expanded inline
 let SR = {active:false,groups:[],text:[],years:[],windows:[],impossible:false,relaxed:false};
 let page=0; const PER=250;
 
@@ -2329,9 +2404,10 @@ function renderLedger(){
         <span class="tools">${rec.r?`<span class="stars">${'\u2605'.repeat(rec.r)}</span>`:''}
           <button class="star${fav?' on':''}" data-act="fav" title="Favourite">${fav?'\u2605':'\u2606'}</button>
           <button data-act="bulk" title="Mark this and everything before it watched">&#8676; All prior</button>
-          <button data-act="open">Details</button>
+          <span class="chev">${openRow===e.id?'\u25B2':'\u25BC'}</span>
         </span>
       </div>`);
+    if(openRow===e.id) out.push(rowDetail(e));
   }
   $('ledger').innerHTML=out.join('');
   $('pager').innerHTML = pages>1
@@ -2377,6 +2453,95 @@ function spotlight(label, ids, only){
   renderLedger(); jumpToSpot();
 }
 
+/* Inline detail, rendered in the ledger rather than a modal so you keep your
+   place in the list. */
+function rowDetail(e){
+  const rec=state.seen[e.id]||{}, m=SHOW_META[e.show];
+  const desc=(state.desc||{})[e.id]||'';
+  const src=(state.wikiSrc||{})[e.id]||'';
+  const queued=(state.queue||[]).includes(e.id);
+  const faces=e.card?facesInCard(e.card):[];
+  return `<div class="rowdetail" data-for="${e.id}">
+    <div class="rdmain">
+      <div class="rdhead">
+        <div>
+          <h4>${esc(e.title)}</h4>
+          <div class="rdmeta">${fmtDate(e.date)} &middot; ${esc(m.name)} &middot; ${fmtHours(e.run)}${e.est?' &middot; date estimated':''}${e.approxNum?' &middot; number approximate':''}</div>
+        </div>
+        <button class="btn sm" data-rd="close">Close</button>
+      </div>
+      ${faces.length?`<div class="rdfaces">${faces.slice(0,6).map(f=>
+        `<span class="dperson" data-rdperson="${esc(f.name)}">${avatarFor(f.name)}<span>${esc(f.name)}</span></span>`).join('')}</div>`:''}
+      ${(state.stills||{})[e.id]?`<img class="rdstill" src="${esc(state.stills[e.id])}" alt="" loading="lazy">`:''}
+      ${desc?`<p class="rddesc">${esc(desc)}</p>`:''}
+      ${src?`<p class="rdsrc">From the Wikipedia article &ldquo;${esc(src)}&rdquo;, CC BY-SA.</p>`:''}
+      <div class="rdfield">
+        <label>Match card</label>
+        <textarea data-rd="card" placeholder="Nothing on file. Type it, or use Fill from Wikipedia.">${esc(e.card||'')}</textarea>
+      </div>
+      <div class="rdfield">
+        <label>Your notes</label>
+        <textarea data-rd="note" placeholder="Best match, worst segment, where you stopped\u2026">${esc(rec.n||'')}</textarea>
+      </div>
+      <div class="rdrow">
+        <span class="rdlabel">Rating</span>
+        <span class="rdstars">${[1,2,3,4,5].map(n=>`<button data-rd="rate" data-n="${n}" class="${rec.r>=n?'on':''}">\u2605</button>`).join('')}</span>
+      </div>
+      <div class="rdacts">
+        <button class="btn sm ${isSeen(e.id)?'':'primary'}" data-rd="seen">${isSeen(e.id)?'Mark unwatched':'Mark watched'}</button>
+        <button class="btn sm" data-rd="queue">${queued?'On watchlist':'+ Watchlist'}</button>
+        <button class="btn sm" data-rd="fetch">Fill from Wikipedia</button>
+        <button class="btn sm" data-rd="save">Save</button>
+        <button class="btn sm" data-rd="hide">Remove</button>
+      </div>
+      <div class="rdstatus" data-rdstatus></div>
+    </div>
+  </div>`;
+}
+function handleDetailClick(ev,id){
+  const b=ev.target.closest('[data-rd]'); 
+  const person=ev.target.closest('[data-rdperson]');
+  if(person){ openWrestler(person.dataset.rdperson); return; }
+  if(!b) return;
+  const panel=ev.target.closest('.rowdetail');
+  const e=BY_ID[id]; if(!e) return;
+  const a=b.dataset.rd;
+  const cardEl=panel.querySelector('[data-rd="card"]');
+  const noteEl=panel.querySelector('[data-rd="note"]');
+  const status=panel.querySelector('[data-rdstatus]');
+
+  if(a==='close'){ openRow=null; renderLedger(); return; }
+  if(a==='rate'){
+    const n=Number(b.dataset.n);
+    const cur=state.seen[id]||{d:iso(TODAY)};
+    cur.r = cur.r===n ? undefined : n;
+    state.seen[id]=cur; save(); renderLedger(); return;
+  }
+  if(a==='seen'){ setSeen(id,!isSeen(id)); return; }
+  if(a==='queue'){
+    state.queue=state.queue||[];
+    if(state.queue.includes(id)) state.queue=state.queue.filter(x=>x!==id);
+    else state.queue.push(id);
+    save(); renderLedger(); return;
+  }
+  if(a==='hide'){ state.hidden[id]=1; openRow=null; save(); rebuildPool(); renderAll(); toast('Removed'); return; }
+  if(a==='save'){
+    const c=cardEl.value.trim(), n=noteEl.value.trim();
+    if(c) state.cards[id]=c; else delete state.cards[id];
+    const cur=state.seen[id]||{};
+    if(n){ cur.n=n; cur.d=cur.d||iso(TODAY); state.seen[id]=cur; }
+    else if(state.seen[id]) delete state.seen[id].n;
+    save(); rebuildCatalogue(); renderAll(); toast('Saved'); return;
+  }
+  if(a==='fetch'){
+    status.textContent='Looking up Wikipedia\u2026';
+    fillEpisode(e).then(r=>{
+      if(r.card||r.desc){ renderLedger(); toast('Filled from '+r.title); }
+      else { status.textContent='Nothing usable found for this one.'; }
+    }).catch(err=>{ status.textContent='Lookup failed: '+(err.message||err); });
+  }
+}
+
 function noResults(){
   const q=$('fText').value.trim();
   if(SR.impossible)
@@ -2393,10 +2558,16 @@ function noResults(){
 }
 
 $('ledger').addEventListener('click',ev=>{
+  /* Clicking the tick marks it watched. Clicking anywhere else opens the
+     episode inline. Marking 8,551 things watched by accident while trying to
+     read one of them is not a reasonable default. */
+  const inDetail=ev.target.closest('.rowdetail');
+  if(inDetail) return handleDetailClick(ev,inDetail.dataset.for);
   const row=ev.target.closest('.row'); if(!row) return;
-  const id=row.dataset.id, btn=ev.target.closest('button');
+  const id=row.dataset.id;
+  if(ev.target.closest('.tick')){ setSeen(id,!isSeen(id)); return; }
+  const btn=ev.target.closest('button');
   if(btn){ ev.stopPropagation();
-    if(btn.dataset.act==='open') return openDetail(id);
     if(btn.dataset.act==='bulk') return bulkTo(id);
     if(btn.dataset.act==='fav'){
       state.fav=state.fav||{};
@@ -2404,12 +2575,13 @@ $('ledger').addEventListener('click',ev=>{
       save(); renderLedger(); return;
     }
   }
-  setSeen(id,!isSeen(id));
+  openRow = (openRow===id) ? null : id;
+  renderLedger();
 });
 $('ledger').addEventListener('keydown',ev=>{
-  if(ev.key!=='Enter'&&ev.key!==' ') return;
   const row=ev.target.closest('.row'); if(!row) return;
-  ev.preventDefault(); setSeen(row.dataset.id,!isSeen(row.dataset.id));
+  if(ev.key==='Enter'){ ev.preventDefault(); openRow=(openRow===row.dataset.id)?null:row.dataset.id; renderLedger(); }
+  else if(ev.key===' '){ ev.preventDefault(); setSeen(row.dataset.id,!isSeen(row.dataset.id)); }
 });
 $('pager').addEventListener('click',ev=>{
   const b=ev.target.closest('button'); if(!b||b.disabled) return;
@@ -3273,6 +3445,273 @@ async function fixEventDates(onEach){
 }
 
 /* ============================================================
+   24. FILLING IN EPISODE DATA
+   Typing 8,551 match cards by hand is not a plan. WWE event
+   articles on Wikipedia carry a structured results table in
+   their wikitext, so one request per event returns the intro
+   prose, the real date and the full card together.
+
+   Weekly episodes are honestly harder: Wikipedia has articles
+   for notable Raws and almost nothing else. The lookup is tried
+   anyway and simply reports nothing when there is nothing.
+   ============================================================ */
+function cleanWiki(t){
+  return String(t)
+    .replace(/<ref[^>]*\/>/gi,'')
+    .replace(/<ref[^>]*>[\s\S]*?<\/ref>/gi,'')
+    .replace(/\{\{[^{}]*\}\}/g,'')
+    .replace(/\[\[File:[^\]]*\]\]/gi,'')
+    .replace(/\[\[[^\]|]*\|([^\]]*)\]\]/g,'$1')
+    .replace(/\[\[([^\]]*)\]\]/g,'$1')
+    .replace(/<sup>[\s\S]*?<\/sup>/gi,'')
+    .replace(/'''?/g,'')
+    .replace(/<br\s*\/?>/gi,' ')
+    .replace(/<[^>]+>/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+function parseResults(wikitext){
+  const tables=String(wikitext||'').split(/\{\|/).slice(1);
+  for(const raw of tables){
+    const body=raw.split(/\|\}/)[0];
+    if(!/!\s*(No\.?|Results)/i.test(body)) continue;
+    const rows=body.split(/\n\|-/).slice(1);
+    const out=[];
+    for(const r of rows){
+      const cells=[];
+      for(const line of r.split('\n')){
+        const t=line.trim();
+        if(t.startsWith('!')) continue;
+        if(!t.startsWith('|')) continue;
+        for(const c of t.slice(1).split('||')) cells.push(cleanWiki(c));
+      }
+      const nonEmpty=cells.filter(Boolean);
+      if(!nonEmpty.length) continue;
+      const result=nonEmpty[0], stip=nonEmpty[1]||'';
+      if(!/defeated|def\.|won|beat|drew|\bvs\b/i.test(result)) continue;
+      out.push(stip && !/^singles match$/i.test(stip) ? result+' ('+stip+')' : result);
+    }
+    if(out.length) return out;
+  }
+  return [];
+}
+
+async function wikiFull(query){
+  const url=WIKI+'?action=query&generator=search&gsrsearch='+encodeURIComponent(query)+
+    '&gsrlimit=1&prop=extracts|revisions&rvprop=content&rvslots=main'+
+    '&exintro=1&explaintext=1&exsentences=3&format=json&origin=*';
+  const r=await fetch(url);
+  if(!r.ok) throw new Error('Wikipedia returned '+r.status);
+  const j=await r.json();
+  const pages=j&&j.query&&j.query.pages;
+  if(!pages) return null;
+  const p=Object.values(pages)[0];
+  if(!p) return null;
+  let wikitext='';
+  try{ wikitext=p.revisions[0].slots.main['*']||p.revisions[0].slots.main.content||''; }catch(e){}
+  return {title:p.title||'', extract:(p.extract||'').trim(), wikitext};
+}
+
+/* A wrong article must not write nonsense into your ledger, so the year has
+   to appear in the title or the opening prose before anything is accepted. */
+function articleMatches(e, rec){
+  const yr=e.date.slice(0,4);
+  const hay=(rec.title+' '+rec.extract).toLowerCase();
+  if(!hay.includes(yr)) return false;
+  if(e.kind==='event'){
+    const stem=norm(e.title).replace(/\d{4}/g,'').trim().split(' ')[0];
+    return stem.length<3 || norm(rec.title).includes(stem);
+  }
+  return true;
+}
+
+async function fillEpisode(e){
+  const q = e.kind==='event'
+    ? e.title+' professional wrestling event'
+    : SHOW_META[e.show].name+' '+fmtDate(e.date);
+  const rec=await wikiFull(q);
+  const out={card:'',desc:'',date:'',title:rec?rec.title:''};
+  if(!rec || !articleMatches(e,rec)) return out;
+
+  const matches=parseResults(rec.wikitext);
+  if(matches.length){
+    out.card=matches.join('; ');
+    state.cards=state.cards||{}; state.cards[e.id]=out.card;
+  }
+  if(rec.extract){
+    out.desc=rec.extract;
+    state.desc=state.desc||{}; state.desc[e.id]=out.desc;
+  }
+  const d=dateFromProse(rec.extract);
+  if(d && e.est){
+    const gap=Math.abs(parse(d)-parse(e.date))/864e5;
+    if(gap<=120 && d!==e.date){ state.dates=state.dates||{}; state.dates[e.id]=d; out.date=d; }
+  }
+  state.wikiSrc=state.wikiSrc||{}; state.wikiSrc[e.id]=rec.title;
+  save(); rebuildCatalogue();
+  return out;
+}
+
+let fillRun={stop:false};
+async function fillAll(kind, onEach){
+  const todo=CAT.filter(e=>!e.future && !state.hidden[e.id]
+    && (kind==='event' ? e.kind==='event' : state.tracked[e.show] && e.kind!=='event')
+    && !(state.cards||{})[e.id]);
+  let cards=0, descs=0, dates=0, none=0;
+  fillRun={stop:false};
+  for(let i=0;i<todo.length;i++){
+    if(fillRun.stop) break;
+    try{
+      const r=await fillEpisode(todo[i]);
+      if(r.card) cards++;
+      if(r.desc) descs++;
+      if(r.date) dates++;
+      if(!r.card && !r.desc) none++;
+    }catch(err){ none++; }
+    if(onEach) onEach(i+1, todo.length, cards);
+    await new Promise(r=>setTimeout(r,170));
+  }
+  rebuildCatalogue(); renderAll();
+  return {cards,descs,dates,none,total:todo.length};
+}
+
+/* ============================================================
+   25. TMDB
+   Wikipedia covers pay-per-views well and weekly television
+   barely at all. TMDB is the other way round: it carries Raw and
+   SmackDown episode by episode with air dates, titles, recap
+   text and stills, and organises them one season per year, which
+   is exactly how this catalogue is generated.
+
+   Needs your own free API key -- shipping mine would put it in a
+   public file and get it revoked. Stored per device in plain
+   storage, because a read-only TMDB key is not worth encrypting.
+
+   This product uses the TMDB API but is not endorsed or
+   certified by TMDB.
+   ============================================================ */
+const TMDB_IDS={ raw:4656, smackdown:1549 };
+const TMDB_KEY='wwe-tmdb-key';
+let tmdbKey='';
+const TMDB_IMG='https://image.tmdb.org/t/p/w400';
+
+async function loadTmdbKey(){
+  try{ tmdbKey=(await RAW.get(TMDB_KEY))||''; }catch(e){ tmdbKey=''; }
+  const el=document.getElementById('tmdbKey');
+  if(el) el.value=tmdbKey;
+}
+function saveTmdbKey(v){ tmdbKey=(v||'').trim(); RAW.set(TMDB_KEY,tmdbKey); }
+
+async function tmdbGet(path){
+  if(!tmdbKey) throw new Error('No TMDB key set');
+  const sep=path.includes('?')?'&':'?';
+  const r=await fetch('https://api.themoviedb.org/3'+path+sep+'api_key='+encodeURIComponent(tmdbKey));
+  if(r.status===401) throw new Error('TMDB rejected the key');
+  if(!r.ok) throw new Error('TMDB returned '+r.status);
+  return r.json();
+}
+function seasonsByYear(show){
+  const map={};
+  for(const s of (show.seasons||[])){
+    if(!s.season_number) continue;              // season 0 is specials
+    const y=(s.air_date||'').slice(0,4);
+    if(y) map[y]=s.season_number;
+  }
+  return map;
+}
+function tidyEpisodes(payload){
+  return (payload.episodes||[])
+    .filter(e=>/^\d{4}-\d{2}-\d{2}$/.test(e.air_date||''))
+    .map(e=>({
+      date:e.air_date,
+      name:(e.name||'').trim(),
+      overview:(e.overview||'').trim(),
+      still:e.still_path?(TMDB_IMG+e.still_path):''
+    }));
+}
+/* Placeholder names add nothing over the numbering the app already generates.
+   A real one like "Raw 1000" or "Raw Is Owen" is worth keeping, so only clear
+   filler is rejected. */
+function meaningfulName(n){
+  if(!n) return false;
+  if(/^#?\d+$/.test(n)) return false;
+  if(/#\d+\s*$/.test(n)) return false;
+  if(/^episode\s*\d+$/i.test(n)) return false;
+  if(/^season\s*\d+/i.test(n)) return false;
+  return true;
+}
+
+let tmdbRun={stop:false};
+async function tmdbImport(showId, onEach){
+  const tid=TMDB_IDS[showId];
+  if(!tid) throw new Error('No TMDB id known for that show');
+  const show=await tmdbGet('/tv/'+tid);
+  const byYear=seasonsByYear(show);
+  const years=Object.keys(byYear).sort();
+  const stats={titles:0,descs:0,stills:0,matched:0,phantom:0,missing:0,years:0};
+  const phantom=[], missing=[];
+  tmdbRun={stop:false};
+
+  state.desc=state.desc||{}; state.titles=state.titles||{}; state.stills=state.stills||{};
+
+  for(let i=0;i<years.length;i++){
+    if(tmdbRun.stop) break;
+    const y=years[i];
+    let eps=[];
+    try{ eps=tidyEpisodes(await tmdbGet('/tv/'+tid+'/season/'+byYear[y])); }
+    catch(e){ continue; }
+    stats.years++;
+
+    const seen={};
+    for(const ep of eps){
+      const id=showId+':'+ep.date;
+      const mine=BY_ID[id];
+      if(mine){
+        stats.matched++; seen[ep.date]=1;
+        if(meaningfulName(ep.name)){ state.titles[id]=ep.name; stats.titles++; }
+        if(ep.overview){ state.desc[id]=ep.overview; stats.descs++; }
+        if(ep.still){ state.stills[id]=ep.still; stats.stills++; }
+      } else {
+        missing.push(ep.date);
+        stats.missing++;
+      }
+    }
+    // generated episodes in this year that TMDB has no record of
+    for(const e of CAT){
+      if(e.show!==showId || e.future) continue;
+      if(e.date.slice(0,4)!==y) continue;
+      if(!seen[e.date]){ phantom.push(e.date); stats.phantom++; }
+    }
+    if(onEach) onEach(i+1, years.length, stats);
+    await new Promise(r=>setTimeout(r,90));
+  }
+  save(); rebuildCatalogue(); renderAll();
+  return {stats, phantom, missing};
+}
+
+/* Reconciling is separate and opt-in: it changes which episodes exist, which
+   is a bigger claim than filling in a description. */
+function tmdbReconcile(showId, phantom, missing){
+  state.hidden=state.hidden||{}; state.custom=state.custom||[];
+  let removed=0, added=0;
+  for(const d of phantom){
+    const id=showId+':'+d;
+    if(BY_ID[id] && !isSeen(id)){ state.hidden[id]=1; removed++; }
+  }
+  const meta=SHOW_META[showId];
+  for(const d of missing){
+    const id=showId+':'+d;
+    if(!BY_ID[id]){
+      state.custom.push({id, show:showId, date:d, title:meta.short+' '+d,
+                         run:meta.run, kind:'weekly'});
+      added++;
+    }
+  }
+  save(); rebuildCatalogue(); renderAll();
+  return {removed, added};
+}
+
+/* ============================================================
    18. WRESTLER SCREEN
    Built entirely from the roster tenure index plus the feud
    list -- no biographical data is invented. Everything shown
@@ -4065,6 +4504,80 @@ document.getElementById('btnFixDates').onclick=async function(){
     ...res.moved.slice(0,60).map(([t,a,b])=>'  '+t+'\n     '+a+'  ->  '+b)].join('\n');
   toast(res.fixed+' event dates corrected');
 };
+async function runFill(kind,btn){
+  const log=document.getElementById('fillLog'), stop=document.getElementById('btnStopFill');
+  document.getElementById('btnFillEvents').disabled=true;
+  document.getElementById('btnFillWeekly').disabled=true;
+  stop.style.display='inline-block'; log.style.display='block';
+  log.textContent='Starting\u2026';
+  const res=await fillAll(kind,(done,total,cards)=>{
+    log.textContent='Checked '+done+' of '+total+' \u2014 '+cards+' cards filled';
+  });
+  document.getElementById('btnFillEvents').disabled=false;
+  document.getElementById('btnFillWeekly').disabled=false;
+  stop.style.display='none';
+  log.textContent=[
+    'Checked '+res.total+'.',
+    res.cards+' match cards, '+res.descs+' descriptions, '+res.dates+' dates corrected.',
+    res.none+' had no usable article.'
+  ].join('\n');
+  renderHealth();
+  toast(res.cards+' cards filled');
+}
+document.getElementById('btnFillEvents').onclick=function(){ runFill('event',this); };
+document.getElementById('btnFillWeekly').onclick=function(){
+  if(!confirm('Weekly episodes mostly have no Wikipedia article, so this will be slow and mostly empty. Continue?')) return;
+  runFill('weekly',this);
+};
+let tmdbPending=null;
+document.getElementById('tmdbKey').oninput=e=>saveTmdbKey(e.target.value);
+async function runTmdb(showId,label){
+  const log=document.getElementById('tmdbLog'), stop=document.getElementById('btnTmdbStop');
+  if(!tmdbKey){ toast('Paste your TMDB key first'); return; }
+  document.getElementById('btnTmdbRaw').disabled=true;
+  document.getElementById('btnTmdbSD').disabled=true;
+  stop.style.display='inline-block'; log.style.display='block';
+  document.getElementById('tmdbFixWrap').style.display='none';
+  log.textContent='Reading seasons\u2026';
+  try{
+    const res=await tmdbImport(showId,(done,total,st)=>{
+      log.textContent=label+': season '+done+' of '+total+
+        ' \u2014 '+st.matched+' matched, '+st.descs+' descriptions, '+st.stills+' stills';
+    });
+    const s=res.stats;
+    tmdbPending={showId, phantom:res.phantom, missing:res.missing};
+    log.textContent=[
+      label+' \u2014 '+s.years+' seasons read.',
+      s.matched+' episodes matched by air date.',
+      s.titles+' real titles, '+s.descs+' descriptions, '+s.stills+' stills saved.',
+      '',
+      s.phantom+' episodes this app generated that TMDB has no record of (probably never aired).',
+      s.missing+' episodes TMDB lists that this app never generated.',
+      (s.phantom||s.missing)?'\nApply the reconciliation to hide the first set and add the second. That is what fixes the numbering drift properly.':'\nNothing to reconcile.'
+    ].join('\n');
+    document.getElementById('tmdbFixWrap').style.display=(s.phantom||s.missing)?'flex':'none';
+    toast(s.matched+' episodes matched');
+  }catch(e){ log.textContent='Failed: '+(e.message||e); }
+  document.getElementById('btnTmdbRaw').disabled=false;
+  document.getElementById('btnTmdbSD').disabled=false;
+  stop.style.display='none';
+  renderHealth();
+}
+document.getElementById('btnTmdbRaw').onclick=()=>runTmdb('raw','Raw');
+document.getElementById('btnTmdbSD').onclick=()=>runTmdb('smackdown','SmackDown');
+document.getElementById('btnTmdbStop').onclick=()=>{ tmdbRun.stop=true; toast('Stopping\u2026'); };
+document.getElementById('btnTmdbFix').onclick=()=>{
+  if(!tmdbPending) return;
+  const p=tmdbPending;
+  if(!confirm('Hide '+p.phantom.length+' generated episodes TMDB has no record of, and add '+
+     p.missing.length+' it lists that are missing? Watched episodes are never hidden.')) return;
+  snapshot('tmdb reconcile');
+  const r=tmdbReconcile(p.showId,p.phantom,p.missing);
+  document.getElementById('tmdbLog').textContent+='\n\nApplied: '+r.removed+' hidden, '+r.added+' added.';
+  document.getElementById('tmdbFixWrap').style.display='none';
+  toastUndo(r.removed+' hidden, '+r.added+' added');
+};
+document.getElementById('btnStopFill').onclick=()=>{ fillRun.stop=true; toast('Stopping\u2026'); };
 document.getElementById('btnStopDates').onclick=()=>{ dateFixRun.stop=true; toast('Stopping\u2026'); };
 document.getElementById('btnCopyTransfer').onclick=async()=>{
   const blob=btoa(unescape(encodeURIComponent(JSON.stringify(state))));
@@ -4490,6 +5003,7 @@ G('btnChangePw').onclick=async()=>{
 (async function start(){
   applyTheme(await RAW.get(THEME_KEY) || 'tron');
   await loadPrefs();
+  await loadTmdbKey();
   await loadRepoData();
   await refreshProfiles();
 

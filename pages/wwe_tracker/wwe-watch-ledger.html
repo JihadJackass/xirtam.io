@@ -1117,7 +1117,7 @@
    rows: "SmackDown aired Thursdays 1999-2005, Fridays to 2016,
    Tuesdays to 2019, Fridays since." Episodes generate from that.
    ============================================================ */
-const BUILD_ID='2026-07-30 15:58 UTC';
+const BUILD_ID='2026-07-30 16:41 UTC';
 
 /* Known (episode number, date) pairs. The generator assumes a weekly show
    never missed its slot, which is false -- Raw was pre-empted often enough to
@@ -3470,57 +3470,78 @@ function cleanWiki(t){
     .replace(/\s+/g,' ')
     .trim();
 }
+/* Tolerant on purpose. These tables vary a lot across articles: some have a
+   No. column, some do not, some put the row number on the same line as the
+   cells, headers are variously "Results", "Match" or "#". So: score every
+   table by how many rows look like a result, and inside a row find the cell
+   containing the verb rather than assuming a position. */
+const WIN_RE=/\b(?:defeated|defeats|def\.|beat|won|drew|submitted|pinned)(?=\s|$)/i;
 function parseResults(wikitext){
   const tables=String(wikitext||'').split(/\{\|/).slice(1);
+  let best=[];
   for(const raw of tables){
-    const body=raw.split(/\|\}/)[0];
-    if(!/!\s*(No\.?|Results)/i.test(body)) continue;
-    const rows=body.split(/\n\|-/).slice(1);
+    const body=raw.split(/\n\s*\|\}/)[0];
+    const rows=body.split(/\n\s*\|-/);
     const out=[];
     for(const r of rows){
       const cells=[];
       for(const line of r.split('\n')){
-        const t=line.trim();
-        if(t.startsWith('!')) continue;
-        if(!t.startsWith('|')) continue;
-        for(const c of t.slice(1).split('||')) cells.push(cleanWiki(c));
+        let t=line.trim();
+        if(!t || t.startsWith('|+')) continue;
+        if(t[0]==='!'||t[0]==='|') t=t.slice(1); else continue;
+        for(const c of t.split(/\|\||!!/)) cells.push(cleanWiki(c));
       }
-      const nonEmpty=cells.filter(Boolean);
-      if(!nonEmpty.length) continue;
-      const result=nonEmpty[0], stip=nonEmpty[1]||'';
-      if(!/defeated|def\.|won|beat|drew|\bvs\b/i.test(result)) continue;
+      const idx=cells.findIndex(c=>WIN_RE.test(c));
+      if(idx<0) continue;
+      const result=cells[idx];
+      if(result.length<8) continue;
+      const stip=cells.slice(idx+1).find(c=>c && !/^\d+:\d+$/.test(c) && !/^\d+$/.test(c) && c.length>3)||'';
       out.push(stip && !/^singles match$/i.test(stip) ? result+' ('+stip+')' : result);
     }
-    if(out.length) return out;
+    if(out.length>best.length) best=out;
   }
-  return [];
+  return best;
 }
 
-async function wikiFull(query){
-  const url=WIKI+'?action=query&generator=search&gsrsearch='+encodeURIComponent(query)+
-    '&gsrlimit=1&prop=extracts|revisions&rvprop=content&rvslots=main'+
-    '&exintro=1&explaintext=1&exsentences=3&format=json&origin=*';
+/* Split into plain, well-trodden calls. The previous version asked for
+   extracts and raw wikitext in one request through generator=search, which is
+   the brittle corner of that API -- it returned no content at all, which is
+   why 301 events produced zero cards. Search for the title, then fetch the
+   wikitext and the intro separately. Slower, but it works. */
+async function wikiSearchTitle(query){
+  const url=WIKI+'?action=query&list=search&srsearch='+encodeURIComponent(query)+
+    '&srlimit=1&format=json&origin=*';
   const r=await fetch(url);
-  if(!r.ok) throw new Error('Wikipedia returned '+r.status);
+  if(!r.ok) throw new Error('search HTTP '+r.status);
   const j=await r.json();
-  const pages=j&&j.query&&j.query.pages;
-  if(!pages) return null;
-  const p=Object.values(pages)[0];
-  if(!p) return null;
-  let wikitext='';
-  try{ wikitext=p.revisions[0].slots.main['*']||p.revisions[0].slots.main.content||''; }catch(e){}
-  return {title:p.title||'', extract:(p.extract||'').trim(), wikitext};
+  const hit=j&&j.query&&j.query.search&&j.query.search[0];
+  return hit?hit.title:'';
+}
+async function wikiWikitext(title){
+  const url=WIKI+'?action=parse&page='+encodeURIComponent(title)+
+    '&prop=wikitext&redirects=1&format=json&origin=*';
+  const r=await fetch(url);
+  if(!r.ok) return '';
+  const j=await r.json();
+  try{ return j.parse.wikitext['*']||j.parse.wikitext||''; }catch(e){ return ''; }
+}
+async function wikiIntro(title){
+  const url=WIKI+'?action=query&titles='+encodeURIComponent(title)+
+    '&prop=extracts&exintro=1&explaintext=1&exsentences=3&redirects=1&format=json&origin=*';
+  const r=await fetch(url);
+  if(!r.ok) return '';
+  const j=await r.json();
+  try{ return (Object.values(j.query.pages)[0].extract||'').trim(); }catch(e){ return ''; }
 }
 
-/* A wrong article must not write nonsense into your ledger, so the year has
-   to appear in the title or the opening prose before anything is accepted. */
-function articleMatches(e, rec){
+/* A wrong article must not write nonsense into the ledger, so the year has to
+   appear somewhere in the article before anything is accepted. */
+function articleMatches(e, title, extract, wikitext){
   const yr=e.date.slice(0,4);
-  const hay=(rec.title+' '+rec.extract).toLowerCase();
-  if(!hay.includes(yr)) return false;
+  if(!(title+' '+extract).includes(yr) && !String(wikitext).slice(0,3000).includes(yr)) return false;
   if(e.kind==='event'){
-    const stem=norm(e.title).replace(/\d{4}/g,'').trim().split(' ')[0];
-    return stem.length<3 || norm(rec.title).includes(stem);
+    const stem=norm(e.title).replace(/\d{4}/g,'').trim().split(' ').filter(w=>w.length>2)[0]||'';
+    return !stem || norm(title).includes(stem);
   }
   return true;
 }
@@ -3529,25 +3550,33 @@ async function fillEpisode(e){
   const q = e.kind==='event'
     ? e.title+' professional wrestling event'
     : SHOW_META[e.show].name+' '+fmtDate(e.date);
-  const rec=await wikiFull(q);
-  const out={card:'',desc:'',date:'',title:rec?rec.title:''};
-  if(!rec || !articleMatches(e,rec)) return out;
+  const out={card:'',desc:'',date:'',title:'',why:''};
 
-  const matches=parseResults(rec.wikitext);
+  const title=await wikiSearchTitle(q);
+  if(!title){ out.why='no article'; return out; }
+  out.title=title;
+
+  const wikitext=await wikiWikitext(title);
+  const extract=await wikiIntro(title);
+  if(!wikitext && !extract){ out.why='no content'; return out; }
+  if(!articleMatches(e,title,extract,wikitext)){ out.why='wrong article'; return out; }
+
+  const matches=parseResults(wikitext);
   if(matches.length){
     out.card=matches.join('; ');
     state.cards=state.cards||{}; state.cards[e.id]=out.card;
+  } else if(wikitext){ out.why='no results table'; }
+
+  if(extract){
+    out.desc=extract;
+    state.desc=state.desc||{}; state.desc[e.id]=extract;
   }
-  if(rec.extract){
-    out.desc=rec.extract;
-    state.desc=state.desc||{}; state.desc[e.id]=out.desc;
-  }
-  const d=dateFromProse(rec.extract);
+  const d=dateFromProse(extract);
   if(d && e.est){
     const gap=Math.abs(parse(d)-parse(e.date))/864e5;
     if(gap<=120 && d!==e.date){ state.dates=state.dates||{}; state.dates[e.id]=d; out.date=d; }
   }
-  state.wikiSrc=state.wikiSrc||{}; state.wikiSrc[e.id]=rec.title;
+  state.wikiSrc=state.wikiSrc||{}; state.wikiSrc[e.id]=title;
   save(); rebuildCatalogue();
   return out;
 }
@@ -3558,6 +3587,7 @@ async function fillAll(kind, onEach){
     && (kind==='event' ? e.kind==='event' : state.tracked[e.show] && e.kind!=='event')
     && !(state.cards||{})[e.id]);
   let cards=0, descs=0, dates=0, none=0;
+  const why={};
   fillRun={stop:false};
   for(let i=0;i<todo.length;i++){
     if(fillRun.stop) break;
@@ -3567,12 +3597,13 @@ async function fillAll(kind, onEach){
       if(r.desc) descs++;
       if(r.date) dates++;
       if(!r.card && !r.desc) none++;
-    }catch(err){ none++; }
+      if(r.why) why[r.why]=(why[r.why]||0)+1;
+    }catch(err){ none++; why[(err.message||'error').slice(0,40)]=(why[(err.message||'error').slice(0,40)]||0)+1; }
     if(onEach) onEach(i+1, todo.length, cards);
     await new Promise(r=>setTimeout(r,170));
   }
   rebuildCatalogue(); renderAll();
-  return {cards,descs,dates,none,total:todo.length};
+  return {cards,descs,dates,none,total:todo.length,why};
 }
 
 /* ============================================================
@@ -4516,10 +4547,13 @@ async function runFill(kind,btn){
   document.getElementById('btnFillEvents').disabled=false;
   document.getElementById('btnFillWeekly').disabled=false;
   stop.style.display='none';
+  const why=Object.entries(res.why||{}).sort((a,b)=>b[1]-a[1])
+    .map(([k,v])=>'   '+v+' \u00d7 '+k).join('\n');
   log.textContent=[
     'Checked '+res.total+'.',
     res.cards+' match cards, '+res.descs+' descriptions, '+res.dates+' dates corrected.',
-    res.none+' had no usable article.'
+    res.none+' produced nothing.',
+    why?'\nWhy nothing came back:\n'+why:''
   ].join('\n');
   renderHealth();
   toast(res.cards+' cards filled');

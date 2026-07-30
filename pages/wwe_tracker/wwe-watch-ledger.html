@@ -983,22 +983,32 @@
     </div>
 
     <div class="card2">
-      <h3>Import weekly episodes from TMDB</h3>
-      <p>Wikipedia covers pay-per-views well and weekly television barely at all. TMDB is the other way
-      round &mdash; it carries Raw and SmackDown episode by episode with air dates, titles, recap text and
-      stills, one season per year, which is how this catalogue is already built.</p>
-      <p>You need your own free key from <b>themoviedb.org &rarr; Settings &rarr; API</b>. Mine would be
-      visible in this file and revoked within a day. It is kept in plain storage on this device, since a
-      read-only key is not worth encrypting.</p>
-      <div class="field" style="max-width:400px">
-        <label for="tmdbKey">TMDB API key</label>
-        <input type="text" id="tmdbKey" placeholder="paste your v3 API key" spellcheck="false">
-      </div>
+      <h3>Import weekly episodes</h3>
+      <p>Wikipedia covers pay-per-views well and weekly television barely at all. This is the other way
+      round &mdash; episode by episode with air dates, titles, recap text and stills. It is the same thing
+      Plex does.</p>
+      <p><b>TVmaze needs no account and no key.</b> Just press the button. One request returns every
+      episode of the show.</p>
       <div class="acts">
-        <button class="btn primary" id="btnTmdbRaw">Import Raw</button>
-        <button class="btn primary" id="btnTmdbSD">Import SmackDown</button>
+        <button class="btn primary" id="btnTvmRaw">Import Raw</button>
+        <button class="btn primary" id="btnTvmSD">Import SmackDown</button>
+        <button class="btn" id="btnTvmNXT">Import NXT</button>
         <button class="btn" id="btnTmdbStop" style="display:none">Stop</button>
       </div>
+      <details style="margin-top:15px">
+        <summary style="cursor:pointer;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--dim2)">Use TMDB instead</summary>
+        <p style="margin-top:11px">TMDB carries the same kind of data and sometimes different coverage, but it
+        needs a free key from <b>themoviedb.org &rarr; Settings &rarr; API</b>. If their signup gives you a
+        CloudFront 403, that is their bot protection and nothing this app can work around &mdash; use TVmaze.</p>
+        <div class="field" style="max-width:400px">
+          <label for="tmdbKey">TMDB API key</label>
+          <input type="text" id="tmdbKey" placeholder="paste your v3 API key" spellcheck="false">
+        </div>
+        <div class="acts">
+          <button class="btn" id="btnTmdbRaw">Import Raw via TMDB</button>
+          <button class="btn" id="btnTmdbSD">Import SmackDown via TMDB</button>
+        </div>
+      </details>
       <pre id="tmdbLog" style="display:none;font-family:'DM Mono',monospace;font-size:11px;color:var(--dim);
         background:var(--deep);border:1px solid var(--line);padding:11px 13px;margin:12px 0 0;
         white-space:pre-wrap;line-height:1.6;max-height:260px;overflow:auto"></pre>
@@ -1117,7 +1127,7 @@
    rows: "SmackDown aired Thursdays 1999-2005, Fridays to 2016,
    Tuesdays to 2019, Fridays since." Episodes generate from that.
    ============================================================ */
-const BUILD_ID='2026-07-30 16:41 UTC';
+const BUILD_ID='2026-07-30 17:53 UTC';
 
 /* Known (episode number, date) pairs. The generator assumes a weekly show
    never missed its slot, which is false -- Raw was pre-empted often enough to
@@ -3508,30 +3518,51 @@ function parseResults(wikitext){
    the brittle corner of that API -- it returned no content at all, which is
    why 301 events produced zero cards. Search for the title, then fetch the
    wikitext and the intro separately. Slower, but it works. */
-async function wikiSearchTitle(query){
-  const url=WIKI+'?action=query&list=search&srsearch='+encodeURIComponent(query)+
-    '&srlimit=1&format=json&origin=*';
+/* 157 of 424 events came back HTTP 429 last run: three requests per event at
+   170ms is far too fast for an anonymous CORS client. Now two requests per
+   event, a slower floor, and a real backoff that honours Retry-After. A 429
+   is also no longer allowed to masquerade as "no results table". */
+let wikiBackoff=0;
+async function wikiFetch(url, tries){
+  tries = tries||0;
+  if(wikiBackoff) await new Promise(r=>setTimeout(r,wikiBackoff));
   const r=await fetch(url);
-  if(!r.ok) throw new Error('search HTTP '+r.status);
-  const j=await r.json();
+  if(r.status===429){
+    const ra=Number(r.headers.get('Retry-After'))||0;
+    wikiBackoff=Math.min(8000, Math.max(wikiBackoff*2||900, ra*1000));
+    if(tries<4){ await new Promise(x=>setTimeout(x,wikiBackoff)); return wikiFetch(url,tries+1); }
+    throw new Error('rate limited by Wikipedia');
+  }
+  if(wikiBackoff) wikiBackoff=Math.max(0, wikiBackoff-250);   // ease off once it recovers
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  return r.json();
+}
+async function wikiSearchTitle(query){
+  const j=await wikiFetch(WIKI+'?action=query&list=search&srsearch='+
+    encodeURIComponent(query)+'&srlimit=1&format=json&origin=*');
   const hit=j&&j.query&&j.query.search&&j.query.search[0];
   return hit?hit.title:'';
 }
-async function wikiWikitext(title){
-  const url=WIKI+'?action=parse&page='+encodeURIComponent(title)+
-    '&prop=wikitext&redirects=1&format=json&origin=*';
-  const r=await fetch(url);
-  if(!r.ok) return '';
-  const j=await r.json();
-  try{ return j.parse.wikitext['*']||j.parse.wikitext||''; }catch(e){ return ''; }
-}
-async function wikiIntro(title){
-  const url=WIKI+'?action=query&titles='+encodeURIComponent(title)+
-    '&prop=extracts&exintro=1&explaintext=1&exsentences=3&redirects=1&format=json&origin=*';
-  const r=await fetch(url);
-  if(!r.ok) return '';
-  const j=await r.json();
-  try{ return (Object.values(j.query.pages)[0].extract||'').trim(); }catch(e){ return ''; }
+/* Wikitext and intro in one call. This is safe with an explicit titles= --
+   it was only unreliable through generator=search. */
+async function wikiContent(title){
+  const j=await wikiFetch(WIKI+'?action=query&titles='+encodeURIComponent(title)+
+    '&prop=extracts|revisions&rvprop=content&rvslots=main&exintro=1&explaintext=1'+
+    '&exsentences=3&redirects=1&format=json&origin=*');
+  let wikitext='', extract='';
+  try{
+    const p=Object.values(j.query.pages)[0];
+    extract=(p.extract||'').trim();
+    try{ wikitext=p.revisions[0].slots.main['*']||p.revisions[0].slots.main.content||''; }catch(e){}
+  }catch(e){}
+  if(!wikitext){                       // fall back to action=parse if that shape fails
+    try{
+      const k=await wikiFetch(WIKI+'?action=parse&page='+encodeURIComponent(title)+
+        '&prop=wikitext&redirects=1&format=json&origin=*');
+      wikitext=(k.parse&&k.parse.wikitext&&(k.parse.wikitext['*']||k.parse.wikitext))||'';
+    }catch(e){}
+  }
+  return {wikitext, extract};
 }
 
 /* A wrong article must not write nonsense into the ledger, so the year has to
@@ -3553,19 +3584,19 @@ async function fillEpisode(e){
   const out={card:'',desc:'',date:'',title:'',why:''};
 
   const title=await wikiSearchTitle(q);
-  if(!title){ out.why='no article'; return out; }
+  if(!title){ out.why='no article found'; return out; }
   out.title=title;
 
-  const wikitext=await wikiWikitext(title);
-  const extract=await wikiIntro(title);
-  if(!wikitext && !extract){ out.why='no content'; return out; }
-  if(!articleMatches(e,title,extract,wikitext)){ out.why='wrong article'; return out; }
+  const {wikitext, extract}=await wikiContent(title);
+  if(!wikitext && !extract){ out.why='article had no content'; return out; }
+  if(!articleMatches(e,title,extract,wikitext)){ out.why='search found the wrong article'; return out; }
 
   const matches=parseResults(wikitext);
   if(matches.length){
     out.card=matches.join('; ');
     state.cards=state.cards||{}; state.cards[e.id]=out.card;
-  } else if(wikitext){ out.why='no results table'; }
+  } else if(wikitext){ out.why='article has no results table';
+  } else { out.why='could not read the article source'; }
 
   if(extract){
     out.desc=extract;
@@ -3600,7 +3631,7 @@ async function fillAll(kind, onEach){
       if(r.why) why[r.why]=(why[r.why]||0)+1;
     }catch(err){ none++; why[(err.message||'error').slice(0,40)]=(why[(err.message||'error').slice(0,40)]||0)+1; }
     if(onEach) onEach(i+1, todo.length, cards);
-    await new Promise(r=>setTimeout(r,170));
+    await new Promise(r=>setTimeout(r,420));   // polite floor for anonymous API use
   }
   rebuildCatalogue(); renderAll();
   return {cards,descs,dates,none,total:todo.length,why};
@@ -3669,7 +3700,70 @@ function meaningfulName(n){
   if(/#\d+\s*$/.test(n)) return false;
   if(/^episode\s*\d+$/i.test(n)) return false;
   if(/^season\s*\d+/i.test(n)) return false;
+  if(/^tba$|^tbd$/i.test(n)) return false;
   return true;
+}
+
+/* ============================================================
+   TVMAZE
+   TMDB requires an account, and their signup is behind a
+   CloudFront rule that blocks some people outright. TVmaze needs
+   no key and no account, sends CORS headers, and returns every
+   episode of a show in a single request. It is the better
+   default; TMDB stays as an alternative.
+   ============================================================ */
+const TVMAZE='https://api.tvmaze.com';
+const TVMAZE_Q={ raw:'WWE Raw', smackdown:'WWE SmackDown', nxt:'WWE NXT' };
+
+function stripHtml(h){
+  return String(h||'').replace(/<[^>]+>/g,' ')
+    .replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&quot;/g,'"')
+    .replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+    .replace(/\s+/g,' ').trim();
+}
+function tidyTvmaze(eps){
+  return (eps||[]).filter(e=>/^\d{4}-\d{2}-\d{2}$/.test(e.airdate||''))
+    .map(e=>({ date:e.airdate, name:(e.name||'').trim(),
+      overview:stripHtml(e.summary),
+      still:(e.image&&(e.image.original||e.image.medium))||'' }));
+}
+async function tvmazeShow(showId){
+  const q=TVMAZE_Q[showId]||SHOW_META[showId].name;
+  const r=await fetch(TVMAZE+'/singlesearch/shows?q='+encodeURIComponent(q));
+  if(!r.ok) throw new Error('TVmaze returned '+r.status);
+  const j=await r.json();
+  if(!j||!j.id) throw new Error('TVmaze has no show called '+q);
+  return j;
+}
+async function tvmazeImport(showId, onEach){
+  const show=await tvmazeShow(showId);
+  if(onEach) onEach(0,1,{matched:0},'Matched TVmaze show: '+show.name);
+  const r=await fetch(TVMAZE+'/shows/'+show.id+'/episodes');
+  if(!r.ok) throw new Error('TVmaze returned '+r.status);
+  const eps=tidyTvmaze(await r.json());
+
+  const stats={titles:0,descs:0,stills:0,matched:0,phantom:0,missing:0,source:show.name};
+  const phantom=[], missing=[], seen={};
+  state.desc=state.desc||{}; state.titles=state.titles||{}; state.stills=state.stills||{};
+
+  for(const ep of eps){
+    const id=showId+':'+ep.date;
+    if(BY_ID[id]){
+      stats.matched++; seen[ep.date]=1;
+      if(meaningfulName(ep.name)){ state.titles[id]=ep.name; stats.titles++; }
+      if(ep.overview){ state.desc[id]=ep.overview; stats.descs++; }
+      if(ep.still){ state.stills[id]=ep.still; stats.stills++; }
+    } else { missing.push(ep.date); stats.missing++; }
+    if(onEach && stats.matched%150===0) onEach(stats.matched,eps.length,stats);
+  }
+  const covered={}; eps.forEach(e=>covered[e.date.slice(0,4)]=1);
+  for(const e of CAT){
+    if(e.show!==showId || e.future) continue;
+    if(!covered[e.date.slice(0,4)]) continue;      // only judge years TVmaze actually lists
+    if(!seen[e.date]){ phantom.push(e.date); stats.phantom++; }
+  }
+  save(); rebuildCatalogue(); renderAll();
+  return {stats, phantom, missing};
 }
 
 let tmdbRun={stop:false};
@@ -4597,6 +4691,36 @@ async function runTmdb(showId,label){
   stop.style.display='none';
   renderHealth();
 }
+async function runTvmaze(showId,label){
+  const log=document.getElementById('tmdbLog');
+  ['btnTvmRaw','btnTvmSD','btnTvmNXT'].forEach(i=>document.getElementById(i).disabled=true);
+  log.style.display='block';
+  document.getElementById('tmdbFixWrap').style.display='none';
+  log.textContent='Asking TVmaze for '+label+'\u2026';
+  try{
+    const res=await tvmazeImport(showId,(done,total,st,msg)=>{
+      log.textContent=msg||(label+': '+done+' of '+total+' matched');
+    });
+    const s=res.stats;
+    tmdbPending={showId, phantom:res.phantom, missing:res.missing};
+    log.textContent=[
+      label+' \u2014 matched against TVmaze series "'+s.source+'".',
+      s.matched+' episodes matched by air date.',
+      s.titles+' real titles, '+s.descs+' descriptions, '+s.stills+' stills saved.',
+      '',
+      s.phantom+' episodes this app generated that TVmaze has no record of.',
+      s.missing+' episodes TVmaze lists that this app never generated.',
+      (s.phantom||s.missing)?'\nApply the reconciliation to fix the numbering properly.':'\nNothing to reconcile.'
+    ].join('\n');
+    document.getElementById('tmdbFixWrap').style.display=(s.phantom||s.missing)?'flex':'none';
+    toast(s.matched+' episodes matched');
+  }catch(e){ log.textContent='Failed: '+(e.message||e); }
+  ['btnTvmRaw','btnTvmSD','btnTvmNXT'].forEach(i=>document.getElementById(i).disabled=false);
+  renderHealth();
+}
+document.getElementById('btnTvmRaw').onclick=()=>runTvmaze('raw','Raw');
+document.getElementById('btnTvmSD').onclick=()=>runTvmaze('smackdown','SmackDown');
+document.getElementById('btnTvmNXT').onclick=()=>runTvmaze('nxt','NXT');
 document.getElementById('btnTmdbRaw').onclick=()=>runTmdb('raw','Raw');
 document.getElementById('btnTmdbSD').onclick=()=>runTmdb('smackdown','SmackDown');
 document.getElementById('btnTmdbStop').onclick=()=>{ tmdbRun.stop=true; toast('Stopping\u2026'); };
